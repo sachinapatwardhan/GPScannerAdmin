@@ -36,19 +36,13 @@
                 nameplate: 0,
                 deviceid: '',
                 renewaldate: new Date(date),
-                macname: '',
                 mode: 0,
                 DeviceBattery: 0,
                 IsDeleted: 0,
-                IsCharging: 0,
                 IMEINumber: '',
-                CurrentWifi: '',
-                DeviceModel: '',
                 IsOnline: 0,
-                Weight: '',
                 DeviceType: '',
                 IsOldDevice: 0,
-                Gsercer: 0,
                 Buyer: '',
                 country: '',
 
@@ -171,17 +165,13 @@
             $scope.model.nameplate = o.nameplate;
             $scope.model.deviceid = o.deviceid;
             $scope.model.renewaldate = new Date(o.renewaldate);
-            $scope.model.macname = o.macname;
             $scope.model.DeviceBattery = o.DeviceBattery;
             $scope.model.mode = o.mode;
             $scope.model.IsCharging = o.IsCharging;
             $scope.model.IsDeleted = o.IsDeleted;
             $scope.model.IMEINumber = o.IMEINumber;
-            $scope.model.CurrentWifi = o.CurrentWifi;
-            $scope.model.DeviceModel = o.DeviceModel;
             $scope.model.IsOnline = o.IsOnline;
             $scope.model.IsOldDevice = o.IsOldDevice;
-            $scope.model.Weight = o.Weight;
 
             $scope.model.DeviceType = o.DeviceType;
             if ($scope.model.DeviceType == "Z3") {
@@ -191,7 +181,6 @@
             }
 
             $scope.selectedItem = o.tbluserinformation;
-            $scope.model.Gsercer = o.Gsercer;
             $scope.model.Buyer = o.Buyer;
 
             $scope.model.country = o.tbluserinformation.country;
@@ -466,6 +455,7 @@
             var date = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
             $scope.model = {
 
+
                 id: 0,
                 iduser: 0,
                 bikeimageURl: '',
@@ -474,21 +464,15 @@
                 nameplate: 0,
                 deviceid: '',
                 renewaldate: new Date(date),
-                macname: '',
                 mode: true,
                 DeviceBattery: 0,
                 IsDeleted: 0,
-                IsCharging: 0,
                 IMEINumber: '',
-                CurrentWifi: '',
-                DeviceModel: '',
                 IsOnline: 0,
                 HandshakDatetime: '',
                 CreatedDate: new Date(),
-                Weight: '',
                 DeviceType: '',
                 IsOldDevice: 0,
-                Gsercer: 0,
                 Buyer: '',
             };
 
