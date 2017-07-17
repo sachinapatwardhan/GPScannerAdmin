@@ -1,0 +1,281 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Shopper User</span>
+                </div>
+                <div class="title">Shopper User Management</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <form name="AddUserForm" novalidate class="md-inline-form">
+                    <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                        <!-- <md-tab label="Users  List" ng-click="ResetTab()"> -->
+                        <md-tab label="Shopper Users  List" ng-click="Reset()">
+                            <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                                <div class="content custom-content">
+                                    <table id="Usertable" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">No</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Image</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">User Name</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Shop Name</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Shop Owner</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Email</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Phone</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">User Role</span>
+                                                    </div>
+                                                </th>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Action</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <!--  <tbody>
+                                         <tr ng-repeat="item in lstUsers">
+                                         <td>{{$index+1}}</td>
+                                        <td>{{item.username}}</td>
+                                        <td>{{item.email}}</td>
+                                        <td >{{item.phone}}</td>
+                                         <td >{{item.tbluserinroles[0].tblrole.RoleName}}</td>
+                                        <td>
+                                            <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchRoleById(item)">
+                                                <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                            </md-button>
+
+
+                                        </td>
+                                    </tr>
+                                    </tbody> -->
+                                    </table>
+                                </div>
+                            </div>
+                        </md-tab>
+                        <!--<md-tab label="Manage Users" ng-if="flgShow">
+                        <md-content class="md-padding">
+                            <div>
+                                <form name="FormManageUser" novalidate class="ms-stepper" aria-invalid="false">
+                                    <div layout-gt-sm="row">
+                                        <md-input-container flex="100" flex-gt-xs="50">
+                                            <input type="text" name="Phone" ng-model="model.phone" placeholder="Phone *" ng-pattern="/^(0|[1-9][0-9]*)$/" required>
+                                            <div ng-messages="FormManageUser.Phone.$error" ng-if="FormManageUser.Phone.$touched" role="alert">
+                                                <div ng-message="pattern"><span>Please Enter numbers only.</span></div>
+                                                <div ng-message="required">
+                                                    <span>Phone field is required.</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container flex="100" flex-gt-xs="50" class="md-icon-float flex-gt-xs-50 flex-100 md-default-theme">
+                                            <label>Select Role</label>
+                                            <md-select ng-model="model.roleId" ng-required="true">
+                                                <md-option ng-repeat="o in lstRoles" value="{{o.id}}" ng-selected="o.id==model.roleId">
+                                                    {{o.RoleName}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div align="center">
+                                        <md-button class="md-raised md-primary" ng-click="CreateUser(model)" ng-disabled="FormManageUser.$invalid">save</md-button>
+                                        <md-button class="md-raised md-warn" ng-click="Reset()">cancel</md-button>
+                                    </div>
+                                </form>
+                            </div>
+                        </md-content>
+                    </md-tab>-->
+                        <md-tab label="Add Shopper Users" ng-click="ResetEdit()" ng-disabled="!FlgAddedEditlocal">
+                            <md-content class="md-padding">
+                                <div class="custom-content">
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>User name *</label>
+                                            <input type="text" name="username" md-maxlength="250" ng-model="model.username" required>
+                                            <div ng-messages="AddUserForm.username.$error" ng-if="AddUserForm.username.$touched">
+                                                <div ng-message="required">
+                                                    <span>User name is required</span>
+                                                </div>
+                                                <div ng-message="md-maxlength">
+                                                    <span>User name can't be greater than 250 character</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Email address *</label>
+                                            <input type="Email" name="email" ng-model="model.email" md-maxlength="250" ng-pattern="/^.+@.+\..+$/" required>
+                                            <div ng-messages="AddUserForm.email.$error" ng-if="AddUserForm.email.$touched">
+                                                <div ng-message="required">
+                                                    <span>Email is required</span>
+                                                </div>
+                                                <div ng-message="pattern">
+                                                    <span>Email must be a valid E-mail address</span>
+                                                </div>
+                                                <div ng-message="md-maxlength">
+                                                    <span>Email must be in between 250 characters long</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <!--<div layout-gt-sm="row">
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Old Password *</label>
+                                                    <input type="Password" name="Password" ng-model="model.password" required>
+                                                    <div ng-messages="AddUserForm.Password.$error" ng-if="AddUserForm.Password.$touched">
+                                                        <div ng-message="required">
+                                                            <span>Password is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Confirm Password *</label>
+                                                    <input type="Password" name="ConfirmPassword" ng-model="model.cpassword" required>
+                                                    <div ng-messages="AddUserForm.ConfirmPassword.$error" ng-if="AddUserForm.ConfirmPassword.$touched">
+                                                        <div ng-message="required">
+                                                            <span>Confirm Password is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>-->
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Phone number </label>
+                                            <input type="text" name="Phone" ng-model="model.phone" placeholder="1234567890" ng-pattern='/^[+]*\d{2,4}[-]*\d{3,}[\s{1}]*\d{3,}$/' ng-maxlength="15">
+                                            <div ng-messages="AddUserForm.Phone.$error">
+                                                <div ng-message="maxlength" class="my-message">Phone number can't be longer than 15 number</div>
+                                                <div ng-message="pattern" class="my-message">Please Enter Vaild number</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Country *</label>
+                                            <md-select name="country" ng-model="model.country" ng-change="GetAllStateByCountry(model.country)" required>
+                                                <md-option ng-repeat="o in lstCountry" value=" {{o.Country}}">{{o.Country}}</md-option>
+                                            </md-select>
+                                            <div ng-messages="AddUserForm.country.$error" ng-if="AddUserForm.country.$touched">
+                                                <div ng-message="required">
+                                                    <span>Country is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>State </label>
+                                            <md-select name="StateName" ng-model="model.state" ng-disabled="model.country==''" ng-change="GetAllCityByStateId(model.state)">
+                                                <md-option ng-repeat="o in lstState" value="{{o.Name}}">{{ o.Name }}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>City </label>
+                                            <md-select name="CityName" ng-model="model.city" ng-disabled="model.state==''">
+                                                <md-option ng-repeat="o in lstCity" value="{{o.Name}}">{{ o.Name }}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <!--  <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>City</label>
+                                                    <input type="text" name="city" ng-model="model.city">
+                                                </md-input-container> -->
+                                    </div>
+
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Shop Name </label>
+                                            <input type="text" name="ShopName" ng-model="model.ShopName">
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Shop Owner </label>
+                                            <input type="text" name="ShopOwner" ng-model="model.PersonInCharge">
+                                        </md-input-container>
+                                    </div>
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex="30">
+                                            <md-subheader class="md-no-sticky">Select role</md-subheader>
+                                            <md-list-item ng-repeat="o in lstRoles">
+                                                <p> {{o.RoleName}} </p>
+                                                <md-checkbox class="md-secondary" ng-model="o.checked" value="{{o.id}}"></md-checkbox>
+                                            </md-list-item>
+                                        </md-input-container>
+                                        <!-- <md-input-container class="md-block" flex="40" align="right">
+                                            Gender:
+                                            <md-radio-group ng-model="model.gender">
+                                                <md-radio-button value="Male" class="md-primary">Male</md-radio-button>
+                                                <md-radio-button value="Female" class="md-primary"> Female </md-radio-button>
+                                            </md-radio-group>
+                                        </md-input-container> -->
+                                    </div>
+                                    <div ng-show="FlgImage" class="row" flex="100" flex-gt-xs="100">
+                                        <img ng-src="{{myCroppedImage}}" id="UploadedImage" err-src="assets/images/no-image.png" width="150px" />
+                                        <!-- <img ng-src="{{RoutePath}}MediaUploads/PetUpload/{{model.petimageURl}}" err-src="assets/images/no-image.png" style="width:150px!important;height:150px!important;" /> -->
+                                        <!--   <md-button class="md-raised md-dafault" ng-click="setFiles()" ng-show="FlgImage">Remove Image</md-button>
+                                                <br> -->
+                                        <br />
+                                        <md-button class="md-raised md-primary" ng-click="RemoveImage()">Remove</md-button>
+                                    </div>
+                                    <div layout="row" flex="100" flex-gt-xs="50">
+                                        <label>Image</label>
+                                        <md-input-container class="md-block" flex>
+                                            <lf-ng-md-file-input id="fileInput" name="files00" lf-files="Mediafiles" lf-api="apiMedia" ng-click="removeAllFiles()" onchange="angular.element(this).scope().setFiles(this)" lf-mimetype="image/*" base-sixty-four-input></lf-ng-md-file-input>
+                                            <div ng-messages="AddUserForm.files00.$error" style="color:red;">
+                                                <div ng-message="mimetype">Only image file supported</div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout-gt-sm="row" flex="100" ng-show="FlgCropImage">
+                                        <div class="cropArea">
+                                            <img-crop image="myImage" result-image="myCroppedImage" on-change="CropImageToFile()" result-image-size="300" area-min-size="300" area-type="square"></img-crop>
+                                        </div>
+                                    </div>
+                                    <div align="center">
+                                        <md-button class="md-raised md-primary" ng-disabled="!AddUserForm.$valid" ng-click="CreateUser(model)">Save</md-button>
+                                        <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </form>
+            </div>
+        </div>
+    </div>
+</md-content>
+<style>
+.cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width: 100%;
+    height: 350px;
+}
+</style>

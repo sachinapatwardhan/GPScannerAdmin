@@ -1,0 +1,89 @@
+<div id="login" class="flex-scrollable" layout="column" ms-scroll>
+    <div id="login-form-wrapper" layout="column" layout-align="center center">
+        <div id="login-form" class="md-whiteframe-8dp">
+        
+            <div class="title" translate="NEW CUSTOMERS">NEW CUSTOMERS</div>
+            <form name="RegisterForm" novalidate>
+                <md-input-container class="md-block" md-no-float>
+                    <label>User Name   <md-icon class="md-warn">*</md-icon></label>
+                    <input type="text" name="username" ng-model="model.username" required>
+                    <div ng-messages="RegisterForm.username.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>User Name is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" md-no-float>
+                    <label>Email Address   <md-icon class="md-warn">*</md-icon></label>
+                    <input type="email" name="email" ng-model="model.email" ng-pattern="/^.+@.+\..+$/" required>
+                    <div ng-messages="RegisterForm.email.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>Email is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span>Email must be a valid e-mail address</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" md-no-float>
+                    <label>Password </label>
+                    <input type="password" name="password" ng-model="model.password" required>
+                    <div ng-messages="RegisterForm.password.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>Password is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" md-no-float>
+                    <label>Confirm Password   <md-icon class="md-warn">*</md-icon></label>
+                    <input type="password" name="cpassword" ng-model="model.cpassword" required>
+                    <div ng-messages="RegisterForm.cpassword.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>Confirm Password is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" md-no-float>
+                    <label>Phone Number </label>
+                    <input name="phone" ng-model="model.phone" type="number" placeholder="1234567890" max="9999999999" min='0'>
+                    <div ng-messages="RegisterForm.phone.$error">
+                        <div ng-message="max" class="my-message">Phone Number can't be longer than 10 number.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex>
+                    <label>Country
+                    </label>
+                    <md-select Name="country" ng-model="model.country" ng-change="GetAllStateByCountry(model.country)">
+                        <md-option ng-repeat="o in lstCountry" value=" {{o.Country}}">{{o.Country}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex>
+                    <label>State
+                    </label>
+                    <md-select Name="state" ng-model="model.state" ng-disabled="model.country==''">
+                        <md-option ng-repeat="o in lstState" value="{{o.Name}}">{{ o.Name }}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" md-no-float>
+                    <label>City</label>
+                    <input type="text" name="city" ng-model="model.city">
+                </md-input-container>
+                <label>Gender</label>
+                <md-input-container class="md-block" flex>
+                    <md-radio-group ng-model="model.gender">
+                        <md-radio-button value="Male" class="md-primary">Male</md-radio-button>
+                        <md-radio-button value="Female" class="md-primary"> Female </md-radio-button>
+                    </md-radio-group>
+                </md-input-container>
+                
+                <md-button type="submit" class="md-raised md-accent submit-button" aria-label="Register" ng-click="Register(model)" ng-disabled="RegisterForm.$invalid || RegisterForm.$pristine">
+                    Register
+                </md-button>
+                <md-button type="reset" class="md-raised md-accent submit-button" aria-label="Register" ng-click="Cancel()" >
+                    Cancel
+                </md-button>
+            </form>
+
+        </div>
+    </div>
+</div>

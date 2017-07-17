@@ -1,0 +1,70 @@
+<md-dialog class="flex-50">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Compose Email</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <ms-form-wizard flex>
+            <form name="formEmailTemplate" novalidate class="ms-stepper" aria-invalid="false">
+                <md-content class="md-padding">
+                    <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                        <label>Id</label>
+                        <input ng-model="model.id">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>select Email</label>
+                        <md-select name="Type" ng-model="model.Type" ng-required="true">
+                            <md-option value="Welcome Email">Welcome Email</md-option>
+                            <md-option value="Enquiry Email">Enquiry Email</md-option>
+                            <md-option value="Subscriber Email">Subscriber Email</md-option>
+                            <md-option value="Forgot Password Email">Forgot Password Email</md-option>
+                            <md-option value="Create New Order Email">Create New Order Email</md-option>
+                            <md-option value="Confirm Order Email">Confirm Order Email</md-option>
+                            <md-option value="Cancel Order Email">Cancel Order Email</md-option>
+                            <md-option value="Complete Order Email">Complete Order Email</md-option>
+							<md-option value="Panding Order Email">Pending Order Email</md-option>
+							<md-option value="Ready to Ship Order Email">Ready to Ship Order Email</md-option>
+							<md-option value="Shipped Order Email">Shipped Order Email</md-option>
+							<md-option value="Delivery failed Order Email">Delivery failed Order Email</md-option>
+							<md-option value="Returned Order Email">Returned Order Email</md-option>
+							<md-option value="Default Email">Default Email</md-option>
+                            <md-option value="Other Email">Other Email</md-option>
+                        </md-select>
+                        <div ng-messages="formEmailTemplate.Type.$error" role="alert">
+                            <div ng-message="required">
+                                <span>Subject is required.</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>Email From</label>
+                        <input name="EmailFrom" ng-model="model.EmailFrom" maxlength="250" md-maxlength="250">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>Subject *</label>
+                        <input name="EmailSubject" ng-model="model.EmailSubject" maxlength="150" md-maxlength="150" ng-required="true">
+                        <div ng-messages="formEmailTemplate.EmailSubject.$error" role="alert">
+                            <div ng-message="required">
+                                <span>Email Subject is required.</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <label>Message</label>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex>
+                            <textarea ckeditor="editorOptions" name="EmailBody" ng-model="model.EmailBody"></textarea>
+                        </md-input-container>
+                    </div>
+                </md-content>
+                <div align="left">
+                    <md-button class="md-raised md-primary" ng-disabled="!formEmailTemplate.$valid" ng-click="SaveEmailTemplate(model)">Save</md-button>
+                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                </div>
+            </form>
+        </ms-form-wizard>
+    </md-dialog-content>
+</md-dialog>

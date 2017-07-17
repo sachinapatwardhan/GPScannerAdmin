@@ -1,0 +1,155 @@
+<div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="center start">
+            <div class="breadcrumb" layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+                <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                <span class="parent">Tables</span>
+            </div>
+            <div class="title">Datatable</div>
+        </div>
+        <div layout="row" layout-align="start center">
+            <md-button class="md-raised reference-button" ng-click="GetAllData()">
+                <md-icon md-font-icon="icon-link"></md-icon>
+                <span>Reference</span>
+            </md-button>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content">
+        <div class="md-title mb-32">Zero Configuration</div>
+        <div class="white-bg md-whiteframe-4dp">
+        <form id="formFilter">
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>Product name</label>
+                    <input name="Name" id="Name" ng-model="Name">
+                </md-input-container>
+            </div>
+            <div align="right">
+                <md-button class="md-button md-accent md-raised  md-hue-1" ng-click="GetAllData()">Search</md-button>
+            </div>
+            </form>
+            <table datatable="" class="dataTable row-border hover" dt-instance="vm.dtInstance" dt-columns="vm.dtColumns" dt-options="vm.dtOptions">
+                <thead>
+                    <tr>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <md-checkbox ng-click="toggleSeleted()" ng-model="toggleChecked" aria-label="Checkbox 1" class="md-primary">
+                                </md-checkbox>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">No</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Image</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">File Name</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Author</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Action</span>
+                            </div>
+                        </th>
+                        <!--  <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">CreatedDate</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">CreatedBy</span>
+                            </div>
+                        </th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--   <tr ng-repeat="o in lstdata">
+                        <td>{{ o.Name }}</td>
+                        <td>{{ o.Title }}</td>
+                        <td>{{ o.PageContent }}</td>
+                        <td>{{ o.Slug }}</td>
+                        <td>{{ o.CreatedDate }}</td>
+                        <td>{{ o.CreatedBy }}</td>
+                    </tr> -->
+                    <!--  <tr ng->
+                        <td>
+                            <md-checkbox ng-click="toggleSeleted()" aria-label="Checkbox 1" class="md-primary">
+                            </md-checkbox>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+        <!--    <div class="white-bg md-whiteframe-4dp">
+            <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions" dt-column-defs="vm.dtColumnDefs">
+                <thead>
+                    <tr>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Name</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Title</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">PageContent</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Slug</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">CreatedDate</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">CreatedBy</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="employee in ::vm.employees">
+                        <td>{{ employee.Name }}</td>
+                        <td>{{ employee.Title }}</td>
+                        <td>{{ employee.PageContent }}</td>
+                        <td>{{ employee.Slug }}</td>
+                        <td>{{ employee.CreatedDate }}</td>
+                        <td>{{ employee.CreatedBy }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -->
+    </div>
+    <!-- / CONTENT -->
+</div>

@@ -1,0 +1,143 @@
+<div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="center start">
+            <div class="breadcrumb" layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+                <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                <span class="parent">Country</span>
+            </div>
+            <div class="title">Country Management</div>
+        </div>
+
+        <div layout="row" layout-align="start center">
+            <md-button class="md-raised reference-button"
+                       href="https://l-lin.github.io/angular-datatables"
+                       target="_blank">
+                <md-icon md-font-icon="icon-link"></md-icon>
+                <span>Reference</span>
+            </md-button>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content">
+
+        <md-content class="widget-page">
+            <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                <md-tab label="List of Country">
+                    <md-content class="md-padding" md-selected="selectedIndex">
+                        <div class="md-whiteframe-4dp">
+                            <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                                <thead>
+                                    <tr>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">No</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Country Code</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Country Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Short Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Action</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="o in lstCountry">
+                                        <td>{{ $index+1 }}</td>
+                                        <td>{{ o.Code }}</td>
+                                        <td>{{ o.Country }}</td>
+                                        <td>{{ o.ShortName }}</td>
+                                        <td>
+                                            <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchCountryById(o)">
+                                                <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                            </md-button>
+                                            <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteCountry(o.id)">
+                                                <md-icon md-font-icon="icon-trash"></md-icon>
+                                            </md-button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Manage Country" ng-click="ResetModel()">
+                    <md-content class="md-padding">
+                        <div class="md-whiteframe-4dp">
+                            <div class="md-padding">
+                                <ms-form-wizard flex>
+                                    <form name="formCountry" class="md-inline-form" ms-form-wizard-form>
+                                        <md-content class="md-padding">
+                                            <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                                                <label>Id</label>
+                                                <input ng-model="model.id">
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex-gt-sm="50">
+                                                <label>Country Code</label>
+                                                <input name="Code" ng-model="model.Code" placeholder="12345" required ng-pattern="/^(0|[1-9][0-9]*)$/" maxlength="5">
+                                                <div ng-messages="formCountry.Code.$error" role="alert">
+                                                    <div ng-message="required"><span>You must supply a Country Code.</span></div>
+                                                    <div ng-message="pattern">
+                                                        <span>That doesn't look like a valid  Country Code.</span>
+                                                    </div>
+                                                    <div ng-message="maxlength">
+                                                        <span> Country Code can't be longer than 5 characters.</span>
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex-gt-sm="50">
+                                                <label>Country Name</label>
+                                                <input name="Country" ng-model="model.Country" maxlength="25" ng-required="true">
+                                                <div ng-messages="formCountry.Country.$error" role="alert">
+                                                    <div ng-message="required">
+                                                        <span>Country Name is required.</span>
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex-gt-sm="50">
+                                                <label>Short Name</label>
+                                                <input name="ShortName" ng-model="model.ShortName" maxlength="10" ng-required="true">
+                                                <div ng-messages="formCountry.ShortName.$error" role="alert">
+                                                    <div ng-message="required">
+                                                        <span>Short Name is required.</span>
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </md-content>
+                                        <div align="left">
+                                            <md-button class="md-raised md-primary" ng-disabled="!formCountry.$valid" ng-click="CreateCountry(model)">Save</md-button>
+                                            <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                        </div>
+                                    </form>
+                                </ms-form-wizard>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+
+
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

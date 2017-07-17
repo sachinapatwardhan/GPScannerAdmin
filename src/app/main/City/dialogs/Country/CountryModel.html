@@ -1,0 +1,113 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Country Management</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ms-scroll>
+        <md-content class="widget-page">
+            <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                <md-tab label="List of Country">
+                    <div class="custom-content">
+                        <md-content class="md-padding" md-selected="selectedIndex">
+                            <!-- 
+                        <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
+                            <table class="dataTable row-border hover text-center" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
+                                <thead>
+                                    <tr>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">No</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Country Code</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Country Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Short Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Action</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <!-- <tbody>
+                                <tr ng-repeat="o in lstCountry">
+                                    <td>{{ $index+1 }}</td>
+                                    <td>{{ o.Code }}</td>
+                                    <td>{{ o.Country }}</td>
+                                    <td>{{ o.ShortName }}</td>
+                                    <td>
+                                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchCountryById(o)">
+                                            <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteCountry(o.id)">
+                                            <md-icon md-font-icon="icon-trash"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                            </tbody> -->
+                            </table>
+                        </md-content>
+                    </div>
+                </md-tab>
+                <md-tab label="Manage Country" ng-click="ResetModel()">
+                    <div class="custom-content">
+                        <md-content class="md-padding">
+                            <form Name="formCountry" class="md-inline-form">
+                                <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                                    <label>Id</label>
+                                    <input ng-model="model.id">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>Country code *</label>
+                                    <input name="Code" ng-model="model.Code" placeholder="12345" type="number" max="99999" min='0' required>
+                                    <div ng-messages="formCountry.Code.$error" ng-if="formCountry.Code.$touched">
+                                        <div ng-message="required"><span>Country code is required</span></div>
+                                        <div ng-message="max" class="my-message">Country code can't be longer than 5 number</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>Country name *</label>
+                                    <input name="CountryName" ng-model="model.Country" maxlength="25" ng-required="true" maxlength="50" md-maxlength="50">
+                                    <div ng-messages="formCountry.CountryName.$error" ng-if="formCountry.CountryName.$touched">
+                                        <div ng-message="required">
+                                            <span>Country name is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>Short name *</label>
+                                    <input name="ShortName" ng-model="model.ShortName" maxlength="10" md-maxlength="10" ng-required="true">
+                                    <div ng-messages="formCountry.ShortName.$error" ng-if="formCountry.ShortName.$touched">
+                                        <div ng-message="required">
+                                            <span>Short name is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <div align="left">
+                                    <md-button class="md-raised md-primary" ng-disabled="!formCountry.$valid" ng-click="CreateCountry(model)">Save</md-button>
+                                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                </div>
+                            </form>
+                        </md-content>
+                    </div>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </md-dialog-content>
+</md-dialog>

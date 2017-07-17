@@ -1,0 +1,31 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Add Country to Send Auto Push Notification </span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ms-scroll>
+        <md-content class="widget-page">
+            <md-content>
+                <form Name="formImport" class="md-inline-form">
+                    <md-content class="md-padding">
+                        <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>Country
+                            </label>
+                            <md-select name="Country" ng-model="model.Country">
+                                <md-option value="All">All</md-option>
+                                <md-option ng-repeat="o in lstCountry" value="{{o.Country}}">{{o.Country}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </md-content>
+                    <div align="left">
+                        <md-button class="md-raised md-primary" ng-disabled="!formImport.$valid" ng-if="vm.FlgAddedEditlocal" ng-click="SaveCountry(model.Country)">Save</md-button>
+                        <md-button class="md-raised md-warn" ng-click="closeModel()">Close</md-button>
+                    </div>
+                </form>
+            </md-content>
+    </md-dialog-content>
+</md-dialog>

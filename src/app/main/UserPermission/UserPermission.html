@@ -1,0 +1,113 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">User Permission</span>
+                </div>
+                <div class="title">User Permission</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                    <md-tab label="User Permission">
+                        <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                            <div class="content custom-content">
+                                <div class="row">
+                                    <md-input-container class="md-block" flex>
+                                        <label>Role</label>
+                                        <md-select ng-model="model.RoleName" ng-change="GetAllPermissionByRole()">
+                                            <md-option value="">Select Role</md-option>
+                                            <md-option value="{{o.RoleName}}" ng-repeat="o in lstRoles">{{o.RoleName}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                                    <thead>
+                                        <tr>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">No</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Module</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">
+                                                        <md-checkbox value="modelPermission.View" ng-model="modelPermission.View" aria-label="View"
+                                                        class="md-accent" ng-change="ChangePermissionAllView()">
+                                                        View
+                                                    </md-checkbox>
+                                                </span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">
+                                                    <md-checkbox value="modelPermission.Add"ng-model="modelPermission.Add" aria-label="View"
+                                                    class="md-accent" ng-change="ChangePermissionAllAdd()">
+                                                    Add
+                                                </md-checkbox>
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">
+                                                <md-checkbox value="modelPermission.Update" ng-model="modelPermission.Update" aria-label="View"
+                                                class="md-accent" ng-change="ChangePermissionAllUpdate()">
+                                                Update
+                                            </md-checkbox>
+                                        </span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">
+                                            <md-checkbox value="modelPermission.Delete" ng-model="modelPermission.Delete" aria-label="View"
+                                            class="md-accent" ng-change="ChangePermissionAllDelete()">
+                                            Delete
+                                        </md-checkbox>
+                                    </span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="o in lstModules">
+                            <td>{{$index+1}}</td>
+                            <td>{{o.Module}}</td>
+                            <td>
+                                <md-checkbox ng-model="o.Show" value="o.Show" ng-change="ChangePermission(o)" aria-label="View" class="md-accent">
+                                </md-checkbox>
+                            </td>
+                            <td>
+                                <md-checkbox ng-model="o.Added" value="o.Added" ng-change="ChangePermission(o)" aria-label="Add" class="md-accent">
+                                </md-checkbox>
+                            </td>
+                            <td>
+                                <md-checkbox ng-model="o.Modified" value="o.Modified" ng-change="ChangePermission(o)" aria-label="Update" class="md-accent">
+                                </md-checkbox>
+                            </td>
+                            <td>
+                                <md-checkbox ng-model="o.Deleted" value="o.Deleted" ng-change="ChangePermission(o)" aria-label="View" class="md-accent">
+                                </md-checkbox>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </md-tab>
+</md-tabs>
+</div>
+</div>
+</div>
+</md-content>
+

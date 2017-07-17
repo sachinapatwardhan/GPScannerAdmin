@@ -1,0 +1,119 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Menu</span></div>
+                <div class="title">Menu Management</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <div class="ms-stepper-steps">
+                    <form name="FormManageMenu" novalidate class="ms-stepper" aria-invalid="false">
+                        <div class="md-inline-form" layout-padding>
+                            <div layout="column" layout-gt-xs="row" flex="" class="layout-gt-xs-row layout-column flex">
+                                <md-input-container flex="100" flex-gt-xs="50" class="md-icon-float flex-gt-xs-50 flex-100 md-default-theme">
+                                    <label>Select Menu</label>
+                                    <md-select ng-model="model.MenuId" ng-required="true" ng-change="GetMenuStructureByMenu(model.MenuId)">
+                                        <md-option ng-repeat="o in lstMenu" value="{{o.id}}">
+                                            {{o.MenuLabel}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" layout-gt-xs="row" flex="" class="layout-gt-xs-row layout-column flex">
+                                <md-input-container flex="100" flex-gt-xs="50" class="md-icon-float flex-gt-xs-50 flex-100 md-default-theme">
+                                    <label>Or</label>
+                                    <br>
+                                    <md-button class="md-primary" ng-if="FlgAddedEditlocal" ng-click="showDialog($event)">Create Menu</md-button>
+                                    <md-button class="md-primary" ng-if="model.MenuId!=null && model.MenuId!='' &&FlgDeletedAccess" ng-click="DeleteMenu(model.MenuId,$event)">Delete Menu</md-button>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <md-content layout="column" class="nestedDemo layout-fill layout-wrap " flex>
+                    <div layout="row" class="change-my-css">
+                        <md-content layout="column" flex="30" class="md-padding" ms-scroll>
+                            <md-toolbar>
+                                <div class="md-toolbar-tools">
+                                    <h3>Pages</h3>
+                                </div>
+                            </md-toolbar>
+                            <md-content layout="column" style="height:300px" ms-scroll>
+                                <md-list>
+                                    <md-list-item ng-repeat="item in lstDynamicPages">
+                                        <p>{{item.Name}}</p>
+                                        <button class="md-primary md-button" ng-repeat="o in item.templates" dnd-disable-if="CheckMenu(o)" dnd-draggable="o" dnd-effect-allowed="copy" dnd-copied="o.id = o.id" type="button" aria-label="Janet Perkins">
+                                                {{o.Name}}
+                                            </button>
+                                        <md-divider inset></md-divider>
+                                    </md-list-item>
+                                </md-list>
+                            </md-content>
+                            <md-toolbar>
+                                <div class="md-toolbar-tools">
+                                    <h3>Categories</h3>
+                                </div>
+                            </md-toolbar>
+                            <md-content layout="column" style="height:300px" ms-scroll>
+                                <md-list>
+                                    <md-list-item ng-repeat="item in lstCategories">
+                                        <p>{{item.Title}}</p>
+                                        <button class="md-primary md-button" ng-repeat="o in item.templates" dnd-disable-if="CheckMenu(o)" dnd-draggable="o" dnd-effect-allowed="copy" dnd-copied="o.id = o.id" type="button" aria-label="Janet Perkins">
+                                                {{o.Name}}
+                                            </button>
+                                        <md-divider inset></md-divider>
+                                    </md-list-item>
+                                </md-list>
+                            </md-content>
+                        </md-content>
+                        <md-content layout="column" flex="70" class="md-padding" ms-scroll>
+                            <script type="text/ng-template" id="list.html">
+                                <ul dnd-list="list" flex>
+                                    <li ng-repeat="item in list" dnd-draggable="item" dnd-effect-allowed="move" dnd-moved="list.splice($index, 1)" dnd-selected="models.selected = item" ng-class="{selected: models.selected === item}" ng-include="item.type + '.html'">
+                                    </li>
+                                </ul>
+                            </script>
+                            <script type="text/ng-template" id="SubMenu.html">
+                                <div class="container-element box box-blue">
+                                    <h3>{{item.Title}} <i class="icon s16 icon-close" style="float:right" ng-click="RemoveMenu(list,$index)"></i></h3>
+                                    <div layout="row" ng-repeat="list in item.columns" ng-include="'list.html'"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </script>
+                            <!-- Template for a normal list item -->
+                            <script type="text/ng-template" id="item.html">
+                                <div class="item">{{item.Title}} <i class="icon s16 icon-close" style="float:right" ng-click="RemoveMenu(list,$index)"></i></div>
+                            </script>
+                            <div class="row">
+                                <div ng-repeat="(zone, list) in models.dropzones" style="padding-bottom:100px">
+                                    <div class="dropzone box box-yellow">
+                                        <!-- The dropzone also uses the list template -->
+                                        <h3>Dropzone {{zone}}</h3>
+                                        <div ng-include="'list.html'"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div view-source="nested"></div>
+                        </md-content>
+                    </div>
+                </md-content>
+                <!--  </div> -->
+                <div layout="row">
+                    <div flex>
+                        <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-if="FlgModifiedAccess" ng-disabled="!FormManageMenu.$valid" ng-click="SaveMenuStructure(models)" aria-label="Primary"><span class="ng-scope">Save</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</md-content>
+<style type="text/css" media="screen">
+    .change-my-css {
+        height: 100vh;
+        /* overflow: auto; */
+    }
+</style>

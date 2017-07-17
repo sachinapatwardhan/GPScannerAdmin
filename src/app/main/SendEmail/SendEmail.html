@@ -1,0 +1,72 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Send Email</span>
+                </div>
+                <div class="title">Send Email</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                    <md-tab label="Send Email">
+                        <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                            <div class="content">
+                                <md-content class="content" ms-scroll>
+                                    <div class="demo-content">
+                                        <form name="FormSendEmail" class="md-inline-form" novalidate>
+                                            <md-content class="md-padding">
+                                                <md-input-container class="md-block">
+                                                    <label>Subject *</label>
+                                                    <input name="EmailSubject" ng-model="model.EmailSubject" md-maxlength="250" required>
+                                                    <div ng-messages="FormSendEmail.EmailSubject.$error" ng-if="FormSendEmail.EmailSubject.$touched" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Subject is required</span>
+                                                        </div>
+                                                        <div ng-message="md-maxlength">
+                                                            <span>Subject is 250 char long</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                                <md-input-container class="md-block">
+                                                    <label>Email to *</label>
+                                                    <input type="email" name="EmailTo" ng-model="model.EmailTo" md-maxlength="250" required>
+                                                    <div ng-messages="FormSendEmail.EmailTo.$error" ng-if="FormSendEmail.EmailTo.$touched" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Email field is required</span>
+                                                        </div>
+                                                        <div ng-message="email">
+                                                            <span>Email must be a valid e-mail address</span>
+                                                        </div>
+                                                        <div ng-message="md-maxlength">
+                                                            <span>Email is 250 char long</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                                <label>Message</label>
+                                                <div layout-gt-sm="row">
+                                                    <md-input-container class="md-block" flex>
+                                                        <textarea ckeditor="editorOptions" name="EmailBody" ng-model="model.EmailBody"></textarea>
+                                                    </md-input-container>
+                                                </div>
+                                            </md-content>
+                                            <div layout="row" layout-align="start center">
+                                                <md-button class="md-raised md-accent" ng-disabled="FormSendEmail.$invalid" ng-click="SendEmail(model)">Send</md-button>
+                                                <md-button class="md-raised md-default" ng-click="Reset()">Cancel</md-button>
+                                            </div>
+                                        </form>
+                                        <br/>
+                                    </div>
+                                </md-content>
+                            </div>
+                        </div>
+                    </md-tab>
+                </md-tabs>
+            </div>
+        </div>
+    </div>
+</md-content>
+

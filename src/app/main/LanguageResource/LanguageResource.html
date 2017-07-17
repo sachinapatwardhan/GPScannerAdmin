@@ -1,0 +1,129 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <!-- HEADER -->
+        <div class="header md-accent-bg" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start">
+                <div class="breadcrumb" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                    <span class="parent">Language Resource</span>
+                </div>
+                <div class="title">Language Resource</div>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="content">
+            <md-content class="md-whiteframe-4dp">
+                <form name="formLanguagesResource" class="md-inline-form">
+                    <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                        <md-tab label="List of Language Resource" ng-click="ResetTab()">
+                            <div class="custom-content">
+                                <md-content class="md-padding" md-selected="selectedIndex">
+                                    <div class="md-whiteframe">
+                                        <br />
+                                        <div align="left">
+                                            <md-button class="md-button md-accent md-raised   md-hue-2" ng-if="FlgAddedEditlocal">Generate View</md-button>
+                                            <md-button class="md-button md-accent md-raised  md-hue-2" ng-click="ShowExport($event)">Export by Language</md-button>
+                                            <md-button class="md-button md-accent md-raised   md-hue-2" ng-if="FlgAddedEditlocal" ng-click="ShowImportModal($event)">Import By Language</md-button>
+                                            <md-button class="md-button md-primary md-raised  md-hue-2" ng-click="DownloadTemplate()">Download Excel Template</md-button>
+                                        </div>
+                                        <br />
+                                        <table id="LanguageResourcetable" class="dataTable row-border hover" dt-instance="dtInstance" datatable="" dt-columns="dtColumnDefs" dt-options="dtOptions">
+                                            <thead>
+                                                <tr>
+                                                    <th class="all">
+                                                        <div class="table-header">
+                                                            <span class="column-title">No</span>
+                                                        </div>
+                                                    </th>
+                                                    <th class="secondary-text">
+                                                        <div class="table-header">
+                                                            <span class="column-title">Language</span>
+                                                        </div>
+                                                    </th>
+                                                    <th class="secondary-text">
+                                                        <div class="table-header" align="left">
+                                                            <span class="column-title">Name</span>
+                                                        </div>
+                                                    </th>
+                                                    <th class="secondary-text">
+                                                        <div class="table-header">
+                                                            <span class="column-title">Value</span>
+                                                        </div>
+                                                    </th>
+                                                    <th class="all">
+                                                        <div class="table-header">
+                                                            <span class="column-title">Action</span>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <!--<tbody>
+                                <tr ng-repeat="o in lstLanguageResources">
+                                    <td>{{ $index+1 }}</td>
+                                    <td>{{ o.language.Name }}</td>
+                                    <td>{{ o.ResourceName | ellipsis:30 }}</td>
+                                    <td>{{ o.ResourceValue | ellipsis:30 }}</td>
+                                    <td>
+                                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchLanguageResourceById(o)">
+                                            <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteLanguageResource(o.Id)">
+                                            <md-icon md-font-icon="icon-trash"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                            </tbody>-->
+                                        </table>
+                                    </div>
+                                </md-content>
+                            </div>
+                        </md-tab>
+                        <md-tab label="Manage Language Resource" ng-click="ResetModel()" ng-if="FlgAddedEditlocal">
+                            <div class="custom-content">
+                            <md-content class="md-padding">
+                                
+                                    <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                                        <label>Id</label>
+                                        <input ng-model="model.Id">
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm="50">
+                                        <label>Languages name *</label>
+                                        <md-select name="Language" ng-model="model.LanguageId" ng-required="true">
+                                            <md-option ng-repeat="o in lstlanguage" value="{{o.Id}}">{{o.Name}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm="50">
+                                        <label>Resource name *</label>
+                                        <input name="ResourceName" ng-model="model.ResourceName" ng-required="true">
+                                        <div ng-messages="formLanguagesResource.ResourceName.$error" ng-if="formLanguagesResource.ResourceName.$touched">
+                                            <div ng-message="required">
+                                                <span>Resource name is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm="50">
+                                        <label>Resource value *</label>
+                                        <input name="ResourceValue" ng-model="model.ResourceValue" ng-required="true">
+                                        <div ng-messages="formLanguagesResource.ResourceValue.$error" ng-if="formLanguagesResource.ResourceValue.$touched">
+                                            <div ng-message="required">
+                                                <span>Resource value is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <div align="left">
+                                        <md-button class="md-raised md-primary" ng-disabled="!formLanguagesResource.$valid" ng-click="CreateLanguageResource(model)">Save</md-button>
+                                        <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                    </div>
+                                
+                            </md-content>
+                            </div>
+                        </md-tab>
+                    </md-tabs>
+                </form>
+            </md-content>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</md-content>

@@ -1,0 +1,104 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <!-- HEADER -->
+        <div class="header md-accent-bg" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start">
+                <div class="breadcrumb" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                    <span class="parent">Carrier</span>
+                </div>
+                <div class="title">Carrier</div>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="content">
+            <md-content class="md-whiteframe-4dp">
+                <form name="formCarrier" class="md-inline-form">
+                    <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                        <!-- <md-tab label="List of Languages" ng-click="ResetTab()"> -->
+                        <md-tab label="List of Carrier" ng-click="Reset()">
+                            <div class="custom-content">
+                                <md-content class="md-padding" md-selected="selectedIndex">
+                                    <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                                        <thead>
+                                            <tr>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">No</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Name</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header" align="center">
+                                                        <span class="column-title">Country</span>
+                                                    </div>
+                                                </th>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Action</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="o in lstCarrier">
+                                                <td>{{ $index+1 }}</td>
+                                                <td>{{ o.Name }}</td>
+                                                <td align="center">{{ o.tblcountrymgmt.Country }}</td>
+                                                <td>
+                                                    <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchCarrierById(o)">
+                                                        <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                                    </md-button>
+                                                    <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="FlgDeletedAccess" ng-click="DeleteCarrier(o.id)">
+                                                        <md-icon md-font-icon="icon-trash"></md-icon>
+                                                    </md-button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </md-content>
+                            </div>
+                        </md-tab>
+                        <md-tab label="Manage Carrier" ng-click="ResetModel()" ng-if="FlgAddedEditlocal">
+                            <div class="custom-content">
+                                <md-content class="md-padding">
+                                    <md-input-container class="md-block" flex-gt-sm="50">
+                                        <label>Carrier Name *</label>
+                                        <input name="Name" ng-model="model.Name" ng-required="true">
+                                        <div ng-messages="formCarrier.Name.$error" ng-if="formCarrier.Name.$touched">
+                                            <div ng-message="required">
+                                                <span>Carrier name is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm="50">
+                                        <label>Country *</label>
+                                        <md-select name="idCountry" ng-model="model.idCountry" ng-required="true">
+                                            <md-option ng-repeat="o in lstCountry" value="{{o.id}}">{{o.Country}}</md-option>
+                                        </md-select>
+                                        <div ng-messages="formCarrier.idCountry.$error" ng-if="formCarrier.idCountry.$touched">
+                                            <div ng-message="required">
+                                                <span>Country is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <div align="center">
+                                        <md-button class="md-raised md-primary" ng-disabled="!formCarrier.$valid" ng-click="CreateCarrier(model)">Save</md-button>
+                                        <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                    </div>
+                                </md-content>
+                            </div>
+                        </md-tab>
+                    </md-tabs>
+                </form>
+            </md-content>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</md-content>

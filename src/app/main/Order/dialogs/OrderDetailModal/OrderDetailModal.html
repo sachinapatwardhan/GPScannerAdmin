@@ -1,0 +1,97 @@
+<md-dialog aria-label="New Task">
+    <form name="taskForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Order Detail</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div>
+                <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptionsOrderDetail" dt-column-defs="dtColumnDefs">
+                    <thead>
+                        <tr>
+                            <!--     <th class="secondary-text">
+                                <div class="table-header">Index</div>
+                            </th> -->
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Product</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header" align="center">
+                                    <span class="column-title">Quantity</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header" align="center">
+                                    <span class="column-title">Price</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header" align="center">
+                                    <span class="column-title">Total Price</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="o in lstOrderDetail">
+                            <!-- <td class="">{{$index+1}}</td> -->
+                            <td class="">{{o.ProductName}}
+                                <div style="margin-left: 10px;" ng-repeat="o1 in o.lstAttribute">{{o1.Name}} : <span>{{o1.Value}}</span></div>
+                            </td>
+                            <td class="" align="center">{{o.Quantity}}</td>
+                            <td class="" align="center">{{CurrencyCode}} {{o.UnitPriceExclTax | number:2}}</td>
+                            <td class="" align="center">{{CurrencyCode}} {{o.PriceExclTax | number:2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <hr/> -->
+                <div layout="row">
+                    <div flex="50">
+                        <h4><b>Billing Address</b></h4>
+                        <div class="md-list-item-text">
+                            <p> {{lstOrderDetail[0].tblorder.tblbillingaddress.FirstName}} {{lstOrderDetail[0].tblorder.tblbillingaddress.LastName}}</p>
+                            <p>{{lstOrderDetail[0].tblorder.tblbillingaddress.Email}} </p>
+                            <p ng-if="lstOrderDetail[0].tblorder.tblbillingaddress.Address2!=null && lstOrderDetail[0].tblorder.tblbillingaddress.Address2!=''">
+                                {{lstOrderDetail[0].tblorder.tblbillingaddress.Address1}},{{lstOrderDetail[0].tblorder.tblbillingaddress.Address2}},{{lstOrderDetail[0].tblorder.tblbillingaddress.City}},{{lstOrderDetail[0].tblorder.tblbillingaddress.tblcountrystatemgmt.Name}},<br/>{{lstOrderDetail[0].tblorder.tblbillingaddress.tblcountrymgmt.Country}}- {{lstOrderDetail[0].tblorder.tblbillingaddress.PostCode}}
+                            </p>
+                            <p ng-if="lstOrderDetail[0].tblorder.tblbillingaddress.Address2==null || lstOrderDetail[0].tblorder.tblbillingaddress.Address2==''">
+                                {{lstOrderDetail[0].tblorder.tblbillingaddress.Address1}},{{lstOrderDetail[0].tblorder.tblbillingaddress.City}},{{lstOrderDetail[0].tblorder.tblbillingaddress.tblcountrystatemgmt.Name}},<br/>{{lstOrderDetail[0].tblorder.tblbillingaddress.tblcountrymgmt.Country}}- {{lstOrderDetail[0].tblorder.tblbillingaddress.PostCode}}
+                            </p>
+                            <p ng-if="lstOrderDetail[0].tblorder.tblbillingaddress.PhoneNo!=null && lstOrderDetail[0].tblorder.tblbillingaddress.PhoneNo!=''">
+                                <b>Phone:</b>{{lstOrderDetail[0].tblorder.tblbillingaddress.PhoneNo}}
+                            </p>
+                        </div>
+                    </div>
+                    <div flex="50">
+                        <h4><b>Shipping Address</b></h4>
+                        <div class="md-list-item-text">
+                            <p> {{lstOrderDetail[0].tblorder.ShippFirstName}} {{lstOrderDetail[0].tblorder.ShippLastName}} </p>
+                           
+                            <p ng-if="lstOrderDetail[0].tblorder.ShippAddress2==null || lstOrderDetail[0].tblorder.ShippAddress2==''">{{lstOrderDetail[0].tblorder.ShippAddress1}},{{lstOrderDetail[0].tblorder.ShippidCity}},{{lstOrderDetail[0].tblorder.tblcountrystatemgmt.Name}} ,<br/>{{lstOrderDetail[0].tblorder.tblcountrymgmt.Country}}- {{lstOrderDetail[0].tblorder.ShippPostCode}}</p>
+                            <p ng-if="lstOrderDetail[0].tblorder.ShippAddress2 !=null && lstOrderDetail[0].tblorder.ShippAddress2!=''">{{lstOrderDetail[0].tblorder.ShippAddress1}} ,{{lstOrderDetail[0].tblorder.ShippAddress2}}, {{lstOrderDetail[0].tblorder.ShippidCity}},{{lstOrderDetail[0].tblorder.tblcountrystatemgmt.Name}} ,<br/>{{lstOrderDetail[0].tblorder.tblcountrymgmt.Country}}- {{lstOrderDetail[0].tblorder.ShippPostCode}}
+                            </p>
+
+                            <p ng-if="lstOrderDetail[0].tblorder.ShippPhoneNo!=null && lstOrderDetail[0].tblorder.ShippPhoneNo!=''">
+                                <b>Phone:</b>{{lstOrderDetail[0].tblorder.ShippPhoneNo}}
+                            </p>
+                            <!-- <p>{{lstOrderDetail[0].tblorder.ShippidCity}},{{lstOrderDetail[0].tblorder.ShippPostCode}} </p>
+                            <p>{{lstOrderDetail[0].tblorder.tblcountrystatemgmt.Name}}-{{lstOrderDetail[0].tblorder.tblcountrymgmt.Country}}</p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <!-- <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button class="md-raised md-primary">save</md-button>
+                <md-button class="md-raised md-default" ng-click="closeModel()">cancel</md-button>
+            </div>
+        </md-dialog-actions> -->
+    </form>
+</md-dialog>

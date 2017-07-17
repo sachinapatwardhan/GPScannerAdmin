@@ -1,0 +1,28 @@
+md-tabs-wrapper {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.custom-content {
+    margin-top: 48px;
+}
+
+.page-layout.simple.fullwidth > .header{
+	height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    padding: 10px 24px;
+}
+
+.page-layout > .header .title {
+	font-size: 26px;
+}
+
+md-content {
+    background-color: transparent !important;
+}
+
+md-content md-option {
+    background-color: white !important;
+}

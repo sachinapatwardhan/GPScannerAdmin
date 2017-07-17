@@ -1,0 +1,134 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Trackers</span>
+                </div>
+                <div class="title">Trackers Management</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                    <md-tab label="Trackers">
+                        <div class="custom-content">
+                            <br />
+                            <div align="center">
+                                <md-button class="md-button md-accent md-raised md-hue-2" ng-click="ShowImportPetDeviceModal($event)">Import From Excel</md-button>
+                                <md-button class="md-button md-accent md-raised  md-hue-2" ng-click="DownloadExcelTemplate()">Download Excel Template</md-button>
+                            </div>
+                            <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                                <div class="content">
+                                    <table id="Trackerstable" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">No</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Device Id</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Type</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">DATE</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Created By</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Manage Trackers" ng-click="ResetEdit()">
+                        <md-content class="md-padding">
+                            <div class="custom-content">
+                                <form name="FormManageTrackers" novalidate class="ms-stepper" aria-invalid="false">
+                                    <div layout-gt-sm="row">
+                                        <md-input-container flex="100" flex-gt-xs="50">
+                                            <label>Device Id*</label>
+                                            <input type="text" name="DeviceId" ng-model="model.DeviceId" required md-maxlength="100">
+                                            <div ng-messages="FormManageTrackers.DeviceId.$error" ng-if="FormManageTrackers.DeviceId.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>DeviceId is required.</span>
+                                                </div>
+                                                <div ng-message="md-maxlength">
+                                                    Trackers has to be less than 100 characters long.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container flex="100" flex-gt-xs="50">
+                                            <label>IMEI*</label>
+                                            <input type="text" name="IMEI" ng-model="model.IMEI" required md-maxlength="100">
+                                            <div ng-messages="FormManageTrackers.IMEI.$error" ng-if="FormManageTrackers.IMEI.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>IMEI Number is required.</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout-gt-sm="row">
+                                        <md-input-container flex="100" flex-gt-xs="50">
+                                            <label>Type</label>
+                                            <md-select ng-model="model.Type" name="Type">
+                                                <md-option name="Type1" value="M2" selected="true">M2</md-option>
+                                                <md-option name="Type2" value="M2-U">C2</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Carrier </label>
+                                            <md-select name="CarrierId" ng-model="model.CarrierId">
+                                                <md-option ng-repeat="o in lstCarrier" value="{{o.id}}">{{o.Name}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Country *</label>
+                                            <md-select name="CountryId" ng-model="model.CountryId">
+                                                <md-option ng-repeat="o in lstCountry" value="{{o.id}}">{{o.Country}}</md-option>
+                                            </md-select>
+                                    </div>
+                                    </md-input-container>
+                            </div>
+                            <div align="center">
+                                <md-button class="md-raised md-primary" ng-click="CreatePetDevice(model)" ng-disabled="FormManageTrackers.$invalid">save</md-button>
+                                <md-button class="md-raised md-warn" ng-click="Reset()">cancel</md-button>
+                            </div>
+                            </form>
+            </div>
+            </md-content>
+            </md-tab>
+            </md-tabs>
+        </div>
+    </div>
+    </div>
+</md-content>
+<style type="text/css" media="screen">
+    md-input-container.go-button-container.md-icon-right {
+        padding-right: 46px;
+    }
+    
+    md-input-container.go-button-container .go-button {
+        position: absolute;
+        top: -10px;
+        right: 0;
+        padding-left: 2px;
+    }
+</style>

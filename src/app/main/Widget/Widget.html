@@ -1,0 +1,163 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Widget</span>
+                </div>
+                <div class="title">Widget Management</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <form name="FormWidget" class="md-inline-form">
+                    <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                        <md-tab label="Widget List" ng-click="ResetTab()">
+                            <div class="custom-content">
+                                <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                                    <div class="content">
+                                        <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                                            <thead>
+                                                <tr>
+                                                    <th class="all">
+                                                        <div class="table-header">
+                                                            <span class="column-title">No</span>
+                                                        </div>
+                                                    </th>
+                                                    <th class="secondary-text">
+                                                        <div class="table-header">
+                                                            <span class="column-title">Name</span>
+                                                        </div>
+                                                    </th>
+                                                    <th class="secondary-text">
+                                                        <div class="table-header">
+                                                            <span class="column-title">Title</span>
+                                                        </div>
+                                                    </th>
+                                                    <!--     <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">CMS Type</span>
+                                                </div>
+                                            </th> -->
+                                                    <th class="secondary-text">
+                                                        <div class="table-header">
+                                                            <span class="column-title">Image</span>
+                                                        </div>
+                                                    </th>
+                                                    <!-- <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Page Content</span>
+                                                </div>
+                                            </th> -->
+                                                    <th class="all">
+                                                        <div class="table-header">
+                                                            <span class="column-title">Action</span>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in lstWidget">
+                                                    <td>{{ $index+1 }}</td>
+                                                    <td>{{ item.Name }}</td>
+                                                    <td>{{ item.Title }}</td>
+                                                    <!-- <td>{{ item.CmsType }}</td> -->
+                                                    <td>
+                                                        <img ng-src="{{RoutePath}}MediaUploads/{{item.ImageUrl}}" err-src="assets/images/no-image.png" style="width:150px;" />
+                                                        <!-- <span ng-if="item.ImageUrl==null || item.ImageUrl==''">No-image</span> -->
+                                                    </td>
+                                                    <!--  <td>
+                                                 <span ng-bind-html="item.Design"></span>
+                                             </td> -->
+                                                    <td>
+                                                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="EditWidget(item)" ng-if="FlgModifiedAccess">
+                                                            <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                                        </md-button>
+                                                        <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="FlgDeletedAccess" ng-click="DeleteWidget(item.id)">
+                                                            <md-icon md-font-icon="icon-trash"></md-icon>
+                                                        </md-button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-tab>
+                        <md-tab label="Manage Widget" ng-click="ResetEdit()" ng-if="FlgAddedEditlocal">
+                            <md-content class="md-padding">
+                                <div class="custom-content">
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label>Name * </label>
+                                            <input ng-model="model.Name" name="Name" type="text" md-maxlength="250" placeholder="Name" required>
+                                            <div ng-messages="FormWidget.Name.$error" ng-if="FormWidget.Name.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Name field is required</span>
+                                                </div>
+                                                <div ng-message="md-maxlength">
+                                                    Name has to be less than 250 characters long
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label>Title *</label>
+                                            <input ng-model="model.Title" name="Title" type="text" md-maxlength="250" placeholder="Title" required>
+                                            <div ng-messages="FormWidget.Title.$error" ng-if="FormWidget.Title.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Title field is required</span>
+                                                </div>
+                                                <div ng-message="md-maxlength">
+                                                    Title has to be less than 250 characters long
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label>Image</label>
+                                            <br />
+                                            <br />
+                                            <img ng-src="{{RoutePath}}MediaUploads/{{model.ImageUrl}}" err-src="assets/images/no-image.png" style="width:150px;" ng-show="FlgImage==1" />
+                                            <br ng-show="FlgImage==1" />
+                                            <br ng-show="FlgImage==1" />
+                                            <md-button class="md-raised md-primary" ng-click="ShowModal($event)">Select Image</md-button>
+                                            <md-button class="md-raised md-dafault" ng-if="FlgImage==1" ng-click="RemoveImage()">Remove Image</md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <label>URL</label>
+                                            <input ng-model="model.URL" name="URL" type="text" placeholder="URL">
+                                        </md-input-container>
+                                    </div>
+                                    <!--   <div layout="row">
+                                          <label>CMS Type </label>
+                                        <md-input-container class="md-block" flex>
+                                            <md-radio-group ng-model="model.CmsType">
+                                                <md-radio-button value="Web" class="md-primary">Web</md-radio-button>
+                                                <md-radio-button value="Mobile" class="md-primary"> Mobile App </md-radio-button>
+                                            </md-radio-group>
+                                        </md-input-container>
+                                    </div> -->
+                                    <div>
+                                        <md-input-container class="md-block" flex>
+                                            <label class="font-weight-900">Design</label>
+                                            <br />
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex>
+                                            <textarea ckeditor="editorOptions" ng-model="model.Design"></textarea>
+                                        </md-input-container>
+                                    </div>
+                                    <div align="center">
+                                        <md-button class="md-raised md-primary" ng-click="saveWidget(model)" ng-disabled="FormWidget.$invalid">save</md-button>
+                                        <md-button class="md-raised md-warn" ng-click="Reset()">cancel</md-button>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </form>
+            </div>
+        </div>
+    </div>
+</md-content>

@@ -1,0 +1,62 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Manage Country </span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ms-scroll>
+        <md-content class="widget-page">
+            <md-content>
+                <form Name="formImport" class="md-inline-form">
+                    <md-content class="md-padding">
+                        <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>Country
+                            </label>
+                            <md-select name="Country" ng-model="model.Country">
+                                <md-option value="All">All</md-option>
+                                <md-option ng-repeat="o in lstCountry" value="{{o.Country}}">{{o.Country}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-button class="md-raised md-primary" ng-disabled="!formImport.$valid" ng-click="SaveCountry(model.Country)">Save</md-button>
+                    </md-content>
+                    
+                </form>
+              
+                <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="CountrydtColumnDefs1">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Country</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstCountryData">
+                            <td>{{$index+1}}</td>
+                            <td>{{item}}</td>
+                            <td>
+                                <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="vm.FlgDeletedAccess" ng-click="DeleteCountry(item)">
+                                    <md-icon md-font-icon="icon-trash"></md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-content>
+    </md-dialog-content>
+</md-dialog>

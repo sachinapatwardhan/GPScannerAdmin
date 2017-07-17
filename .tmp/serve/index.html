@@ -1,0 +1,327 @@
+<!doctype html>
+<html ng-app="fuse">
+
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>GPS Scanner - Admin</title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel='stylesheet' href='../bower_components/perfect-scrollbar/css/perfect-scrollbar.css' />
+    <link rel='stylesheet' href='../bower_components/toastr/toastr.css' />
+    <link rel='stylesheet' href='../bower_components/datatables/media/css/jquery.dataTables.css' />
+    <link rel='stylesheet' href='../bower_components/lf-ng-md-file-input/dist/lf-ng-md-file-input.css' />
+    <link rel='stylesheet' href='../bower_components/ang-accordion/css/ang-accordion.css' />
+    <link rel='stylesheet' href='../bower_components/ng-tags-input/ng-tags-input.min.css' />
+    <link rel='stylesheet' href='../bower_components/angular-material-datetimepicker/css/material-datetimepicker.min.css' />
+    <link rel='stylesheet' href='../bower_components/angular-chart.js/dist/angular-chart.css' />
+    <link rel='stylesheet' href='../bower_components/ng-img-crop/compile/minified/ng-img-crop.css' />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css({.tmp/serve,src}) styles/app.css -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="app/index.css">
+    <!-- endinject -->
+    <!-- endbuild -->
+    <!--  <script src="assets/js/jquery-2.1.0.min.js"></script>
+    <script src="assets/js/jquery-ui-1.10.3.min.js"></script>
+    <script src="assets/js/jquery.mjs.nestedSortable.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--  <link href='assets/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='assets/css/bootstrap-theme.min.css' rel='stylesheet' type='text/css'> -->
+    <link href='assets/css/Nested.css' rel='stylesheet' type='text/css'>
+    <link href="assets/icons/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic' rel='stylesheet' type='text/css'>
+    <link href="assets/css/custom_style.css" rel="stylesheet" type="text/css">
+    <link rel='stylesheet' href='../bower_components/nvd3/build/nv.d3.css' />
+    <style>
+        .dtp>.dtp-content {
+            padding: 0;
+        }
+    </style>
+</head>
+<!--[if lt IE 10]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+<body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm" class="{{state.current.bodyClass || ''}}">
+    <!-- SPLASH SCREEN -->
+    <ms-splash-screen id="splash-screen">
+        <div class="center">
+            <div class="logo">
+            </div>
+            <!-- Material Design Spinner -->
+            <div class="spinner-wrapper">
+                <div class="spinner">
+                    <div class="inner">
+                        <div class="gap"></div>
+                        <div class="left">
+                            <div class="half-circle"></div>
+                        </div>
+                        <div class="right">
+                            <div class="half-circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / Material Design Spinner -->
+        </div>
+    </ms-splash-screen>
+    <!-- / SPLASH SCREEN -->
+    <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
+    <ms-theme-options></ms-theme-options>
+    <!-- build:js(src) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-aria/angular-aria.js"></script>
+    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="../bower_components/angular-messages/angular-messages.js"></script>
+    <script src="../bower_components/angular-material/angular-material.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../bower_components/angular-translate/angular-translate.js"></script>
+    <script src="../bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/mobile-detect/mobile-detect.js"></script>
+    <script src="../bower_components/moment/moment.js"></script>
+    <script src="../bower_components/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="../bower_components/toastr/toastr.js"></script>
+    <script src="../bower_components/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="../bower_components/angular-datatables/dist/angular-datatables.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
+    <script src="../bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js"></script>
+    <script src="../bower_components/lf-ng-md-file-input/dist/lf-ng-md-file-input.js"></script>
+    <script src="../bower_components/ng-ckeditor/ng-ckeditor.js"></script>
+    <script src="../bower_components/ang-accordion/js/ang-accordion.js"></script>
+    <script src="../bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+    <script src="../bower_components/momentjs/moment.js"></script>
+    <script src="../bower_components/angular-material-datetimepicker/js/angular-material-datetimepicker.min.js"></script>
+    <script src="../bower_components/Chart.js/Chart.js"></script>
+    <script src="../bower_components/angular-chart.js/dist/angular-chart.js"></script>
+    <script src="../bower_components/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="../bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+    <!-- inject:js -->
+    <script src="app/main/OwnerBike/OwnerBike.module.js"></script>
+    <script src="app/main/OwnerBike/dialogs/Location/Location.controller.js"></script>
+    <script src="app/main/login/login.module.js"></script>
+    <script src="app/main/login/dialogs/Register/Register.controller.js"></script>
+    <script src="app/main/login/dialogs/ForgotPassword/ForgotPassword.controller.js"></script>
+    <script src="app/main/MobileWidget/MobileWidget.module.js"></script>
+    <script src="app/main/MobileWidget/dialogs/ImageModel/ImageModel.controller.js"></script>
+    <script src="app/main/Widget/Widget.module.js"></script>
+    <script src="app/main/Widget/dialogs/ImageModel/ImageModel.controller.js"></script>
+    <script src="app/main/StickyFooter/StickyFooter.module.js"></script>
+    <script src="app/main/StickyFooter/dialogs/ImageModel/ImageModel.controller.js"></script>
+    <script src="app/main/Support/Support.module.js"></script>
+    <script src="app/main/Support/dialogs/DeviceModel/DeviceModel.controller.js"></script>
+    <script src="app/main/Roles/Roles.module.js"></script>
+    <script src="app/main/Roles/dialogs/RemoveCountryModel/RemoveCountryModel.controller.js"></script>
+    <script src="app/main/PetDevice/PetDevice.module.js"></script>
+    <script src="app/main/PetDevice/dialogs/ImportPetDevice/ImportPetDeviceModel.controller.js"></script>
+    <script src="app/main/Provider/Provider.module.js"></script>
+    <script src="app/main/Provider/dialogs/ProviderModel/ProviderModel.controller.js"></script>
+    <script src="app/main/OwnerCustomer/OwnerCustomer.module.js"></script>
+    <script src="app/main/OwnerCustomer/dialogs/DeviceModel/DeviceModel.controller.js"></script>
+    <script src="app/main/OwnerBike/dialogs/AlarmDetail/AlarmDetail.controller.js"></script>
+    <script src="app/main/Order/Order.module.js"></script>
+    <script src="app/main/Order/dialogs/OrderDetailModal/OrderDetailModal.controller.js"></script>
+    <script src="app/main/Order/dialogs/ManageTrackingNumberModal/ManageTrackingNumberModal.controller.js"></script>
+    <script src="app/main/Order/dialogs/EditOrderProductModal/EditOrderProductModal.controller.js"></script>
+    <script src="app/main/MobileLanguageResource/MobileLanguageResource.controller.js"></script>
+    <script src="app/main/MobileLanguageResource/dialogs/ImportMobileLanguageResource/ImportMobileLanguageResourceModel.controller.js"></script>
+    <script src="app/main/Media/Media.module.js"></script>
+    <script src="app/main/Media/dialogs/MediaModel/MediaModel.controller.js"></script>
+    <script src="app/main/LanguageResource/LanguageResource.controller.js"></script>
+    <script src="app/main/LanguageResource/dialogs/ImportLanguageResources/ImportLanguageResourcesModel.controller.js"></script>
+    <script src="app/main/Feedback/Feedback.module.js"></script>
+    <script src="app/main/Feedback/dialogs/EmailTemplateModel/EmailTemplateModel.controller.js"></script>
+    <script src="app/main/LanguageResource/dialogs/Export/ExportModel.controller.js"></script>
+    <script src="app/main/Language/Language.controller.js"></script>
+    <script src="app/main/Language/dialogs/ImageModel/ImageModel.controller.js"></script>
+    <script src="app/main/FacebookFeed/FacebookFeed.module.js"></script>
+    <script src="app/main/FacebookFeed/dialogs/FacebookFeedModel/FacebookFeedModel.controller.js"></script>
+    <script src="app/main/EnquiryMgmt/EnquiryMgmt.module.js"></script>
+    <script src="app/main/EnquiryMgmt/dialogs/EnquiryLogModel/EnquiryLogModel.controller.js"></script>
+    <script src="app/main/EnquiryMgmt/dialogs/EmailTemplateModel/EmailTemplateModel.controller.js"></script>
+    <script src="app/main/EmailTemplate/EmailTemplate.module.js"></script>
+    <script src="app/main/EmailTemplate/dialogs/EmailTemplateModel/EmailTemplateModel.controller.js"></script>
+    <script src="app/main/Discount/dialogs/Export/ExportModel.controller.js"></script>
+    <script src="app/main/Discount/dialogs/ImportLanguageResources/ImportLanguageResourcesModel.controller.js"></script>
+    <script src="app/main/Discount/Discount.module.js"></script>
+    <script src="app/main/Discount/dialogs/ImportDiscount/ImportDiscountModel.controller.js"></script>
+    <script src="app/main/Customer/Customer.module.js"></script>
+    <script src="app/main/Customer/dialogs/DeviceModel/DeviceModel.controller.js"></script>
+    <script src="app/main/City/City.module.js"></script>
+    <script src="app/main/City/dialogs/State/StateModel.controller.js"></script>
+    <script src="app/main/City/dialogs/Country/CountryModel.controller.js"></script>
+    <script src="app/main/Banner/Banner.module.js"></script>
+    <script src="app/main/Banner/dialogs/ImageModel/ImageModel.controller.js"></script>
+    <script src="app/quick-panel/quick-panel.module.js"></script>
+    <script src="app/quick-panel/tabs/chat/chat-tab.controller.js"></script>
+    <script src="app/core/core.module.js"></script>
+    <script src="app/core/directives/ms-material-color-picker/ms-material-color-picker.directive.js"></script>
+    <script src="app/core/directives/ms-widget/ms-widget.directive.js"></script>
+    <script src="app/core/directives/ms-timeline/ms-timeline.js"></script>
+    <script src="app/core/directives/ms-stepper/ms-stepper.directive.js"></script>
+    <script src="app/core/directives/ms-splash-screen/ms-splash-screen.directive.js"></script>
+    <script src="app/core/directives/ms-sidenav-helper/ms-sidenav-helper.directive.js"></script>
+    <script src="app/core/directives/ms-search-bar/ms-search-bar.directive.js"></script>
+    <script src="app/core/directives/ms-scroll/ms-scroll.directive.js"></script>
+    <script src="app/core/directives/ms-responsive-table/ms-responsive-table.directive.js"></script>
+    <script src="app/core/directives/ms-random-class/ms-random-class.directive.js"></script>
+    <script src="app/core/directives/ms-navigation/ms-navigation.directive.js"></script>
+    <script src="app/core/directives/ms-nav/ms-nav.directive.js"></script>
+    <script src="app/core/directives/ms-form-wizard/ms-form-wizard.directive.js"></script>
+    <script src="app/core/directives/ms-datepicker-fix/ms-datepicker-fix.directive.js"></script>
+    <script src="app/core/directives/ms-card/ms-card.directive.js"></script>
+    <script src="app/core/directives/err-src/err-src.directive.js"></script>
+    <script src="app/main/sample/sample.module.js"></script>
+    <script src="app/main/sample/sample.controller.js"></script>
+    <script src="app/main/login/login.controller.js"></script>
+    <script src="app/main/datatable/datatable.module.js"></script>
+    <script src="app/main/datatable/datatable.controller.js"></script>
+    <script src="app/main/Widget/Widget.controller.js"></script>
+    <script src="app/main/Warehouse/Warehouse.module.js"></script>
+    <script src="app/main/Warehouse/Warehouse.controller.js"></script>
+    <script src="app/main/UserPermission/UserPermission.module.js"></script>
+    <script src="app/main/UserPermission/UserPermission.controller.js"></script>
+    <script src="app/main/User/User.module.js"></script>
+    <script src="app/main/User/User.controller.js"></script>
+    <script src="app/main/TaxCategory/TaxCategory.module.js"></script>
+    <script src="app/main/TaxCategory/TaxCategory.controller.js"></script>
+    <script src="app/main/Support/Support.controller.js"></script>
+    <script src="app/main/StickyFooter/StickyFooter.controller.js"></script>
+    <script src="app/main/State/State.module.js"></script>
+    <script src="app/main/State/State.controller.js"></script>
+    <script src="app/main/Setting/Setting.module.js"></script>
+    <script src="app/main/Setting/Setting.controller.js"></script>
+    <script src="app/main/SendEmail/SendEmail.module.js"></script>
+    <script src="app/main/SendEmail/SendEmail.controller.js"></script>
+    <script src="app/main/Roles/Roles.controller.js"></script>
+    <script src="app/main/RewardSystem/RewardSystem.module.js"></script>
+    <script src="app/main/RewardSystem/RewardSystem.controller.js"></script>
+    <script src="app/main/Register/Register.module.js"></script>
+    <script src="app/main/Register/Register.controller.js"></script>
+    <script src="app/main/Provider/Provider.controller.js"></script>
+    <script src="app/main/PetDevice/PetDevice.controller.js"></script>
+    <script src="app/main/OwnerUser/OwnerUser.module.js"></script>
+    <script src="app/main/OwnerUser/OwnerUser.controller.js"></script>
+    <script src="app/main/OwnerCustomer/OwnerCustomer.controller.js"></script>
+    <script src="app/main/OwnerBike/OwnerBike.controller.js"></script>
+    <script src="app/main/Order/Order.controller.js"></script>
+    <script src="app/main/News/News.module.js"></script>
+    <script src="app/main/News/News.controller.js"></script>
+    <script src="app/main/Module/Module.module.js"></script>
+    <script src="app/main/Module/Module.controller.js"></script>
+    <script src="app/main/MobileWidget/MobileWidget.controller.js"></script>
+    <script src="app/main/Menu/Menu.module.js"></script>
+    <script src="app/main/Menu/Menu.controller.js"></script>
+    <script src="app/main/MediaSetting/MediaSetting.module.js"></script>
+    <script src="app/main/MediaSetting/MediaSetting.controller.js"></script>
+    <script src="app/main/Media/Media.controller.js"></script>
+    <script src="app/main/Forgotpassword/Forgotpassword.module.js"></script>
+    <script src="app/main/Forgotpassword/Forgotpassword.controller.js"></script>
+    <script src="app/main/Feedback/Feedback.controller.js"></script>
+    <script src="app/main/FacebookSetting/FacebookSetting.module.js"></script>
+    <script src="app/main/FacebookSetting/FacebookSetting.controller.js"></script>
+    <script src="app/main/FacebookFeed/FacebookFeed.controller.js"></script>
+    <script src="app/main/EnquiryMgmt/EnquiryMgmt.controller.js"></script>
+    <script src="app/main/EmailTemplate/EmailTemplate.controller.js"></script>
+    <script src="app/main/EmailSetting/EmailSetting.module.js"></script>
+    <script src="app/main/EmailSetting/EmailSetting.controller.js"></script>
+    <script src="app/main/Discount/Discount.controller.js"></script>
+    <script src="app/main/DeviceStatus/DeviceStatus.module.js"></script>
+    <script src="app/main/DeviceStatus/DeviceStatus.controller.js"></script>
+    <script src="app/main/Dashboard/Dashboard.module.js"></script>
+    <script src="app/main/Dashboard/Dashboard.controller.js"></script>
+    <script src="app/main/Customer/Customer.controller.js"></script>
+    <script src="app/main/Country/Country.module.js"></script>
+    <script src="app/main/Country/Country.controller.js"></script>
+    <script src="app/main/City/City.controller.js"></script>
+    <script src="app/main/ChangePassword/ChangePassword.module.js"></script>
+    <script src="app/main/ChangePassword/ChangePassword.controller.js"></script>
+    <script src="app/main/Category/Category.module.js"></script>
+    <script src="app/main/Category/Category.controller.js"></script>
+    <script src="app/main/Carrier/Carrier.controller.js"></script>
+    <script src="app/main/Banner/Banner.controller.js"></script>
+    <script src="app/core/theming/fuse-theming.provider.js"></script>
+    <script src="app/core/theming/fuse-theming.config.js"></script>
+    <script src="app/core/theming/fuse-themes.constant.js"></script>
+    <script src="app/core/theming/fuse-palettes.constant.js"></script>
+    <script src="app/core/theming/fuse-generator.factory.js"></script>
+    <script src="app/core/theme-options/theme-options.directive.js"></script>
+    <script src="app/core/services/ms-utils.service.js"></script>
+    <script src="app/core/services/ms-api.provider.js"></script>
+    <script src="app/core/services/api-resolver.service.js"></script>
+    <script src="app/core/filters/tag.filter.js"></script>
+    <script src="app/core/filters/ellipsis.filter.js"></script>
+    <script src="app/core/filters/basic.filter.js"></script>
+    <script src="app/core/directives/highlight.directive.js"></script>
+    <script src="app/core/config/fuse-config.provider.js"></script>
+    <script src="app/toolbar/toolbar.module.js"></script>
+    <script src="app/toolbar/toolbar.controller.js"></script>
+    <script src="app/quick-panel/quick-panel.controller.js"></script>
+    <script src="app/navigation/navigation.module.js"></script>
+    <script src="app/navigation/navigation.controller.js"></script>
+    <script src="app/index.module.js"></script>
+    <script src="app/main/main.controller.js"></script>
+    <script src="app/core/core.run.js"></script>
+    <script src="app/core/core.config.js"></script>
+    <script src="app/index.run.js"></script>
+    <script src="app/index.route.js"></script>
+    <script src="app/index.controller.js"></script>
+    <script src="app/index.constants.js"></script>
+    <script src="app/index.config.js"></script>
+    <script src="app/index.api.js"></script>
+    <script src="app/base64.js"></script>
+    <script src="app/main/MobileLanguageResource/MobileLanguageResource.module.js"></script>
+    <script src="app/main/LanguageResource/LanguageResource.module.js"></script>
+    <script src="app/main/Language/Language.module.js"></script>
+    <script src="app/main/Carrier/Carrier.module.js"></script>
+    <!-- endinject -->
+
+    <!-- inject:partials -->
+    <!-- angular templates will be automatically converted in js and inserted here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+    <script src="app/base64.js"></script>
+    <script src="assets/js/angular-drag-and-drop-lists.js"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script> -->
+    <script src="assets/js/angular-route.min.js"></script>
+    <script src="assets/js/Prism.js"></script>
+    <script src="assets/js/underscore.js"></script>
+    <script src="assets/js/socket.io-1.2.0.js"></script>
+    <!--<script src="../../bower_components/ng-ckeditor/ng-ckeditor.js"></script> -->
+    <script src="../bower_components/ng-ckeditor/libs/ckeditor/ckeditor.js"></script>
+    <script src="../bower_components/d3/d3.min.js"></script>
+    <script src="../bower_components/nvd3/build/nv.d3.min.js"></script>
+    <script src="../bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
+    <!-- <script src="http://maps.google.com/maps/api/js?v=3.5&amp;sensor=false"></script> -->
+    <script src="http://maps.google.com/maps/api/js?v=3.5&amp;sensor=false&key=AIzaSyDXmqbTJJXQiS_Iytd-4PSK5zq28gPBMbU&libraries=drawing"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script> -->
+    <!-- // <script src="angular-ckeditor/angular.js"></script> -->
+    <!-- <script src="ckeditor.js"></script> -->
+    <!-- // <script src="bower_components/angular-ckeditor/angular-ckeditor.js"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<div class="template-1">
+    <div class="media">
+        <a href="{{card.link}}" ng-if="card.type=='link'" target="_blank">
+            <img class="image" ng-src="{{card.full_picture}}">
+            <div class="text-center" ng-click="GotoLink(d)">
+                <i class="icon-link play-icon"></i>
+            </div>
+        </a>
+        <a href="{{card.source}}" ng-if="card.type=='video'" target="_blank">
+            <img class="image" ng-src="{{card.full_picture}}">
+            <div class="text-center" ng-click="playVideo(d)">
+                <i class="icon-play play-icon"></i>
+            </div>
+        </a>
+        <a ng-if="card.type=='photo'">
+            <img class="image" ng-src="{{card.full_picture}}">
+        </a>
+    </div>
+    <div class="content pv-24 ph-16">
+        <div class="title h1" ng-if="card.name">
+            {{card.name}}
+        </div>
+        <div class="subtitle secondary-text" ng-if="card.message">
+            {{card.message}}
+        </div>
+        <div class="text pt-16" ng-if="card.description">
+            {{card.description}}
+        </div>
+    </div>
+    <div class="buttons m-8">
+        <md-icon md-font-icon="icon-heart" class="s24"></md-icon>
+        {{card.likes.summary.total_count}}
+        <md-icon md-font-icon="icon-comment" class="s24"></md-icon>
+        {{card.comments.summary.total_count}}
+    </div>
+</div>

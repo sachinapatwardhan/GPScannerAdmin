@@ -1,0 +1,115 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Sticky Footer</span></div>
+                <div class="title">Sticky Footer</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                    <md-tab label="Sticky Footer  List">
+                        <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                            <div class="content">
+                                <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                                    <thead>
+                                        <tr>
+                                            <th class="all">
+                                                <div class="table-header">
+                                                    <span class="column-title">No</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Image</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Page Url</span>
+                                                </div>
+                                            </th>
+                                            <th class="all">
+                                                <div class="table-header">
+                                                    <span class="column-title">Action</span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in lstStickyFooter">
+                                            <td>
+                                                {{$index+1}}
+                                            </td>
+                                            <td> <img ng-show="item.ImageUrl!=null  && item.ImageUrl!=''" src="{{RoutePath}}MediaUploads/{{item.ImageUrl}}" style="width:100px;" err-src="assets/images/no-image.png"/>
+                                                <span ng-if="item.ImageUrl==null || item.ImageUrl==''">No-image</span>
+                                            </td>
+                                            <td>{{item.Name}}</td>
+                                            <td>
+                                                {{item.URL}}
+                                            </td>
+                                            <td>
+                                                <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchStickyFooterById(item)">
+                                                    <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteStickyFooter(item.id)">
+                                                    <md-icon md-font-icon="icon-trash"></md-icon>
+                                                </md-button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Manage Sticky Footer" ng-click="ResetEdit()">
+                        <md-content class="md-padding">
+                            <div>
+                                <form name="FormStickyFooter" novalidate class="ms-stepper" aria-invalid="false">
+                                    <div layout-gt-sm="row">
+                                        <md-input-container flex="100" flex-gt-xs="50">
+                                            <label>Name *</label>
+                                            <input type="text" name="Name" ng-model="model.Name" required  maxlength="50" md-maxlength="50">
+                                            <div ng-messages="FormStickyFooter.Name.$error" ng-if="FormStickyFooter.Name.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Name field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container flex="100" flex-gt-xs="50">
+                                            <input type="text" name="URL" ng-model="model.URL" placeholder="URL"  maxlength="500" md-maxlength="500">
+                                        </md-input-container>
+                                    </div>
+                                    <div layout-gt-sm="row">
+                                        <md-input-container class="md-block" flex>
+                                            <label>Image</label>
+                                            <br/>
+                                            <br/>
+                                            <img src="{{RoutePath}}MediaUploads/{{model.ImageUrl}}" err-src="assets/images/no-image.png" style="width:150px;" ng-show="FlgImage==1" />
+                                            <br ng-show="FlgImage==1" />
+                                            <br ng-show="FlgImage==1" />
+                                            <md-button class="md-raised md-primary" ng-click="ShowModal($event)">Select Image</md-button>
+                                            <md-button class="md-raised md-dafault" ng-if="FlgImage==1" ng-click="RemoveImage()">Remove Image</md-button>
+                                        </md-input-container>
+                                    </div>
+                                    <div align="center">
+                                        <md-button class="md-raised md-primary" ng-click="CreateStickyFooter(model)" ng-disabled="FormStickyFooter.$invalid">save</md-button>
+                                        <md-button class="md-raised md-warn" ng-click="Reset()">cancel</md-button>
+                                    </div>
+                                </form>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </div>
+        </div>
+    </div>
+</md-content>

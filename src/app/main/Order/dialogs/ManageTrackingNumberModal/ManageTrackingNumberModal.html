@@ -1,0 +1,45 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="formTrackingNumber" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Manage Tracking Number</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div>
+                <md-input-container class="md-block" flex="50">
+                    <label>Track Number *</label>
+                    <input type="number" numbers-Only max="9999999999" min="0" ng-model="modelTracking.TrackingNumber" required name="TrackNumber"/>
+                    <div ng-messages="formTrackingNumber.TrackNumber.$error" ng-if="formTrackingNumber.TrackNumber.$touched" role="alert" md-auto-hide="false">
+                        <div ng-message="max">
+                            <span>Track Number maximun 10 length</span>
+                        </div>
+                        <div ng-message="required">
+                            <span>Track Number is required.</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex="50">
+                    <label>Courier Service *</label>
+                    <md-select name="Courier" ng-model="modelTracking.Courier" ng-required="true" >
+                    <md-option ng-repeat="o in CourierList" ng-selcted="modelTracking.Courier==o.Name" value="{{o.Name}}">{{o.Name}}</md-option>
+                    </md-select>
+                      <div ng-messages="formTrackingNumber.Courier.$error" ng-if="formTrackingNumber.Courier.$touched" role="alert" md-auto-hide="false">
+                        <div ng-message="required">
+                            <span>Courier Service is required.</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button class="md-raised md-primary" ng-disabled="formTrackingNumber.$invalid" ng-click="SaveTrackNumber(modelTracking)">save</md-button>
+                <md-button class="md-raised md-warn" ng-click="closeModel()">cancel</md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

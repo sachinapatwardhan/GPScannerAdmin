@@ -1,0 +1,263 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Settings</span>
+                </div>
+                <div class="title">Settings</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                    <md-tab label="Settings">
+                        <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                            <div class="content">
+                                <md-content class="md-padding">
+                                    <div class="custom-content">
+                                        <form name="FormSetting" class="md-inline-form" novalidate>
+                                            <!-- <div layout-gt-sm="row">
+                                            <md-input-container class="md-block" flex>
+                                                <md-checkbox ng-model="model.PriceInTax" aria-label="Checkbox 1" class="md-primary">
+                                                    Prices include tax
+                                                </md-checkbox>
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex>
+                                                <md-checkbox ng-model="model.DisplayAllApplyTaxRate" aria-label="Checkbox 1" class="md-primary">
+                                                    Display all applied tax rates
+                                                </md-checkbox>
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex>
+                                                <md-checkbox ng-model="model.DisplayTaxSuffix" aria-label="Checkbox 1" class="md-primary">
+                                                    Display tax suffix
+                                                </md-checkbox>
+                                            </md-input-container>
+                                        </div> -->
+                                            <!-- <div layout-gt-sm="row">
+                                            <md-input-container class="md-block" flex>
+                                                <md-checkbox ng-model="model.SelectTaxDisplayType" aria-label="Checkbox 1" class="md-primary">
+                                                    Allow customers to select tax display type
+                                                </md-checkbox>
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex>
+                                                <md-checkbox ng-model="model.TaxExculsionFromSubTotal" aria-label="Checkbox 1" class="md-primary">
+                                                    Force tax exclusion from order subtotal
+                                                </md-checkbox>
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex>
+                                                <md-checkbox ng-model="model.HideZeroTax" aria-label="Checkbox 1" class="md-primary">
+                                                    Hide zero tax
+                                                </md-checkbox>
+                                            </md-input-container>
+                                        </div> -->
+                                            <!-- <div layout-gt-sm="row">
+                                                <md-input-container class="md-block" flex ng-if="model.SelectTaxDisplayType==false">
+                                                    <label>Tax display type</label>
+                                                    <md-select ng-model="model.TaxDisplyType">
+                                                        <md-option value="Including Tax">Including Tax</md-option>
+                                                        <md-option value="Excluding Tax">Excluding Tax</md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex>
+                                                    <md-checkbox ng-model="model.GSTEnable" aria-label="Checkbox 1" class="md-primary">
+                                                        GST enabled
+                                                    </md-checkbox>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex ng-if="model.GSTEnable==false">
+                                                </md-input-container>
+                                                <md-input-container ng-if="model.GSTEnable==true" class="md-block" flex>
+                                                    <md-checkbox ng-model="model.GSTInPrice" aria-label="Checkbox 1" class="md-primary">
+                                                        GST includes Price
+                                                    </md-checkbox>
+                                                </md-input-container>
+                                            </div>
+                                            <md-input-container class="md-block" ng-show="model.GSTEnable==true">
+                                                <label>GST (%)</label>
+                                                <input name="GSTPercentage" ng-model="model.GSTPercentage" placeholder="10" required ng-pattern="/^(0|[1-9][0-9]*)$/" md-maxlength="3">
+                                                <div ng-messages="FormWidget.GSTPercentage.$error" role="alert" multiple>
+                                                    <div ng-message="required"><span>You must supply a postal code</span></div>
+                                                    <div ng-message="pattern">
+                                                        <span>That doesn't look like a valid postal code</span></div>
+                                                    <div ng-message="md-maxlength">
+                                                        <span>Postal code can't be longer than 3 characters</span>
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                            <div layout="row">
+                                                <md-input-container class="md-block" flex>
+                                                    <label>Tax based on</label>
+                                                    <md-select ng-model="model.TaxBasedOn">
+                                                        <md-option value="Billing">Billing Address</md-option>
+                                                        <md-option value="Shipping">Shipping Address</md-option>
+                                                        <md-option value="Default">Default Address</md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex>
+                                                    <md-checkbox ng-model="model.PaymentMethodAdditFeeTaxAble" aria-label="Checkbox 1" class="md-primary">
+                                                        Payment method additional fee is taxable
+                                                    </md-checkbox>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row">
+                                                <div layout="column" flex ng-show="model.TaxBasedOn=='Default'">
+                                                    <label>Default tax address</label>
+                                                    <md-input-container class="md-block">
+                                                        <label>Country *</label>
+                                                        <md-select ng-model="model.Country" name="Country" ng-change="GetAllStateByCountryId(model.Country)" required>
+                                                            <md-option value="{{o.id}}" ng-repeat="o in lstcountry">{{o.Country}}</md-option>
+                                                        </md-select>
+                                                        <div ng-messages="FormSetting.Country.$error" role="alert">
+                                                            <div ng-message="required">
+                                                                <span>Country field is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </md-input-container>
+                                                    <md-input-container class="md-block">
+                                                        <label>State / province *</label>
+                                                        <md-select ng-model="model.State" required name="State">
+                                                            <md-option ng-repeat="p in lststate" ng-selected="model.State==p.id" value="{{p.id}}">{{p.Name}}
+                                                            </md-option>
+                                                        </md-select>
+                                                        <div ng-messages="FormSetting.State.$error" role="alert">
+                                                            <div ng-message="required">
+                                                                <span>State is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </md-input-container>
+                                                    <md-input-container class="md-block">
+                                                        <label>Zip / postal code</label>
+                                                        <input ng-model="model.ZipCode">
+                                                    </md-input-container>
+                                                </div>
+                                                <div layout="column" flex>
+                                                </div>
+                                                <div layout="column" flex ng-if="model.TaxBasedOn!='Default'">
+                                                </div>
+                                                <div layout="column" flex ng-if="model.PaymentMethodAdditFeeTaxAble==false">
+                                                </div>
+                                                <div layout="column" flex ng-if="model.PaymentMethodAdditFeeTaxAble==true">
+                                                    <md-input-container class="md-block" flex>
+                                                        <md-checkbox ng-model="model.PaymentMethodAdditFeeIncludeTax" aria-label="Checkbox 1" class="md-primary">
+                                                            Payment method additional fee includes tax
+                                                        </md-checkbox>
+                                                    </md-input-container>
+                                                    <md-input-container class="md-block" flex>
+                                                        <label>Payment method additional fee tax class</label>
+                                                        <md-select ng-model="model.PaymentMethodAdditFeeTaxClass">
+                                                            <md-option value="{{o.Id}}" ng-repeat="o in lstTaxCategory">{{o.Name}}</md-option>
+                                                        </md-select>
+                                                    </md-input-container>
+                                                    <md-input-container class="md-block" flex>
+                                                    </md-input-container>
+                                                </div>
+                                            </div> -->
+                                            <div layout-gt-sm="row">
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Android GPSIN Shop App Version *</label>
+                                                    <input name="AndroidAppVersion" ng-model="model.AndroidAppVersion" required>
+                                                    <div ng-messages="FormSetting.AndroidAppVersion.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Android GPSIN Shop App Version is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Ios GPSIN Shop App Version *</label>
+                                                    <input name="IosAppVersion" ng-model="model.IosAppVersion" required>
+                                                    <div ng-messages="FormSetting.IosAppVersion.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Ios GPSIN Shop App Version is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout-gt-sm="row">
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Android GPSIN Owner App Version *</label>
+                                                    <input name="OwnerAndroidAppVersion" ng-model="model.OwnerAndroidAppVersion" required>
+                                                    <div ng-messages="FormSetting.OwnerAndroidAppVersion.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Android GPSIN Owner App Version is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Ios GPSIN Owner App Version *</label>
+                                                    <input name="OwnerIosAppVersion" ng-model="model.OwnerIosAppVersion" required>
+                                                    <div ng-messages="FormSetting.OwnerIosAppVersion.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Ios GPSIN Owner App Version is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout-gt-sm="row">
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Online/Offline Notification *</label>
+                                                    <md-select ng-model="model.OwnerDeviceStatusPushNotification" required>
+                                                        <md-option value="0">False</md-option>
+                                                        <md-option value="1">True</md-option>
+                                                    </md-select>
+                                                    <div ng-messages="FormSetting.OwnerDeviceStatusPushNotification.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Online/Offline Notification is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Vibration Notification *</label>
+                                                    <md-select ng-model="model.OwnerVibrationPushNotification" required>
+                                                        <md-option value="0">False</md-option>
+                                                        <md-option value="1">True</md-option>
+                                                    </md-select>
+                                                    <div ng-messages="FormSetting.OwnerVibrationPushNotification.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Vibration Notification is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+                                            <div layout-gt-sm="row">
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Max speed Notification *</label>
+                                                    <md-select ng-model="model.OwnerMaxSpeedPushNotification" required>
+                                                        <md-option value="0">False</md-option>
+                                                        <md-option value="1">True</md-option>
+                                                    </md-select>
+                                                    <div ng-messages="FormSetting.OwnerMaxSpeedPushNotification.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Max speed Notification  is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>Notification Email To*</label>
+                                                    <input name="NotificationEmailTo" ng-model="model.NotificationEmailTo" required>
+                                                    <div ng-messages="FormSetting.NotificationEmailTo.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>Notification Email To is required</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+                                            <div align="center">
+                                                <md-button class="md-raised md-accent" ng-disabled="FormSetting.$invalid" ng-if="FlgModifiedAccess" ng-click="SaveSetting(model)">Save</md-button>
+                                                <md-button class="md-raised md-default" ng-click="Reset()" ng-if="FlgModifiedAccess">Reset</md-button>
+                                            </div>
+                                        </form>
+                                        <!-- <br/>
+                                        <br/> -->
+                                    </div>
+                                </md-content>
+                            </div>
+                        </div>
+                    </md-tab>
+                </md-tabs>
+            </div>
+        </div>
+    </div>
+</md-content>

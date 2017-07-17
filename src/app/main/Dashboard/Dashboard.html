@@ -1,0 +1,361 @@
+<md-content>
+    <!--      <div id="dashboard-project" class="page-layout simple right-sidenav" layout="row">
+        <div class="center" flex ms-scroll onload="uploader()">
+            <div class="header md-accent-bg" layout="column" layout-align="space-between">
+                <div layout="row" layout-align="space-between">
+                    <div class="toolbar">
+                        <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleSidenav('sidenav')" hide-gt-md aria-label="Toggle sidenav">
+                            <md-icon md-font-icon="icon-menu" class="icon"></md-icon>
+                        </md-button>
+                    </div>
+                </div>
+                <div layout="row">
+                    <div class="selected-project">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div> -->
+    <div id="dashboard-project" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <div class="toolbar">
+                        <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleSidenav('sidenav')" hide-gt-md aria-label="Toggle sidenav">
+                            <md-icon md-font-icon="icon-menu" class="icon"></md-icon>
+                        </md-button>
+                    </div>
+                </div>
+                <div class="title">Dashboard</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="widget-group" layout="row" flex="100" layout-wrap>
+                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="25" flex-gt-md="25" href="#">
+                    <ms-widget-front class="white-bg">
+                        <div class="pt-40 pb-30" layout="column" layout-align="center center">
+                            <div class="light-blue-fg font-size-72 line-height-72" align="center">
+                                <span ng-if="lstDashBoardInfo.TotalUser==null" class="s70">0</span>
+                                <span ng-if="lstDashBoardInfo.TotalUser!=null" class="s70">{{lstDashBoardInfo.TotalUser}}</span>
+                            </div>
+                            <md-icon md-font-icon="icon-account-multiple" class="s30"></md-icon>
+                        </div>
+                        <a href="" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Total Users</a>
+                    </ms-widget-front>
+                </ms-widget>
+                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="25" flex-gt-md="25" href="#">
+                    <ms-widget-front class="white-bg">
+                        <div class="pt-40 pb-30" layout="column" layout-align="center center">
+                            <div class="light-black-fg font-size-72 line-height-72" align="center">
+                                <span ng-if="lstTotalCustomer==null" class="s70">0</span>
+                                <span ng-if="lstTotalCustomer!=null" class="s70">{{lstTotalCustomer}}</span>
+                            </div>
+                            <md-icon md-font-icon="icon-account-multiple" class="s30"></md-icon>
+                        </div>
+                        <a href="" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Total Customers</a>
+                    </ms-widget-front>
+                </ms-widget>
+                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="25" flex-gt-md="25" href="/#/owneruser">
+                    <ms-widget-front class="white-bg">
+                        <div class="pt-40 pb-30" layout="column" layout-align="center center">
+                            <div class="light-black-fg font-size-72 line-height-72" align="center">
+                                <span ng-if="lstTotalOwner==null" class="s70">0</span>
+                                <span ng-if="lstTotalOwner!=null" class="s70">{{TotalOwnerCustomer}}</span>
+                            </div>
+                            <md-icon md-font-icon="icon-account-multiple" class="s30"></md-icon>
+                        </div>
+                        <a href="/#/OwnerCustomer" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Total Owner</a>
+                    </ms-widget-front>
+                </ms-widget>
+            </div>
+            <div class="content" layout-gt-sm="row" layout="row">
+                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
+                    <ms-widget-front class="white-bg">
+                        <div class="content" layout-gt-sm="row" layout="row">
+                            <div class="widget-group text-left" flex="100" flex-gt-sm="30" flex-gt-md="20" flex-gt-xs="40">
+                                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
+                                    <div class="pt-0 pb-30">
+                                        <a style="text-decoration:none;" class="green-fg p-16 h3" align="center">Total Device </a>
+                                        <span class="s200">
+                                            <span ng-if="ActiveDevice==null && NotActiveDevice==null">0</span>
+                                        <span ng-if="ActiveDevice!=null && NotActiveDevice!=null">{{ActiveDevice.length + NotActiveDevice.length}}</span>
+                                        </span>
+                                    </div>
+                                    <div class="pt-0 pb-30">
+                                        <a style="text-decoration:none;" class="green-fg p-16 h3" align="center">Active Device </a>
+                                        <span class="s200">
+                                            <span ng-if="ActiveDevice==null">0</span>
+                                        <span ng-if="ActiveDevice!=null">{{ActiveDevice.length}}</span>
+                                        </span>
+                                    </div>
+                                    <div class="pt-0 pb-30">
+                                        <a style="text-decoration:none;" class="green-fg p-16 h3" align="center">Not Active Device </a>
+                                        <span class="s200">
+                                            <span ng-if="NotActiveDevice==null">0</span>
+                                        <span ng-if="NotActiveDevice!=null">{{NotActiveDevice.length}}</span>
+                                        </span>
+                                    </div>
+                                    <div class="pt-0 pb-30">
+                                        <a style="text-decoration:none;" class="green-fg p-16 h3" align="center">Owner  Device </a>
+                                        <span class="s200">
+                                            <span ng-if="OwnerDevice==null">0</span>
+                                        <span ng-if="OwnerDevice!=null">{{OwnerDevice.length}}</span>
+                                        </span>
+                                    </div>
+
+                                    <span class="border-top pt-0 pb-30"></span>
+
+                                </ms-widget>
+                            </div>
+                            <div class="widget-group text-left" flex="100" flex-gt-sm="70" flex-gt-md="80" flex-gt-xs="60">
+                                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
+                                    <md-content class="text-right">
+                                        <div>
+                                            <div layout-gt-sm="row">
+                                                <div style="width: 100%;">
+                                                    <div id="map123" style="height: 500px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </ms-widget>
+                            </div>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+            </div>
+            <div class="widget-group" layout="row" layout-wrap>
+                <ms-widget layout="column" flex="100" flex-md="100" flex-xs="100" flex-sm="100">
+                    <ms-widget-front class="white-bg">
+                        <md-toolbar class="md-primary md-hue-2">
+                            <h2 class="md-toolbar-tools">
+                                <span>This Year Users</span>
+                            </h2>
+                        </md-toolbar>
+                        <md-list-item>
+                            <span class="md-avatar" flex="25"></span>
+                            <span class="md-avatar" style="background-color:rgba(234, 241, 245, 0.54)!important;width:20px;height:20px;"></span>
+                            <p>Owner</p>
+                        </md-list-item>
+                        <br />
+                        <div layout="row" class="chart-container">
+                            <div layout="column" flex="100" layout-align="left">
+                                <canvas id="bar" class="chart chart-bar" chart-data="dataUsresOrders" chart-labels="labelsMonth" chart-series="series" chart-options="options"> </canvas>
+                            </div>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+            </div>
+            <div class="widget-group" layout="row" flex="100" layout-wrap>
+                <ms-widget flippable="false" layout="row" flex="100">
+                    <!-- Front -->
+                    <ms-widget-front class="p-16 white-bg">
+                        <div class="pb-16" layout="row" layout-align="space-between center">
+                            <div class="h3">{{TotalCustomerUser.title}}</div>
+                            <md-input-container flex="10" flex-gt-sm="10">
+                                <label>Year</label>
+                                <md-select Name="OperatingWeeks1" ng-model="model.Year">
+                                    <md-option value="0">Select</md-option>
+                                    <md-option value="{{o.YearName}}" ng-repeat="o in listYear">{{o.YearName}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="10" flex-gt-sm="10">
+                                <label>Month</label>
+                                <md-select Name="OperatingWeeks1" ng-model="model.MonthId">
+                                    <md-option value="0">Select</md-option>
+                                    <md-option ng-repeat="o in listMonthName" value="{{o.id}}">{{o.name}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="10" flex-gt-sm="10">
+                                <label>Country</label>
+                                <md-select name="CountryName" ng-model="model.CountryName">
+                                    <md-option value="All">All</md-option>
+                                    <md-option ng-repeat="i in lstCountry | orderBy : 'country'" value="{{i.country}}"><span ng-if="i.country!=null">{{i.country}}</span><span ng-if="i.country==null">Other</span></md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-button class="md-raised md-primary" ng-click="SearchData(model)">Search</md-button>
+                            <md-button class="md-raised md-warn" ng-click="CustomerAndUser(false)">Reset</md-button>
+                            <md-menu>
+                                <md-button aria-label="more" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                    <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="2">
+                                    <md-menu-item>
+                                        <md-button ng-click="CustomerAndUser(false)" aria-label="Refresh widget">
+                                            Refresh
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                        <div>
+                            <nvd3 class="h-320" class="remove-x-lines" options="TotalCustomerUser.chart.options" data="TotalCustomerUser.chart.data"></nvd3>
+                        </div>
+                    </ms-widget-front>
+                    <!-- / Front -->
+                </ms-widget>
+            </div>
+            <div class="widget-group" layout="row" flex="100" layout-wrap>
+                <ms-widget flippable="false" layout="row" flex="100">
+                    <!-- Front -->
+                    <ms-widget-front class="p-16 white-bg">
+                        <div class="pb-16" layout="row" layout-align="space-between center">
+                            <div class="h3">{{TotalCustomerUserAcc.title}}</div>
+                            <md-input-container flex="10" flex-gt-sm="10">
+                                <label>Year</label>
+                                <md-select Name="OperatingWeeks1" ng-model="model.YearAcc">
+                                    <md-option value="0">Select</md-option>
+                                    <md-option value="{{o.YearName}}" ng-repeat="o in listYear">{{o.YearName}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="10" flex-gt-sm="10">
+                                <label>Month</label>
+                                <md-select Name="OperatingWeeks1" ng-model="model.MonthIdAcc">
+                                    <md-option value="0">Select</md-option>
+                                    <md-option ng-repeat="o in listMonthName" value="{{o.id}}">{{o.name}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="10" flex-gt-sm="10">
+                                <label>Country</label>
+                                <md-select name="CountryName" ng-model="model.CountryNameAcc">
+                                    <md-option value="All">All</md-option>
+                                    <md-option ng-repeat="i in lstCountry | orderBy : 'country'" value="{{i.country}}"><span ng-if="i.country!=null">{{i.country}}</span><span ng-if="i.country==null">Other</span></md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-button class="md-raised md-primary" ng-click="SearchDataAcc(model)">Search</md-button>
+                            <md-button class="md-raised md-warn" ng-click="CustomerAndUserAcc(false)">Reset</md-button>
+                            <md-menu>
+                                <md-button aria-label="more" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                    <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="2">
+                                    <md-menu-item>
+                                        <md-button ng-click="CustomerAndUserAcc(false)" aria-label="Refresh widget">
+                                            Refresh
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                        <div>
+                            <nvd3 class="h-320" class="remove-x-lines" options="TotalCustomerUserAcc.chart.options" data="TotalCustomerUserAcc.chart.data"></nvd3>
+                        </div>
+                    </ms-widget-front>
+                    <!-- / Front -->
+                </ms-widget>
+            </div>
+            <div class="widget-group" layout="row" layout-wrap>
+
+                <ms-widget layout="column" flex="100" flex-md="100" flex-xs="100" flex-sm="100">
+                    <ms-widget-front class="white-bg">
+                        <md-toolbar class="md-primary md-hue-2">
+                            <div class="md-toolbar-tools">
+                                <h2 class="md-flex">Total Customer by Country</h2>
+                                <span flex></span>
+                                <md-button class="md-icon-button md-raised md-accent">
+                                    <md-icon md-font-icon="icon-refresh" ng-click="TotalCustomerbyCountry()" class="s16"></md-icon>
+                                </md-button>
+                            </div>
+                        </md-toolbar>
+                        <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptionstable" dt-column-defs="dtColumnDefsC">
+                            <thead>
+                                <tr>
+                                    <th class="secondary-text">
+                                        <div class="table-header">No</div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Country</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Owner</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="o in lstFinalTotalCustomerByCountry">
+                                    <td class="">{{$index+1}}</td>
+                                    <td class="" ng-if="o.Country!=null">{{o.Country}}</td>
+                                    <td class="" ng-if="o.Country==null">Other</td>
+                                    <td class="">{{o.Owner}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ms-widget-front>
+                </ms-widget>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</md-content>
+
+<style>
+    .customMarker1 {
+        height: 60px;
+        background-image: url(/assets/images/marker1.png);
+        width: 43px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -21px;
+        margin-top: -31px;
+    }
+    
+    .customMarker2 {
+        height: 60px;
+        background-image: url(/assets/images/marker2.png);
+        width: 43px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -21px;
+        margin-top: -31px;
+    }
+    
+    .customMarker1 .my-text-shadow {
+        color: white;
+        position: absolute;
+        left: -44px;
+        top: -15px;
+        text-shadow: -2px -2px 0 #ee0600, -2px -1px 0 #ee0600, -2px 0px 0 #ee0600, -2px 1px 0 #ee0600, -2px 2px 0 #ee0600, -1px -2px 0 #ee0600, -1px -1px 0 #ee0600, -1px 0px 0 #ee0600, -1px 1px 0 #ee0600, -1px 2px 0 #ee0600, 0px -2px 0 #ee0600, 0px -1px 0 #ee0600, 0px 0px 0 #ee0600, 0px 1px 0 #ee0600, 0px 2px 0 #ee0600, 1px -2px 0 #ee0600, 1px -1px 0 #ee0600, 1px 0px 0 #ee0600, 1px 1px 0 #ee0600, 1px 2px 0 #ee0600, 2px -2px 0 #ee0600, 2px -1px 0 #ee0600, 2px 0px 0 #ee0600, 2px 1px 0 #ee0600, 2px 2px 0 #ee0600;
+        font-size: 14px;
+        width: 100px;
+    }
+    
+    .customMarker2 .my-text-shadow {
+        color: white;
+        position: absolute;
+        left: -44px;
+        top: -15px;
+        text-shadow: -2px -2px 0 #0cad00, -2px -1px 0 #0cad00, -2px 0px 0 #0cad00, -2px 1px 0 #0cad00, -2px 2px 0 #0cad00, -1px -2px 0 #0cad00, -1px -1px 0 #0cad00, -1px 0px 0 #0cad00, -1px 1px 0 #0cad00, -1px 2px 0 #0cad00, 0px -2px 0 #0cad00, 0px -1px 0 #0cad00, 0px 0px 0 #0cad00, 0px 1px 0 #0cad00, 0px 2px 0 #0cad00, 1px -2px 0 #0cad00, 1px -1px 0 #0cad00, 1px 0px 0 #0cad00, 1px 1px 0 #0cad00, 1px 2px 0 #0cad00, 2px -2px 0 #0cad00, 2px -1px 0 #0cad00, 2px 0px 0 #0cad00, 2px 1px 0 #0cad00, 2px 2px 0 #0cad00;
+        font-size: 14px;
+        width: 100px;
+    }
+    
+    .nvtooltip {
+        color: #fff;
+        border: none;
+    }
+    
+    .nvtooltip table {
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .nvtooltip.gravity-s:after {
+        display: block;
+        position: absolute;
+        content: '';
+        width: 0;
+        height: 0;
+        top: 99%;
+        left: 50%;
+        margin-left: -5px;
+        border: 10px solid transparent;
+        border-top-color: rgba(0, 0, 0, 0.87);
+        transform: translateX(-20%);
+    }
+</style>

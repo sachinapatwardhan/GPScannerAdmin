@@ -1,0 +1,50 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="taskForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Edit Media</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>Name</label>
+                    <input ng-model="model.Name">
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>Author</label>
+                    <input ng-model="model.Author">
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>Caption</label>
+                    <input ng-model="model.Caption">
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>Alt text</label>
+                    <input ng-model="model.AltText">
+                </md-input-container>
+            </div>
+            <label>Description</label>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <textarea ckeditor="editorOptions" ng-model="model.Description" ng-required="true"></textarea>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button class="md-button md-raised md-primary" ng-click="SaveMedia(model)">save</md-button>
+                <md-button class="md-button md-raised md-default" ng-click="closeModel()">cancel</md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

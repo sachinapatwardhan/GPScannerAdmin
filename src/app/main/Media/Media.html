@@ -1,0 +1,77 @@
+<md-content class="widget-page">
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Media</span></div>
+                <div class="title">Manage Media</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <form name="FormMedia" layout="column">
+                    <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                        <md-tab label="List Of Media">
+                            <div class="custom-content">
+                                <md-content class="md-padding">
+                                    <table id="Mediatable" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="vm.dtColumns" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">No</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Image</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Name</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Author</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Alt Text</span>
+                                                    </div>
+                                                </th>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Action</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </md-content>
+                            </div>
+                        </md-tab>
+                        <md-tab label="Add Media">
+                            <div class="custom-content">
+                                <md-content class="md-padding">
+                                    <lf-ng-md-file-input name="files00" lf-files="Mediafiles" lf-api="apiMedia" lf-required lf-maxcount="10" lf-filesize="10MB" lf-mimetype="image/*" multiple drag preview></lf-ng-md-file-input>
+                                    <div ng-messages="FormMedia.files00.$error" style="color:red;">
+                                        <div ng-message="required">This is required</div>
+                                        <div ng-message="maxcount">Too much files</div>
+                                        <div ng-message="filesize">File size too large</div>
+                                        <div ng-message="mimetype">Only image file supported</div>
+                                    </div>
+                                    <md-button type="button" ng-disabled="FormMedia.$invalid" class="md-raised md-primary" ng-click="UploadImage()">Submit</md-button>
+                                </md-content>
+                            </div>
+                        </md-tab>
+                    </md-tabs>
+                </form>
+            </div>
+        </div>
+    </div>
+</md-content>

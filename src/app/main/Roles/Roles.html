@@ -1,0 +1,108 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Role Management</span></div>
+                <div class="title">Role Management</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <form name="FormManageRoles" novalidate class="ms-stepper" aria-invalid="false">
+                    <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                        <!--   <md-tab label="Role List" ng-click="ResetTab()"> -->
+                        <md-tab label="Role List" ng-click="Reset()">
+                            <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                                <div class="content custom-content">
+                                    <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                                        <thead>
+                                            <tr>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">No</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Role Name</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Role Description</span>
+                                                    </div>
+                                                </th>
+                                               
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Action</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in lstRoles">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{item.RoleName}}</td>
+                                                <td>{{item.Description}}</td>
+                                     
+                                                <td>
+                                                    <!-- <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="AddCountryToRole(item)">
+                                                        <md-icon md-font-icon="icon-plus">
+                                                            <md-tooltip md-direction="left">
+                                                                Add Country to Role
+                                                            </md-tooltip>
+                                                    </md-button> -->
+                                                    <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="RemoveCountryToRole(item)">
+                                                        <md-icon md-font-icon="icon-eye">
+                                                            <md-tooltip md-direction="left">
+                                                                Manage Country to Role
+                                                            </md-tooltip>
+                                                    </md-button>
+                                                    <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchRoleById(item)">
+                                                        <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                                    </md-button>
+                                                    <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="FlgDeletedAccess" ng-click="DeleteRole(item.id)">
+                                                        <md-icon md-font-icon="icon-trash"></md-icon>
+                                                    </md-button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </md-tab>
+                        <md-tab label="Manage Role" ng-click="ResetEdit()" ng-if="FlgAddedEditlocal">
+                            <md-content class="md-padding">
+                                <div class="custom-content">
+                                    <div layout-gt-sm="row">
+                                        <md-input-container flex="100" flex-gt-xs="50">
+                                            <label>Role name *</label>
+                                            <input type="text" name="RoleName" ng-model="model.RoleName" required maxlength="256" md-maxlength="256">
+                                            <div ng-messages="FormManageRoles.RoleName.$error" ng-if="FormManageRoles.RoleName.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Role name field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div layout-gt-sm="row">
+                                        <md-input-container flex="100" flex-gt-xs="50">
+                                            <input type="text" name="Description" ng-model="model.Description" placeholder="Description ">
+                                        </md-input-container>
+                                    </div>
+                                    <div align="center">
+                                        <md-button class="md-raised md-primary" ng-click="CreateRole(model)" ng-disabled="FormManageRoles.$invalid">save</md-button>
+                                        <md-button class="md-raised md-warn" ng-click="Reset()">cancel</md-button>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </form>
+            </div>
+        </div>
+    </div>
+</md-content>

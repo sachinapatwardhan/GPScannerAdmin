@@ -1,0 +1,306 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Facebook Feeds</span></div>
+                <div class="title">Facebook Feeds</div>
+            </div>
+        </div>
+        <form name="FormPushNotification" class="md-inline-form" novalidate>
+            <md-tabs md-dynamic-height md-selected="0" md-border-bottom>
+                <md-tab label="Custom Push Notification">
+                <div class="custom-content">
+                    <div class="content md-padding">
+                        <div class="white-bg md-whiteframe-4dp" ng-if="FlgAddedEditlocal">
+                            <div class="ms-stepper-steps">
+                                <md-toolbar>
+                                    <div class="md-toolbar-tools">
+                                        <h2 class="md-flex">Send Push Notification</h2>
+                                        <!--  <span flex></span>
+                                        <md-button class="md-icon-button md-raised md-accent" aria-label="Auto Push notification Settings">
+                                            <md-icon md-font-icon="icon-cog" ng-click="FacebookSetting($event)" class="s16">
+                                            </md-icon>
+                                            <md-tooltip md-direction="left">
+                                                Auto Push notification Settings
+                                            </md-tooltip>
+                                        </md-button> -->
+                                    </div>
+                                </md-toolbar>
+                                <md-content class="md-padding">
+                                    <!--   <h2>Send Push Notification <md-button class="md-raised md-accent pull-right" ng-click="SendPushNotification(model)">Send</md-button></h2> -->
+                                    <md-input-container class="md-block">
+                                        <label>Title *</label>
+                                        <input name="Title" ng-model="model.Title" md-maxlength="30" required>
+                                        <div ng-messages="FormPushNotification.Title.$error" ng-if="FormPushNotification.Title.$touched" role="alert">
+                                            <div ng-message="required">
+                                                <span>Title is required</span>
+                                            </div>
+                                            <div ng-message="md-maxlength">
+                                                <span>Title is 30 char long</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container class="md-block">
+                                        <label>Message *</label>
+                                        <input type="text" name="Message" ng-model="model.Message" md-maxlength="100" required>
+                                        <div ng-messages="FormPushNotification.Message.$error" ng-if="FormPushNotification.Message.$touched" role="alert">
+                                            <div ng-message="required">
+                                                <span>Message is required</span>
+                                            </div>
+                                            <div ng-message="md-maxlength">
+                                                <span>Message is 100 char long</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container class="md-block">
+                                        <label>Select Country</label>
+                                        <md-select ng-model="model.Country" name="Country">
+                                            <md-option value="All">All</md-option>
+                                            <md-option ng-repeat="o in lstCountry" value="{{o.Country}}">{{o.Country}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </md-content>
+                                <div layout="row" layout-align="start center">
+                                    <md-button class="md-raised md-accent" ng-disabled="FormPushNotification.$invalid" ng-click="SendPushNotification(model)">Send</md-button>
+                                    <md-button class="md-raised md-default" ng-click="Reset()">Cancel</md-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="timeline" class="timeline-left" ms-timeline ms-timeline-load-more="loadMoreFeeds()">
+                        <!-- TIMELINE ITEM -->
+                        <div ms-timeline-item layout="column" layout-align="center center" layout-gt-md="row" layout-align-gt-md="center start" ng-repeat="o in lstFeeds">
+                            <div class="timeline-card" layout="row" flex="50">
+                                <!-- MS-CARD -->
+                                <ms-card template="app/core/directives/ms-card/templates/template-1/template-1.html" ng-model="o"></ms-card>
+                                <!--  <div class="template-1">
+                        <div class="media">
+                            <img class="image" ng-src="{{o.full_picture}}" alt="Facebook">
+                        </div>
+                        <div class="content pv-24 ph-16">
+                            <div class="title h1" ng-if="o.name">
+                                {{o.name}}
+                            </div>
+                           
+                            <div class="text pt-16" ng-if="o.description">
+                                {{o.description}}
+                            </div>
+                        </div>
+                    </div> -->
+                                <!-- / MS-CARD -->
+                            </div>
+                            <div class="timeline-point md-accent-bg md-whiteframe-2dp">
+                                <md-icon md-font-icon="icon-document"></md-icon>
+                            </div>
+                            <div class="timeline-detail" flex="50">
+                                <div class="time">
+                                    {{o.PostDate}}
+                                </div>
+                                <div class="event">
+                                    {{o.type}}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / TIMELINE ITEM -->
+                    </div>
+                    </div>
+                </md-tab>
+                <md-tab label="Auto Push Notification Settings">
+                <div class="custom-content">
+                    <md-content class="md-padding" md-selected="selectedIndex">
+                        <!--   <div class="md-whiteframe-4dp"> -->
+                        <!--   <h2>Auto push notification times</h2> -->
+                        <md-toolbar>
+                            <div class="md-toolbar-tools">
+                                <h2 class="md-flex">Auto push notification times</h2>
+                            </div>
+                        </md-toolbar>
+                        <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                            <thead>
+                                <tr>
+                                    <th class="all">
+                                        <div class="table-header">
+                                            <span class="column-title">No</span>
+                                        </div>
+                                    </th>
+                                    <!--  <th class="all">
+                                        <div class="table-header">
+                                            <span class="column-title">Name</span>
+                                        </div>
+                                    </th> -->
+                                    <th class="all">
+                                        <div class="table-header" align="center">
+                                            <span class="column-title text-center">Time</span>
+                                        </div>
+                                    </th>
+                                    <th class="all">
+                                        <div class="table-header">
+                                            <span class="column-title text-center">Action</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="SettingFlg==1">
+                                    <td></td>
+                                    <td align="center">
+                                        <md-input-container class="md-block" flex>
+                                            <label>Time</label>
+                                            <input mdc-datetime-picker date="false" time="true" type="text" id="time" format="HH:mm" ng-model="Settingmodel.Value">
+                                        </md-input-container>
+                                    </td>
+                                    <td align="center">
+                                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-disabled="Settingmodel.Value==''" ng-click="UpdateSettings(Settingmodel)">
+                                            <md-icon md-font-icon="icon-content-save"></md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button md-raised md-background md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="ResetSettings()">
+                                            <md-icon md-font-icon="icon-close"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="o in lstData">
+                                    <td>{{ $index+1 }}</td>
+                                    <!--   <td>{{ o.Name }}</td> -->
+                                    <td align="center">{{ o.Value }}</td>
+                                    <td align="center">
+                                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-disabled="SettingFlg==1" ng-click="FetchLanguageById(o)">
+                                            <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                        </md-button>
+                                        <!--  <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteLanguage(o.Id)">
+                                            <md-icon md-font-icon="icon-trash"></md-icon>
+                                        </md-button> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <md-toolbar>
+                            <div class="md-toolbar-tools">
+                                <h2 class="md-flex">Auto push notification Countries</h2>
+                                <span flex></span>
+                                <md-button class="md-icon-button md-raised md-accent" aria-label=" Add Country for Auto Push notification" ng-if="FlgAddedEditlocal">
+                                    <md-icon md-font-icon="icon-plus" ng-click="FacebookCountrySetting($event)">
+                                    </md-icon>
+                                    <md-tooltip md-direction="left">
+                                        Add Country for Auto Push notification
+                                    </md-tooltip>
+                                </md-button>
+                            </div>
+                        </md-toolbar>
+                        <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                            <thead>
+                                <tr>
+                                    <th class="all">
+                                        <div class="table-header">
+                                            <span class="column-title">No</span>
+                                        </div>
+                                    </th>
+                                    <th class="all">
+                                        <div class="table-header" align="center">
+                                            <span class="column-title text-center">Country</span>
+                                        </div>
+                                    </th>
+                                    <th class="all">
+                                        <div class="table-header">
+                                            <span class="column-title text-center">Action</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="o in lstFacbookCountry">
+                                    <td>{{ $index+1 }}</td>
+                                    <td align="center">{{ o }}</td>
+                                    <td align="center">
+                                        <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="FlgDeletedAccess" ng-click="DeleteFacebookCountry(o)">
+                                            <md-icon md-font-icon="icon-trash"></md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-content>
+                    </div>
+                </md-tab>
+                <md-tab label="Auto Sent Facebook Feeds">
+                <div class="custom-content">
+                    <md-content class="md-padding" md-selected="selectedIndex">
+                        <!--   <div class="md-whiteframe-4dp"> -->
+                        <table class="dataTable row-border hover" id="FacebookFeedTable" datatable="" dt-instance="dtInstance1" dt-columns="dtColumns1" dt-options="dtOptions1">
+                            <thead>
+                                <tr>
+                                    <th class="all">
+                                        <div class="table-header">
+                                            <span class="column-title">No</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Title</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Message</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Datetime</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Type</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Send By</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Country</span>
+                                        </div>
+                                    </th>
+                                    <!--   <th class="all">
+                                    <div class="table-header">
+                                        <span class="column-title">Action</span>
+                                    </div>
+                                </th> -->
+                                </tr>
+                            </thead>
+                        </table>
+                        <!--  </div> -->
+                    </md-content>
+                    </div>
+                </md-tab>
+            </md-tabs>
+        </form>
+    </div>
+</md-content>
+<style type="text/css">
+.template-1 .media a {
+    position: relative;
+}
+
+.play-icon {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 2px;
+    color: #fff;
+    font-size: 45px;
+    height: 50px;
+    width: 50px;
+    /* padding-left: 5px;*/
+    transform: translateY(-50%);
+    margin-left: -20px;
+    text-shadow: 0 0 10px #000;
+}
+</style>

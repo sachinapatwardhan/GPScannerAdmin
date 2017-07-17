@@ -1,0 +1,75 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <!-- HEADER -->
+        <div class="header md-accent-bg" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start">
+                <div class="breadcrumb" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                    <span class="parent">Email Setting</span>
+                </div>
+                <div class="title">Email Setting</div>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="content">
+            <md-content class="md-whiteframe-4dp">
+                <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                    <md-tab label="Email Setting">
+                        <md-content class="md-padding">
+                            <div class="custom-content">
+                                <ms-form-wizard flex>
+                                    <form name="form" class="md-inline-form" ms-form-wizard-form>
+                                        <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                                            <label>Id</label>
+                                            <input ng-model="model.id">
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Default email from</label>
+                                            <input name="DefaultEmailFrom" ng-model="model.DefaultEmailFrom" maxlength="150" md-maxlength="150">
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>Notification email to *</label>
+                                            <input name="NotificationEmailTo" ng-model="model.NotificationEmailTo" ng-required="true" maxlength="150" md-maxlength="150">
+                                            <div ng-messages="form.NotificationEmailTo.$error" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Notification email to name is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <!--  <md-input-container class="md-block" flex-gt-sm="50">
+                                                    <label>EE Mandrill Key *</label>
+                                                    <input name="EEMandrillKey" ng-model="model.EEMandrillKey" ng-required="true" maxlength="150" md-maxlength="150">
+                                                    <div ng-messages="form.EEMandrillKey.$error" role="alert">
+                                                        <div ng-message="required">
+                                                            <span>EE Mandrill Key Name is required.</span>
+                                                        </div>
+                                                    </div>
+                                                </md-input-container> -->
+                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                            <label>EE default from</label>
+                                            <input name="EEDefaultFrom" ng-model="model.EEDefaultFrom" maxlength="150" md-maxlength="150">
+                                            <div ng-messages="form.EEDefaultFrom.$error" role="alert">
+                                                <div ng-message="required">
+                                                    <span>EE default from is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <label>EE validate email addresses</label>
+                                        <br/>
+                                        <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="model.EEValidateEmailAddresses" class="md-primary"></md-checkbox>
+                                        <div align="left">
+                                            <md-button class="md-raised md-primary" ng-disabled="!form.$valid" ng-if="FlgModifiedAccess" ng-click="SaveEmailSetting(model)">Save</md-button>
+                                        </div>
+                                    </form>
+                                </ms-form-wizard>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</md-content>

@@ -1,0 +1,113 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <!-- HEADER -->
+        <div class="header md-accent-bg" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start">
+                <div class="breadcrumb" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                    <span class="parent">Facebook Page</span>
+                </div>
+                <div class="title">Facebook Page Setting</div>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="content">
+            <md-content class="md-whiteframe-4dp">
+                <form name="formSetting" class="md-inline-form">
+                    <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                        <md-tab label="List of Fagebook Page" ng-click="ResetTab()">
+                            <md-content class="md-padding" md-selected="selectedIndex">
+                                <div class="custom-content">
+                                    <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                                        <thead>
+                                            <tr>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">No</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">County Name</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Facebook Page No</span>
+                                                    </div>
+                                                </th>
+                                                <th class="all">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Action</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="o in lstFacebookPage">
+                                                <td>{{ $index+1 }}</td>
+                                                <td>{{ o.CountryName }}</td>
+                                                <td>{{o.FacebookPageId}}</td>
+                                                <td>
+                                                    <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchFacebookPageId(o)">
+                                                        <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                                    </md-button>
+                                                    <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="FlgDeletedAccess" ng-click="DeleteFacebookPage(o.id)">
+                                                        <md-icon md-font-icon="icon-trash"></md-icon>
+                                                    </md-button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Facebook Page" ng-click="ResetModel()" ng-if="FlgAddedEditlocal">
+                            <md-content class="md-padding">
+                                <div class="custom-content">
+                                    <div class="md-padding">
+                                        <md-tabs md-dynamic-height md-border-bottom>
+                                            <md-tab label="Standard">
+                                                <div class="custom-content">
+                                                    <md-content class="md-padding">
+                                                        <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                                                            <label>Id</label>
+                                                            <input ng-model="model.id">
+                                                        </md-input-container>
+                                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                                            <label>Country Name *</label>
+                                                            <input name="Name" ng-model="model.CountryName" ng-required="true" maxlength="100" md-maxlength="100">
+                                                            <div ng-messages="formSetting.Name.$error" ng-if="formSetting.Name.$touched">
+                                                                <div ng-message="required">
+                                                                    <span>Country is required</span>
+                                                                </div>
+                                                            </div>
+                                                        </md-input-container>
+                                                        <md-input-container class="md-block" flex-gt-sm="50">
+                                                            <label>Facebook Page No *</label>
+                                                            <input name="Page" ng-model="model.FacebookPageId" placeholder="12345" type="number" ng-required="true">
+                                                            <div ng-messages="formSetting.Page.$error" ng-if="formSetting.Page.$touched">
+                                                                <div ng-message="required"><span>Facebook Page No is required</span></div>
+                                                            </div>
+                                                        </md-input-container>
+                                                    </md-content>
+                                                    <div align="left">
+                                                        <md-button class="md-raised md-primary" ng-disabled="!formSetting.$valid" ng-click="CreatePage(model)">Save</md-button>
+                                                        <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                                    </div>
+                                                </div>
+                                            </md-tab>
+                                        </md-tabs>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </form>
+            </md-content>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</md-content>

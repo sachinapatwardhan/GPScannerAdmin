@@ -1,0 +1,82 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <!-- HEADER -->
+        <div class="header md-accent-bg" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start">
+                <div class="breadcrumb" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                    <span class="parent">Module</span>
+                </div>
+                <div class="title">Module Management</div>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="content">
+            <md-content class="md-whiteframe-4dp">
+                <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                    <md-tab label="Manage Module Permission">
+                        <md-content class="md-padding" md-selected="selectedIndex">
+                            <div class="custom-content">
+                                <table class="dataTable row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-column-defs="vm.dtColumnDefs">
+                                    <thead>
+                                        <tr>
+                                            <th class="all">
+                                                <div class="table-header">
+                                                    <span class="column-title">Module</span>
+                                                </div>
+                                            </th>
+                                            <th class="all">
+                                                <div class="table-header">
+                                                    <span class="column-title">Is Active</span>
+                                                </div>
+                                            </th>
+                                            <th class="all">
+                                                <div class="table-header">
+                                                    <span class="column-title">Display Order</span>
+                                                </div>
+                                            </th>
+                                            <th class="all">
+                                                <div class="table-header">
+                                                    <span class="column-title">Action</span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="o in lstModules">
+                                            <td>{{ o.Module }}</td>
+                                            <td>
+                                                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.IsActive" ng-change="SaveModule(o)" class="md-primary"></md-checkbox>
+                                            </td>
+                                            <td ng-if="!o.IsUpdate">{{o.DisplayOrder}}</td>
+                                            <td ng-if="o.IsUpdate">
+                                                <md-input-container  class="md-block margin-0" flex>
+                                                    <input type="number" ng-model="o.DisplayOrder">
+                                                </md-input-container>
+                                            </td>
+                                            <td>
+                                                <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="!o.IsUpdate">
+                                                    <md-icon md-font-icon="icon-pencil-box-outline" ng-click="FetchmoduleById(o)"></md-icon>
+                                                </md-button>
+
+                                                <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="o.IsUpdate" ng-disabled="o.DisplayOrder==''" ng-click="SaveModule(o)">
+                                                    <md-icon md-font-icon="icon-content-save"></md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button md-raised md-background md-raised md-hue-2" ng-if="o.IsUpdate" ng-click="ResetEdit(o)">
+                                                    <md-icon md-font-icon="icon-close"></md-icon>
+                                                </md-button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</md-content>

@@ -1,0 +1,161 @@
+<md-content>
+    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
+            <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
+                <div class="breadcrumb layout-align-start-center layout-row" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-home" class="s16 ng-isolate-scope md-font icon-home material-icons md-default-theme" aria-hidden="true"></md-icon>
+                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator ng-isolate-scope md-font icon-chevron-right material-icons md-default-theme" aria-hidden="true"></md-icon><span class="parent">Tax Provider</span></div>
+                <div class="title">Tax Provider Management</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="white-bg md-whiteframe-4dp">
+                <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                    <md-tab label="Tax Providers">
+                        <md-content class="md-padding">
+                            <table class="dataTable row-border hover">
+                                <thead>
+                                    <tr>
+                                        <th class="all">
+                                            <div class="table-header">
+                                                <span class="column-title">No</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Friendly Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">System Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Is Primary Provider</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Mark as Primary Provider</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Configure</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="normal-mode">
+                                        <td>
+                                            <span>1</span>
+                                        </td>
+                                        <td>Fixed tax rate provider</td>
+                                        <td>Tax.FixedRate</td>
+                                        <td>
+                                            <md-button class="md-icon-button md-raised md-green-500-bg md-warn md-hue-2" ng-show="FlgSystemNameFixed==true">
+                                                <md-icon md-font-icon="icon-check"></md-icon>
+                                            </md-button>
+                                            <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-show="FlgSystemNameCountry==true">
+                                                <md-icon md-font-icon="icon-close"></md-icon>
+                                            </md-button>
+                                        </td>
+                                        <td>
+                                            <md-button class="md-accent md-raised md-hue-2" ng-click="SaveProviderSystemName('FixedRate')">Mark as Primary Provider</md-button>
+                                        </td>
+                                        <td>
+                                            <md-button class="md-accent md-raised md-hue-2" ng-click="GetAllTaxCategory()">Configure</md-button>
+                                        </td>
+                                    </tr>
+                                    <tr class="normal-mode">
+                                        <td>
+                                            <span>2</span>
+                                        </td>
+                                        <td>Tax By Country & State & Zip</td>
+                                        <td>Tax.CountryStateZip</td>
+                                        <td>
+                                            <md-button class="md-icon-button md-raised md-green-500-bg md-warn md-hue-2" ng-show="FlgSystemNameCountry==true">
+                                                <md-icon md-font-icon="icon-check"></md-icon>
+                                            </md-button>
+                                            <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-show="FlgSystemNameFixed==true">
+                                                <md-icon md-font-icon="icon-close"></md-icon>
+                                            </md-button>
+                                        </td>
+                                        <td>
+                                            <md-button class="md-accent md-raised md-hue-2" ng-click="SaveProviderSystemName('CountryStateZip')">Mark as Primary Provider</md-button>
+                                        </td>
+                                        <td>
+                                            <md-button class="md-accent md-raised md-hue-2" ng-click="ShowModal()">Configure</md-button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Configure - Fixed Tax Rate Provider" ng-click="GetAllTaxCategory()">
+                        <md-content class="md-padding">
+                            <ms-form-wizard flex>
+                                <form name="FormRate" class="md-inline-form" ms-form-wizard-form novalidate>
+                                    <!-- datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" -->
+                                    <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                                        <thead>
+                                            <tr>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">No</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Tax category</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Rate</span>
+                                                    </div>
+                                                </th>
+                                                <th class="secondary-text">
+                                                    <div class="table-header">
+                                                        <span class="column-title">Action</span>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="o in LstTaxCategory">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{o.Name}}</td>
+                                                <td>
+                                                    <span ng-show="EditFlg!=o.id">{{o.Rate}}</span>
+                                                    <md-input-container class="md-block" flex ng-show="EditFlg==o.id">
+                                                        <input ng-model="o.Rate" value="{{o.Rate}}" name="Rate" placeholder="Rate" type="number" max="100">
+                                                        <small ng-show="!FormRate.$valid" style="color:red;float:right">Rate less Then 100.</small>
+                                                    </md-input-container>
+                                                </td>
+                                                <td>
+                                                    <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-show="EditFlg!=o.id" ng-click="SetEditFlg(o.id)">
+                                                        <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                                    </md-button>
+                                                    <md-button class="md-icon-button md-raised md-accent md-hue-2" ng-disabled="!FormRate.$valid" ng-show="EditFlg==o.id" ng-click="SaveTaxCategoryFixedRate(o.id,o.Rate)">
+                                                        <md-icon md-font-icon="icon-content-save"></md-icon>
+                                                    </md-button>
+                                                    <md-button class="md-icon-button md-raised md-warn md-hue-2" ng-show="EditFlg==o.id" ng-click="CancelUpdate(item.id)">
+                                                        <md-icon md-font-icon="icon-close"></md-icon>
+                                                    </md-button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </ms-form-wizard>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </div>
+        </div>
+    </div>
+</md-content>
