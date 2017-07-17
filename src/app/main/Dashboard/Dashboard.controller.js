@@ -177,9 +177,9 @@
                                         }
                                     };
                                 }, function(err) {
-                                    console.log('Err:', err);
+                                    //  console.log('Err:', err);
                                 }, function(msg) {
-                                    console.log('message:', msg);
+                                    //console.log('message:', msg);
                                 });
                             };
                         })(marker, content, infowindow, loan, add, Phone, lat, long));
@@ -1429,7 +1429,7 @@
             }
 
             $http.get($rootScope.RoutePath + "dashboard/GetDashboardData", { params: params }).then(function(data) {
-                console.log("sdfds", data);
+
                 $scope.lstDashBoardInfo = data.data;
 
                 //Today
@@ -1633,26 +1633,7 @@
                 } else {
                     monthwiseOwnerlist.push(0)
                 }
-                // if (objUserShop != undefined && objUserShop != null && objUserShop != '') {
-                //     if (objUserShop.Type == 'Shop' || objUserShop.Type == 'Both') {
-                //         console.log("objUserShop", objUserShop);
-                //         monthwiseShoplist.push(objUserShop.Total);
-                //     } else {
-                //         monthwiseShoplist.push(0)
-                //     }
-                // } else {
-                //     monthwiseShoplist.push(0)
-                // };
-                // var objUserOwner = _.findWhere($scope.userslist, { month: $scope.CurrentMonth, year: $scope.CurrentYear });
-                // if (objUserOwner != undefined && objUserOwner != null && objUserOwner != '') {
-                //     if (objUserOwner.Type == 'Owner' || objUserOwner.Type == 'Both') {
-                //         monthwiseOwnerlist.push(objUserShop.Total);
-                //     } else {
-                //         monthwiseOwnerlist.push(0)
-                //     }
-                // } else {
-                //     monthwiseOwnerlist.push(0)
-                // };
+
                 //Add Label for graph
                 var monthName = $scope.listMonthbyName[$scope.CurrentMonth - 1] + ' - ' + $scope.CurrentYear;
                 $scope.labelsMonth.push(monthName);
