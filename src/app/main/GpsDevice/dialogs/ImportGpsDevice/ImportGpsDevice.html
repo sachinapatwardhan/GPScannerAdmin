@@ -1,0 +1,49 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Import Trackers From Excel</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ms-scroll>
+        <form Name="formImport" class="md-inline-form">
+            <md-content class="md-padding">
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex="50" flex-gt-sm="25">
+                        <label>Type </label>
+                        <md-select ng-model="model.Type" name="Type">
+                            <md-option name="Type1" value="M2" selected="true">M2</md-option>
+                            <md-option name="Type2" value="M2-U">C2</md-option>
+                            <!-- <md-option name="Type3" value="Petrover">Petrover</md-option> -->
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="50" flex-gt-sm="25">
+                        <label>Country </label>
+                        <md-select name="CountryId" ng-model="model.CountryId">
+                            <md-option ng-repeat="o in lstCountry" value="{{o.id}}">{{o.Country}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <p>You must upload file same as excel template for Import Trackers .
+                    <br/>
+                    <!-- <small>you can download excel template for import excel file.</small> -->
+                </p>
+                <lf-ng-md-file-input name="files1" lf-files="Productfiles" lf-mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" lf-required lf-maxcount="1" lf-api="apiReset" lf-filesize="10MB" ng-click="Reset()"></lf-ng-md-file-input>
+                <div ng-messages="formImport.files1.$error" style="color:red;">
+                    <div ng-message="required">You must Select file.</div>
+                    <div ng-message="maxcount">Too much files.</div>
+                    <div ng-message="filesize">File size too large.</div>
+                    <div ng-message="mimetype">Only Excel File Supported.</div>
+                </div>
+            </md-content>
+            <div align="left">
+                <md-button class="md-raised md-primary" ng-disabled="!formImport.$valid" ng-click="Import(model)">Import</md-button>
+                <md-button class="md-raised md-warn" ng-click="closeModel()">Close Model</md-button>
+            </div>
+        </form>
+        </md-content>
+    </md-dialog-content>
+</md-dialog>

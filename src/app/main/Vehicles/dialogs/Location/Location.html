@@ -1,0 +1,72 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="taskForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Location</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <label style="text-align: center; margin-left: 40%" class="green-fg p-16 h3">{{NoLocation}}</label>
+            <div class="widget-group text-left" flex-gt-sm="100">
+                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
+                    <md-content class="text-right">
+                        <div>
+                            <div layout-gt-sm="row">
+                                <div style="width: 100%;">
+                                    <div id="map123" style="height: 500px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </md-content>
+                </ms-widget>
+            </div>
+        </md-dialog-content>
+
+    </form>
+</md-dialog>
+
+<style>
+    .customMarker1 {
+        height: 60px;
+        background-image: url(/assets/images/marker2.png);
+        width: 43px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -21px;
+        margin-top: -31px;
+    }
+    
+    .customMarkerPetShop {
+        height: 60px;
+        background-image: url(/assets/images/marker1.png);
+        width: 43px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -20px;
+        margin-top: -60px;
+    }
+    
+    .customMarker1 .my-text-shadow {
+        color: white;
+        position: absolute;
+        left: -44px;
+        top: -15px;
+        text-shadow: -2px -2px 0 #0cad00, -2px -1px 0 #0cad00, -2px 0px 0 #0cad00, -2px 1px 0 #0cad00, -2px 2px 0 #0cad00, -1px -2px 0 #0cad00, -1px -1px 0 #0cad00, -1px 0px 0 #0cad00, -1px 1px 0 #0cad00, -1px 2px 0 #0cad00, 0px -2px 0 #0cad00, 0px -1px 0 #0cad00, 0px 0px 0 #0cad00, 0px 1px 0 #0cad00, 0px 2px 0 #0cad00, 1px -2px 0 #0cad00, 1px -1px 0 #0cad00, 1px 0px 0 #0cad00, 1px 1px 0 #0cad00, 1px 2px 0 #0cad00, 2px -2px 0 #0cad00, 2px -1px 0 #0cad00, 2px 0px 0 #0cad00, 2px 1px 0 #0cad00, 2px 2px 0 #0cad00;
+        font-size: 14px;
+        width: 100px;
+    }
+    
+    .customMarkerPetShop .my-text-shadow {
+        color: white;
+        position: absolute;
+        left: 25px;
+        top: 5px;
+        text-shadow: -2px -2px 0 #ee0600, -2px -1px 0 #ee0600, -2px 0px 0 #ee0600, -2px 1px 0 #ee0600, -2px 2px 0 #ee0600, -1px -2px 0 #ee0600, -1px -1px 0 #ee0600, -1px 0px 0 #ee0600, -1px 1px 0 #ee0600, -1px 2px 0 #ee0600, 0px -2px 0 #ee0600, 0px -1px 0 #ee0600, 0px 0px 0 #ee0600, 0px 1px 0 #ee0600, 0px 2px 0 #ee0600, 1px -2px 0 #ee0600, 1px -1px 0 #ee0600, 1px 0px 0 #ee0600, 1px 1px 0 #ee0600, 1px 2px 0 #ee0600, 2px -2px 0 #ee0600, 2px -1px 0 #ee0600, 2px 0px 0 #ee0600, 2px 1px 0 #ee0600, 2px 2px 0 #ee0600;
+        font-size: 14px;
+    }
+</style>

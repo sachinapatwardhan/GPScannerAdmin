@@ -1,0 +1,157 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="taskForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Detail of Vehicle - {{Name}} </span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div class="widget-group text-left" flex-gt-sm="100">
+                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                        <md-content class="md-padding">
+                            <form name="formVehicledetails1" novalidate class="md-inline-form" aria-invalid="false">
+                                <div class="content">
+                                    <div layout="row" layout-wrap>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <md-checkbox class="md-secondary" ng-model="model.IsACC" value="{{model.IsACC}}" flex></md-checkbox>&nbsp;&nbsp;Is Acc
+                                            <div ng-messages="formVehicledetails1.IsACC.$error" ng-if="formVehicledetails1.IsACC.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Is Acc field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Max Speed </label>
+                                            <input type="number" name="MaxSpeed" ng-model="model.MaxSpeed">
+                                            <div ng-messages="formVehicledetails1.MaxSpeed.$error" ng-if="formVehicledetails1.MaxSpeed.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Max Speed field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Sleep Mode </label>
+                                            <input type="text" name="SleepMode" ng-model="model.SleepMode">
+                                            <div ng-messages="formVehicledetails1.SleepMode.$error" ng-if="formVehicledetails1.SleepMode.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Sleep Mode field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>GPRS Interval </label>
+                                            <input type="text" name="GPRSInterval" ng-model="model.GPRSInterval">
+                                            <div ng-messages="formVehicledetails1.GPRSInterval.$error" ng-if="formVehicledetails1.GPRSInterval.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>GPRS Interval field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>GPRS Stop Interval </label>
+                                            <input type="text" name="GPRSStopInterval" ng-model="model.GPRSStopInterval">
+                                            <div ng-messages="formVehicledetails1.GPRSStopInterval.$error" ng-if="formVehicledetails1.GPRSStopInterval.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>GPRS Stop Interval field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Arm </label>
+                                            <input type="text" name="Arm" ng-model="model.Arm">
+                                            <div ng-messages="formVehicledetails1.Arm.$error" ng-if="formVehicledetails1.Arm.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Arm field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>OdoMeter </label>
+                                            <input type="text" name="OdoMeter" ng-model="model.OdoMeter">
+                                            <div ng-messages="formVehicledetails1.OdoMeter.$error" ng-if="formVehicledetails1.OdoMeter.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>OdoMeter Name field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Heartbeat Interval </label>
+                                            <input type="text" name="HeartbeatInterval" ng-model="model.HeartbeatInterval">
+                                            <div ng-messages="formVehicledetails1.HeartbeatInterval.$error" ng-if="formVehicledetails1.HeartbeatInterval.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Heartbeat Interval field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Relay </label>
+                                            <input type="text" name="Relay" ng-model="model.Relay">
+                                            <div ng-messages="formVehicledetails1.Relay.$error" ng-if="formVehicledetails1.Relay.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Relay field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Siren </label>
+                                            <input type="text" name="Siren" ng-model="model.Siren">
+                                            <div ng-messages="formVehicledetails1.Siren.$error" ng-if="formVehicledetails1.Siren.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Vehicle Siren field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>User Defined</label>
+                                            <input type="text" name="UserDefined" ng-model="model.UserDefined">
+                                            <div ng-messages="formVehicledetails1.UserDefined.$error" ng-if="formVehicledetails1.UserDefined.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>User Defined field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Door Lock </label>
+                                            <input type="text" name="DoorLock" ng-model="model.DoorLock">
+                                            <div ng-messages="formVehicledetails1.DoorLock.$error" ng-if="formVehicledetails1.DoorLock.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span> Door Lock field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Door Unlock</label>
+                                            <input type="text" name="DoorUnlock" ng-model="model.DoorUnlock">
+                                            <div ng-messages="formVehicledetails1.DoorUnlock.$error" ng-if="formVehicledetails1.DoorUnlock.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Door Unlock field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                            <label>Time Zone</label>
+                                            <input type="text" name="TimeZone" ng-model="model.TimeZone">
+                                            <div ng-messages="formVehicledetails1.TimeZone.$error" ng-if="formVehicledetails1.TimeZone.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>Time Zone field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div align="left">
+                                        <md-button class="md-raised md-primary" ng-click="CreateVehicleDetails(model)">Update</md-button>
+                                        <md-button class="md-raised md-warn" ng-click="closeModel()">Cancel</md-button>
+                                    </div>
+                                </div>
+                            </form>
+                        </md-content>
+                    </div>
+                </ms-widget>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>
