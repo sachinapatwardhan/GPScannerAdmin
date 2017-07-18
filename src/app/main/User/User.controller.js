@@ -15,8 +15,6 @@
                 id: '',
                 email: '',
                 username: '',
-                ShopName: '',
-                PersonInCharge: '',
                 phone: '',
                 createdby: 'Admin',
                 createddate: new Date(),
@@ -27,22 +25,41 @@
                 country: '',
                 state: '',
                 city: '',
+                password: '',
+                conPass: '',
                 gender: '',
                 image: '',
-                Type: '',
-                OwnerName: '',
-                OwnerPhone: '',
-                OwnerEmail: '',
-                // OwnerPassword: '',
                 IsMobileVerify: false,
             };
             //$scope.GetAllUser();
             $scope.GetAllRoles();
             $scope.GetAllCountry();
-            $scope.tab = { selectedIndex: 0 };
+            $scope.tab = {
+                selectedIndex: 0
+            };
 
             $scope.FlgImage = 0;
             $scope.FlgCropImage = 0;
+
+            $scope.searchTermCountry = '';
+            $scope.searchTermState = '';
+            $scope.searchTermCity = '';
+            $scope.searchTermLocation = '';
+            $scope.searchTermSubLocation = '';
+
+            $scope.searchCountry = '';
+            $scope.searchState = '';
+            $scope.searchCity = '';
+            $scope.searchLocation = '';
+            $scope.searchSubLocation = '';
+
+            $scope.idCountry = '';
+            $scope.flgEdit = false;
+            $scope.Search = '';
+            $scope.flag = false;
+            $scope.modelSearch = {
+                Search: '',
+            }
         }
 
         // $scope.GetAllUser = function () {
@@ -51,6 +68,24 @@
         //         $scope.lstUsers = data.data;
         //     });
         // }
+
+        $scope.clearSearchTerm = function() {
+            $scope.searchTermCountry = '';
+            $scope.searchTermState = '';
+            $scope.searchTermCity = '';
+            $scope.searchTermLocation = '';
+            $scope.searchTermSubLocation = '';
+
+            $scope.searchCountry = '';
+            $scope.searchState = '';
+            $scope.searchCity = '';
+            $scope.searchLocation = '';
+            $scope.searchSubLocation = '';
+        };
+
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
 
         $scope.GetAllRoles = function() {
             // Data
@@ -61,16 +96,16 @@
 
         $scope.FetchRoleById = function(id) {
             $rootScope.FlgAddedEditlocal = true;
-            var o = _.findWhere($scope.lstdata, { id: id });
+
+            var o = _.findWhere($scope.lstdata, {
+                id: id
+            });
+            $scope.flgEdit = true;
             $scope.tab.selectedIndex = 1;
             $scope.model.phone = o.phone;
             $scope.model.email = o.email;
             $scope.model.phone = o.phone;
             $scope.model.username = o.username;
-
-            $scope.model.ShopName = o.ShopName;
-            $scope.model.PersonInCharge = o.PersonInCharge;
-
             $scope.model.createddate = o.createddate;
             $scope.model.createdby = o.createdby;
             $scope.model.modifieddate = new Date();
@@ -87,20 +122,24 @@
             }, 1000);
 
             $scope.model.gender = o.gender;
-            $scope.model.Type = o.Type;
-            $scope.model.OwnerName = o.OwnerName;
-            $scope.model.OwnerPhone = o.OwnerPhone;
-            $scope.model.OwnerEmail = o.OwnerEmail;
-            // $scope.model.OwnerPassword = o.OwnerPassword;
             $scope.model.IsMobileVerify = o.IsMobileVerify;
-
-            if (o.tbluserinroles.length > 0) {
-                for (var i = 0; i < o.tbluserinroles.length; i++) {
-                    var obj = _.findWhere($scope.lstRoles, { id: o.tbluserinroles[i].roleId })
+            // if (o.tbluserinroles.length > 0) {
+            //     for (var i = 0; i < o.tbluserinroles.length; i++) {
+            //         var obj = _.findWhere($scope.lstRoles, {
+            //             id: o.tbluserinroles[i].roleId
+            //         })
+            //         obj.checked = true;
+            //     }
+            // }
+            var RoleId = o.roleId.split(',');
+            if (RoleId.length > 0) {
+                for (var i = 0; i < RoleId.length; i++) {
+                    var obj = _.findWhere($scope.lstRoles, {
+                        id: parseInt(RoleId[i])
+                    })
                     obj.checked = true;
                 }
             }
-
             $scope.model.image = o.image;
             $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
             if ($scope.model.image != null && $scope.model.image != '' && $scope.model.image != undefined) {
@@ -109,6 +148,8 @@
                 $scope.FlgImage = 0;
             }
 
+            $scope.flag = true;
+
         }
 
 
@@ -116,6 +157,10 @@
         $scope.GetAllCountry = function() {
             $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
                 $scope.lstCountry = data.data;
+                var obj = _.filter($scope.lstCountry, {
+                    Country: 'India'
+                });
+                $scope.idCountry = obj[0].Country;
             });
         }
 
@@ -125,14 +170,19 @@
             $scope.lstCity = '';
             $scope.model.state = "";
             $scope.model.city = "";
+
             if (Country != null && Country != '' && Country != undefined) {
-                var Countryid = _.where($scope.lstCountry, { Country: Country })[0].id;
+                var Countryid = _.filter($scope.lstCountry, {
+                    Country: Country
+                });
                 $scope.lstState = '';
                 $scope.lstCity = '';
                 var params = {
-                    CountryId: Countryid
+                    CountryId: Countryid[0].id
                 };
-                $http.get($rootScope.RoutePath + "state/GetAllStateByCountryId", { params: params }).success(function(data) {
+                $http.get($rootScope.RoutePath + "state/GetAllStateByCountryId", {
+                    params: params
+                }).success(function(data) {
                     $scope.lstState = data.data;
                 });
             }
@@ -142,13 +192,16 @@
         //Get All City By State Name
         $scope.GetAllCityByStateId = function(State) {
             if (State != null && State != '' && State != undefined) {
-                var Stateid = _.where($scope.lstState, { Name: State })[0].id;
-
+                var Stateid = _.filter($scope.lstState, {
+                    Name: State
+                });
                 $scope.lstCity = '';
                 var params = {
-                    StateId: Stateid
+                    StateId: Stateid[0].id
                 };
-                $http.get($rootScope.RoutePath + "city/GetAllCityByStateId", { params: params }).success(function(data) {
+                $http.get($rootScope.RoutePath + "city/GetAllCityByStateId", {
+                    params: params
+                }).success(function(data) {
                     $scope.lstCity = data.data;
                 });
             }
@@ -156,102 +209,114 @@
 
         //Create New User With It's Role
         $scope.CreateUser = function(o) {
-            o.roleId = _.where($scope.lstRoles, { checked: true });
-            if (o.roleId.length > 0) {
-                if ($scope.Mediafiles.length == 0 && (o.id == 0 || o.id == '')) {
-                    //if ($scope.Mediafiles.length == 0) {
-                    o.image = null;
-                    $cookieStore.put('UserImage', null);
-                    $rootScope.UserImage = $cookieStore.get('UserImage');
-                }
-                $http.post($rootScope.RoutePath + "user/SaveUser", o).then(function(data) {
-                    //$scope.SaveUserInRole(o);
-                    if (data.data.success == true) {
-                        var id;
-                        if (o.id != 0) {
-                            id = o.id;
-                        } else {
-                            id = data.data.data.userId;
-                        }
-                        if ($scope.Mediafiles.length > 0) {
-                            var formData = new FormData();
-                            // angular.forEach($scope.Mediafiles, function(d) {
-                            formData.append(id, file);
-                            // });
-                            $http.post($rootScope.RoutePath + "user/uploadImage", formData, {
-                                transformRequest: angular.identity,
-                                headers: { 'Content-Type': undefined }
-                            }).then(function(data) {
-                                if ($rootScope.UserName == o.username) {
-                                    if (data.data.data != null) {
-                                        $cookieStore.put('UserImage', data.data.data);
-                                        $rootScope.UserImage = $cookieStore.get('UserImage');
+            o.roleId = _.where($scope.lstRoles, {
+                checked: true
+            });
+            if (o.password != o.conPass) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Password And Confirm Password Should Be Same')
+                    .position('top right')
+                    .hideDelay(3000)
+                )
+            } else {
+                if (o.roleId.length > 0) {
+                    if ($scope.Mediafiles.length == 0 && (o.id == 0 || o.id == '')) {
+                        o.image = null;
+                        $cookieStore.put('UserImage', null);
+                        $rootScope.UserImage = $cookieStore.get('UserImage');
+                    }
+                    $http.post($rootScope.RoutePath + "user/SaveUser", o).then(function(data) {
+                        //$scope.SaveUserInRole(o);
+                        if (data.data.success == true) {
+                            var id;
+                            if (o.id != 0) {
+                                id = o.id;
+                            } else {
+                                id = data.data.data.userId;
+                            }
+                            if ($scope.Mediafiles.length > 0) {
+                                var formData = new FormData();
+                                // angular.forEach($scope.Mediafiles, function(d) {
+                                formData.append(id, file);
+                                // });
+                                $http.post($rootScope.RoutePath + "user/uploadImage", formData, {
+                                    transformRequest: angular.identity,
+                                    headers: {
+                                        'Content-Type': undefined
                                     }
-                                }
+                                }).then(function(data) {
+                                    if ($rootScope.UserName == o.username) {
+                                        if (data.data.data != null) {
+                                            $cookieStore.put('UserImage', data.data.data);
+                                            $rootScope.UserImage = $cookieStore.get('UserImage');
+                                        }
+                                    }
 
-                                $scope.myImage = '';
-                                $scope.myCroppedImage = '';
-                                $scope.apiMedia.removeAll();
-                                $scope.GetAllUser(true);
+                                    $scope.myImage = '';
+                                    $scope.myCroppedImage = '';
+                                    $scope.apiMedia.removeAll();
+                                    $scope.GetAllUser(true);
+                                    $rootScope.FlgAddedEditlocal = false;
+                                    if ($rootScope.FlgAddedAccess == true) {
+                                        $rootScope.FlgAddedEditlocal = true;
+                                    }
+
+                                    $scope.init();
+                                }, function(err) {
+                                    $scope.myImage = '';
+                                    $scope.myCroppedImage = '';
+                                    $scope.apiMedia.removeAll();
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                        .textContent(err)
+                                        .position('top right')
+                                        .hideDelay(3000)
+                                    );
+                                    // do sometingh
+                                });
+
+                            } else {
                                 $rootScope.FlgAddedEditlocal = false;
                                 if ($rootScope.FlgAddedAccess == true) {
                                     $rootScope.FlgAddedEditlocal = true;
                                 }
-
+                                $scope.GetAllUser(true);
                                 $scope.init();
-                            }, function(err) {
-                                $scope.myImage = '';
-                                $scope.myCroppedImage = '';
-                                $scope.apiMedia.removeAll();
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                    .textContent(err)
-                                    .position('top right')
-                                    .hideDelay(3000)
-                                );
-                                // do sometingh
-                            });
-
-                        } else {
-                            $rootScope.FlgAddedEditlocal = false;
-                            if ($rootScope.FlgAddedAccess == true) {
-                                $rootScope.FlgAddedEditlocal = true;
                             }
-                            $scope.GetAllUser(true);
-                            $scope.init();
-                        }
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    } else {
-                        if (data.data.data == 'TOKEN') {
-                            //$cookieStore.remove('UserName');
-                            //$cookieStore.remove('token');
-                            //window.location.href = '/app/login';
-                        } else {
                             $mdToast.show(
                                 $mdToast.simple()
                                 .textContent(data.data.message)
                                 .position('top right')
                                 .hideDelay(3000)
                             );
+                        } else {
+                            if (data.data.data == 'TOKEN') {
+                                //$cookieStore.remove('UserName');
+                                //$cookieStore.remove('token');
+                                //window.location.href = '/app/login';
+                            } else {
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                                );
+                            }
                         }
-                    }
-                });
-            } else {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Please Select atleast One Role...')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
+                    });
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Please Select atleast One Role...')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                }
             }
 
-        }
 
+        }
 
         //$scope.SaveUserInRole = function (o) {
         //    o.roleId = parseInt(o.roleId);
@@ -284,27 +349,30 @@
 
 
         //Dynamic Pagging
+
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
                 DTColumnBuilder.newColumn('username'),
-                DTColumnBuilder.newColumn('ShopName'),
-                DTColumnBuilder.newColumn('PersonInCharge'),
                 DTColumnBuilder.newColumn('email'),
                 DTColumnBuilder.newColumn('phone'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(roleHtml),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                DTColumnBuilder.newColumn('RoleName'),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "user/GetAllDynamicUserbyCountry",
+                    url: $rootScope.RoutePath + "user/GetAllDynamicUserNew",
                     data: function(d) {
+                        if ($scope.modelSearch.Search == '') {
+                            d.search = '';
+                        } else {
+                            d.search = $scope.modelSearch.Search;
+                        }
                         d.UserCountry = $rootScope.UserCountry;
                         d.UserRoles = $rootScope.UserRoles;
                         d.CountryList = $rootScope.CountryList;
-                        d.Type = ['Shop', 'Both'];
                         return d;
                     },
                     type: "get",
@@ -319,12 +387,14 @@
                 })
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
-                .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
-                .withDisplayLength(10) // Page size
-                .withOption('aaSorting', [0, 'asc'])
+                .withPaginationType('simple') // for get full pagination options // first / last / prev / next and page numbers
+                .withDisplayLength(25) // Page size
+                .withOption('aaSorting', [2, 'asc'])
                 .withOption('responsive', true)
-                .withOption('autoWidth', false)
-                .withOption('createdRow', createdRow);
+                .withOption('autoWidth', true)
+                .withOption('createdRow', createdRow)
+                .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+                .withOption('scrollY', 'auto');
         });
         $scope.dtInstance = {};
 
@@ -369,16 +439,27 @@
             } else {
                 varspan = 'N/A';
             }
+            // if (full.tbluserinrole != null) {
+            //     varspan = full.tbluserinrole.tblrole.RoleName;
+            // } else {
+            //     varspan = 'N/A';
+            // }
             return varspan;
         };
 
-        function DateFormateHtml(data, type, full, meta) {
-            if (data != null && data != undefined && data != '') {
-                return $rootScope.convertdateformat(data);
+        function IsVerifyHtml(data, type, full, meta) {
+            var varspan = '';
+            if (data != null && data != '') {
+                if (data) {
+                    varspan = '<i class="icon-checkbox-marked-circle green-500-fg"></i>'
+                } else {
+                    varspan = '<i class="icon-cancel red-500-fg"></i>'
+                }
             } else {
-                return 'N/A';
+                varspan = '<i class="icon-cancel red-500-fg"></i>'
             }
-        }
+            return varspan;
+        };
 
         function ImageHtml(data, type, full, meta) {
             var img = '';
@@ -393,28 +474,144 @@
 
 
         function actionsHtml(data, type, full, meta) {
+            var btns = '<div layout="row">'
+                // btns += '<md-button  class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="FetchRoleById(' + data.id + ')" aria-label="">' +
+                //     '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon> <md-tooltip md-visible="" md-direction="">Edit User </md-tooltip>' +
+                //     '</md-button>';
 
-            var btns = '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="FetchRoleById(' + data.id + ')" aria-label="">' +
-                '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon>' +
-                '</md-button>';
 
-            btns += '<md-button class="md-raised md-primary" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')">Reset Password</md-button>';
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="FetchRoleById(' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+            }
 
+            if (data.IsSuspend) {
+                btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',0)" aria-label="">' +
+                    '<md-icon md-font-icon="icon-lock-outline" class="s18 red-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Resume User </md-tooltip>' +
+                    '</md-button>';
+            } else {
+                btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',1)" aria-label="">' +
+                    '<md-icon md-font-icon="icon-lock-unlocked-outline" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Suspend User </md-tooltip>' +
+                    '</md-button>';
+            }
+            // if ($rootScope.FlgModifiedAccess) {
+            //     // btns += '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')"><md-icon md-svg-icon="assets/icons/icon-pass-reset.svg"></md-icon> <md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip></md-button></div>';
+            //     btns += '<md-button class="md-raised md-primary"  ng-click="ResetPassword(' + data.id + ')">Reset Password</md-button>';
+            //     // btns += '<md-button class="md-raised md-primary"  ng-click="ChangePassword(' + data + ')">Change Password</md-button>';
+
+            // }
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword(' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
+                    '</md-button>';
+            }
+
+            // if ($rootScope.FlgModifiedAccess && !data.IsMobileVerify) {
+            //     btns += '<md-button class="edit-button md-icon-button"  ng-click="Verify(' + data.id + ')" aria-label="">' +
+            //         '<md-icon md-font-icon="icon-verified"  class="s18 green-500-fg"></md-icon>' +
+            //         '<md-tooltip md-visible="" md-direction="">Verify</md-tooltip>' +
+            //         '</md-button>';
+            // }
+
+            // if ($rootScope.FlgModifiedAccess) {
+            //     btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
+            //         '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
+            //         '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
+            //         '</md-button>';
+            // }
+            btns += '</div>'
             return btns;
         };
 
         //Dynamic Pagging End
 
+        $scope.Verify = function(id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to verify this user?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function() {
+                var params = {
+                    idUser: id,
+                };
+                $http.get($rootScope.RoutePath + "user/MobileVerify", {
+                    params: params
+                }).success(function(data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.init();
+                        $scope.GetAllUser(true);
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                });
+            });
+        }
+
+        $scope.SetSuspendStatus = function(id, flg) {
+            var title = "";
+            if (flg) {
+                title = 'Are you sure you want to suspend this user?';
+            } else {
+                title = 'Are you sure you want to resumed this user?';
+            }
+            var confirm = $mdDialog.confirm()
+                .title(title)
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function() {
+                var params = {
+                    idUser: id,
+                    flg: flg
+                };
+                $http.get($rootScope.RoutePath + "user/SetSuspendStatus", {
+                    params: params
+                }).success(function(data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.GetAllUser(true);
+                        $scope.init();
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                });
+            });
+        }
 
         //Reset Password User By Id
         $scope.ResetPassword = function(id) {
-            $scope.obj = _.findWhere($scope.lstdata, { id: id });
+            $scope.obj = _.findWhere($scope.lstdata, {
+                id: id
+            });
             var confirm = $mdDialog.confirm()
                 .title('Are you sure to Reset Password of this User ?')
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function() {
-                $http.get($rootScope.RoutePath + "account/forgotpassword?email=" + $scope.obj.email +"&Type=Shop").then(function(data) {
+                $http.get($rootScope.RoutePath + "account/forgotpassword?email=" + $scope.obj.email).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
@@ -484,8 +681,7 @@
         };
 
         // $scope.$watch('Mediafiles', function(newVal) {
-        //     console.log(newVal);
-        //     console.log($scope.Mediafiles);
+
         // })
 
         $scope.removeAllFiles = function() {
@@ -551,7 +747,9 @@
                 byteArrays.push(byteArray);
             }
 
-            var blob = new Blob(byteArrays, { type: contentType });
+            var blob = new Blob(byteArrays, {
+                type: contentType
+            });
             return blob;
         }
 
@@ -559,7 +757,9 @@
             if ($scope.myCroppedImage != '' && $scope.myCroppedImage != $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image && $scope.Mediafiles.length > 0) {
                 var image = $scope.myCroppedImage;
                 var blob = b64toBlob(image.split(",")[1], $scope.Mediafiles[0].lfFile.type, 512);
-                file = new File([blob], $scope.Mediafiles[0].lfFileName, { type: $scope.Mediafiles[0].lfFile.type });
+                file = new File([blob], $scope.Mediafiles[0].lfFileName, {
+                    type: $scope.Mediafiles[0].lfFile.type
+                });
             }
         })
 
@@ -568,7 +768,9 @@
             if ($scope.myCroppedImage != '' && $scope.myCroppedImage != $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image) {
                 var image = $scope.myCroppedImage;
                 var blob = b64toBlob(image.split(",")[1], $scope.Mediafiles[0].lfFile.type, 512);
-                file = new File([blob], $scope.Mediafiles[0].lfFileName, { type: $scope.Mediafiles[0].lfFile.type });
+                file = new File([blob], $scope.Mediafiles[0].lfFileName, {
+                    type: $scope.Mediafiles[0].lfFile.type
+                });
             }
         }
 
@@ -584,6 +786,29 @@
             $scope.AddUserForm.$setPristine();
         }
 
+        $scope.GetSerch = function(Search) {
+            $scope.modelSearch.Search = Search;
+            $scope.GetAllUser(true);
+        }
+
+        $scope.ChangePassword = function(ev, id) {
+            var obj = _.findWhere($scope.lstdata, { id: id })
+            $mdDialog.show({
+                controller: 'ChangePassword1Controller',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/User/dialogs/ChangePassword/ChangePassword.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    obj: obj,
+                    Tasks: [],
+                    event: ev,
+                    VM: vm
+                }
+            });
+        }
+
         $scope.ResetEdit = function() {
             if ($rootScope.FlgAddedAccess == true) {
                 $scope.model = {
@@ -597,33 +822,72 @@
                     modifieddate: null,
                     roleId: '',
                     userId: '',
-                    country: '',
+                    country: $scope.idCountry,
                     state: '',
                     city: '',
                     gender: '',
+                    password: '',
+                    conPass: '',
                     image: '',
-                    Type: '',
-                    OwnerName: '',
-                    OwnerPhone: '',
-                    OwnerEmail: '',
-                    // OwnerPassword: '',
                     IsMobileVerify: false,
+                };
+                $scope.tab = {
+                    selectedIndex: 1
                 };
                 $scope.FlgImage = 0;
                 $scope.FlgCropImage = 0;
-
+                $scope.flag = true;
+                $scope.flgEdit = false;
                 $scope.GetAllRoles();
                 $scope.restForm();
                 $scope.myImage = '';
                 $scope.myCroppedImage = '';
                 $scope.apiMedia.removeAll();
+                $scope.GetAllStateByCountry($scope.idCountry);
             }
+        }
+
+        $scope.ResetModel = function() {
+            $scope.model = {
+                id: '',
+                email: '',
+                username: '',
+                phone: '',
+                createdby: 'Admin',
+                createddate: new Date(),
+                modifiedby: '',
+                modifieddate: null,
+                roleId: '',
+                userId: '',
+                country: $scope.idCountry,
+                state: '',
+                city: '',
+                gender: '',
+                password: '',
+                conPass: '',
+                image: '',
+                IsMobileVerify: false,
+            };
+            $scope.tab = {
+                selectedIndex: 1
+            };
+            $scope.FlgImage = 0;
+            $scope.FlgCropImage = 0;
+            $scope.flag = false;
+            $scope.flgEdit = false;
+            $scope.GetAllRoles();
+            $scope.restForm();
+            $scope.myImage = '';
+            $scope.myCroppedImage = '';
+            $scope.apiMedia.removeAll();
+            $scope.GetAllStateByCountry($scope.idCountry);
         }
         $scope.ResetTab = function() {
             if ($rootScope.FlgAddedAccess != true) {
                 $scope.FlgAddedEditlocal = false;
             }
         }
+
 
         $scope.Reset = function() {
             $rootScope.FlgAddedEditlocal = false;

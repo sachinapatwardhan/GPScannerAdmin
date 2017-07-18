@@ -16,12 +16,19 @@
         };
 
 
-        $rootScope.convertdateformat = function(date1) {
-            var date = new Date(date1.substring(0, date1.indexOf('T')));
+        $rootScope.convertdateformat = function(date1, flg) {
+            var date = new Date(date1);
             var firstdayDay = date.getDate();
             var firstdayMonth = date.getMonth() + 1;
             var firstdayYear = date.getFullYear();
-            return ("00" + firstdayDay.toString()).slice(-2) + "-" + ("00" + firstdayMonth.toString()).slice(-2) + "-" + ("0000" + firstdayYear.toString()).slice(-4);
+            var firstdayHours = date.getHours();
+            var firstdayMinutes = date.getMinutes();
+            var firstdaySeconds = date.getSeconds();
+            if (flg == 1) {
+                return ("00" + firstdayDay.toString()).slice(-2) + "-" + ("00" + firstdayMonth.toString()).slice(-2) + "-" + ("0000" + firstdayYear.toString()).slice(-4) + ' ' + ("00" + firstdayHours.toString()).slice(-2) + ":" + ("00" + firstdayMinutes.toString()).slice(-2);
+            } else {
+                return ("00" + firstdayDay.toString()).slice(-2) + "-" + ("00" + firstdayMonth.toString()).slice(-2) + "-" + ("0000" + firstdayYear.toString()).slice(-4);
+            }
         }
 
         $rootScope.dtOptions = DTOptionsBuilder.newOptions()

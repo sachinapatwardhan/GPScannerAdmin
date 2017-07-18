@@ -10,7 +10,7 @@
         // State
         $stateProvider
             .state('app.PetDevice', {
-                url: '/Trackers',
+                url: '/PetDevice',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/PetDevice/PetDevice.html',
