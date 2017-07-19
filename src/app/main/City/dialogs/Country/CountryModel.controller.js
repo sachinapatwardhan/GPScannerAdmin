@@ -93,13 +93,25 @@
         function actionsHtml(data, type, full, meta) {
             var btn = '';
 
-            btn = btn + '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchCountryById(' + full.id + ')">' +
-                '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon>' +
-                '</md-button>' +
-                '<md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteCountry(' + full.id + ')">' +
-                '<md-icon md-font-icon="icon-trash"></md-icon>' +
-                '</md-button>';
-
+            // btn = btn + '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchCountryById(' + full.id + ')">' +
+            //     '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon>' +
+            //     '</md-button>' +
+            //     '<md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteCountry(' + full.id + ')">' +
+            //     '<md-icon md-font-icon="icon-trash"></md-icon>' +
+            //     '</md-button>';
+            if ($rootScope.FlgModifiedAccess) {
+                btn += '<md-button class="edit-button md-icon-button"  ng-click="FetchCountryById(' + full.id + ')">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 md-default-theme"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+            }
+            if ($rootScope.FlgDeletedAccess) {
+                btn += '<md-button class="edit-button md-icon-button" ng-click="DeleteCountry(' + full.id + ')">' +
+                    '<md-icon md-font-icon="icon-trash"  class="s18 red-600-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
+            }
+            btn += '</div>';
             return btn;
         };
 
@@ -143,7 +155,6 @@
 
         $scope.FetchCountryById = function(id) {
             var o = _.findWhere($scope.lstCountry, { id: id });
-            console.log(o)
             $scope.restForm();
 
             $scope.tab.selectedIndex = 1;
@@ -174,7 +185,6 @@
                         );
                         GetAllCountry(true);
                         CountryVM.GetAllCountry();
-                        $scope.restForm();
                         $scope.init();
                     } else {
                         if (data.data) {

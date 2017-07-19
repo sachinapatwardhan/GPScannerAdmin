@@ -9,7 +9,7 @@
     function LanguageController($http, $scope, $state, $rootScope, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder) {
         var vm = this;
         vm.SelectImage = SelectImage;
-
+        vm.Reset = Reset;
         $scope.init = function() {
 
             $scope.model = {
@@ -26,6 +26,23 @@
             $scope.GetAllLanguage();
             $scope.GetLangageCulture();
             $scope.tab = { selectedIndex: 0 };
+        }
+
+        $scope.gotoList = function() {
+            $scope.model = {
+                Id: '',
+                Name: '',
+                LanguageCulture: '',
+                UniqueSeoCode: '',
+                FlagImageFileName: '',
+                Rtl: false,
+                Published: true,
+                DisplayOrder: null,
+            };
+            $scope.GetAllLanguage();
+            $scope.GetLangageCulture();
+            $scope.Search = '';
+            $scope.flag = false;
         }
 
         $scope.GetAllLanguage = function() {
@@ -153,15 +170,20 @@
             });
         };
 
-        $scope.Reset = function() {
+        function Reset() {
             $rootScope.FlgAddedEditlocal = false;
             if ($rootScope.FlgAddedAccess == true) {
-                $rootScope.FlgAddedEditlocal = true
+                $rootScope.FlgAddedEditlocal = true;
             }
+            // $scope.resetForm();
             $scope.init();
-            $scope.restForm();
+            $scope.flag = true;
         }
 
+        $scope.resetForm = function() {
+            $scope.formMediadetails.$setUntouched();
+            $scope.formMediadetails.$setPristine();
+        }
 
         vm.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
@@ -172,6 +194,28 @@
             DTColumnDefBuilder.newColumnDef(5)
 
         ];
+
+        vm.dtInstance = {};
+        vm.dtOptions = {
+            dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+            columnDefs: [],
+            initComplete: function() {
+                var api = this.api(),
+                    searchBox = angular.element('body').find('#modelsearch');
+
+                // Bind an external input as a table wide search box
+                if (searchBox.length > 0) {
+                    searchBox.on('keyup', function(event) {
+                        api.search(event.target.value).draw();
+                    });
+                }
+            },
+            pagingType: 'full_numbers',
+            lengthMenu: [25, 30, 50, 100],
+            pageLength: 25,
+            scrollY: 'auto',
+            responsive: true
+        };
 
         $scope.restForm = function() {
             $scope.formLanguages.$setUntouched();
@@ -184,21 +228,19 @@
             }
         }
         $scope.ResetModel = function() {
-            if ($rootScope.FlgAddedAccess == true) {
-
-                $scope.FlgImage = 0;
-                $scope.model = {
-                    Id: '',
-                    Name: '',
-                    LanguageCulture: '',
-                    UniqueSeoCode: '',
-                    FlagImageFileName: '',
-                    Rtl: false,
-                    Published: true,
-                    DisplayOrder: null,
-                };
-                $scope.restForm();
-            }
+            $scope.FlgImage = 0;
+            $scope.model = {
+                Id: '',
+                Name: '',
+                LanguageCulture: '',
+                UniqueSeoCode: '',
+                FlagImageFileName: '',
+                Rtl: false,
+                Published: true,
+                DisplayOrder: null,
+            };
+            $scope.restForm();
+            $scope.flag = false;
         }
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {

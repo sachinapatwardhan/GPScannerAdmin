@@ -10,6 +10,9 @@
 
         vm.GetAllCountry = GetAllCountry;
         vm.GetAllStateByCountry = GetAllStateByCountry;
+        vm.isFormValid = isFormValid;
+        vm.searchTermCountry = '';
+        vm.searchTermState = '';
 
         $scope.init = function() {
             $scope.model = {
@@ -22,9 +25,27 @@
                 CreatedBy: '',
                 CreatedDate: null,
             };
+            $scope.idcountry = '';
+
             // $scope.GetAllCity();
             GetAllCountry();
-            $scope.tab = { selectedIndex: 0 };
+            $scope.Search = '';
+            $scope.flag = false;
+        }
+
+        function isFormValid(formName) {
+            if ($scope[formName] && $scope[formName].$valid) {
+                return $scope[formName].$valid;
+            }
+        }
+        $scope.clearSearchTerm = function() {
+            vm.searchTermCountry = '';
+            vm.searchTermState = '';
+            // $scope.searchTermCity = '';
+        };
+
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
         }
 
 
@@ -40,7 +61,6 @@
             });
         }
 
-
         function GetAllStateByCountry(idCountry) {
             $scope.lstState = '';
             var params = {
@@ -54,36 +74,43 @@
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.lst = [];
             $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml),
-                    DTColumnBuilder.newColumn('tblcountrystatemgmt.tblcountrymgmt.Country'),
-                    DTColumnBuilder.newColumn('tblcountrystatemgmt.Name'),
-                    DTColumnBuilder.newColumn('Name'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml).withOption('width', '4%'),
+                    DTColumnBuilder.newColumn('tblcountrystatemgmt.tblcountrymgmt.Country').withOption('width', '10%'),
+                    DTColumnBuilder.newColumn('tblcountrystatemgmt.Name').withOption('width', '10%'),
+                    DTColumnBuilder.newColumn('Name').withOption('width', '10%'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%')
                 ]
                 // ShowTrackNumberModal
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "city/GetAllCityByPagging",
                     data: function(d) {
+                        d.search.value = $scope.Search;
+
                         return d;
                     },
                     type: "get",
                     dataSrc: function(json) {
                         if (json.success != false) {
                             $scope.lst = json.data
+                            $scope.recordsTotal = json.recordsTotal;
                             return json.data;
                         } else {
                             return [];
                         }
                     },
                 })
-                .withOption('processing', true)
-                .withOption('serverSide', true)
-                .withPaginationType('full_numbers')
-                .withDisplayLength(10)
+                .withOption('processing', true) //for show progress bar
+                .withOption('serverSide', true) // for server side processing
+                .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
+                .withDisplayLength(25) // Page size
+                .withOption('aaSorting', [2, 'asc'])
                 .withOption('responsive', true)
-                .withOption('aaSorting', [3, 'asc'])
-                .withOption('autoWidth', false)
-                .withOption('createdRow', createdRow);
+                // .withOption('autoWidth', false)
+                // .withOption('deferRender', true)
+                .withOption('createdRow', createdRow)
+                // .withOption('bFilter', false)
+                .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+                .withOption('scrollY', 'auto');
         });
 
         $scope.dtInstance = {};
@@ -95,6 +122,7 @@
                 resetPaging = true;
             };
             $scope.dtInstance.reloadData(callback, resetPaging);
+            $('#citytable').dataTable()._fnAjaxUpdate();
         }
 
         $scope.reloadData = function() {}
@@ -111,18 +139,27 @@
 
         function actionsHtml(data, type, full, meta) {
             var btn = '';
-
-            btn = btn + '<md-button class="md-icon-button md-accent md-raised md-hue-2"  ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="FetchListId(' + full.id + ')">' +
-                '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon>' +
-                '</md-button>' +
-                '<md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="' + $rootScope.FlgDeletedAccess + '" ng-click="DeleteList(' + full.id + ')">' +
-                '<md-icon md-font-icon="icon-trash"></md-icon>' +
-                '</md-button>';
+            if ($rootScope.FlgModifiedAccess) {
+                btn += '<md-button class="edit-button md-icon-button"  ng-click="FetchListId(' + full.id + ')">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+            }
+            if ($rootScope.FlgDeletedAccess) {
+                btn += '<md-button class="edit-button md-icon-button" ng-click="DeleteList(' + full.id + ')">' +
+                    '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
+            }
+            btn += '</div>';
             return btn;
         };
 
-
-        //Create Country-State-City
+        $scope.GetSerch = function(Search) {
+                $scope.Search = Search;
+                GetAllCity(true);
+            }
+            //Create Country-State-City
 
         $scope.CreateList = function(o) {
             if (o.id == null || o.id == '') {
@@ -170,8 +207,7 @@
             $scope.restForm();
 
             var o = _.findWhere($scope.lst, { id: id });
-            console.log(o)
-            $scope.tab.selectedIndex = 1;
+            //$scope.tab.selectedIndex = 1;
             $scope.model.id = o.id;
             $scope.model.idState = o.idState;
             $scope.model.idCountry = o.tblcountrystatemgmt.tblcountrymgmt.id;
@@ -182,6 +218,7 @@
             $scope.model.Seq = o.Seq;
             $scope.model.ShortName = o.ShortName;
             $scope.model.CreatedDate = o.CreatedDate;
+            $scope.flag = true;
 
         }
 
@@ -284,12 +321,13 @@
                 id: '',
                 Name: '',
                 idState: 0,
-                idCountry: '',
+                idCountry: $scope.idcountry,
                 CreatedBy: '',
                 CreatedDate: null,
             };
             $scope.restForm();
-
+            GetAllStateByCountry($scope.model.idCountry);
+            $scope.flag = true;
         }
 
         //Add Country
@@ -378,7 +416,9 @@
                 $rootScope.FlgAddedEditlocal = false;
             }
         }
-
+        $scope.gotoOrderList = function() {
+            $scope.init();
+        }
         $scope.init();
     }
 

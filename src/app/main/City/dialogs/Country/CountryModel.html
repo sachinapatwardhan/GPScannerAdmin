@@ -1,7 +1,16 @@
 <md-dialog class="task-dialog" aria-label="New Task">
-    <md-toolbar class="md-accent md-hue-2">
+    <!--<md-toolbar class="md-accent md-hue-2">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between">
             <span class="title">Country Management</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>-->
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Country Management</h2>
+            <span flex></span>
             <md-button class="md-icon-button" ng-click="closeModel()">
                 <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
             </md-button>
@@ -74,7 +83,7 @@
                                     <input ng-model="model.id">
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm="50">
-                                    <label>Country code *</label>
+                                    <label>Country code </label>
                                     <input name="Code" ng-model="model.Code" placeholder="12345" type="number" max="99999" min='0' required>
                                     <div ng-messages="formCountry.Code.$error" ng-if="formCountry.Code.$touched">
                                         <div ng-message="required"><span>Country code is required</span></div>
@@ -82,8 +91,8 @@
                                     </div>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm="50">
-                                    <label>Country name *</label>
-                                    <input name="CountryName" ng-model="model.Country" maxlength="25" ng-required="true" maxlength="50" md-maxlength="50">
+                                    <label>Country name </label>
+                                    <input name="CountryName" ng-model="model.Country" ng-required="true" maxlength="50" md-maxlength="50">
                                     <div ng-messages="formCountry.CountryName.$error" ng-if="formCountry.CountryName.$touched">
                                         <div ng-message="required">
                                             <span>Country name is required</span>
@@ -91,7 +100,7 @@
                                     </div>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm="50">
-                                    <label>Short name *</label>
+                                    <label>Short name </label>
                                     <input name="ShortName" ng-model="model.ShortName" maxlength="10" md-maxlength="10" ng-required="true">
                                     <div ng-messages="formCountry.ShortName.$error" ng-if="formCountry.ShortName.$touched">
                                         <div ng-message="required">

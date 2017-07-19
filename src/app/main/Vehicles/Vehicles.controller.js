@@ -247,7 +247,7 @@
         function actionsHtml(data, type, full, meta) {
             var device = data.deviceid;
             var event = '$event';
-            var btns = "";
+            var btns = '<div layout="row">';
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="FetchVehicleById(' + data.id + ')">' +
                     '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
@@ -265,16 +265,13 @@
                 '<md-tooltip md-visible="" md-direction="">View Detail</md-tooltip>' +
                 '</md-button>';
 
-            btns += '<md-button class="edit-button md-icon-button" ng-click="ShowModal($event,\'' + device + '\',\'' + data.bikeNumber + '\',\'' + data.bikeimageURl + '\',\'' + data.IsOnline + '\')" aria-label="">' +
-                '<md-icon md-font-icon="icon-map-marker" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Location </md-tooltip>' +
-                '</md-button>';
-            btns += '<md-button class="edit-button md-icon-button"  ng-click="ShowAlarmDetail($event,\'' + device + '\')" aria-label="">' +
-                '<md-icon md-font-icon="icon-timer"  class="s18 blue-500-fg"></md-icon>' +
-                '<md-tooltip md-visible="" md-direction="">Show Alarm</md-tooltip>' +
-                '</md-button>';
-
-
-
+            // btns += '<md-button class="edit-button md-icon-button" ng-click="ShowModal($event,\'' + device + '\',\'' + data.bikeNumber + '\',\'' + data.bikeimageURl + '\',\'' + data.IsOnline + '\')" aria-label="">' +
+            //     '<md-icon md-font-icon="icon-map-marker" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Location </md-tooltip>' +
+            //     '</md-button>';
+            // btns += '<md-button class="edit-button md-icon-button"  ng-click="ShowAlarmDetail($event,\'' + device + '\')" aria-label="">' +
+            //     '<md-icon md-font-icon="icon-timer"  class="s18 blue-500-fg"></md-icon>' +
+            //     '<md-tooltip md-visible="" md-direction="">Show Alarm</md-tooltip>' +
+            //     '</md-button>';
             btns += '</div>';
             return btns;
         };

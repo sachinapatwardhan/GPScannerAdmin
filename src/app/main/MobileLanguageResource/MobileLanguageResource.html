@@ -1,102 +1,221 @@
-<md-content>
-    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
-        <!-- HEADER -->
-        <div class="header md-accent-bg" layout="row" layout-align="space-between">
-            <div layout="column" layout-align="center start">
-                <div class="breadcrumb" layout="row" layout-align="start center">
-                    <md-icon md-font-icon="icon-home" class="s16"></md-icon>
-                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
-                    <span class="parent">Mobile Language Resource</span>
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Mobile Language Resource">Mobile Language Resource</span>
                 </div>
-                <div class="title">Mobile Language Resource</div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Language Resources :</span>
+                    <b>{{lstLanguage.length}}</b>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <!--<div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-raised md-background" ng-click="vm.Reset()">
+                        <span translate="Add New Resource">Add New Resource</span>
+                    </md-button>
+                </div>-->
+                <md-button class="md-raised md-background" ng-click="ShowImportLanguageModal($event)">Import</md-button>
+                <md-button class="md-raised md-background" ng-click="ExportLanguage()">Export</md-button>
             </div>
         </div>
-        <!-- / HEADER -->
-        <!-- CONTENT -->
-        <div class="content">
-            <md-content class="white-bg md-whiteframe-4dp">
-                <form name="formMobileLanguagesResource" class="md-inline-form">
-                    <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
-                        <md-tab label="List of Language Resource" ng-click="ResetTab()">
-                            <md-content class="md-padding" md-selected="selectedIndex">
-                                <div class="custom-content">
-                                    <br />
-                                    <div align="left">
-                                    </div>
-                                    <br />
-                                    <div align="center">
-                                        <md-button class="md-button md-accent md-raised md-hue-2" ng-click="ShowImportLanguageModal($event)">Import</md-button>
-                                        <md-button class="md-button md-accent md-raised  md-hue-2" ng-click="ExportLanguage()">Export</md-button>
-                                    </div>
-                                    <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
-                                        <thead>
-                                            <tr>
-                                                <th class="all" ng-repeat="o in obj" ng-if="o.Name=='No'">
-                                                    <div class="table-header" align="left">
-                                                        <span class="column-title">{{o.Name}}</span>
-                                                    </div>
-                                                </th>
-                                                <th class="all" ng-repeat="o in obj" ng-if="o.Name=='Code'">
-                                                    <div class="table-header" align="left">
-                                                        <span class="column-title">{{o.Name}}</span>
-                                                    </div>
-                                                </th>
-                                                <th class="secondary-text" ng-repeat="o in obj" ng-if="o.Name!='Action' && o.Name!='No' && o.Name!='Code' ">
-                                                    <div class="table-header" align="left">
-                                                        <span class="column-title">{{o.Name}}</span>
-                                                    </div>
-                                                </th>
-                                                <th class="all" ng-repeat="o in obj" ng-if="o.Name=='Action'">
-                                                    <div class="table-header" align="left">
-                                                        <span class="column-title">{{o.Name}}</span>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="o in lstLanguage">
-                                                <td>{{ $index+1 }}</td>
-                                                <td>{{o.Code}}</td>
-                                                <td ng-repeat="o1 in objName">{{o[o1.Name]}}</td>
-                                                <td>
-                                                    <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchLanguageResourceById(o)">
-                                                        <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
-                                                    </md-button>
+        <div class="content-card" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance" dt-options="vm.dtOptions" dt-column-defs="vm.dtColumnDefs">
+                    <thead>
+                        <tr>
+                            <th class="all" ng-repeat="o in obj" ng-if="o.Name=='No'">
+                                <div class="table-header" align="left">
+                                    <span class="column-title">{{o.Name}}</span>
+                                </div>
+                            </th>
+                            <th class="all" ng-repeat="o in obj" ng-if="o.Name=='Code'">
+                                <div class="table-header" align="left">
+                                    <span class="column-title">{{o.Name}}</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text" ng-repeat="o in obj" ng-if="o.Name!='Action' && o.Name!='No' && o.Name!='Code' ">
+                                <div class="table-header" align="left">
+                                    <span class="column-title">{{o.Name}}</span>
+                                </div>
+                            </th>
+                            <th class="all" ng-repeat="o in obj" ng-if="o.Name=='Action'">
+                                <div class="table-header" align="left">
+                                    <span class="column-title">{{o.Name}}</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="o in lstLanguage">
+                            <td>{{ $index+1 }}</td>
+                            <td>{{o.Code}}</td>
+                            <td ng-repeat="o1 in objName">{{o[o1.Name]}}</td>
+                            <td>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="FetchLanguageResourceById(o)" aria-label="Edit Location">
+                                    <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                </md-button>
+                                <!--<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchLanguageResourceById(o)">
+                                    <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                </md-button>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed" layout="column" ng-show="flag">
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to List" ng-click="gotoList()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="Language Resource Detail">Language Resource Detail</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
 
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+        </div>
+    </div>
+    <div class="content" layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-content class="md-padding">
+                <form name="formMobileLanguagesResource" novalidate class="md-inline-form" aria-invalid="false">
+                    <div class="content">
+                        <div layout="row" layout-wrap>
+                            <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                                <label>Id</label>
+                                <input ng-model="model.Id">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm="25" ng-repeat="o in model" ng-if="o.Name!='Action' && o.Name!='No'">
+                                <label>{{o.Name}} *</label>
+                                <input name="name{{$index}}" ng-model="o.Value" ng-required="true" ng-disabled="o.Name=='Code'">
+                                <div ng-if="o.Value=='' || o.Value==null">
+                                    <span style="color: rgb(213,0,0);font-size: 12px;">{{o.Name}} is required</span>
                                 </div>
-                            </md-content>
-                        </md-tab>
-                        <md-tab label="Manage Language Resource" ng-if="flgShow && FlgAddedEditlocal">
-                            <md-content class="md-padding">
-                                <div class="custom-content">
-                                    <div class="md-padding">
-                                        <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
-                                            <label>Id</label>
-                                            <input ng-model="model.Id">
-                                        </md-input-container>
-                                        <md-input-container class="md-block" flex-gt-sm="50" ng-repeat="o in model" ng-if="o.Name!='Action' && o.Name!='No'">
-                                            <label>{{o.Name}} *</label>
-                                            <input name="name{{$index}}" ng-model="o.Value" ng-required="true" ng-disabled="o.Name=='Code'">
-                                            <div ng-if="o.Value=='' || o.Value==null">
-                                                <span style="color: rgb(213,0,0);font-size: 12px;">{{o.Name}} is required</span>
-                                            </div>
-                                        </md-input-container>
-                                        <div align="left">
-                                            <md-button class="md-raised md-primary" ng-disabled="!formMobileLanguagesResource.$valid" ng-click="CreateMobileLanguageResource(formMobileLanguagesResource,obj)">Save</md-button>
-                                            <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </md-content>
-                        </md-tab>
-                    </md-tabs>
+                            </md-input-container>
+                        </div>
+                        <div align="left">
+                            <md-button class="md-raised md-primary" ng-disabled="!formMobileLanguagesResource.$valid" ng-click="CreateMobileLanguageResource(formMobileLanguagesResource,obj)">Save</md-button>
+                            <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+                        </div>
+                    </div>
                 </form>
             </md-content>
         </div>
-        <!-- / CONTENT -->
     </div>
-</md-content>
+</div>
+<!--<md-content>
+            <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
+                <div class="header md-accent-bg" layout="row" layout-align="space-between">
+                    <div layout="column" layout-align="center start">
+                        <div class="breadcrumb" layout="row" layout-align="start center">
+                            <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+                            <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+                            <span class="parent">Mobile Language Resource</span>
+                        </div>
+                        <div class="title">Mobile Language Resource</div>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <md-content class="white-bg md-whiteframe-4dp">
+                        <form name="formMobileLanguagesResource" class="md-inline-form">
+                            <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                                <md-tab label="List of Language Resource" ng-click="ResetTab()">
+                                    <md-content class="md-padding" md-selected="selectedIndex">
+                                        <div class="custom-content">
+                                            <br />
+                                            <div align="left">
+                                            </div>
+                                            <br />
+                                            <div align="center">
+                                                <md-button class="md-button md-accent md-raised md-hue-2" ng-click="ShowImportLanguageModal($event)">Import</md-button>
+                                                <md-button class="md-button md-accent md-raised  md-hue-2" ng-click="ExportLanguage()">Export</md-button>
+                                            </div>
+                                            <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="all" ng-repeat="o in obj" ng-if="o.Name=='No'">
+                                                            <div class="table-header" align="left">
+                                                                <span class="column-title">{{o.Name}}</span>
+                                                            </div>
+                                                        </th>
+                                                        <th class="all" ng-repeat="o in obj" ng-if="o.Name=='Code'">
+                                                            <div class="table-header" align="left">
+                                                                <span class="column-title">{{o.Name}}</span>
+                                                            </div>
+                                                        </th>
+                                                        <th class="secondary-text" ng-repeat="o in obj" ng-if="o.Name!='Action' && o.Name!='No' && o.Name!='Code' ">
+                                                            <div class="table-header" align="left">
+                                                                <span class="column-title">{{o.Name}}</span>
+                                                            </div>
+                                                        </th>
+                                                        <th class="all" ng-repeat="o in obj" ng-if="o.Name=='Action'">
+                                                            <div class="table-header" align="left">
+                                                                <span class="column-title">{{o.Name}}</span>
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="o in lstLanguage">
+                                                        <td>{{ $index+1 }}</td>
+                                                        <td>{{o.Code}}</td>
+                                                        <td ng-repeat="o1 in objName">{{o[o1.Name]}}</td>
+                                                        <td>
+                                                            <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchLanguageResourceById(o)">
+                                                                <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                                            </md-button>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Manage Language Resource" ng-if="flgShow && FlgAddedEditlocal">
+                                    <md-content class="md-padding">
+                                        <div class="custom-content">
+                                            <div class="md-padding">
+                                                <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                                                    <label>Id</label>
+                                                    <input ng-model="model.Id">
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm="50" ng-repeat="o in model" ng-if="o.Name!='Action' && o.Name!='No'">
+                                                    <label>{{o.Name}} *</label>
+                                                    <input name="name{{$index}}" ng-model="o.Value" ng-required="true" ng-disabled="o.Name=='Code'">
+                                                    <div ng-if="o.Value=='' || o.Value==null">
+                                                        <span style="color: rgb(213,0,0);font-size: 12px;">{{o.Name}} is required</span>
+                                                    </div>
+                                                </md-input-container>
+                                                <div align="left">
+                                                    <md-button class="md-raised md-primary" ng-disabled="!formMobileLanguagesResource.$valid" ng-click="CreateMobileLanguageResource(formMobileLanguagesResource,obj)">Save</md-button>
+                                                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                            </md-tabs>
+                        </form>
+                    </md-content>
+                </div>
+            </div>
+        </md-content>-->

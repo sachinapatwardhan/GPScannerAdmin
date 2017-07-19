@@ -16,6 +16,7 @@
                 Module: '',
                 IsActive: '',
             };
+            $scope.Search = '';
             $scope.GetAllModule();
             $scope.tab = { selectedIndex: 0 };
         }
@@ -25,11 +26,15 @@
             $http.get($rootScope.RoutePath + "module/GetAllModuleName").then(function(data) {
                 $scope.lstModules = data.data;
                 for (var i = 0; i < $scope.lstModules.length; i++) {
+                    if ($scope.lstModules[i].IsActive == 1) {
+                        $scope.lstModules[i].IsActive = true;
+                    } else {
+                        $scope.lstModules[i].IsActive = false;
+                    }
                     $scope.lstModules.IsUpdate = false;
                 };
             });
         }
-
 
         $scope.SaveModule = function(o) {
             $http.post($rootScope.RoutePath + "module/UpdateModule", o).then(function(data) {
@@ -65,18 +70,31 @@
             $scope.init();
         }
 
+
+        //vm.dtOptions = DTOptionsBuilder.newOptions()
+        //    .withPaginationType('full_numbers')
+        //    .withDisplayLength(10)
+        //    .withOption('responsive', true)
+        //    .withOption('autoWidth', true)
+        //     .withOption('language', {
+        //         'zeroRecords': "No Record Found",
+        //         'emptyTable': "No Record Found"
+        //     })
+        //    .withOption('dom', '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
+        // .withDOM('<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
+
         $scope.dtCustomOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
             .withDisplayLength(10)
             .withOption('responsive', true)
-            .withOption('autoWidth', false)
+            //.withOption('autoWidth', false)
             .withOption('aaSorting', [0, 'asc'])
             .withOption('deferRender', true)
             .withOption('language', {
                 'zeroRecords': "No Record Found",
                 'emptyTable': "No Record Found"
             })
-            .withOption('dom', '<"top"<"left"<"length"l>>f>rt<"bottom"<"left"<"info"i>><"right"<"pagination"p>>>');
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
 
         vm.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
@@ -88,7 +106,13 @@
             //DTColumnDefBuilder.newColumnDef(4),
             // DTColumnDefBuilder.newColumnDef(5)
         ];
+        $scope.dtInstance = {};
 
+        $scope.GetSerch = function(Search) {
+            $scope.dtInstance.DataTable.search(Search);
+
+            $scope.dtInstance.DataTable.search(Search).draw();
+        };
         $scope.init();
     }
 

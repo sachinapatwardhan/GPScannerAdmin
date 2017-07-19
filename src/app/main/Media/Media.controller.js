@@ -10,22 +10,51 @@
         var vm = this;
 
         vm.GetAllMedia = GetAllMedia;
-
+        vm.Reset = Reset;
         $scope.init = function() {
-            $scope.tab = { selectedIndex: 0 };
-
+            $scope.Search = '';
+            $scope.flag = false;
         }
 
-        function GetAllMedia(IsDelete) {
+        function Reset() {
+            $rootScope.FlgAddedEditlocal = false;
+            if ($rootScope.FlgAddedAccess == true) {
+                $rootScope.FlgAddedEditlocal = true;
+            }
+            $scope.resetForm();
+            $scope.init();
+            $scope.flag = true;
+        }
+
+        $scope.resetForm = function() {
+            $scope.formMediadetails.$setUntouched();
+            $scope.formMediadetails.$setPristine();
+        }
+
+        $scope.ResetModel = function() {
+            $scope.resetForm();
+            $scope.init();
+        }
+
+        $scope.gotoMediaList = function() {
+            $scope.Search = '';
+            $scope.flag = false;
+        }
+
+        $scope.GetSerch = function(Search) {
+            $scope.Search = Search;
+            GetAllMedia(true);
+        }
+
+        function GetAllMedia(IsUpdate) {
             var resetPaging = false;
-            if (IsDelete == true) {
+            if (IsUpdate == true) {
                 resetPaging = true;
             };
             vm.dtInstance.reloadData(callback, resetPaging);
             $('#Mediatable').dataTable()._fnPageChange(0);
             $('#Mediatable').dataTable()._fnAjaxUpdate();
         }
-        $scope.init();
 
         $scope.UploadImage = function() {
 
@@ -119,7 +148,6 @@
 
         }
 
-
         $scope.OpenModel = function(ev, id) {
 
             var o = _.findWhere($scope.lstMedia, { id: id });
@@ -139,7 +167,6 @@
             });
         }
 
-
         // console.log($rootScope.state)
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
 
@@ -156,28 +183,38 @@
             vm.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "media/GetAllDynamicMedia",
                     type: "get",
+                    data: function(d) {
+                        if ($scope.Search == '') {
+                            d.search = '';
+                        } else {
+                            d.search = $scope.Search;
+                        }
+                        return d;
+                    },
                     dataSrc: function(json) {
                         $scope.lstMedia = json.data;
+                        $scope.lstTotal = json.recordsTotal;
                         return json.data;
                     },
                 })
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
-                .withDisplayLength(10) // Page size
-                .withOption('responsive', true)
-                .withOption('autoWidth', false)
+                .withDisplayLength(25) // Page size
                 .withOption('aaSorting', [0, 'asc'])
-                .withOption('createdRow', createdRow);
+                .withOption('responsive', true)
+                .withOption('autoWidth', true)
+                // .withOption('deferRender', true)
+                .withOption('createdRow', createdRow)
+                // .withOption('bFilter', false)
+                .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+                .withOption('scrollY', 'auto');
         });
-
 
         // vm.reloadData = reloadData;
         vm.dtInstance = {};
 
-        $scope.reloadData = function() {
-
-        }
+        $scope.reloadData = function() {}
 
         function callback(json) {
             // console.log(json);
@@ -188,17 +225,28 @@
             $compile(angular.element(row).contents())($scope);
         }
 
-
-
-
         function actionsHtml(data, type, full, meta) {
-
-            return '  <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-transclude ng-click="OpenModel($event,' + full.id + ')">' +
-                '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon>' +
-                '</md-button>' +
-                '<md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="' + $rootScope.FlgDeletedAccess + '" ng-transclude ng-click="DeleteMedia(' + full.id + ')">' +
-                '<md-icon md-font-icon="icon-trash"></md-icon>' +
-                '</md-button>';
+            var btns = '<div layout="row">';
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="OpenModel($event,' + data.id + ')" aria-label="Edit Location">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+            }
+            if ($rootScope.FlgDeletedAccess) {
+                btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteMedia(' + data.id + ',$event)" aria-label="Add SubLocation">' +
+                    '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
+            }
+            btns += '</div>';
+            return btns;
+            // return '  <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-transclude ng-click="OpenModel($event,' + full.id + ')">' +
+            //     '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon>' +
+            //     '</md-button>' +
+            //     '<md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="' + $rootScope.FlgDeletedAccess + '" ng-transclude ng-click="DeleteMedia(' + full.id + ')">' +
+            //     '<md-icon md-font-icon="icon-trash"></md-icon>' +
+            //     '</md-button>';
         }
 
         function ImageHtml(data, type, full, meta) {
@@ -214,7 +262,7 @@
         function NumberHtml(data, type, full, meta) {
             return (meta.row + 1);
         }
-
+        $scope.init();
     }
 
 })();

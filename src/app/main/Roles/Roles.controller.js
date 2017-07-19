@@ -10,23 +10,59 @@
 
         var vm = this;
         vm.GetAllRoles = GetAllRoles;
-        vm.RemoveCountryToRole=RemoveCountryToRole;
+        vm.RemoveCountryToRole = RemoveCountryToRole;
         $scope.init = function() {
-            // if ($rootScope.FlgAddedAccess == true) {
-            //     $scope.FlgAddedEditlocal = true;
-            // } else {
-            //     $scope.FlgAddedEditlocal = false;
-            // }
             $scope.model = {
                 RoleName: '',
                 Description: '',
                 id: '',
 
             };
+            $scope.Search = '';
             $scope.GetAllRoles();
             $scope.RoleCountry = "";
-            $scope.tab = { selectedIndex: 0 };
+            $scope.tab = {
+                selectedIndex: 0
+            };
+            $scope.flag = false;
         }
+
+
+        vm.dtInstance = {};
+        // vm.dtOptions = {
+        //     dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+        //     columnDefs: [],
+        //     initComplete: function() {
+        //         var api = this.api(),
+        //             searchBox = angular.element('body').find('#modelsearch');
+
+        //         // Bind an external input as a table wide search box
+        //         if (searchBox.length > 0) {
+        //             searchBox.on('keyup', function(event) {
+        //                 api.search(event.target.value).draw();
+        //             });
+        //         }
+        //     },
+        //     pagingType: 'simple',
+        //     lengthMenu: [10, 20, 30, 50, 100],
+        //     pageLength: 20,
+        //     scrollY: 'auto',
+        //     responsive: true
+        // };
+
+        vm.dtOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withDisplayLength(25)
+            .withOption('lengthMenu', [25, 50, 100])
+            .withOption('responsive', true)
+            .withOption('autoWidth', true)
+            .withOption('language', {
+                'zeroRecords': "No Record Found",
+                'emptyTable': "No Record Found"
+            })
+            .withOption('scrollY', 'auto')
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            .withDOM('rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
 
         $scope.GetAllCountry = function() {
             $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
@@ -95,6 +131,7 @@
             $scope.model.Description = o.Description;
             $scope.model.RoleName = o.RoleName;
             $scope.model.id = o.id;
+            $scope.flag = true;
         }
 
         $scope.CreateRole = function(o, form) {
@@ -205,7 +242,7 @@
 
         $scope.ResetEdit = function() {
             if ($rootScope.FlgAddedAccess == true) {
-
+                $scope.flag = true;
                 $scope.FormManageRoles.$setPristine();
                 $scope.FormManageRoles.$setUntouched();
                 $scope.model = {
@@ -221,6 +258,28 @@
             if ($rootScope.FlgAddedAccess == true) {
                 $rootScope.FlgAddedEditlocal = true
             }
+            $scope.init();
+        }
+        $scope.dtCustomOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withDisplayLength(10)
+            .withOption('responsive', true)
+            .withOption('autoWidth', false)
+            .withOption('aaSorting', [0, 'asc'])
+            .withOption('deferRender', true)
+            .withOption('language', {
+                'zeroRecords': "No Record Found",
+                'emptyTable': "No Record Found"
+            })
+            .withOption('dom', 'rt<"bottom"<"left"<"info"i>><"right"<"pagination"p>>>');
+        $scope.dtInstance = {};
+
+        $scope.GetSerch = function(Search) {
+            $scope.dtInstance.DataTable.search(Search);
+
+            $scope.dtInstance.DataTable.search(Search).draw();
+        };
+        $scope.gotoOrderList = function() {
             $scope.init();
         }
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {

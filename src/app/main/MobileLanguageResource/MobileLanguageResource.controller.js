@@ -10,22 +10,49 @@
     function MobileLanguageResourceController($http, $scope, $state, $rootScope, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         var vm = this;
         vm.GetAllLanguageResources = GetAllLanguageResources;
-
+        vm.Reset = Reset;
         $scope.init = function() {
-            $scope.model = {
-
-            };
-            $scope.flgShow = 0;
-
-            $scope.tab = { selectedIndex: 0 };
-
-
+            $scope.Search = '';
+            $scope.flag = false;
         }
         $scope.obj = [];
+
+        $scope.gotoList = function() {
+            $scope.Search = '';
+            $scope.flag = false;
+            GetAllLanguageResources(true);
+        }
+
+        $scope.GetSerch = function(Search) {
+            $scope.Search = Search;
+            vm.dtInstance.DataTable.search(Search);
+            vm.dtInstance.DataTable.search(Search).draw();
+        }
 
         vm.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
         ];
+        vm.dtInstance = {};
+        vm.dtOptions = {
+            dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+            columnDefs: [],
+            initComplete: function() {
+                var api = this.api(),
+                    searchBox = angular.element('body').find('#modelsearch');
+
+                // Bind an external input as a table wide search box
+                if (searchBox.length > 0) {
+                    searchBox.on('keyup', function(event) {
+                        api.search(event.target.value).draw();
+                    });
+                }
+            },
+            pagingType: 'full_numbers',
+            lengthMenu: [25, 30, 50, 100],
+            pageLength: 25,
+            scrollY: 'auto',
+            responsive: true
+        };
 
         //Get All Mobile Language Resources
         function GetAllLanguageResources(flag) {
@@ -67,7 +94,7 @@
 
         $scope.FetchLanguageResourceById = function(obj) {
             $rootScope.FlgAddedEditlocal = true;
-            $scope.tab.selectedIndex = 1;
+            $scope.flag = true;
             $scope.flgShow = 1;
             $scope.model = $scope.obj;
             for (var i = 1; i < $scope.model.length - 1; i++) {
@@ -132,16 +159,25 @@
 
         }
 
-        $scope.Reset = function() {
-
+        function Reset() {
+            $rootScope.FlgAddedEditlocal = false;
+            if ($rootScope.FlgAddedAccess == true) {
+                $rootScope.FlgAddedEditlocal = true;
+            }
+            $scope.resetForm();
             $scope.init();
-            GetAllLanguageResources(false);
+            $scope.flag = true;
         }
 
-        $scope.ResetTab = function() {
-            if ($rootScope.FlgAddedAccess != true) {
-                $rootScope.FlgAddedEditlocal = false;
-            }
+        $scope.resetForm = function() {
+            $scope.formMobileLanguagesResource.$setUntouched();
+            $scope.formMobileLanguagesResource.$setPristine();
+        }
+
+        $scope.ResetModel = function() {
+            $scope.resetForm();
+            $scope.init();
+            GetAllLanguageResources(true);
         }
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.init();

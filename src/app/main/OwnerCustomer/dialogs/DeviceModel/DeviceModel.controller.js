@@ -6,20 +6,19 @@
         .controller('DeviceModelController', DeviceModelController);
 
     /** @ngInject */
-    function DeviceModelController($http, $mdDialog, $mdToast, $scope, $cookieStore, $rootScope, objUser, Tasks, event) {
+    function DeviceModelController($http, $mdDialog, $mdToast, $scope, $cookieStore, $rootScope, idUser, Tasks, event) {
         var vm = this;
 
         $scope.init = function() {
-            $scope.UserName = objUser;
-            $scope.GetUserDevices($scope.UserName);
+            $scope.idUser = idUser;
+            $scope.GetUserDevices($scope.idUser);
         }
 
-        $scope.GetUserDevices = function(o) {
+        $scope.GetUserDevices = function(idUser) {
             var params = {
-                id: o,
-                DeviceType: "M2-U"
-            }           
-            $http.get($rootScope.RoutePath + "bike/GetAllPetByUser", { params: params }).then(function(data) {              
+                iduser: idUser,
+            }
+            $http.get($rootScope.RoutePath + "vehicles/GetAllVehicleByUser", { params: params }).then(function(data) {
                 $scope.lstDevice = data.data;
             });
         }

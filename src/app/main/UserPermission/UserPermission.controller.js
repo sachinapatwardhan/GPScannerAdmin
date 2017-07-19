@@ -68,10 +68,31 @@
             for (var i = 0; i < $scope.lstUserPermission.length; i++) {
                 for (var j = 0; j < $scope.lstModules.length; j++) {
                     if ($scope.lstUserPermission[i].idModule == $scope.lstModules[j].idModule && $scope.model.RoleName == $scope.lstUserPermission[i].RoleName) {
-                        $scope.lstModules[j].Added = $scope.lstUserPermission[i].Added;
-                        $scope.lstModules[j].Modified = $scope.lstUserPermission[i].Modified;
-                        $scope.lstModules[j].Deleted = $scope.lstUserPermission[i].Deleted;
-                        $scope.lstModules[j].Show = $scope.lstUserPermission[i].Show;
+                        // $scope.lstModules[j].Added = $scope.lstUserPermission[i].Added;
+                        //$scope.lstModules[j].Modified = $scope.lstUserPermission[i].Modified;
+                        //$scope.lstModules[j].Deleted = $scope.lstUserPermission[i].Deleted;
+                        //$scope.lstModules[j].Show = $scope.lstUserPermission[i].Show;
+                        if ($scope.lstUserPermission[i].Added == 1) {
+                            $scope.lstModules[j].Added = true;
+                        } else {
+                            $scope.lstModules[j].Added = false;
+                        }
+                        if ($scope.lstUserPermission[i].Modified == 1) {
+                            $scope.lstModules[j].Modified = true;
+                        } else {
+                            $scope.lstModules[j].Modified = false;
+                        }
+                        if ($scope.lstUserPermission[i].Deleted == 1) {
+                            $scope.lstModules[j].Deleted = true;
+                        } else {
+                            $scope.lstModules[j].Deleted = false;
+                        }
+                        if ($scope.lstUserPermission[i].Show == 1) {
+                            $scope.lstModules[j].Show = true;
+                        } else {
+                            $scope.lstModules[j].Show = false;
+                        }
+
                     }
                 }
             }
@@ -148,7 +169,6 @@
                     $scope.lstModules[i].Show = $scope.modelPermission.View;
                 }
                 $http.post($rootScope.RoutePath + "userPermission/ChangeAllPermissions", obj).then(function(response) {
-                    console.log(response)
                     if (response.data.data == 'TOKEN') {
                         $rootScope.logout();
                     }
@@ -178,7 +198,6 @@
                 obj.RoleName = $scope.model.RoleName;
                 obj.Type = "Add"
                 $http.post($rootScope.RoutePath + "userPermission/ChangeAllPermissions", obj).then(function(response) {
-                    console.log(response)
                     if (response.data.data == 'TOKEN') {
                         $rootScope.logout();
                     }
@@ -209,7 +228,6 @@
                 obj.RoleName = $scope.model.RoleName;
                 obj.Type = "Update"
                 $http.post($rootScope.RoutePath + "userPermission/ChangeAllPermissions", obj).then(function(response) {
-                    console.log(response)
                     if (response.data.data == 'TOKEN') {
                         $rootScope.logout();
                     }
@@ -240,7 +258,6 @@
                 obj.RoleName = $scope.model.RoleName;
                 obj.Type = "Delete"
                 $http.post($rootScope.RoutePath + "userPermission/ChangeAllPermissions", obj).then(function(response) {
-                    console.log(response)
                     if (response.data.data == 'TOKEN') {
                         $rootScope.logout();
                     }
@@ -257,17 +274,29 @@
                 });
             }
         }
+        $scope.dtCustomOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
+            .withDisplayLength(25) // Page size
+            .withOption('aaSorting', [0, 'asc'])
+            .withOption('responsive', true)
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            .withOption('scrollY', 'auto');
 
         $scope.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
             DTColumnDefBuilder.newColumnDef(1),
-
             DTColumnDefBuilder.newColumnDef(2).notSortable(),
             DTColumnDefBuilder.newColumnDef(3).notSortable(),
             DTColumnDefBuilder.newColumnDef(4).notSortable(),
             DTColumnDefBuilder.newColumnDef(5).notSortable(),
         ];
+        $scope.dtInstance = {};
 
+        $scope.GetSerch = function(Search) {
+            $scope.dtInstance.DataTable.search(Search);
+
+            $scope.dtInstance.DataTable.search(Search).draw();
+        };
         $scope.Reset = function() {
             $scope.init();
         }

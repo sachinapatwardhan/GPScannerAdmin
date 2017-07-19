@@ -21,16 +21,6 @@
                 ModuleName: 'Country-State-City'
             });
 
-        // Translation
-        //$translatePartialLoaderProvider.addPart('app/main/City');
-
-        // Navigation
-        // msNavigationServiceProvider.saveItem('Settings.City', {
-        //     title: 'Authentication',
-        //     icon: 'icon-lock',
-        //     weight: 1
-        // });
-
         // msNavigationServiceProvider.saveItem('Settings.Country-State-City', {
         //     title: 'Country-State-City',
         //     state: 'app.City',

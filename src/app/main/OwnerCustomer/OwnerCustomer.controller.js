@@ -17,20 +17,23 @@
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '5%'), ,
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '5%'), ,
-                DTColumnBuilder.newColumn('email').withOption('width', '5%'), ,
-                DTColumnBuilder.newColumn('OwnerName').withOption('width', '5%'), ,
-                DTColumnBuilder.newColumn('phone').withOption('width', '5%'), ,
-                DTColumnBuilder.newColumn('country').withOption('width', '5%'), ,
-                DTColumnBuilder.newColumn('MaxSpeed').renderWith(MaxSpeed).withOption('width', '5%'), ,
-                DTColumnBuilder.newColumn('IsSecurity').renderWith(IsSecurity).notSortable().withOption('width', '5%'), ,
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '5%'),
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
+                DTColumnBuilder.newColumn('email'), ,
+                // DTColumnBuilder.newColumn('OwnerName'),
+                DTColumnBuilder.newColumn('phone'),
+                DTColumnBuilder.newColumn('country'),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "user/GetAllDynamicOwnerCustomer",
                     data: function(d) {
+                        if ($scope.Search != "") {
+                            d.search = $scope.Search;
+                        } else {
+                            d.search = "";
+                        }
                         d.UserCountry = $rootScope.UserCountry;
                         d.UserRoles = $rootScope.UserRoles;
                         d.CountryList = $rootScope.CountryList;
@@ -40,6 +43,7 @@
                     dataSrc: function(json) {
                         if (json.success != false) {
                             $scope.lstdata = json.data;
+                            $scope.lstTotal = json.recordsTotal;
                             return json.data;
                         } else {
                             return [];
@@ -50,20 +54,25 @@
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(10) // Page size
-                .withOption('aaSorting', [0, 'asc'])
+                .withOption('aaSorting', [0, 'DESC'])
                 .withOption('responsive', true).withOption('bAutoWidth', false)
-                .withOption('createdRow', createdRow);
+                .withOption('createdRow', createdRow)
+                .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+                .withOption('scrollY', 'auto');
         });
         $scope.dtInstance = {};
 
 
         //Reload Datatable
+
         $scope.GetAllUser = function(IsUpdate) {
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
             };
             $scope.dtInstance.reloadData(callback, resetPaging);
+            $('#Customer').dataTable()._fnAjaxUpdate();
+
         }
 
         $scope.reloadData = function() {}
@@ -110,17 +119,25 @@
         }
 
         function actionsHtml(data, type, full, meta) {
-            var btns = '<md-button class="md-accent md-raised md-hue-2" ng-click="ShowDeviceModal($event,' + data.id + ')" aria-label="">Device</md-button>';
-
+            var btns = '<md-button class="edit-button md-icon-button"  ng-click="ShowDeviceModal($event,' + data.id + ')" aria-label="">' +
+                '<md-icon md-font-icon="icon-timer"  class="s18 blue-500-fg"></md-icon>' +
+                '<md-tooltip md-visible="" md-direction="">Show Devices</md-tooltip>' +
+                '</md-button>';
             if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="ResetPassword(' + data.id + ')" aria-label="">' +
-                    '<md-icon md-font-icon="icon-account-alert"></md-icon>' +
-                    '<md-tooltip md-visible=" " md-direction=" ">Reset Password</md-tooltip>' +
+
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword(' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-account-alert"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
                     '</md-button>';
 
             }
             return btns;
         };
+
+        $scope.GetSerch = function(Search) {
+            $scope.Search = Search;
+            $scope.GetAllUser(true);
+        }
 
         //Reset Password User By Id
         $scope.ResetPassword = function(id) {
@@ -131,7 +148,7 @@
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function() {
-                $http.get($rootScope.RoutePath + "account/forgotpasswordfromOwnerCustomer?email=" + $scope.obj.email + "&Type=Owner").then(function(data) {
+                $http.get($rootScope.RoutePath + "account/forgotpasswordfromOwnerCustomer?email=" + $scope.obj.email).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
@@ -173,7 +190,7 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    objUser: id,
+                    idUser: id,
                     Tasks: [],
                     event: ev,
 

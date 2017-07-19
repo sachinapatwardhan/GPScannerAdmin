@@ -1,169 +1,187 @@
-<md-content>
-    <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
-        <!-- HEADER -->
-        <div class="header md-accent-bg" layout="row" layout-align="space-between">
-            <div layout="column" layout-align="center start">
-                <div class="breadcrumb" layout="row" layout-align="start center">
-                    <md-icon md-font-icon="icon-home" class="s16"></md-icon>
-                    <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
-                    <span class="parent">Country-State-City</span>
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Country-State-City">Country-State-City</span>
                 </div>
-                <div class="title">Country-State-City Management</div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Records :</span>
+                    <b>{{recordsTotal}}</b>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-raised md-background" ng-click="ResetModel()">
+                        <span translate="Add City">Add City</span>
+                    </md-button>
+                </div>
             </div>
         </div>
-        <!-- / HEADER -->
-        <!-- CONTENT -->
-        <div class="content">
-            <md-content class="md-whiteframe-4dp">
-                <form name="form" class="md-inline-form">
-                    <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
-                        <md-tab label="List of Country-State-City" ng-click="ResetTab()">
-                            <md-content class="md-padding" md-selected="selectedIndex">
-                                <div class="custom-content">
-                                    <!--      <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
-                                    <table class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
-                                        <thead>
-                                            <tr>
-                                                <th class="all">
-                                                    <div class="table-header">
-                                                        <span class="column-title">No</span>
-                                                    </div>
-                                                </th>
-                                                <th class="secondary-text">
-                                                    <div class="table-header">
-                                                        <span class="column-title">Country Name</span>
-                                                    </div>
-                                                </th>
-                                                <th class="secondary-text">
-                                                    <div class="table-header">
-                                                        <span class="column-title">State Name</span>
-                                                    </div>
-                                                </th>
-                                                <th class="secondary-text">
-                                                    <div class="table-header">
-                                                        <span class="column-title">City Name</span>
-                                                    </div>
-                                                </th>
-                                                <th class="all text-center">
-                                                    <div class="table-header">
-                                                        <span class="column-title">Action</span>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <!--  <tbody>
-                                    <tr ng-repeat="o in lst">
-                                        <td>{{ $index+1 }}</td>
-                                        <td>{{ o.tblcountrystatemgmt.tblcountrymgmt.Country }}</td>
-                                        <td>{{ o.tblcountrystatemgmt.Name }}</td>
-                                        <td>{{ o.Name }}</td>
-                                        <td>
-                                            <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchListId(o)">
-                                                <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
-                                            </md-button>
-                                            <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteList(o.id)">
-                                                <md-icon md-font-icon="icon-trash"></md-icon>
-                                            </md-button>
-                                        </td>
-                                    </tr>
-                                </tbody> -->
-                                    </table>
+        <div class="content-card" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table id="citytable" class="dataTable cell-border row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
                                 </div>
-                            </md-content>
-                        </md-tab>
-                        <md-tab label="Manage Country-State-City" ng-click="ResetModel()" ng-if="FlgAddedEditlocal">
-                            <md-content class="md-padding">
-                                <div class="custom-content">
-                                    <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
-                                        <label>Id</label>
-                                        <input ng-model="model.id">
-                                    </md-input-container>
-                                    <md-input-container class="md-block" flex>
-                                        <div layout="row">
-                                            <md-input-container class="md-block" flex>
-                                                <label>Country name
-                                                    <md-icon>*</md-icon>
-                                                </label>
-                                                <md-select Name="CountryName" ng-model="model.idCountry" ng-required="true" ng-change="vm.GetAllStateByCountry(model.idCountry)">
-                                                    <md-option ng-repeat="o in lstCountry" value=" {{o.id}}">{{o.Country}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex>
-                                                <md-button class="md-accent md-raised md-hue-2" ng-if="FlgAddedEditlocal" ng-click="AddCountry($event)">Add Country
-                                                    <md-tooltip>Add Country</md-tooltip>
-                                                </md-button>
-                                                <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchCountryById($event)">
-                                                    <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
-                                                    <md-tooltip>Edit Country</md-tooltip>
-                                                </md-button>
-                                                <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="FlgDeletedAccess" ng-click="DeleteCountry($event)">
-                                                    <md-icon md-font-icon="icon-trash"></md-icon>
-                                                    <md-tooltip>Delete Country</md-tooltip>
-                                                </md-button>
-                                            </md-input-container>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block" flex>
-                                        <div layout="row">
-                                            <md-input-container class="md-block" flex>
-                                                <label>State name
-                                                    <md-icon>*</md-icon>
-                                                </label>
-                                                <md-select Name="StateName" ng-model="model.idState" ng-required="true" ng-disabled="model.idCountry==''">
-                                                    <md-option ng-repeat="o in lstState" value="{{o.id}}">{{ o.Name }}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex>
-                                                <md-button class="md-accent md-raised md-hue-2" ng-if="FlgAddedEditlocal" ng-click="AddState($event)">Add State
-                                                    <md-tooltip>Add State</md-tooltip>
-                                                </md-button>
-                                                <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchStateById($event)">
-                                                    <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
-                                                    <md-tooltip>Edit State</md-tooltip>
-                                                </md-button>
-                                                <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="FlgDeletedAccess" ng-click="DeleteState($event)">
-                                                    <md-icon md-font-icon="icon-trash"></md-icon>
-                                                    <md-tooltip>Delete State</md-tooltip>
-                                                </md-button>
-                                            </md-input-container>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block" flex-gt-sm="50">
-                                        <label>City name *</label>
-                                        <input name="Name" ng-model="model.Name" maxlength="25" ng-required="true" ng-disabled="model.idState==''" maxlength="50" md-maxlength="50">
-                                        <div ng-messages="form.Name.$error" ng-if="form.Name.$touched">
-                                            <div ng-message="required">
-                                                <span>City name is required</span>
-                                            </div>
-                                        </div>
-                                    </md-input-container>
-                                    <md-input-container class="md-block" flex-gt-sm="50">
-                                        <label>Short name </label>
-                                        <input name="ShortName" type="text" ng-model="model.ShortName" maxlength="10" md-maxlength="10">
-                                        <!--<div ng-messages="form.ShortName.$error" ng-if="form.ShortName.$touched">
-                                                <div ng-message="md-maxlength">
-                                                    Short Name has to be less than 10 characters long.
-                                                </div>
-                                            </div>-->
-                                    </md-input-container>
-                                    <md-input-container class="md-block" flex-gt-sm="50">
-                                        <label>Sequence</label>
-                                        <input name="Seq" ng-model="model.Seq" type="number" placeholder="12345" max="9999999999" min='0'>
-                                        <div ng-messages="form.Seq.$error">
-                                            <div ng-message="max" class="my-message">Sequence can't be longer than 10 number</div>
-                                        </div>
-                                    </md-input-container>
-                                    <div align="left">
-                                        <md-button class="md-raised md-primary" ng-disabled="!form.$valid" ng-click="CreateList(model)">Save</md-button>
-                                        <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Country Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">State Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">City Name</span>
+                                </div>
+                            </th>
+                            <th class="all text-center">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed" layout="column" ng-show="flag">
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to products" ng-click="gotoOrderList()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="Country-State-City">Country-State-City</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content" layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form name="form" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex>
+                        <div layout="row">
+                            <md-input-container flex>
+                                <label>Country name</label>
+                                <md-select Name="idCountry" ng-model="model.idCountry" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true" ng-change="vm.GetAllStateByCountry(model.idCountry)">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">{{o.Country}}</md-option>
+                                </md-select>
+                                <div ng-messages="form.idCountry.$error" ng-if="form.idCountry.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Country is required.</span>
                                     </div>
                                 </div>
-                            </md-content>
-                        </md-tab>
-                    </md-tabs>
-                </form>
-            </md-content>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgAddedEditlocal" ng-click="AddCountry($event)">
+                                    <md-icon md-font-icon="icon-plus-circle-outline" class="s18 md-default-theme"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Add Country</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="FetchCountryById($event)">
+                                    <md-icon md-font-icon="icon-pencil" class="s18 md-default-theme"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgDeletedAccess" ng-click="DeleteCountry($event)">
+                                    <md-icon md-font-icon="icon-trash" class="s18 red-600-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                                </md-button>
+                            </md-input-container>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex>
+                        <div layout="row">
+                            <md-input-container class="md-block" flex>
+                                <label>State name</label>
+                                <md-select Name="idState" ng-model="model.idState" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-disabled="model.idCountry==''" ng-required="true">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermState" type="search" placeholder="Search for a state.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstState |filter:vm.searchTermState| orderBy: 'Name'">{{o.Name}}</md-option>
+                                </md-select>
+                                <div ng-messages="form.idState.$error" ng-if="form.idState.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>State is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgAddedEditlocal" ng-click="AddState($event)">
+                                    <md-icon md-font-icon="icon-plus-circle-outline" class="s18 md-default-theme"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Add State</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="FetchStateById($event)">
+                                    <md-icon md-font-icon="icon-pencil" class="s18 md-default-theme"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgDeletedAccess" ng-click="DeleteState($event)">
+                                    <md-icon md-font-icon="icon-trash" class="s18 red-600-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                                </md-button>
+                            </md-input-container>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>City name</label>
+                        <input name="Name" ng-model="model.Name" maxlength="25" ng-required="true" ng-disabled="model.idState==''" maxlength="50" md-maxlength="50">
+                        <div ng-messages="form.Name.$error" ng-if="form.Name.$touched">
+                            <div ng-message="required">
+                                <span>City name is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>Short name </label>
+                        <input name="ShortName" type="text" ng-model="model.ShortName" maxlength="10" md-maxlength="10">
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>Sequence</label>
+                        <input name="Seq" ng-model="model.Seq" type="number" placeholder="12345" max="9999999999" min='0'>
+                        <div ng-messages="form.Seq.$error">
+                            <div ng-message="max" class="my-message">Sequence can't be longer than 10 number</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div align="center">
+                    <md-button class="md-raised md-primary" ng-click="CreateList(model)" ng-disabled="!vm.isFormValid('form')">
+                        <span translate="SAVE">SAVE</span>
+                    </md-button>
+                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                </div>
+            </form>
         </div>
-        <!-- / CONTENT -->
     </div>
-</md-content>
+</div>

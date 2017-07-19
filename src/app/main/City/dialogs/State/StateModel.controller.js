@@ -6,7 +6,7 @@
         .controller('StateModelController', StateModelController);
 
     /** @ngInject */
-    function StateModelController($http, $mdDialog, $compile,  $mdToast, $scope, $rootScope, $cookieStore, objState, Tasks, event, StateVM, DTOptionsBuilder, DTColumnDefBuilder,DTColumnBuilder) {
+    function StateModelController($http, $mdDialog, $compile, $mdToast, $scope, $rootScope, $cookieStore, objState, Tasks, event, StateVM, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder) {
         var vm = this;
 
         $scope.init = function() {
@@ -70,7 +70,7 @@
             .withPaginationType('full_numbers')
             .withDisplayLength(10)
             .withOption('responsive', true)
-            .withOption('aaSorting', [2, 'asc'])
+            .withOption('aaSorting', [1, 'asc'])
             .withOption('autoWidth', false)
             .withOption('createdRow', createdRow);
 
@@ -100,12 +100,25 @@
         function actionsHtml(data, type, full, meta) {
             var btn = '';
 
-            btn = btn + '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchStateById(' + full.id + ')">' +
-                '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon>' +
-                '</md-button>' +
-                '<md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteState(' + full.id + ',' + full.idCountry + ')">' +
-                '<md-icon md-font-icon="icon-trash"></md-icon>' +
-                '</md-button>';
+            // btn = btn + '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="FetchStateById(' + full.id + ')">' +
+            //     '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon>' +
+            //     '</md-button>' +
+            //     '<md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-click="DeleteState(' + full.id + ',' + full.idCountry + ')">' +
+            //     '<md-icon md-font-icon="icon-trash"></md-icon>' +
+            //     '</md-button>';
+            if ($rootScope.FlgModifiedAccess) {
+                btn += '<md-button class="edit-button md-icon-button"  ng-click="FetchStateById(' + full.id + ')">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 md-default-theme"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+            }
+            if ($rootScope.FlgDeletedAccess) {
+                btn += '<md-button class="edit-button md-icon-button"  ng-click="DeleteState(' + full.id + ',' + full.idCountry + ')">' +
+                    '<md-icon md-font-icon="icon-trash"  class="s18 red-600-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
+            }
+            btn += '</div>';
             return btn;
         };
 
@@ -176,7 +189,6 @@
                     StateId: id
                 };
                 $http.get($rootScope.RoutePath + "state/DeleteState", { params: params }).success(function(data) {
-                    console.log(data);
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
