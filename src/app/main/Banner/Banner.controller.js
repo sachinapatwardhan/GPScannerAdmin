@@ -13,9 +13,12 @@
     $scope.dtInstance = {};
     $scope.dtOptions = {
       dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+      columnDefs: [],
       initComplete: function() {
         var api = this.api(),
           searchBox = angular.element('body').find('#Temp');
+
+        // Bind an external input as a table wide search box
         if (searchBox.length > 0) {
           searchBox.on('keyup', function(event) {
             api.search(event.target.value).draw();
@@ -28,7 +31,6 @@
       scrollY: 'auto',
       responsive: true
     };
-
 
     $scope.init = function() {
       $scope.tab = { selectedIndex: 0 };
@@ -55,12 +57,6 @@
       }
     };
 
-    $scope.GetSerch = function(Search) {
-      console.log(Search)
-      $scope.dtInstance.DataTable.search(Search);
-
-      $scope.dtInstance.DataTable.search(Search).draw();
-    };
     $scope.Add = function() {
       $scope.flag = true;
     }
@@ -76,7 +72,6 @@
         Time: Date.parse(o.date),
         DateTime: o.date,
       }
-      console.log(params);
       $http.get($rootScope.RoutePath + "petTracking/saveDate", { params: params }).then(function(response) {
         $mdToast.show(
           $mdToast.simple()
