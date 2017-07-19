@@ -23,74 +23,6 @@
 
     }
 
-    function AlarmCode() {
-      $scope.ResponseAlarm = [];
-      var obj = new Object();
-      obj.AlarmCode = "01";
-      obj.Alarm = "SOS alarm(IN1)";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "02";
-      obj.Alarm = "Line broken alarm(IN2)";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "03";
-      obj.Alarm = "Door open alarm(IN3)";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "04";
-      obj.Alarm = "Engine on alarm(IN4)";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "05";
-      obj.Alarm = "Original triggering alarm(IN5)";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "10";
-      obj.Alarm = "Law battery alarm";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "11";
-      obj.Alarm = "Over speed alarm";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "12";
-      obj.Alarm = "Movment alarm";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "13";
-      obj.Alarm = "Geo-fence alarm";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "30";
-      obj.Alarm = "Vibration alarm";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "50";
-      obj.Alarm = "External power cut alarm";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "52";
-      obj.Alarm = "Veer report";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "60";
-      obj.Alarm = "Fatigue driving alarm";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "71";
-      obj.Alarm = "Crash alarm(Harsh brake)";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "71";
-      obj.Alarm = "Acceleration alarm";
-      $scope.ResponseAlarm.push(obj);
-      var obj = new Object();
-      obj.AlarmCode = "81";
-      obj.Alarm = "Fuel loss alarm";
-      $scope.ResponseAlarm.push(obj);
-
-    }
     $scope.GetSerch = function(Search) {
       $scope.Search = Search;
       $scope.GetAllAlarm(true);
@@ -237,7 +169,83 @@
       $scope.GetAllAlarm(true);
     }
 
+
     //Dynamic Pagging End
+
+    $scope.Export = function() {
+
+      window.location.href = $rootScope.RoutePath + "gpsdata/ExportAlarm?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&AlarmCode=" + $scope.ModelSearch.AlarmCode;
+
+    }
+
+    function AlarmCode() {
+      $scope.ResponseAlarm = [];
+      var obj = new Object();
+      obj.AlarmCode = "01";
+      obj.Alarm = "SOS alarm(IN1)";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "02";
+      obj.Alarm = "Line broken alarm(IN2)";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "03";
+      obj.Alarm = "Door open alarm(IN3)";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "04";
+      obj.Alarm = "Engine on alarm(IN4)";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "05";
+      obj.Alarm = "Original triggering alarm(IN5)";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "10";
+      obj.Alarm = "Law battery alarm";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "11";
+      obj.Alarm = "Over speed alarm";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "12";
+      obj.Alarm = "Movment alarm";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "13";
+      obj.Alarm = "Geo-fence alarm";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "30";
+      obj.Alarm = "Vibration alarm";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "50";
+      obj.Alarm = "External power cut alarm";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "52";
+      obj.Alarm = "Veer report";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "60";
+      obj.Alarm = "Fatigue driving alarm";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "71";
+      obj.Alarm = "Crash alarm(Harsh brake)";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "71";
+      obj.Alarm = "Acceleration alarm";
+      $scope.ResponseAlarm.push(obj);
+      var obj = new Object();
+      obj.AlarmCode = "81";
+      obj.Alarm = "Fuel loss alarm";
+      $scope.ResponseAlarm.push(obj);
+
+    }
     $scope.init();
   }
 

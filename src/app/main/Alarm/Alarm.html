@@ -21,6 +21,10 @@
           <md-icon md-font-icon="icon-filter-variant"></md-icon>
           <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
         </md-button>
+        <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length>0 && Search == ''">
+          <md-icon md-font-icon="icon-file-excel"></md-icon>
+          <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
+        </md-button>
       </div>
     </div>
     <div class="content-card" layout="column" flex>
@@ -44,7 +48,7 @@
           <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
             <label>Alarm</label>
             <md-select name="DeviceId" ng-model="ModelSearch.AlarmCode">
-              <md-option ng-repeat="o in ResponseAlarm" value="{{o.AlarmCode}}">{{o.Alarm}}</md-option> 
+              <md-option ng-repeat="o in ResponseAlarm" value="{{o.AlarmCode}}">{{o.Alarm}}</md-option>
             </md-select>
           </md-input-container>
           <div align="left">
