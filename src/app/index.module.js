@@ -1,57 +1,58 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    /**
-     * Main module of the Fuse
-     */
-    angular
-        .module('fuse', [
+  /**
+   * Main module of the Fuse
+   */
+  angular
+    .module('fuse', [
 
-            // Core
-            'app.core',
+      // Core
+      'app.core',
 
-            // Navigation
-            'app.navigation',
+      // Navigation
+      'app.navigation',
 
-            // Toolbar
-            'app.toolbar',
+      // Toolbar
+      'app.toolbar',
 
-            // Quick panel
-            'app.quick-panel',
+      // Quick panel
+      'app.quick-panel',
 
-            // Sample
-            'app.sample',
-            'app.Dashboard',
-            'app.login',
-            // 'app.productdetail',
+      // Sample
+      'app.sample',
+      'app.Dashboard',
+      'app.login',
+      // 'app.productdetail',
 
-            'app.menu',
-            'app.datatable',
-            'app.media',
-            'app.City',
-            'app.MediaSetting',
-            'app.Module',
-            'app.Banner',
-            'app.Setting',
-            'app.Warehouse',
-            'app.stickyfooter',
-            'app.Provider',
-            'app.roles',
-            'app.rewardsystem',
-            'app.UserPermission',
-            // 'app.PetDevice',
-            'app.ChangePassword',
-            'app.Register',
-            'app.Forgotpassword',
-            'app.SendEmail',
-            'app.Language',
-            'app.DeviceStatus',
-            'app.MobileWidget',
-            'app.OwnerCustomer',
-            'app.MobileLanguageResource',
-            'app.ownerVehicle',
-            'app.owneruser',
-            'app.Trackers',
-            'app.gps',
-        ]);
+      'app.menu',
+      'app.datatable',
+      'app.media',
+      'app.City',
+      'app.MediaSetting',
+      'app.Module',
+      'app.Banner',
+      'app.Setting',
+      'app.Warehouse',
+      'app.stickyfooter',
+      'app.Provider',
+      'app.roles',
+      'app.rewardsystem',
+      'app.UserPermission',
+      // 'app.PetDevice',
+      'app.ChangePassword',
+      'app.Register',
+      'app.Forgotpassword',
+      'app.SendEmail',
+      'app.Language',
+      'app.DeviceStatus',
+      'app.MobileWidget',
+      'app.OwnerCustomer',
+      'app.MobileLanguageResource',
+      'app.ownerVehicle',
+      'app.owneruser',
+      'app.Trackers',
+      'app.gps',
+      'app.alarm',
+    ]);
 })();
