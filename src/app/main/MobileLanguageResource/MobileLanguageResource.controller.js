@@ -23,12 +23,6 @@
             GetAllLanguageResources(true);
         }
 
-        $scope.GetSerch = function(Search) {
-            $scope.Search = Search;
-            vm.dtInstance.DataTable.search(Search);
-            vm.dtInstance.DataTable.search(Search).draw();
-        }
-
         vm.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
         ];
@@ -53,6 +47,12 @@
             scrollY: 'auto',
             responsive: true
         };
+
+        // $scope.GetSerch = function(Search) {
+        //     $scope.Search = Search;
+        //     vm.dtInstance.DataTable.search(Search);
+        //     vm.dtInstance.DataTable.search(Search).draw();
+        // }
 
         //Get All Mobile Language Resources
         function GetAllLanguageResources(flag) {

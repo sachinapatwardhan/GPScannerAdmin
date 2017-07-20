@@ -20,7 +20,7 @@
                 Name: '',
                 deviceid: '',
                 renewaldate: null,
-                HandshakDatetime: '',
+                HandshakDatetime: null,
                 MaxSpeed: 0,
                 BatteryPercentage: 0,
                 IsACC: 0,
@@ -40,6 +40,8 @@
                 IsDelete: 0,
             };
             $scope.selectedItem = null;
+            $scope.objSelectedUser = [];
+            // $scope.query = '';
             $scope.Search = '';
             $scope.flag = false;
         }
@@ -51,7 +53,7 @@
                 Name: '',
                 deviceid: '',
                 renewaldate: 0,
-                HandshakDatetime: '',
+                HandshakDatetime: null,
                 MaxSpeed: 0,
                 BatteryPercentage: 0,
                 IsACC: 0,
@@ -71,6 +73,8 @@
                 IsDelete: 0,
             };
             $scope.selectedItem = null;
+            $scope.objSelectedUser = [];
+            // $scope.query = '';
             $scope.Search = '';
             $scope.flag = false;
         }
@@ -261,7 +265,7 @@
                     '</md-button>';
             }
             btns += '<md-button class="edit-button md-icon-button" ng-click="OpenViewModel($event,' + data.id + ')">' +
-                '<md-icon md-font-icon="icon-receipt" class="s18 brown-500-fg"></md-icon>' +
+                '<md-icon md-font-icon="icon-cog" class="s18 brown-500-fg"></md-icon>' +
                 '<md-tooltip md-visible="" md-direction="">View Detail</md-tooltip>' +
                 '</md-button>';
 
@@ -312,7 +316,7 @@
             if (o.HandshakDatetime != null) {
                 $scope.model.HandshakDatetime = new Date(o.HandshakDatetime);
             } else {
-                $scope.model.HandshakDatetime = '';
+                $scope.model.HandshakDatetime = null;
             }
 
             if (o.IsOnline == 1) {
@@ -404,6 +408,7 @@
         }
 
         $scope.OpenViewModel = function(e, idVehicle) {
+            GetAllDynamicVehicles(true);
             var o = _.findWhere($scope.lstVehicledata, {
                 id: idVehicle
             });
@@ -416,7 +421,7 @@
                 locals: {
                     ModalMethod: vm,
                     idVehicle: idVehicle,
-                    objVehicle: o
+                    objVehicle: o,
                 }
             });
         }
@@ -455,16 +460,13 @@
         }
 
         $scope.ResetModel = function() {
-            $scope.tab = {
-                selectedIndex: 0
-            };
             $scope.model = {
                 id: 0,
                 iduser: '',
                 Name: '',
                 deviceid: '',
                 renewaldate: null,
-                HandshakDatetime: '',
+                HandshakDatetime: null,
                 MaxSpeed: 0,
                 BatteryPercentage: 0,
                 IsACC: 0,
@@ -484,6 +486,7 @@
                 IsDelete: 0,
             };
             $scope.selectedItem = null;
+            // // $scope.query = '';
             $scope.flag = false;
             $scope.resetForm();
         }

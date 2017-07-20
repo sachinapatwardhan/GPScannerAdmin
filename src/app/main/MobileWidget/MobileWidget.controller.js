@@ -10,14 +10,11 @@
     function MobileWidgetController($http, $scope, $mdDialog, $document, $mdToast, $cookieStore, DTOptionsBuilder, DTColumnDefBuilder, $rootScope, $timeout) {
         var vm = this;
         vm.SelectImage = SelectImage;
-
+        // vm.Reset = Reset;
         $scope.init = function() {
-
-            $scope.tab = { selectedIndex: 0 };
             $scope.model = {
                 id: '',
                 Name: '',
-                // Heading: '',
                 Title: '',
                 Design: '',
                 ImageUrl: '',
@@ -33,7 +30,31 @@
             }
             $scope.GetAllWidget();
             $scope.FlgImage = 0;
+            $scope.flag = false;
         };
+
+        $scope.gotoList = function() {
+            $scope.model = {
+                id: '',
+                Name: '',
+                Title: '',
+                Design: '',
+                ImageUrl: '',
+                URL: '',
+                Position: null,
+                CustomField: '',
+                CustomValue: '',
+                CreatedBy: 'Admin',
+                CreatedDate: new Date(),
+                ModifiedBy: 'Admin',
+                ModifiedDate: new Date(),
+                CmsType: "Mobile",
+            }
+            $scope.GetAllWidget();
+            $scope.Search = '';
+            $scope.FlgImage = 0;
+            $scope.flag = false;
+        }
 
         $scope.GetAllWidget = function() {
             $http.get($rootScope.RoutePath + "widget/GetAllWidgetByType?CmsType=Mobile").then(function(response) {
@@ -85,7 +106,7 @@
 
         $scope.EditWidget = function(o) {
             $rootScope.FlgAddedEditlocal = true;
-
+            $scope.flag = true;
             $scope.tab = { selectedIndex: 1 };
             $scope.model.id = o.id;
             $scope.model.Name = o.Name;
@@ -171,6 +192,28 @@
             DTColumnDefBuilder.newColumnDef(4).notSortable()
         ];
 
+        $scope.dtInstance = {};
+        $scope.dtOptions = {
+            dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+            columnDefs: [],
+            initComplete: function() {
+                var api = this.api(),
+                    searchBox = angular.element('body').find('#modelsearch');
+
+                // Bind an external input as a table wide search box
+                if (searchBox.length > 0) {
+                    searchBox.on('keyup', function(event) {
+                        api.search(event.target.value).draw();
+                    });
+                }
+            },
+            pagingType: 'full_numbers',
+            lengthMenu: [25, 30, 50, 100],
+            pageLength: 25,
+            scrollY: 'auto',
+            responsive: true
+        };
+
 
         $scope.dtColumnDefsModal = [
             DTColumnDefBuilder.newColumnDef(0),
@@ -179,37 +222,27 @@
             DTColumnDefBuilder.newColumnDef(3).notSortable()
         ];
 
-        $scope.ResetTab = function() {
-            if ($rootScope.FlgAddedAccess != true) {
-                $scope.FlgAddedEditlocal = false;
+        $scope.ResetModel = function() {
+            $scope.FlgImage = 0;
+            $scope.model = {
+                id: '',
+                Name: '',
+                //Heading:'',
+                Title: '',
+                Design: '',
+                ImageUrl: '',
+                URL: '',
+                Position: null,
+                CustomField: '',
+                CustomValue: '',
+                CreatedBy: 'Admin',
+                CreatedDate: new Date(),
+                ModifiedBy: 'Admin',
+                ModifiedDate: new Date(),
+                CmsType: "Mobile",
             }
-        }
-
-        $scope.ResetEdit = function() {
-            if ($rootScope.FlgAddedAccess == true) {
-
-                $scope.FlgImage = 0;
-                $scope.model = {
-                    id: '',
-                    Name: '',
-                    //Heading:'',
-                    Title: '',
-                    Design: '',
-                    ImageUrl: '',
-                    URL: '',
-                    Position: null,
-                    CustomField: '',
-                    CustomValue: '',
-                    CreatedBy: 'Admin',
-                    CreatedDate: new Date(),
-                    ModifiedBy: 'Admin',
-                    ModifiedDate: new Date(),
-                    CmsType: "Mobile",
-                }
-
-                $scope.FormWidget.$setPristine();
-                $scope.FormWidget.$setUntouched();
-            }
+            $scope.restForm();
+            $scope.flag = false;
         }
 
         $scope.Reset = function() {
@@ -218,7 +251,22 @@
                 $rootScope.FlgAddedEditlocal = true
             }
             $scope.init();
+            $scope.flag = true;
         }
+        $scope.restForm = function() {
+            $scope.formLanguages.$setUntouched();
+            $scope.formLanguages.$setPristine();
+        }
+
+        // function Reset() {
+        //     $rootScope.FlgAddedEditlocal = false;
+        //     if ($rootScope.FlgAddedAccess == true) {
+        //         $rootScope.FlgAddedEditlocal = true;
+        //     }
+        //     $scope.resetForm();
+        //     $scope.init();
+        //     $scope.flag = true;
+        // }
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.init();

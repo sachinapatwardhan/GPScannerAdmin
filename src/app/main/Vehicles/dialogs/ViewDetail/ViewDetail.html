@@ -16,33 +16,53 @@
                             <form name="formVehicledetails1" novalidate class="md-inline-form" aria-invalid="false">
                                 <div class="content">
                                     <div layout="row" layout-wrap>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
-                                            <md-checkbox class="md-secondary" ng-model="model.IsACC" value="{{model.IsACC}}" flex></md-checkbox>&nbsp;&nbsp;Is Acc
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
+                                            <md-checkbox class="md-secondary" ng-model="model.IsACC" value="{{model.IsACC}}" ng-true-value="1" ng-false-value="0" flex></md-checkbox>&nbsp;&nbsp;Is ACC
                                             <div ng-messages="formVehicledetails1.IsACC.$error" ng-if="formVehicledetails1.IsACC.$touched" role="alert">
                                                 <div ng-message="required">
-                                                    <span>Is Acc field is required</span>
+                                                    <span>Is ACC field is required</span>
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.IsACC, 'IsACC')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>Max Speed </label>
                                             <input type="number" name="MaxSpeed" ng-model="model.MaxSpeed">
-                                            <div ng-messages="formVehicledetails1.MaxSpeed.$error" ng-if="formVehicledetails1.MaxSpeed.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>Max Speed field is required</span>
+                                            <!--<div ng-messages="formVehicledetails1.MaxSpeed.$error" ng-if="formVehicledetails1.MaxSpeed.$touched" role="alert">
+                                                <div ng-message="max">
+                                                    <span>Max Speed should not greater than 200</span>
                                                 </div>
-                                            </div>
+                                                <div ng-message="min">
+                                                    <span>Max Speed should not less than 0</span>
+                                                </div>
+                                            </div>-->
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.MaxSpeed, 'MaxSpeed')" ng-disabled="formVehicledetails1.MaxSpeed.invalid">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-xs="40">
                                             <label>Sleep Mode </label>
-                                            <input type="text" name="SleepMode" ng-model="model.SleepMode">
-                                            <div ng-messages="formVehicledetails1.SleepMode.$error" ng-if="formVehicledetails1.SleepMode.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>Sleep Mode field is required</span>
-                                                </div>
-                                            </div>
+                                            <md-select Name="SleepMode" ng-model="model.SleepMode">
+                                                <md-option value="0">Off</md-option>
+                                                <md-option value="1">Level 1</md-option>
+                                                <md-option value="2">Level 2</md-option>
+                                            </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.SleepMode, 'SleepMode')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>GPRS Interval </label>
                                             <input type="text" name="GPRSInterval" ng-model="model.GPRSInterval">
                                             <div ng-messages="formVehicledetails1.GPRSInterval.$error" ng-if="formVehicledetails1.GPRSInterval.$touched" role="alert">
@@ -51,7 +71,13 @@
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.GPRSInterval, 'GPRSInterval')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>GPRS Stop Interval </label>
                                             <input type="text" name="GPRSStopInterval" ng-model="model.GPRSStopInterval">
                                             <div ng-messages="formVehicledetails1.GPRSStopInterval.$error" ng-if="formVehicledetails1.GPRSStopInterval.$touched" role="alert">
@@ -60,79 +86,127 @@
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.GPRSStopInterval, 'GPRSStopInterval')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-xs="40">
                                             <label>Arm </label>
-                                            <input type="text" name="Arm" ng-model="model.Arm">
-                                            <div ng-messages="formVehicledetails1.Arm.$error" ng-if="formVehicledetails1.Arm.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>Arm field is required</span>
-                                                </div>
-                                            </div>
+                                            <md-select Name="Arm" ng-model="model.Arm">
+                                                <md-option value="0">DisArm</md-option>
+                                                <md-option value="1">Arm</md-option>
+                                                <md-option value="2">Remain Previous output</md-option>
+                                            </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.Arm, 'Arm')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>OdoMeter </label>
-                                            <input type="text" name="OdoMeter" ng-model="model.OdoMeter">
+                                            <input type="number" name="OdoMeter" ng-model="model.OdoMeter" max="9999">
                                             <div ng-messages="formVehicledetails1.OdoMeter.$error" ng-if="formVehicledetails1.OdoMeter.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>OdoMeter Name field is required</span>
+                                                <div ng-message="max">
+                                                    <span>Odo Meter should not greater than 9999</span>
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.OdoMeter, 'OdoMeter')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>Heartbeat Interval </label>
-                                            <input type="text" name="HeartbeatInterval" ng-model="model.HeartbeatInterval">
+                                            <input type="number" name="HeartbeatInterval" ng-model="model.HeartbeatInterval" max="65535">
                                             <div ng-messages="formVehicledetails1.HeartbeatInterval.$error" ng-if="formVehicledetails1.HeartbeatInterval.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>Heartbeat Interval field is required</span>
+                                                <div ng-message="max">
+                                                    <span>Odo Meter should not greater than 65535 </span>
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.HeartbeatInterval, 'HeartbeatInterval')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>Relay </label>
-                                            <input type="text" name="Relay" ng-model="model.Relay">
-                                            <div ng-messages="formVehicledetails1.Relay.$error" ng-if="formVehicledetails1.Relay.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>Relay field is required</span>
-                                                </div>
-                                            </div>
+                                            <md-select Name="Relay" ng-model="model.Relay">
+                                                <md-option value="0">Close</md-option>
+                                                <md-option value="1">Open</md-option>
+                                                <md-option value="2">Remain Previous output</md-option>
+                                            </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.Relay, 'Relay')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>Siren </label>
-                                            <input type="text" name="Siren" ng-model="model.Siren">
-                                            <div ng-messages="formVehicledetails1.Siren.$error" ng-if="formVehicledetails1.Siren.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>Vehicle Siren field is required</span>
-                                                </div>
-                                            </div>
+                                            <md-select Name="Siren" ng-model="model.Siren">
+                                                <md-option value="0">Close</md-option>
+                                                <md-option value="1">Open</md-option>
+                                                <md-option value="2">Remain Previous output</md-option>
+                                            </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.Siren, 'Siren')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>User Defined</label>
-                                            <input type="text" name="UserDefined" ng-model="model.UserDefined">
-                                            <div ng-messages="formVehicledetails1.UserDefined.$error" ng-if="formVehicledetails1.UserDefined.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>User Defined field is required</span>
-                                                </div>
-                                            </div>
+                                            <md-select Name="UserDefined" ng-model="model.UserDefined">
+                                                <md-option value="0">Close</md-option>
+                                                <md-option value="1">Open</md-option>
+                                                <md-option value="2">Remain Previous output</md-option>
+                                            </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.UserDefined, 'UserDefined')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>Door Lock </label>
-                                            <input type="text" name="DoorLock" ng-model="model.DoorLock">
-                                            <div ng-messages="formVehicledetails1.DoorLock.$error" ng-if="formVehicledetails1.DoorLock.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span> Door Lock field is required</span>
-                                                </div>
-                                            </div>
+                                            <md-select Name="DoorLock" ng-model="model.DoorLock">
+                                                <md-option value="0">Close</md-option>
+                                                <md-option value="1">Open</md-option>
+                                                <md-option value="2">Remain Previous output</md-option>
+                                            </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.DoorLock, 'DoorLock')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>Door Unlock</label>
-                                            <input type="text" name="DoorUnlock" ng-model="model.DoorUnlock">
-                                            <div ng-messages="formVehicledetails1.DoorUnlock.$error" ng-if="formVehicledetails1.DoorUnlock.$touched" role="alert">
-                                                <div ng-message="required">
-                                                    <span>Door Unlock field is required</span>
-                                                </div>
-                                            </div>
+                                            <md-select Name="DoorUnlock" ng-model="model.DoorUnlock">
+                                                <md-option value="0">Close</md-option>
+                                                <md-option value="1">Open</md-option>
+                                                <md-option value="2">Remain Previous output</md-option>
+                                            </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.DoorUnlock, 'DoorUnlock')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>Time Zone</label>
                                             <input type="text" name="TimeZone" ng-model="model.TimeZone">
                                             <div ng-messages="formVehicledetails1.TimeZone.$error" ng-if="formVehicledetails1.TimeZone.$touched" role="alert">
@@ -141,11 +215,17 @@
                                                 </div>
                                             </div>
                                         </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.TimeZone, 'TimeZone')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
                                     </div>
-                                    <div align="left">
+                                    <!--<div align="left">
                                         <md-button class="md-raised md-primary" ng-click="CreateVehicleDetails(model)">Update</md-button>
                                         <md-button class="md-raised md-warn" ng-click="closeModel()">Cancel</md-button>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </form>
                         </md-content>

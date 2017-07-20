@@ -95,17 +95,18 @@
                 'emptyTable': "No Record Found"
             })
             .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            .withOption('scrollY', 'auto'),
 
-        vm.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-            DTColumnDefBuilder.newColumnDef(3).notSortable(),
-            //DTColumnDefBuilder.newColumnDef(2),
-            //DTColumnDefBuilder.newColumnDef(3),
-            //DTColumnDefBuilder.newColumnDef(4),
-            // DTColumnDefBuilder.newColumnDef(5)
-        ];
+            vm.dtColumnDefs = [
+                DTColumnDefBuilder.newColumnDef(0),
+                DTColumnDefBuilder.newColumnDef(1),
+                DTColumnDefBuilder.newColumnDef(2),
+                DTColumnDefBuilder.newColumnDef(3).notSortable(),
+                //DTColumnDefBuilder.newColumnDef(2),
+                //DTColumnDefBuilder.newColumnDef(3),
+                //DTColumnDefBuilder.newColumnDef(4),
+                // DTColumnDefBuilder.newColumnDef(5)
+            ];
         $scope.dtInstance = {};
 
         $scope.GetSerch = function(Search) {

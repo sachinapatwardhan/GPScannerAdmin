@@ -22,6 +22,7 @@
                 Published: true,
                 DisplayOrder: null,
             };
+            $scope.flag = false;
             $scope.FlgImage = 0;
             $scope.GetAllLanguage();
             $scope.GetLangageCulture();
@@ -134,6 +135,7 @@
             $scope.model.Rtl = o.Rtl;
             $scope.model.Published = o.Published;
             $scope.model.DisplayOrder = o.DisplayOrder;
+            $scope.flag = true;
         }
 
         $scope.DeleteLanguage = function(id) {
@@ -178,11 +180,6 @@
             // $scope.resetForm();
             $scope.init();
             $scope.flag = true;
-        }
-
-        $scope.resetForm = function() {
-            $scope.formMediadetails.$setUntouched();
-            $scope.formMediadetails.$setPristine();
         }
 
         vm.dtColumnDefs = [
