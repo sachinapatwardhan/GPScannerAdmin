@@ -62,7 +62,7 @@
             DTColumnBuilder.newColumn('DeviceId'),
             DTColumnBuilder.newColumn('Datetime').renderWith(Datefun),
             DTColumnBuilder.newColumn('Latitude'),
-            DTColumnBuilder.newColumn('Longitude'),
+            DTColumnBuilder.newColumn('Longtitude'),
             DTColumnBuilder.newColumn('GPSPositioning'),
             DTColumnBuilder.newColumn('Speed'),
             DTColumnBuilder.newColumn('Direction'),
