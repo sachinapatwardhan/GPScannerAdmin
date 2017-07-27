@@ -16,12 +16,12 @@
             };
         }
 
-        $rootScope.RoutePath = "http://localhost:7100/";
+        $rootScope.RoutePath = "http://localhost:7212/";
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
         // $rootScope.RoutePath = "http://api.gpsina.com/";
-
-        // $rootScope.Socket_URL = "http://api.gpsina.com:7100";
+        // $rootScope.Socket_URL = "http://api.gpsina.com:7212";
+        $rootScope.Socket_URL = "http://localhost:7212";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
 
@@ -434,7 +434,33 @@
                             msNavigationService.saveItem('GPS Scanner.Alarm', {
                                 title: 'Alarm',
                                 state: 'app.alarm',
-                                order: gps[0].tblmodulemgmt.DisplayOrder,
+                                order: Alarm[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
+                        //CanBusData
+                        var CanBusData = _.filter(lstAllPages, function(obj) {
+                            return obj.tblmodulemgmt.Module == 'CanBus Data';
+                        });
+                        if (CanBusData.length > 0) {
+                            msNavigationService.saveItem('GPS Scanner.CanBus', {
+                                title: 'CanBus',
+                                state: 'app.CanBusData',
+                                order: CanBusData[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
+                        //DrivingBehavior
+                        var DrivingBehavior = _.filter(lstAllPages, function(obj) {
+                            return obj.tblmodulemgmt.Module == 'Driving Behavior';
+                        });
+                        if (DrivingBehavior.length > 0) {
+                            msNavigationService.saveItem('GPS Scanner.Driving Behavior', {
+                                title: 'Driving Behavior',
+                                state: 'app.DrivingBehavior',
+                                order: DrivingBehavior[0].tblmodulemgmt.DisplayOrder,
                                 weight: 1
                             });
                         }
