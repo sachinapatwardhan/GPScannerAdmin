@@ -90,8 +90,16 @@
                         d.search = "";
                     }
                     d.DeviceId = $scope.ModelSearch.DeviceId;
-                    d.StartDate = $scope.ModelSearch.StartDate;
-                    d.EndDate = $scope.ModelSearch.EndDate;
+                    if ($scope.ModelSearch.StartDate != '') {
+                        d.StartDate = $scope.ModelSearch.StartDate.toUTCString();
+                    } else {
+                        d.StartDate = ''
+                    }
+                    if ($scope.ModelSearch.EndDate != '') {
+                        d.EndDate = $scope.ModelSearch.EndDate.toUTCString();
+                    } else {
+                        d.EndDate = ''
+                    }
                     return d;
                 },
                 type: "get",
@@ -142,7 +150,8 @@
 
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
-                return $filter('date')(data, "dd-MM-yyyy");
+                // return $filter('date')(data, "dd-MM-yyyy");
+                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
             } else {
                 return '';
             }

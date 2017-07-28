@@ -24,6 +24,8 @@
                 // DTColumnBuilder.newColumn('OwnerName'),
                 DTColumnBuilder.newColumn('phone'),
                 DTColumnBuilder.newColumn('country'),
+                DTColumnBuilder.newColumn('OTP'),
+                DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
             ]
 
@@ -87,6 +89,18 @@
             $compile(angular.element(row).contents())($scope);
         }
 
+
+        function IsFlg(data, type, full, meta) {
+            var Flg;
+            if (data == true || data == 'true' || data == 1) {
+                Flg = '<i class="icon-checkbox-marked-circle green-500-fg"></i>';
+            } else {
+                Flg = '<i class="icon-cancel red-500-fg"></i>';
+            }
+
+            return Flg;
+
+        }
 
         function NumberHtml(data, type, full, meta) {
             return (meta.row + 1);

@@ -26,7 +26,7 @@
                 CountryId: '',
                 TelCoId: '',
                 SimNum: '',
-                idSalesAgent: '',
+                idSalesAgent: 0,
             };
             $scope.GetAllCountry();
             $scope.GetAlltelco();
@@ -74,7 +74,7 @@
                 CountryId: '',
                 TelCoId: '',
                 SimNum: '',
-                idSalesAgent: '',
+                idSalesAgent: 0,
             };
             $scope.Search = '';
             $scope.flagEdit = false;
@@ -291,7 +291,9 @@
             $scope.model.CountryId = o.CountryId;
             $scope.model.TelCoId = o.TelCoId;
             $scope.model.SimNum = parseInt(o.SimNum);
-            $scope.model.idSalesAgent = o.idSalesAgent;
+            if (o.idSalesAgent != null) {
+                $scope.model.idSalesAgent = o.idSalesAgent;
+            }
             $scope.model.CreatedDate = o.CreatedDate;
             $scope.model.CreatedBy = o.CreatedBy;
             $scope.flag = true;
@@ -315,7 +317,7 @@
                 CountryId: '',
                 TelCoId: '',
                 SimNum: '',
-                idSalesAgent: '',
+                idSalesAgent: 0,
             };
             $scope.flgSalesAgent = false;
             if ($rootScope.UserRoles == "Sales Agent") {

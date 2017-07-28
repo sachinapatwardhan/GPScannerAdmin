@@ -144,8 +144,11 @@
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Type</label>
                                 <md-select ng-model="model.Type" name="Type">
-                                    <md-option name="Type1" value="M2" selected="true">M2</md-option>
-                                    <md-option name="Type2" value="C2">C2</md-option>
+                                    <md-option name="Type1" value="TK510" selected="true">TK510</md-option>
+                                    <md-option name="Type2" value="TK208">TK208</md-option>
+                                    <md-option name="Type3" value="TK228">TK228</md-option>
+                                    <md-option name="Type4" value="GT08">GT08</md-option>
+                                    <md-option name="Type5" value="MT05">MT05</md-option>
                                 </md-select>
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
@@ -165,7 +168,8 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-show="!flgSalesAgent">
                                 <label>Sales Agent </label>
-                                <md-select name="idSalesAgent" ng-model="model.idSalesAgent">
+                                <md-select name="idSalesAgent" ng-model="model.idSalesAgent" ng-selected="model.idSalesAgent == o.id">
+                                    <md-option value="0">No Sales Agent</md-option>
                                     <md-option ng-repeat="o in lstSaleAgent" value="{{o.id}}">{{o.username}}</md-option>
                                 </md-select>
                             </md-input-container>

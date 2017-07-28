@@ -60,7 +60,7 @@
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
             DTColumnBuilder.newColumn('DeviceId'),
-            DTColumnBuilder.newColumn('Datetime').renderWith(Datefun),
+            DTColumnBuilder.newColumn('Datetime').renderWith(Datetimefun),
             DTColumnBuilder.newColumn('TotalIgnition'),
             DTColumnBuilder.newColumn('TotalDrivingTime'),
             DTColumnBuilder.newColumn('TotalIdlingTime'),
@@ -82,8 +82,16 @@
                         d.search = "";
                     }
                     d.DeviceId = $scope.ModelSearch.DeviceId;
-                    d.StartDate = $scope.ModelSearch.StartDate;
-                    d.EndDate = $scope.ModelSearch.EndDate;
+                    if ($scope.ModelSearch.StartDate != '') {
+                        d.StartDate = $scope.ModelSearch.StartDate.toUTCString();
+                    } else {
+                        d.StartDate = ''
+                    }
+                    if ($scope.ModelSearch.EndDate != '') {
+                        d.EndDate = $scope.ModelSearch.EndDate.toUTCString();
+                    } else {
+                        d.EndDate = ''
+                    }
                     return d;
                 },
                 type: "get",
@@ -134,7 +142,17 @@
 
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
-                return $filter('date')(data, "dd-MM-yyyy");
+                // return $filter('date')(data, "dd-MM-yyyy");
+                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
+            } else {
+                return '';
+            }
+        }
+
+        function Datetimefun(data, type, full, meta) {
+            if (data != '' && data != null && data != undefined) {
+                var selectedTime = new Date(data * 1000);
+                return moment(moment.utc(selectedTime).toDate()).format("DD/MM/YYYY hh:mm A");
             } else {
                 return '';
             }

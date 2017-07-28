@@ -1431,7 +1431,6 @@
             $http.get($rootScope.RoutePath + "dashboard/GetDashboardData", { params: params }).then(function(data) {
 
                 $scope.lstDashBoardInfo = data.data;
-
                 //Today
                 if (data.data.sumTodayCancelled == null) {
                     $scope.lstDashBoardInfo.sumTodayCancelled = 0;
@@ -1734,11 +1733,10 @@
             }
             $http.get($rootScope.RoutePath + "dashboard/GetBikeTotalDevice", { params: params }).then(function(data) {
                 $scope.lstDevices = data.data;
-
-                $scope.ActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: true, DeviceType: 'M2-U' });
-                $scope.NotActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: false, DeviceType: 'M2-U' });
-                $scope.ShoperDevice = _.where($scope.lstDevices.DeviceStatus, { DeviceType: 'M2' });
-                $scope.OwnerDevice = _.where($scope.lstDevices.DeviceStatus, { DeviceType: 'M2-U' });
+                $scope.ActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: 1 });
+                $scope.NotActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: 0 });
+                // $scope.ShoperDevice = _.where($scope.lstDevices.DeviceStatus, { DeviceType: 'M2' });
+                // $scope.OwnerDevice = _.where($scope.lstDevices.DeviceStatus, { DeviceType: 'M2-U' });
 
 
             });
@@ -1776,67 +1774,80 @@
             $http.get($rootScope.RoutePath + "dashboard/GetTotalCustomerByCountry").then(function(data) {
                 if (data.data.success == true) {
                     $scope.lstTotalCustomerbyCountry = data.data.data;
+                    console.log(data.data.data);
                     $scope.lst = [];
                     $timeout(function() {
                         for (var i = 0; i < $scope.lstTotalCustomerbyCountry.length; i++) {
-                            if ($scope.lstTotalCustomerbyCountry[i].tbluserinformation.Type == "Shop") {
-                                $scope.TotalShopperCustomer += $scope.lstTotalCustomerbyCountry[i].tbluserinformation.Total;
-                            } else if ($scope.lstTotalCustomerbyCountry[i].tbluserinformation.Type == "Owner") {
-                                $scope.TotalOwnerCustomer += $scope.lstTotalCustomerbyCountry[i].tbluserinformation.Total;
-                            } else if ($scope.lstTotalCustomerbyCountry[i].tbluserinformation.Type == "Both") {
-                                $scope.TotalShopperCustomer += $scope.lstTotalCustomerbyCountry[i].tbluserinformation.Total;
-                                $scope.TotalOwnerCustomer += $scope.lstTotalCustomerbyCountry[i].tbluserinformation.Total;
-                            } else {
+                            // if ($scope.lstTotalCustomerbyCountry[i].tbluserinformation.Type == "Shop") {
+                            //     $scope.TotalShopperCustomer += $scope.lstTotalCustomerbyCountry[i].tbluserinformation.Total;
+                            // } else if ($scope.lstTotalCustomerbyCountry[i].tbluserinformation.Type == "Owner") {
+                            //     $scope.TotalOwnerCustomer += $scope.lstTotalCustomerbyCountry[i].tbluserinformation.Total;
+                            // } else if ($scope.lstTotalCustomerbyCountry[i].tbluserinformation.Type == "Both") {
+                            //     $scope.TotalShopperCustomer += $scope.lstTotalCustomerbyCountry[i].tbluserinformation.Total;
+                            //     $scope.TotalOwnerCustomer += $scope.lstTotalCustomerbyCountry[i].tbluserinformation.Total;
+                            // } else {
 
-                            }
+                            // }
                             $scope.lst.push($scope.lstTotalCustomerbyCountry[i].tbluserinformation);
                         }
+
                         $scope.lstFinalTotalCustomerByCountry = [];
+
                         for (var i = 0; i < $scope.lst.length; i++) {
+                            // console.log($scope.lst[i]);
+                            var getdata = _.findWhere($scope.lst, { country: $scope.lst[i].country });
+                            console.log(getdata);
                             if ($scope.lst[i].country == '' || $scope.lst[i].country == null) {
                                 $scope.lst[i].country = 'Other';
                             }
+                            // console.log($scope.lst[i].country);
+
+
                             if ($scope.lstFinalTotalCustomerByCountry.length == 0) {
                                 var obj = new Object();
                                 obj.Country = $scope.lst[i].country;
-                                if ($scope.lst[i].Type == 'Shop') {
-                                    obj.Shop = $scope.lst[i].Total;
-                                    obj.Owner = 0;
-                                } else if ($scope.lst[i].Type == 'Owner') {
-                                    obj.Shop = 0;
-                                    obj.Owner = $scope.lst[i].Total;
-                                } else {
-                                    obj.Shop = $scope.lst[i].Total;
-                                    obj.Owner = $scope.lst[i].Total;
-                                }
+                                obj.Customer = $scope.lst[i].Total;
+                                //     if ($scope.lst[i].Type == 'Shop') {
+                                //         obj.Shop = $scope.lst[i].Total;
+                                //         obj.Owner = 0;
+                                //     } else if ($scope.lst[i].Type == 'Owner') {
+                                //         obj.Shop = 0;
+                                //         obj.Owner = $scope.lst[i].Total;
+                                //     } else {
+                                //         obj.Shop = $scope.lst[i].Total;
+                                //         obj.Owner = $scope.lst[i].Total;
+                                //     }
                                 $scope.lstFinalTotalCustomerByCountry.push(obj);
                             } else {
-                                var getdata = _.findWhere($scope.lstFinalTotalCustomerByCountry, { Country: $scope.lst[i].country });
-                                if (getdata != null && getdata != undefined) {
-                                    if ($scope.lst[i].Type == 'Shop') {
-                                        getdata.Shop = getdata.Shop + $scope.lst[i].Total;
-                                    } else if ($scope.lst[i].Type == 'Owner') {
-                                        getdata.Owner = getdata.Owner + $scope.lst[i].Total;
-                                    } else {
-                                        getdata.Shop = getdata.Shop + $scope.lst[i].Total;
-                                        getdata.Owner = getdata.Owner + $scope.lst[i].Total;
-                                    }
-                                } else {
-                                    var obj = new Object();
-                                    obj.Country = $scope.lst[i].country;
-                                    if ($scope.lst[i].Type == 'Shop') {
-                                        obj.Shop = $scope.lst[i].Total;
-                                        obj.Owner = 0;
-                                    } else if ($scope.lst[i].Type == 'Shop') {
-                                        obj.Shop = 0;
-                                        obj.Owner = $scope.lst[i].Total;
-                                    } else {
-                                        obj.Shop = $scope.lst[i].Total;
-                                        obj.Owner = $scope.lst[i].Total;
-                                    }
-                                    $scope.lstFinalTotalCustomerByCountry.push(obj);
-                                }
+
+                                //     
+                                //     console.log(getdata);
+                                //     if (getdata != null && getdata != undefined) {
+                                //         if ($scope.lst[i].Type == 'Shop') {
+                                //             getdata.Shop = getdata.Shop + $scope.lst[i].Total;
+                                //         } else if ($scope.lst[i].Type == 'Owner') {
+                                //             getdata.Owner = getdata.Owner + $scope.lst[i].Total;
+                                //         } else {
+                                //             getdata.Shop = getdata.Shop + $scope.lst[i].Total;
+                                //             getdata.Owner = getdata.Owner + $scope.lst[i].Total;
+                                //         }
+                                //     } else {
+                                //         var obj = new Object();
+                                //         obj.Country = $scope.lst[i].country;
+                                //         if ($scope.lst[i].Type == 'Shop') {
+                                //             obj.Shop = $scope.lst[i].Total;
+                                //             obj.Owner = 0;
+                                //         } else if ($scope.lst[i].Type == 'Shop') {
+                                //             obj.Shop = 0;
+                                //             obj.Owner = $scope.lst[i].Total;
+                                //         } else {
+                                //             obj.Shop = $scope.lst[i].Total;
+                                //             obj.Owner = $scope.lst[i].Total;
+                                //         }
+                                //         $scope.lstFinalTotalCustomerByCountry.push(obj);
+                                //     }
                             }
+                            console.log($scope.lstFinalTotalCustomerByCountry);
                         };
                     }, 600);
 

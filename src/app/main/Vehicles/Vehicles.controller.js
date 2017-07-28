@@ -39,6 +39,7 @@
                 TimeZone: null,
                 IsDelete: 0,
                 idSalesAgent: '',
+                DeviceType: '',
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -73,6 +74,7 @@
                 TimeZone: null,
                 IsDelete: 0,
                 idSalesAgent: '',
+                DeviceType: '',
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -178,7 +180,7 @@
                 DTColumnBuilder.newColumn('Name'),
                 DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
-                DTColumnBuilder.newColumn('BatteryPercentage'),
+                DTColumnBuilder.newColumn('DeviceType'),
                 DTColumnBuilder.newColumn('HandshakDatetime').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
@@ -346,6 +348,7 @@
             $scope.model.TimeZone = o.TimeZone;
             $scope.model.IsDelete = o.IsDelete;
             $scope.model.idSalesAgent = o.idSalesAgent;
+            $scope.model.DeviceType = o.DeviceType;
             $scope.GetUserById(o.iduser);
             setTimeout(function() {
                 $scope.$apply(function() {
@@ -399,6 +402,7 @@
                 console.log(data);
                 if (data != null) {
                     $scope.model.idSalesAgent = data.idSalesAgent;
+                    $scope.model.DeviceType = data.Type;
                 } else {
                     $scope.model.deviceid = "";
                     $mdToast.show(
@@ -509,6 +513,7 @@
                 TimeZone: null,
                 IsDelete: 0,
                 idSalesAgent: '',
+                DeviceType: '',
             };
             $scope.selectedItem = null;
             // // $scope.query = '';
