@@ -464,6 +464,19 @@
                                 weight: 1
                             });
                         }
+
+                        //Telephone Company
+                        var TelephoneCompany = _.filter(lstAllPages, function(obj) {
+                            return obj.tblmodulemgmt.Module == 'Telephone Company';
+                        });
+                        if (TelephoneCompany.length > 0) {
+                            msNavigationService.saveItem('CMS.Telephone Company', {
+                                title: 'Telephone Company',
+                                state: 'app.telco',
+                                order: TelephoneCompany[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
                     }
                 });
             }

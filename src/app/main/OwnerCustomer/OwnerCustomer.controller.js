@@ -9,7 +9,8 @@
     function OwnerCustomerController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
-
+        $rootScope.UserId = $cookieStore.get('UserId');
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
 
             }
@@ -36,6 +37,7 @@
                         }
                         d.UserCountry = $rootScope.UserCountry;
                         d.UserRoles = $rootScope.UserRoles;
+                        d.UserId = $rootScope.UserId;
                         d.CountryList = $rootScope.CountryList;
                         return d;
                     },

@@ -56,5 +56,6 @@
             'app.alarm',
             'app.CanBusData',
             'app.DrivingBehavior',
+            'app.telco',
         ]);
 })();

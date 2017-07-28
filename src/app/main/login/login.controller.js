@@ -50,11 +50,12 @@
                     $cookieStore.put('CountryList', _.uniq($scope.splitCountryList));
 
                     $http.defaults.headers.common['Authorization'] = data.data.token; // jshint ignore:line
+                    $rootScope.MenuSet();
                     $window.location.href = '/#/Dashboard';
 
-                    $timeout(function() {
-                        $window.location.reload();
-                    });
+                    // $timeout(function() {
+                    //     $window.location.reload();
+                    // });
 
 
                     // window.location.href = "/#/Dashboard";

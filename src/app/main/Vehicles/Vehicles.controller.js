@@ -38,6 +38,7 @@
                 DoorUnlock: null,
                 TimeZone: null,
                 IsDelete: 0,
+                idSalesAgent: '',
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -71,6 +72,7 @@
                 DoorUnlock: null,
                 TimeZone: null,
                 IsDelete: 0,
+                idSalesAgent: '',
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -189,6 +191,9 @@
                         d.search = '';
                     } else {
                         d.search = $scope.Search;
+                    }
+                    if ($rootScope.UserRoles == "Sales Agent") {
+                        d.UserId = $rootScope.UserId;
                     }
                     return d;
                 },
@@ -340,6 +345,7 @@
             $scope.model.DoorUnlock = o.DoorUnlock;
             $scope.model.TimeZone = o.TimeZone;
             $scope.model.IsDelete = o.IsDelete;
+            $scope.model.idSalesAgent = o.idSalesAgent;
             $scope.GetUserById(o.iduser);
             setTimeout(function() {
                 $scope.$apply(function() {
@@ -387,6 +393,24 @@
                 });
             });
         };
+
+        $scope.chkTrackerId = function(idDevice) {
+            $http.get($rootScope.RoutePath + "PetDevice/GetGPSDeviceById?DeviceId=" + idDevice).success(function(data) {
+                console.log(data);
+                if (data != null) {
+                    $scope.model.idSalesAgent = data.idSalesAgent;
+                } else {
+                    $scope.model.deviceid = "";
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent("Invalid TrackerId")
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+
+                }
+            })
+        }
 
         $scope.ShowModal = function(ev, device, Name, IsOnline) {
             $mdDialog.show({
@@ -484,6 +508,7 @@
                 DoorUnlock: null,
                 TimeZone: null,
                 IsDelete: 0,
+                idSalesAgent: '',
             };
             $scope.selectedItem = null;
             // // $scope.query = '';

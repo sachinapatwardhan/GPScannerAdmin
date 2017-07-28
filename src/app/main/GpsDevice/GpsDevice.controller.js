@@ -11,6 +11,9 @@
         var vm = this;
         vm.GetPetDevice = GetPetDevice;
         vm.Reset = Reset;
+        $rootScope.UserId = $cookieStore.get('UserId');
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
+        $rootScope.CountryList = $cookieStore.get('CountryList');
         $scope.init = function() {
             $scope.model = {
                 id: 0,
@@ -21,18 +24,41 @@
                 Version: '',
                 CreatedBy: '',
                 CountryId: '',
+                TelCoId: '',
+                SimNum: '',
+                idSalesAgent: '',
             };
             $scope.GetAllCountry();
+            $scope.GetAlltelco();
+            $scope.GetAllUserBySalesRole();
             $scope.Search = '';
             $scope.flag = false;
+            $scope.flagEdit = false;
+            $scope.flgSalesAgent = false;
             $scope.tab = {
                 selectedIndex: 0
             };
+            if ($rootScope.UserRoles == "Sales Agent") {
+                $scope.flgSalesAgent = true;
+                $scope.model.idSalesAgent = $rootScope.UserId;
+            }
         }
 
         $scope.GetAllCountry = function() {
             $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
                 $scope.lstCountry = data.data;
+            });
+        }
+
+        $scope.GetAlltelco = function() {
+            $http.get($rootScope.RoutePath + "telco/GetAllCompany").then(function(data) {
+                $scope.lstCompany = data.data;
+            });
+        }
+
+        $scope.GetAllUserBySalesRole = function() {
+            $http.get($rootScope.RoutePath + "user/GetAllUserBySalesRole").then(function(data) {
+                $scope.lstSaleAgent = data.data;
             });
         }
 
@@ -46,9 +72,18 @@
                 Version: '',
                 CreatedBy: '',
                 CountryId: '',
+                TelCoId: '',
+                SimNum: '',
+                idSalesAgent: '',
             };
             $scope.Search = '';
+            $scope.flagEdit = false;
             $scope.flag = false;
+            $scope.flgSalesAgent = false;
+            if ($rootScope.UserRoles == "Sales Agent") {
+                $scope.flgSalesAgent = true;
+                $scope.model.idSalesAgent = $rootScope.UserId;
+            }
         }
 
         $scope.DownloadExcelTemplate = function() {
@@ -70,7 +105,6 @@
                     lstCountry: $scope.lstCountry,
                 }
             })
-
         }
 
         function Reset() {
@@ -110,8 +144,12 @@
                 DTColumnBuilder.newColumn('DeviceId'),
                 DTColumnBuilder.newColumn('Type'),
                 DTColumnBuilder.newColumn('Version'),
+                DTColumnBuilder.newColumn('SimNum'),
+                DTColumnBuilder.newColumn('tbltelco.Name').renderWith(TelCompanyHtml),
+                DTColumnBuilder.newColumn('tbluserinformation.username').renderWith(SalesAgentHtml),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('CreatedBy'),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -123,6 +161,7 @@
                         d.search = $scope.Search;
                     }
                     d.UserRoles = $rootScope.UserRoles;
+                    d.UserId = $rootScope.UserId;
                     d.CountryList = $rootScope.CountryList;
                     return d;
                 },
@@ -135,6 +174,7 @@
                             }
                         }
                         $scope.lstdata = json.data;
+                        // console.log($scope.lstdata);
                         $scope.TotalTrackers = json.recordsTotal
                         return json.data;
                     } else {
@@ -176,6 +216,32 @@
             return (meta.row + 1);
         }
 
+        function TelCompanyHtml(data, type, full, meta) {
+            if (full.tbltelco != null) {
+                return full.tbltelco.Name;
+            }
+            return '';
+        }
+
+        function SalesAgentHtml(data, type, full, meta) {
+            if (full.tbluserinformation != null) {
+                return full.tbluserinformation.username;
+            }
+            return '';
+        }
+
+        function actionsHtml(data, type, full, meta) {
+            var device = data.deviceid;
+            var event = '$event';
+            var btns = '<div layout="row">';
+            btns += '<md-button class="edit-button md-icon-button"  ng-click="FetchDeviceById(' + data.id + ')">' +
+                '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                '</md-button>';
+
+            btns += '</div>';
+            return btns;
+        };
 
         $scope.CreateGpsDevice = function(o) {
             $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
@@ -193,6 +259,7 @@
                     }
                     $scope.resetForm();
                     $scope.init();
+                    GetPetDevice(true);
                 } else {
                     if (data.data.data == 'TOKEN') {
 
@@ -209,13 +276,30 @@
             });
         }
 
-        $scope.resetForm = function() {
-            // if ($rootScope.FlgAddedAccess == true) {
+        $scope.FetchDeviceById = function(id) {
+            $rootScope.FlgAddedEditlocal = true;
+            var o = _.findWhere($scope.lstdata, {
+                id: id
+            });
 
+            $scope.flagEdit = true;
+            $scope.model.id = o.id;
+            $scope.model.DeviceId = o.DeviceId;
+            $scope.model.Version = o.Version;
+            $scope.model.IMEI = o.IMEI;
+            $scope.model.Type = o.Type;
+            $scope.model.CountryId = o.CountryId;
+            $scope.model.TelCoId = o.TelCoId;
+            $scope.model.SimNum = parseInt(o.SimNum);
+            $scope.model.idSalesAgent = o.idSalesAgent;
+            $scope.model.CreatedDate = o.CreatedDate;
+            $scope.model.CreatedBy = o.CreatedBy;
+            $scope.flag = true;
+        }
+
+        $scope.resetForm = function() {
             $scope.formTrackingdetails.$setUntouched();
             $scope.formTrackingdetails.$setPristine();
-
-            // }
         }
 
         $scope.ResetModel = function() {
@@ -226,14 +310,22 @@
                 id: 0,
                 DeviceId: '',
                 IMEI: '',
-                CreatedDate: '',
                 Type: '',
                 Version: '',
-                CreatedBy: '',
                 CountryId: '',
+                TelCoId: '',
+                SimNum: '',
+                idSalesAgent: '',
             };
+            $scope.flgSalesAgent = false;
+            if ($rootScope.UserRoles == "Sales Agent") {
+                $scope.flgSalesAgent = true;
+                $scope.model.idSalesAgent = $rootScope.UserId;
+            }
+            $scope.flagEdit = false;
             $scope.flag = false;
             $scope.resetForm();
+
         }
 
         $scope.init();
