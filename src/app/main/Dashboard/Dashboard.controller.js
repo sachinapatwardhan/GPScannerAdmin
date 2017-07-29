@@ -13,11 +13,15 @@
         socket.on('BikeDeviceStatus', function(msg) {
             var obj = JSON.parse(msg);
             $scope.$apply(function() {
-                for (var i = 0; i < $scope.lstDevices.DeviceStatus.length; i++) {
-                    if ($scope.lstDevices.DeviceStatus[i].id == obj.PetId) {
-                        $scope.lstDevices.DeviceStatus[i].IsOnline = obj.Status;
-                        $scope.ActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: true });
-                        $scope.NotActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: false });
+                if ($scope.lstDevices != undefined) {
+                    if ($scope.lstDevices.DeviceStatus != null && $scope.lstDevices.DeviceStatus != undefined) {
+                        for (var i = 0; i < $scope.lstDevices.DeviceStatus.length; i++) {
+                            if ($scope.lstDevices.DeviceStatus[i].id == obj.PetId) {
+                                $scope.lstDevices.DeviceStatus[i].IsOnline = obj.Status;
+                                $scope.ActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: true });
+                                $scope.NotActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: false });
+                            }
+                        }
                     }
                 }
             });
@@ -34,6 +38,7 @@
             }
             $scope.flgshow = 0;
             $scope.FlgSuperAdmin = false;
+            $rootScope.UserRoles = $cookieStore.get('UserRoles');
             if ($rootScope.UserRoles.length > 0) {
                 for (var i = 0; i < $rootScope.UserRoles.length; i++) {
                     if ($rootScope.UserRoles[i] == "Super Admin") {
