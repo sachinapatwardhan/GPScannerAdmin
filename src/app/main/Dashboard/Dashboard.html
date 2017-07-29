@@ -154,7 +154,7 @@
                                 <label>Country</label>
                                 <md-select name="CountryName" ng-model="model.CountryName">
                                     <md-option value="All">All</md-option>
-                                    <md-option ng-repeat="i in lstCountry | orderBy : 'country' " value="{{i.country}}"><span ng-if="i.country!=null||i.country!=''">{{i.country}}</span><span ng-if="i.country==null||i.country==''">Other</span></md-option>
+                                    <md-option ng-repeat="i in lstCountry | orderBy : 'Country' " value="{{i.Country}}">{{i.Country}}</md-option>
                                 </md-select>
                             </md-input-container>
                             <md-button class="md-raised md-primary" ng-click="SearchData(model)">Search</md-button>
@@ -203,7 +203,7 @@
                                 <label>Country</label>
                                 <md-select name="CountryName" ng-model="model.CountryNameAcc">
                                     <md-option value="All">All</md-option>
-                                    <md-option ng-repeat="i in lstCountry  | orderBy : 'country'" value="{{i.country}}"><span ng-if="i.country!=null">{{i.country}}</span><span ng-if="i.country==null">Other</span></md-option>
+                                    <md-option ng-repeat="i in lstCountry | orderBy : 'Country' " value="{{i.Country}}">{{i.Country}}</md-option>
                                 </md-select>
                             </md-input-container>
                             <md-button class="md-raised md-primary" ng-click="SearchDataAcc(model)">Search</md-button>

@@ -113,9 +113,9 @@
                         var add = locations[i].lang
                         var Phone = locations[i].lang
                         var ImageURL = null
-                        var PetShopId = locations[i].id
-                        var Authorised = locations[i].IsAuthorised
-                        var IsWireCut = locations[i].IsWireCut
+                        var VehicleId = locations[i].id
+                            // var Authorised = locations[i].IsAuthorised
+                            // var IsWireCut = locations[i].IsWireCut
                         latlngset = new google.maps.LatLng(lat, long);
                         var icon = {
                             url: $rootScope.RoutePath + "MediaUploads/" + ImageURL, // url
@@ -125,7 +125,7 @@
                         };
                         var marker = new google.maps.Marker();
                         if (ImageURL != "" && ImageURL != null) {
-                            new CustomMarker(new google.maps.LatLng(lat, long), map, $rootScope.RoutePath + "MediaUploads/" + ImageURL, PetShopId, Authorised, IsWireCut)
+                            new CustomMarker(new google.maps.LatLng(lat, long), map, $rootScope.RoutePath + "MediaUploads/" + ImageURL, VehicleId)
                         } else {
                             marker = new google.maps.Marker({
                                 position: latlngset,
@@ -210,25 +210,24 @@
 
 
                         $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike').success(function(data) {
-                            $scope.lstActivePet = data.data;
+                            $scope.lstActiveVehicle = data.data;
 
-                            function setActivePet(i) {
-
-
-                                if (i < $scope.lstActivePet.length) {
-
+                            function setActiveVehicle(i) {
+                                if (i < $scope.lstActiveVehicle.length) {
                                     var ImageURL = '';
-                                    if ($scope.lstActivePet[i].bikeimageURl != null && $scope.lstActivePet[i].bikeimageURl != '' && $scope.lstActivePet[i].bikeimageURl != undefined) {
-                                        ImageURL = $rootScope.RoutePath + "MediaUploads/PetUpload/" + $scope.lstActivePet[i].bikeimageURl;
-                                    };
-                                    var idBike = $scope.lstActivePet[i].bikeNumber;
-                                    var IsWireCut = $scope.lstActivePet[i].IsWireCut;
-                                    new CustomMarker(new google.maps.LatLng($scope.lstActivePet[i].Latitude, $scope.lstActivePet[i].Longtitude), map, ImageURL, idBike, IsWireCut)
-
-                                    setActivePet(i + 1);
+                                    // var IsWireCut = $scope.lstActiveVehicle[i].IsWireCut;
+                                    var VehicleID = $scope.lstActiveVehicle[i].Name;
+                                    new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longtitude), map, VehicleID)
+                                        // var marker = new google.maps.Marker();
+                                        // marker = new google.maps.Marker({
+                                        //     position: new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longtitude),
+                                        //     map: map,
+                                        //     title: idVehicle,
+                                        // });
+                                    setActiveVehicle(i + 1);
                                 }
                             }
-                            setActivePet(0);
+                            setActiveVehicle(0);
                         });
                     };
                 });
@@ -260,12 +259,11 @@
 
         $scope.getCurrentLocation(false);
 
-        function CustomMarker(latlng, map, imageSrc, BikeID, Authorised) {
-
+        function CustomMarker(latlng, map, VehicleID) {
             this.latlng_ = latlng;
-            this.imageSrc = imageSrc;
-            this.BikeID = BikeID;
-            this.Authorised = Authorised;
+            // this.imageSrc = imageSrc;
+            this.VehicleID = VehicleID;
+            // this.Authorised = Authorised;
 
             // Once the LatLng and text are set, add the overlay to the map.  This will
             // trigger a call to panes_changed which should in turn call draw.
@@ -282,32 +280,36 @@
                 // Create a overlay text DIV
                 div = this.div_ = document.createElement('div');
                 // Create the DIV representing our CustomMarker
-                if (this.Authorised) {
-                    div.className = "customMarker1"
-                } else {
-                    div.className = "customMarker2"
-                };
-                div.id = this.BikeID
-                if (this.imageSrc != '') {
+                // if (this.Authorised) {
+                //     div.className = "customMarker1"
+                // } else {
+                //     div.className = "customMarker2"
+                // };
+                div.className = "customMarker2"
+                div.id = this.VehicleID
+                var TextDiv = document.createElement("div");
+                TextDiv.innerHTML = this.VehicleID;
+                $(TextDiv).addClass('my-text-shadow');
+                div.appendChild(TextDiv);
+                // if (this.imageSrc != '') {
 
-                    var img = document.createElement("img");
-                    img.src = this.imageSrc;
-                    div.appendChild(img);
-                } else {
-                    if (this.Authorised) {
+                //     var img = document.createElement("img");
+                //     img.src = this.imageSrc;
+                //     div.appendChild(img);
+                // } else {
+                //     // if (this.Authorised) {
 
-                        var TextDiv = document.createElement("div");
-                        TextDiv.innerHTML = this.BikeID;
-                        $(TextDiv).addClass('my-text-shadow');
-                        div.appendChild(TextDiv);
-                    } else {
-                        var TextDiv = document.createElement("div");
-                        TextDiv.innerHTML = this.BikeID;
-                        $(TextDiv).addClass('my-text-shadow');
-                        div.appendChild(TextDiv);
-                    }
-
-                };
+                //     //     var TextDiv = document.createElement("div");
+                //     //     TextDiv.innerHTML = this.VehicleID;
+                //     //     $(TextDiv).addClass('my-text-shadow');
+                //     //     div.appendChild(TextDiv);
+                //     // } else {
+                //     //     var TextDiv = document.createElement("div");
+                //     //     TextDiv.innerHTML = this.VehicleID;
+                //     //     $(TextDiv).addClass('my-text-shadow');
+                //     //     div.appendChild(TextDiv);
+                //     // }
+                // };
 
                 var panes = this.getPanes();
                 panes.overlayImage.appendChild(div);
@@ -349,9 +351,27 @@
             }
             $http.get($rootScope.RoutePath + "dashboard/GetGraphCustomer", { params: params }).then(function(data) {
                 $scope.lstCustomerGraph = data.data.UserData;
-                $scope.lstCountry = _.uniq($scope.lstCustomerGraph, function(item, key, country) {
-                    return item.country;
-                });
+                // console.log($scope.lstCustomerGraph);
+                $scope.lstCountry = [];
+                for (var i = 0; i < $scope.lstCustomerGraph.length; i++) {
+                    if ($scope.lstCustomerGraph[i].country == '' || $scope.lstCustomerGraph[i].country == null) {
+                        $scope.lstCustomerGraph[i].country = 'Other';
+                    }
+                    if ($scope.lstCountry.length != 0) {
+                        var obj = _.findWhere($scope.lstCountry, { Country: $scope.lstCustomerGraph[i].country });
+                        if (obj != null && obj != undefined && obj != "") {
+
+                        } else {
+                            var obj1 = new Object();
+                            obj1.Country = $scope.lstCustomerGraph[i].country;
+                            $scope.lstCountry.push(obj1);
+                        }
+                    } else {
+                        var obj1 = new Object();
+                        obj1.Country = $scope.lstCustomerGraph[i].country;
+                        $scope.lstCountry.push(obj1);
+                    }
+                }
 
                 $timeout(function() {
                     $scope.CustomerAndUser(false);

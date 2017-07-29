@@ -54,7 +54,7 @@
                             };
                             var marker = new google.maps.Marker();
                             if (ImageURL != "" && ImageURL != null) {
-                                new CustomMarker(new google.maps.LatLng(lat, long), map, $rootScope.API_URL + "MediaUploads/" + ImageURL, PetShopId, Authorised)
+                                new CustomMarker(new google.maps.LatLng(lat, long), map, PetShopId, Authorised)
                             } else {
                                 marker = new google.maps.Marker({
                                     position: latlngset,
@@ -137,8 +137,7 @@
                                 { lat: se.lat(), lng: se.lng() },
                                 { lat: sw.lat(), lng: sw.lng() }
                             ];
-                            new CustomMarker(new google.maps.LatLng(data.Latitude, data.Longtitude), map, images, Name, IsOnline)
-
+                            new CustomMarker(new google.maps.LatLng(data.Latitude, data.Longtitude), map, Name, IsOnline)
                         };
                     });
 
@@ -161,8 +160,7 @@
                 DeviceId: deviceid,
             }
 
-            $http.get($rootScope.RoutePath + 'bike/GetPetCurrentLocation', { params: params }).success(function(data) {
-                console.log(data)
+            $http.get($rootScope.RoutePath + 'vehicles/GetVehicleCurrentLocation', { params: params }).success(function(data) {
                 $scope.lstlocation = data.data;
 
                 $scope.IntializeGoogleMap($scope.lstlocation);
@@ -175,9 +173,9 @@
         $scope.GetBikeGps(false);
 
         //adapted from http://gmaps-samples-v3.googlecode.com/svn/trunk/overlayview/custommarker.html
-        function CustomMarker(latlng, map, imageSrc, Name, IsOnline, Authorised) {
+        function CustomMarker(latlng, map, Name, IsOnline, Authorised) {
             this.latlng_ = latlng;
-            this.imageSrc = imageSrc;
+            // this.imageSrc = imageSrc;
             this.BikeID = Name;
             this.Authorised = Authorised;
             this.IsOnline = IsOnline;
@@ -200,32 +198,40 @@
                     div.className = "customMarkerPetShop"
 
                     div.id = this.BikeID
-                    if (this.imageSrc != '') {
-                        var img = document.createElement("img");
-                        img.src = this.imageSrc;
-                        div.appendChild(img);
-                    } else {
-                        var TextDiv = document.createElement("div");
-                        TextDiv.innerHTML = this.BikeID;
-                        $(TextDiv).addClass('my-text-shadow');
-                        div.appendChild(TextDiv);
-                    };
+                        // if (this.imageSrc != '') {
+                        //     var img = document.createElement("img");
+                        //     img.src = this.imageSrc;
+                        //     div.appendChild(img);
+                        // } else {
+                        //     var TextDiv = document.createElement("div");
+                        //     TextDiv.innerHTML = this.BikeID;
+                        //     $(TextDiv).addClass('my-text-shadow');
+                        //     div.appendChild(TextDiv);
+                        // };
+
+                    var TextDiv = document.createElement("div");
+                    TextDiv.innerHTML = this.BikeID;
+                    $(TextDiv).addClass('my-text-shadow');
+                    div.appendChild(TextDiv);
 
                 } else {
                     div.className = "customMarker1"
-
                     div.id = this.BikeID
-                    if (this.imageSrc != '') {
+                        // if (this.imageSrc != '') {
 
-                        var img = document.createElement("img");
-                        img.src = this.imageSrc;
-                        div.appendChild(img);
-                    } else {
-                        var TextDiv = document.createElement("div");
-                        TextDiv.innerHTML = this.BikeID;
-                        $(TextDiv).addClass('my-text-shadow');
-                        div.appendChild(TextDiv);;
-                    };
+                    //     var img = document.createElement("img");
+                    //     img.src = this.imageSrc;
+                    //     div.appendChild(img);
+                    // } else {
+                    //     var TextDiv = document.createElement("div");
+                    //     TextDiv.innerHTML = this.BikeID;
+                    //     $(TextDiv).addClass('my-text-shadow');
+                    //     div.appendChild(TextDiv);;
+                    // };
+                    var TextDiv = document.createElement("div");
+                    TextDiv.innerHTML = this.BikeID;
+                    $(TextDiv).addClass('my-text-shadow');
+                    div.appendChild(TextDiv);;
 
                 }
                 // google.maps.event.addDomListener(div, "click", function(event) {

@@ -276,9 +276,9 @@
                 '<md-tooltip md-visible="" md-direction="">View Detail</md-tooltip>' +
                 '</md-button>';
 
-            // btns += '<md-button class="edit-button md-icon-button" ng-click="ShowModal($event,\'' + device + '\',\'' + data.bikeNumber + '\',\'' + data.bikeimageURl + '\',\'' + data.IsOnline + '\')" aria-label="">' +
-            //     '<md-icon md-font-icon="icon-map-marker" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Location </md-tooltip>' +
-            //     '</md-button>';
+            btns += '<md-button class="edit-button md-icon-button" ng-click="ShowModal($event,\'' + device + '\',\'' + data.Name + '\',\'' + data.IsOnline + '\')" aria-label="">' +
+                '<md-icon md-font-icon="icon-map-marker" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Location </md-tooltip>' +
+                '</md-button>';
             // btns += '<md-button class="edit-button md-icon-button"  ng-click="ShowAlarmDetail($event,\'' + device + '\')" aria-label="">' +
             //     '<md-icon md-font-icon="icon-timer"  class="s18 blue-500-fg"></md-icon>' +
             //     '<md-tooltip md-visible="" md-direction="">Show Alarm</md-tooltip>' +
