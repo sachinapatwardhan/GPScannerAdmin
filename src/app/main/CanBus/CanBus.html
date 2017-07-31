@@ -52,7 +52,7 @@
                 <input ng-model="searchDevice" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
               </md-select-header>
               <md-option value="All">All</md-option>
-              <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstdevice| filter: searchDevice">{{o.DeviceId}}</md-option>
+              <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstdevice| filter: searchDevice | orderBy : 'CreatedDate':true">{{o.DeviceId}}</md-option>
             </md-select>
           </md-input-container>
           <div align="left">
