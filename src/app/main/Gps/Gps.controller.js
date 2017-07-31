@@ -67,7 +67,7 @@
     $scope.dtColumns = [
       DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
       DTColumnBuilder.newColumn('DeviceId'),
-      DTColumnBuilder.newColumn('Datetime').renderWith(Datefun),
+      DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
       DTColumnBuilder.newColumn('Latitude'),
       DTColumnBuilder.newColumn('Longtitude'),
       DTColumnBuilder.newColumn('GPSPositioning'),
@@ -159,6 +159,15 @@
       if (data != '' && data != null && data != undefined) {
         // return $filter('date')(data, "dd-MM-yyyy");
         return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
+      } else {
+        return '';
+      }
+    }
+
+    function Datetimefun(data, type, full, meta) {
+      if (data != '' && data != null && data != undefined) {
+        var newdate = data * 1000;
+        return moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm A");
       } else {
         return '';
       }
