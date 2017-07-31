@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('app.DrivingBehavior')
-        .controller('DrivingBehaviorController', DrivingBehaviorController);
+        .module('app.DrivingBehaviour')
+        .controller('DrivingBehaviourController', DrivingBehaviourController);
 
     /** @ngInject */
-    function DrivingBehaviorController($http, $scope, $rootScope, $filter, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
+    function DrivingBehaviourController($http, $scope, $rootScope, $filter, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
-
+        vm.searchTermDevice = '';
         $scope.init = function() {
             $scope.ModelSearch = {
                 DeviceId: '',
@@ -39,9 +39,13 @@
             });
         };
 
-
-
-        //GetDevice
+        $scope.clearSearchTerm = function() {
+            vm.searchTermDevice = '';
+        };
+        $scope.onSearchChange = function($event) {
+                $event.stopPropagation();
+            }
+            //GetDevice
 
         $scope.GetAllGpsDevice = function() {
             $http.get($rootScope.RoutePath + "gpsdata/GetAllGpsDevice").then(function(resdata) {

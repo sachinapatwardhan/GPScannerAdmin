@@ -2,23 +2,23 @@
     'use strict';
 
     angular
-        .module('app.DrivingBehavior', [])
+        .module('app.DrivingBehaviour', [])
         .config(config);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider) {
         // State
         $stateProvider
-            .state('app.DrivingBehavior', {
-                url: '/DrivingBehavior',
+            .state('app.DrivingBehaviour', {
+                url: '/DrivingBehaviour',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/DrivingBehavior/DrivingBehavior.html',
-                        controller: 'DrivingBehaviorController as vm'
+                        controller: 'DrivingBehaviourController as vm'
                     }
                 },
-                bodyClass: 'Driving Behavior',
-                ModuleName: 'Driving Behavior'
+                bodyClass: 'Driving Behaviour',
+                ModuleName: 'Driving Behaviour'
             });
 
         // Translation

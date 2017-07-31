@@ -9,6 +9,8 @@
     function GpsDeviceController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
+        vm.searchTermCountry = '';
+        vm.searchTermTelCoId = '';
         vm.GetPetDevice = GetPetDevice;
         vm.Reset = Reset;
         $rootScope.UserId = $cookieStore.get('UserId');
@@ -23,8 +25,8 @@
                 Type: '',
                 Version: '',
                 CreatedBy: '',
-                CountryId: '',
-                TelCoId: '',
+                CountryId: null,
+                TelCoId: null,
                 SimNum: '',
                 idSalesAgent: 0,
             };
@@ -62,6 +64,10 @@
             });
         }
 
+        $scope.GetDeviceId = function(IMEI) {
+            $scope.model.DeviceId = parseInt($scope.model.IMEI.toString().slice(1));
+        }
+
         $scope.gotoTRACKERList = function() {
             $scope.model = {
                 id: 0,
@@ -71,8 +77,8 @@
                 Type: '',
                 Version: '',
                 CreatedBy: '',
-                CountryId: '',
-                TelCoId: '',
+                CountryId: null,
+                TelCoId: null,
                 SimNum: '',
                 idSalesAgent: 0,
             };
@@ -133,6 +139,16 @@
 
         }
 
+        $scope.clearSearchTerm = function() {
+            vm.searchTermCountry = '';
+            vm.searchTermTelCoId = '';
+            // $scope.searchTermCity = '';
+        };
+
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
+
         //Dynamic Pagging
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
@@ -143,6 +159,7 @@
                 DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
                 DTColumnBuilder.newColumn('DeviceId'),
                 DTColumnBuilder.newColumn('Type'),
+                DTColumnBuilder.newColumn('IMEI'),
                 DTColumnBuilder.newColumn('Version'),
                 DTColumnBuilder.newColumn('SimNum'),
                 DTColumnBuilder.newColumn('tbltelco.Name').renderWith(TelCompanyHtml),
@@ -242,38 +259,42 @@
             btns += '</div>';
             return btns;
         };
-
-        $scope.CreateGpsDevice = function(o) {
-            $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
-                if (data.data.success == true) {
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
-                    );
-
-                    $rootScope.FlgAddedEditlocal = false;
-                    if ($rootScope.FlgAddedAccess == true) {
-                        $rootScope.FlgAddedEditlocal = true
-                    }
-                    $scope.resetForm();
-                    $scope.init();
-                    GetPetDevice(true);
-                } else {
-                    if (data.data.data == 'TOKEN') {
-
-                        $rootScope.logout();
-                    } else {
+        $scope.formsubmit = false;
+        $scope.CreateGpsDevice = function(o, form) {
+            if (form.$invalid) {
+                $scope.formsubmit = true;
+            } else {
+                $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
+                    if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
                             .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
+
+                        $rootScope.FlgAddedEditlocal = false;
+                        if ($rootScope.FlgAddedAccess == true) {
+                            $rootScope.FlgAddedEditlocal = true
+                        }
+                        $scope.resetForm();
+                        $scope.init();
+                        GetPetDevice(true);
+                    } else {
+                        if (data.data.data == 'TOKEN') {
+
+                            $rootScope.logout();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         $scope.FetchDeviceById = function(id) {
@@ -284,9 +305,9 @@
 
             $scope.flagEdit = true;
             $scope.model.id = o.id;
-            $scope.model.DeviceId = o.DeviceId;
+            $scope.model.DeviceId = parseInt(o.DeviceId);
             $scope.model.Version = o.Version;
-            $scope.model.IMEI = o.IMEI;
+            $scope.model.IMEI = parseInt(o.IMEI);
             $scope.model.Type = o.Type;
             $scope.model.CountryId = o.CountryId;
             $scope.model.TelCoId = o.TelCoId;
@@ -305,20 +326,18 @@
         }
 
         $scope.ResetModel = function() {
-            $scope.tab = {
-                selectedIndex: 0
-            };
             $scope.model = {
                 id: 0,
                 DeviceId: '',
                 IMEI: '',
                 Type: '',
                 Version: '',
-                CountryId: '',
-                TelCoId: '',
+                CountryId: null,
+                TelCoId: null,
                 SimNum: '',
                 idSalesAgent: 0,
             };
+            $scope.resetForm();
             $scope.flgSalesAgent = false;
             if ($rootScope.UserRoles == "Sales Agent") {
                 $scope.flgSalesAgent = true;
@@ -326,8 +345,6 @@
             }
             $scope.flagEdit = false;
             $scope.flag = false;
-            $scope.resetForm();
-
         }
 
         $scope.init();

@@ -453,14 +453,14 @@
                         }
 
                         //DrivingBehavior
-                        var DrivingBehavior = _.filter(lstAllPages, function(obj) {
-                            return obj.tblmodulemgmt.Module == 'Driving Behavior';
+                        var DrivingBehaviour = _.filter(lstAllPages, function(obj) {
+                            return obj.tblmodulemgmt.Module == 'Driving Behaviour';
                         });
-                        if (DrivingBehavior.length > 0) {
-                            msNavigationService.saveItem('GPS Scanner.Driving Behavior', {
-                                title: 'Driving Behavior',
-                                state: 'app.DrivingBehavior',
-                                order: DrivingBehavior[0].tblmodulemgmt.DisplayOrder,
+                        if (DrivingBehaviour.length > 0) {
+                            msNavigationService.saveItem('GPS Scanner.Driving Behaviour', {
+                                title: 'Driving Behaviour',
+                                state: 'app.DrivingBehaviour',
+                                order: DrivingBehaviour[0].tblmodulemgmt.DisplayOrder,
                                 weight: 1
                             });
                         }
