@@ -129,7 +129,7 @@
                     <div class="content">
                         <div layout="row" layout-wrap>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>IMEI *</label>
+                                <label>IMEI</label>
                                 <input name="IMEI" type="number" ng-model="model.IMEI" ng-disabled="flagEdit" ng-required="true" max="999999999999999" min="100000000000000" ng-blur="GetDeviceId(model.IMEI)">
                                 <div ng-messages="formTrackingdetails.IMEI.$error" ng-if="formTrackingdetails.IMEI.$touched" role="alert">
                                     <div ng-message="required">
@@ -145,7 +145,7 @@
 
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>Device Id *</label>
+                                <label>Device Id</label>
                                 <input name="DeviceId" id="DeviceId" type="number" ng-model="model.DeviceId" ng-required="true" ng-disabled="flagEdit" max="99999999999999" min="10000000000000">
                                 <div ng-messages="formTrackingdetails.DeviceId.$error" ng-if="formTrackingdetails.DeviceId.$touched" role="alert">
                                     <div ng-message="required">

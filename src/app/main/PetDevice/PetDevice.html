@@ -62,7 +62,7 @@
                                 <form name="FormManageTrackers" novalidate class="ms-stepper" aria-invalid="false">
                                     <div layout-gt-sm="row">
                                         <md-input-container flex="100" flex-gt-xs="50">
-                                            <label>Device Id*</label>
+                                            <label>Device Id</label>
                                             <input type="text" name="DeviceId" ng-model="model.DeviceId" required md-maxlength="100">
                                             <div ng-messages="FormManageTrackers.DeviceId.$error" ng-if="FormManageTrackers.DeviceId.$touched" role="alert">
                                                 <div ng-message="required">
@@ -74,7 +74,7 @@
                                             </div>
                                         </md-input-container>
                                         <md-input-container flex="100" flex-gt-xs="50">
-                                            <label>IMEI*</label>
+                                            <label>IMEI</label>
                                             <input type="text" name="IMEI" ng-model="model.IMEI" required md-maxlength="100">
                                             <div ng-messages="FormManageTrackers.IMEI.$error" ng-if="FormManageTrackers.IMEI.$touched" role="alert">
                                                 <div ng-message="required">
@@ -100,7 +100,7 @@
                                     </div>
                                     <div layout-gt-sm="row">
                                         <md-input-container class="md-block" flex-gt-sm="50">
-                                            <label>Country *</label>
+                                            <label>Country</label>
                                             <md-select name="CountryId" ng-model="model.CountryId">
                                                 <md-option ng-repeat="o in lstCountry" value="{{o.id}}">{{o.Country}}</md-option>
                                             </md-select>

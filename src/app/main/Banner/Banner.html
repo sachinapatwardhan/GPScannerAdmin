@@ -96,7 +96,7 @@
               <form role="form" id="FormCreateBanner" name="FormCreateBanner" class="md-inline-form">
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex>
-                    <label>Banner name *</label>
+                    <label>Banner name</label>
                     <input ng-model="model.Name" name="Name" type="text" required md-maxlength="255">
                     <div ng-messages="FormCreateBanner.Name.$error" ng-if="FormCreateBanner.Name.$touched" role="alert" md-auto-hide="false">
                       <div ng-message="required">
@@ -127,7 +127,7 @@
                       <form name="FormEditBannerImage" class="md-inline-form">
                         <div layout-gt-sm="row">
                           <md-input-container class="md-block" flex>
-                            <label>Select banner *</label>
+                            <label>Select banner</label>
                             <md-select ng-model="obj.BannerId" name="BannerId" required ng-disabled="true">
                               <md-option value="{{o.id}}" ng-repeat="o in lstBanner">{{o.Name}}</md-option>
                             </md-select>
@@ -138,7 +138,7 @@
                             </div>
                           </md-input-container>
                           <md-input-container class="md-block" flex>
-                            <label>Alt *</label>
+                            <label>Alt</label>
                             <input ng-model="obj.alt" name="Alt" md-maxlength="250" type="text" required>
                             <div ng-messages="FormEditBannerImage.Alt.$error" ng-if="FormEditBannerImage.Alt.$touched" role="alert">
                               <div ng-message="required">
@@ -152,7 +152,7 @@
                         </div>
                         <div layout-gt-sm="row">
                           <md-input-container class="md-block" flex>
-                            <label layout-gt-sm="row">Image * </label>
+                            <label layout-gt-sm="row">Image</label>
                             <br/>
                             <br/>
                             <img layout-gt-sm="row" ng-src="{{RoutePath}}MediaUploads/{{obj.ImageUrl}}" required style="width:150px;" err-src="assets/images/no-image.png" ng-show="FlgImage==1" />
@@ -167,7 +167,7 @@
                             <md-button layout-gt-sm="row" class="md-raised md-accent" ng-click="ShowBannerModal($event,obj)">Select Image</md-button>
                           </md-input-container>
                           <md-input-container class="md-block" flex>
-                            <label>URl link *</label>
+                            <label>URl link</label>
                             <input ng-model="obj.UrlLink" md-maxlength="250" name="URl" type="text" required>
                             <div ng-messages="FormEditBannerImage.URl.$error" ng-if="FormEditBannerImage.URl.$touched" role="alert">
                               <div ng-message="required">
@@ -207,7 +207,7 @@
               <form name="FormBannerImage" role="form" class="md-inline-form">
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex>
-                    <label>Select Banner *</label>
+                    <label>Select Banner </label>
                     <md-select ng-model="modelbanner.BannerId" name="BannerId" required>
                       <md-option value="{{o.id}}" ng-repeat="o in lstBanner">{{o.Name}}</md-option>
                     </md-select>
@@ -218,7 +218,7 @@
                     </div>
                   </md-input-container>
                   <md-input-container class="md-block" flex>
-                    <label>Alt *</label>
+                    <label>Alt</label>
                     <input ng-model="modelbanner.alt" name="Alt" md-maxlength="250" type="text" required>
                     <div ng-messages="FormBannerImage.Alt.$error" ng-if="FormBannerImage.Alt.$touched" role="alert">
                       <div ng-message="required">
@@ -232,7 +232,7 @@
                 </div>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex="30">
-                    <label layout-gt-sm="row">Image * </label>
+                    <label layout-gt-sm="row">Image</label>
                     <br/>
                     <br/>
                     <img layout-gt-sm="row" ng-src="{{RoutePath}}MediaUploads/{{modelbanner.ImageUrl}}" required err-src="assets/images/no-image.png" style="width:150px;" ng-show="FlgImage==1 && modelbanner.ImageUrl!=null && modelbanner.ImageUrl!=''" />
@@ -261,7 +261,7 @@
                 </div>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex>
-                    <label>URl Link *</label>
+                    <label>URl Link</label>
                     <input ng-model="modelbanner.UrlLink" md-maxlength="250" name="URl" type="text" required>
                     <div ng-messages="FormBannerImage.URl.$error" ng-if="FormBannerImage.URl.$touched" role="alert">
                       <div ng-message="required">
