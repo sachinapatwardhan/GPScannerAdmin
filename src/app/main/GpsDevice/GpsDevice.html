@@ -136,7 +136,7 @@
                                         <span>IMEI is required</span>
                                     </div>
                                     <div ng-message="max">
-                                        <span>IMEI should not less than 15 digit</span>
+                                        <span>IMEI should not Grater than 15 digit</span>
                                     </div>
                                     <div ng-message="min">
                                         <span>IMEI should not less than 15 digit</span>
@@ -144,7 +144,7 @@
                                 </div>
 
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Device Id</label>
                                 <input name="DeviceId" id="DeviceId" type="number" ng-model="model.DeviceId" ng-required="true" ng-disabled="flagEdit" max="99999999999999" min="10000000000000">
                                 <div ng-messages="formTrackingdetails.DeviceId.$error" ng-if="formTrackingdetails.DeviceId.$touched" role="alert">
@@ -158,7 +158,7 @@
                                         <span>Device Id should not less than 14 digit</span>
                                     </div>
                                 </div>
-                            </md-input-container>
+                            </md-input-container>-->
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Type</label>
                                 <md-select ng-model="model.Type" name="Type">
@@ -213,7 +213,7 @@
                                     <md-select-header class="demo-select-header">
                                         <input ng-model="vm.searchTermTelCoId" type="search" placeholder="Search for a Company.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstCompany |filter:vm.searchTermTelCoId| orderBy: 'Name'">{{o.Name}}</md-option>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstCompany | filter:vm.searchTermTelCoId | orderBy: 'Name'">{{o.Name}}</md-option>
                                 </md-select>
                                 <div ng-messages="formTrackingdetails.TelCoId.$error" ng-if="formTrackingdetails.TelCoId.$touched" role="alert">
                                     <div ng-message="required">

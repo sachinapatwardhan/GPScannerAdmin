@@ -15,15 +15,20 @@
                     <md-input-container class="md-block" flex="50" flex-gt-sm="25">
                         <label>Type </label>
                         <md-select ng-model="model.Type" name="Type">
-                            <md-option name="Type1" value="M2" selected="true">M2</md-option>
-                            <md-option name="Type2" value="M2-U">C2</md-option>
-                            <!-- <md-option name="Type3" value="Petrover">Petrover</md-option> -->
+                            <md-option name="Type1" value="TK510" selected="true">TK510</md-option>
+                            <md-option name="Type2" value="TK208">TK208</md-option>
+                            <md-option name="Type3" value="TK228">TK228</md-option>
+                            <md-option name="Type4" value="GT08">GT08</md-option>
+                            <md-option name="Type5" value="MT05">MT05</md-option>
                         </md-select>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="50" flex-gt-sm="25">
-                        <label>Country </label>
-                        <md-select name="CountryId" ng-model="model.CountryId">
-                            <md-option ng-repeat="o in lstCountry" value="{{o.id}}">{{o.Country}}</md-option>
+                    <md-input-container flex>
+                        <label>Country name</label>
+                        <md-select Name="CountryId" ng-model="model.CountryId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">{{o.Country}}</md-option>
                         </md-select>
                     </md-input-container>
                 </div>

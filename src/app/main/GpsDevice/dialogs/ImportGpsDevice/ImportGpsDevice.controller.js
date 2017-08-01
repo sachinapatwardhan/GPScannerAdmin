@@ -58,6 +58,14 @@
 
         }
 
+        $scope.clearSearchTerm = function() {
+            vm.searchTermCountry = '';
+        };
+
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
+
         $scope.closeModel = function() {
             $scope.apiReset.removeAll();
             $mdDialog.hide();
