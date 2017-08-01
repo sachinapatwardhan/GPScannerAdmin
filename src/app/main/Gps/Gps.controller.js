@@ -12,7 +12,7 @@
 
     $scope.init = function() {
       $scope.ModelSearch = {
-        DeviceId: '',
+        DeviceId: 'All',
         StartDate: '',
         EndDate: '',
       }
@@ -96,7 +96,7 @@
           } else {
             d.search = "";
           }
-          d.DeviceId = $scope.ModelSearch.DeviceId;
+          d.DeviceId = $scope.ModelSearch.DeviceId == 'All' ? '' : $scope.ModelSearch.DeviceId;
           if ($scope.ModelSearch.StartDate != '') {
             d.StartDate = $scope.ModelSearch.StartDate.toUTCString();
           } else {
@@ -123,7 +123,7 @@
       .withOption('serverSide', true) // for server side processing
       .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
       .withDisplayLength(25) // Page size
-      .withOption('aaSorting', [0, 'desc'])
+      .withOption('aaSorting', [2, 'desc'])
       .withOption('responsive', true)
       .withOption('createdRow', createdRow)
       .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
@@ -187,7 +187,7 @@
 
     $scope.SearchReset = function() {
       $scope.ModelSearch = {
-        DeviceId: '',
+        DeviceId: 'All',
         StartDate: '',
         EndDate: '',
       }

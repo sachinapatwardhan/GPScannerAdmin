@@ -48,6 +48,7 @@
                             <md-select-header class="demo-select-header">
                                 <input ng-model="vm.searchTermDevice" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
+                            <md-option value="All">All</md-option>
                             <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstdevice |filter:vm.searchTermDevice">{{o.DeviceId}}</md-option>
                         </md-select>
                     </md-input-container>

@@ -10,7 +10,7 @@
         // State
         $stateProvider
             .state('app.OwnerCustomer', {
-                url: '/OwnerCustomer',
+                url: '/Customer',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/OwnerCustomer/OwnerCustomer.html',

@@ -110,6 +110,7 @@
                 </div>
                 <div layout="row" layout-align="start center">
                   <md-button class="md-raised md-primary" ng-click="CreateBanner(model)" ng-disabled="FormCreateBanner.$invalid">Save</md-button>
+                  <md-button class="md-accent md-raised" ng-click="ResetBanner()">Reset</md-button>
                   <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
                 </div>
               </form>
@@ -230,6 +231,9 @@
                     </div>
                   </md-input-container>
                 </div>
+                <label class="s18 blue-500-fg">Note: Mobile Banner upload 800x370 px size image.</label>
+                <br/>
+                <br/>
                 <div layout-gt-sm="row">
                   <md-input-container class="md-block" flex="30">
                     <label layout-gt-sm="row">Image</label>
@@ -281,6 +285,7 @@
                 </div>
                 <div layout="row" layout-align="start center">
                   <md-button class="md-raised md-accent" ng-click="CreateBannerMgmt(modelbanner)" ng-disabled="FormBannerImage.$invalid">Save</md-button>
+                  <md-button class="md-accent md-raised" ng-click="ResetBannerMgmt()">Reset</md-button>
                   <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
                 </div>
               </form>

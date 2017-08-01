@@ -1,114 +1,115 @@
 <div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
-    <div class="top-bg md-accent-bg"></div>
-    <div class="center" layout="column" flex>
-        <div class="header" layout="row" layout-wrap layout-align="space-between center">
-            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
-                <div class="h1" layout="row" layout-align="start center">
-                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
-                    <span translate="Telephone Company">Telephone Company</span>
-                </div>
-                <div class="product-count secondary-text" hide-xs>
-                    <span>Total Companies :</span>
-                    <b>{{lstCompany.length}}</b>
-                </div>
-            </div>
-            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
-                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
-            </div>
-            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-                <div ng-if="FlgAddedEditlocal">
-                    <md-button class="md-raised md-background" ng-click="ResetEdit()">
-                        <span translate="Add New Company">Add New Company</span>
-                    </md-button>
-                </div>
-            </div>
+  <div class="top-bg md-accent-bg"></div>
+  <div class="center" layout="column" flex>
+    <div class="header" layout="row" layout-wrap layout-align="space-between center">
+      <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <md-icon md-font-icon="icon-cube-outline"></md-icon>
+          <span translate="Telephone Company">Telephone Company</span>
         </div>
-        <div class="content-card" layout="column" flex>
-            <div class="content fullpage-datatable" layout="column" flex>
-                <table class="dataTable cell-border row-border hover" datatable="ng" dt-instance="dtInstance" dt-options="vm.dtOptions">
-                    <thead>
-                        <tr>
-                            <th class="all">
-                                <div class="table-header">
-                                    <span class="column-title">No</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Name</span>
-                                </div>
-                            </th>
-                            <th class="all">
-                                <div class="table-header">
-                                    <span class="column-title">Action</span>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in lstCompany | orderBy: 'Name'">
-                            <td style="width: 4%; text-align: center;">{{$index+1}}</td>
-                            <td>{{item.Name}}</td>
-                            <td style="width: 20%; text-align: center;">
-                                <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="FetchCompanyById(item)">
-                                    <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
-                                    <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
-                                </md-button>
-                                <md-button class="edit-button md-icon-button" ng-if="FlgDeletedAccess" ng-click="DeleteTelco(item.id)">
-                                    <md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>
-                                    <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
-                                </md-button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="product-count secondary-text" hide-xs>
+          <span>Total Companies :</span>
+          <b>{{lstCompany.length}}</b>
         </div>
+      </div>
+      <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+        <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+      </div>
+      <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+        <div ng-if="FlgAddedEditlocal">
+          <md-button class="md-raised md-background" ng-click="ResetEdit()">
+            <span translate="Add New Company">Add New Company</span>
+          </md-button>
+        </div>
+      </div>
     </div>
+    <div class="content-card" layout="column" flex>
+      <div class="content fullpage-datatable" layout="column" flex>
+        <table class="dataTable cell-border row-border hover" datatable="ng" dt-instance="dtInstance" dt-options="vm.dtOptions">
+          <thead>
+            <tr>
+              <th class="all">
+                <div class="table-header">
+                  <span class="column-title">No</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Name</span>
+                </div>
+              </th>
+              <th class="all">
+                <div class="table-header">
+                  <span class="column-title">Action</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in lstCompany | orderBy: 'Name'">
+              <td style="width: 4%; text-align: center;">{{$index+1}}</td>
+              <td>{{item.Name}}</td>
+              <td style="width: 20%; text-align: center;">
+                <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="FetchCompanyById(item)">
+                  <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
+                  <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                </md-button>
+                <md-button class="edit-button md-icon-button" ng-if="FlgDeletedAccess" ng-click="DeleteTelco(item.id)">
+                  <md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>
+                  <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                </md-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="page-layout simple tabbed" layout="column" ng-show="flag">
-    <div class="header md-accent-bg" layout="row" layout-align="start center">
-        <div class="white-fg" layout="row" layout-align="start center" flex>
-            <md-button class="goto-products-button md-icon-button" aria-label="Go to List" ng-click="gotoList()">
-                <md-icon md-font-icon="icon-arrow-left"></md-icon>
-            </md-button>
-            <div layout="row" layout-align="start center">
-                <div layout="column" layout-align="start start">
-                    <div class="subtitle secondary-text">
-                        <span translate="Go To List">Go To List</span>
-                    </div>
-                </div>
-            </div>
+  <div class="header md-accent-bg" layout="row" layout-align="start center">
+    <div class="white-fg" layout="row" layout-align="start center" flex>
+      <md-button class="goto-products-button md-icon-button" aria-label="Go to List" ng-click="gotoList()">
+        <md-icon md-font-icon="icon-arrow-left"></md-icon>
+      </md-button>
+      <div layout="row" layout-align="start center">
+        <div layout="column" layout-align="start start">
+          <div class="subtitle secondary-text">
+            <span translate="Go To List">Go To List</span>
+          </div>
         </div>
-        <div>
-        </div>
+      </div>
     </div>
-    <div class="content" layout-margin>
-        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form name="FormManageTelCo" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
-                <div layout="row" layout-wrap>
-                    <!--</md-input-container>-->
-                    <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="50">
-                        <label> Name </label>
-                        <input type="text" name="Name" ng-model="model.Name" required maxlength="45" md-maxlength="45">
-                        <div ng-messages="FormManageTelCo.Name.$error" ng-if="FormManageTelCo.Name.$touched" role="alert">
-                            <div ng-message="required">
-                                <span>Company Name field is required</span>
-                            </div>
-                        </div>
-                    </md-input-container>
-                    <!--<md-input-container flex="100" flex-gt-sm="50" flex-gt-md="50">
+    <div>
+    </div>
+  </div>
+  <div class="content" layout-margin>
+    <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+      <form name="FormManageTelCo" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
+        <div layout="row" layout-wrap>
+          <!--</md-input-container>-->
+          <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="50">
+            <label> Name </label>
+            <input type="text" name="Name" ng-model="model.Name" required maxlength="45" md-maxlength="45">
+            <div ng-messages="FormManageTelCo.Name.$error" ng-if="FormManageTelCo.Name.$touched" role="alert">
+              <div ng-message="required">
+                <span>Company Name field is required</span>
+              </div>
+            </div>
+          </md-input-container>
+          <!--<md-input-container flex="100" flex-gt-sm="50" flex-gt-md="50">
                         <input type="text" name="Description" ng-model="model.Description" placeholder="Description ">
                     </md-input-container>-->
-                </div>
-                <div align="center">
-                    <md-button class="md-raised md-primary" ng-click="CreateTelCo(model)" ng-disabled="FormManageTelCo.$invalid">
-                        Save</md-button>
-                    <md-button class="md-raised md-warn" ng-click="Reset()">
-                        cancel</md-button>
-                </div>
-            </form>
         </div>
+        <div align="center">
+          <md-button class="md-raised md-primary" ng-click="CreateTelCo(model)" ng-disabled="FormManageTelCo.$invalid">
+            Save</md-button>
+          <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>
+          <md-button class="md-raised md-warn" ng-click="Reset()">
+            cancel</md-button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>

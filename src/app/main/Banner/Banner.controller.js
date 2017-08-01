@@ -410,6 +410,29 @@
         $rootScope.FlgAddedEditlocal = false;
       }
     }
+
+    $scope.ResetBanner = function() {
+      $scope.model = {
+        id: '',
+        Name: '',
+      }
+
+      $scope.FormCreateBanner.Name.$touched = false;
+    }
+
+    $scope.ResetBannerMgmt = function() {
+      $scope.modelbanner = {
+        id: '',
+        BannerId: 0,
+        ImageUrl: '',
+        alt: '',
+        UrlLink: '',
+        Description: '',
+      }
+      $scope.FormBannerImage.$setPristine();
+      $scope.FormBannerImage.$setUntouched();
+
+    }
     $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
       $scope.init();
     })
