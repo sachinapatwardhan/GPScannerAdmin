@@ -207,10 +207,24 @@
             <div class="custom-content">
               <form name="FormBannerImage" role="form" class="md-inline-form">
                 <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex>
+                  <!--              <md-input-container class="md-block" flex>
                     <label>Select Banner </label>
                     <md-select ng-model="modelbanner.BannerId" name="BannerId" required>
                       <md-option value="{{o.id}}" ng-repeat="o in lstBanner">{{o.Name}}</md-option>
+                    </md-select>
+                    <div ng-messages="FormBannerImage.BannerId.$error" ng-if="FormBannerImage.BannerId.$touched" role="alert">
+                      <div ng-message="required">
+                        <span>You must select banner</span>
+                      </div>
+                    </div>
+                  </md-input-container> -->
+                  <md-input-container class="md-block" flex>
+                    <label>Select Banner </label>
+                    <md-select Name="BannerId" ng-model="modelbanner.BannerId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                      <md-select-header class="demo-select-header">
+                        <input ng-model="searchBanner" type="search" placeholder="Search for a Banner.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                      </md-select-header>
+                      <md-option ng-value="{{o.id}}" ng-repeat="o in lstBanner | filter: searchBanner | orderBy : 'Name'">{{o.Name}}</md-option>
                     </md-select>
                     <div ng-messages="FormBannerImage.BannerId.$error" ng-if="FormBannerImage.BannerId.$touched" role="alert">
                       <div ng-message="required">

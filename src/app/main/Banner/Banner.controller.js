@@ -48,7 +48,7 @@
         UrlLink: '',
         Description: '',
       }
-
+      $scope.searchBanner = '';
       $scope.GetAllBanner();
       $scope.FlgImage = 0;
       $scope.flag = false;
@@ -56,6 +56,13 @@
         Search: '',
       }
     };
+
+    $scope.clearSearchTerm = function() {
+      $scope.searchBanner = '';
+    };
+    $scope.onSearchChange = function($event) {
+      $event.stopPropagation();
+    }
 
     $scope.Add = function() {
       $scope.flag = true;
