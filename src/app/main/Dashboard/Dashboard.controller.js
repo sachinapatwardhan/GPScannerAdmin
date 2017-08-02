@@ -217,10 +217,10 @@
                                     var ImageURL = '';
                                     // var IsWireCut = $scope.lstActiveVehicle[i].IsWireCut;
                                     var VehicleID = $scope.lstActiveVehicle[i].Name;
-                                    new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longtitude), map, VehicleID)
+                                    new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude), map, VehicleID)
                                         // var marker = new google.maps.Marker();
                                         // marker = new google.maps.Marker({
-                                        //     position: new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longtitude),
+                                        //     position: new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude),
                                         //     map: map,
                                         //     title: idVehicle,
                                         // });

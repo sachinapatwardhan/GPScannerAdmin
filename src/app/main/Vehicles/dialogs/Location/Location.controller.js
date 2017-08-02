@@ -15,7 +15,7 @@
                 var myOptions;
 
                 var CurrentLat = data.Latitude;
-                var CurrentLang = data.Longtitude;
+                var CurrentLang = data.Longitude;
 
                 myOptions = {
                     center: new google.maps.LatLng(CurrentLat, CurrentLang),
@@ -137,7 +137,7 @@
                                 { lat: se.lat(), lng: se.lng() },
                                 { lat: sw.lat(), lng: sw.lng() }
                             ];
-                            new CustomMarker(new google.maps.LatLng(data.Latitude, data.Longtitude), map, Name, IsOnline)
+                            new CustomMarker(new google.maps.LatLng(data.Latitude, data.Longitude), map, Name, IsOnline)
                         };
                     });
 

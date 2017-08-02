@@ -11,10 +11,10 @@
 
         $scope.init = function() {
             $scope.model = {
-                Id : '',
+                Id: '',
                 Datetime: '',
                 Latitude: '',
-                Longtitude: '',
+                Longitude: '',
                 GPSPositioning: '',
                 Speed: '',
                 Direction: '',

@@ -9,13 +9,13 @@
     function Location1Controller($http, $mdDialog, $scope, deviceid, Tasks, event, MediaVM, $rootScope, $mdToast, bikeNumber, images, IsOnline) {
         var vm = this;
         $scope.RoutePath = $rootScope.RoutePath;
-            //google map
+        //google map
         $scope.IntializeGoogleMap = function(data) {
             if (data != null) {
                 var myOptions;
 
                 var CurrentLat = data.Latitude;
-                var CurrentLang = data.Longtitude;
+                var CurrentLang = data.Longitude;
 
                 myOptions = {
                     center: new google.maps.LatLng(CurrentLat, CurrentLang),
@@ -137,7 +137,7 @@
                                 { lat: se.lat(), lng: se.lng() },
                                 { lat: sw.lat(), lng: sw.lng() }
                             ];
-                            new CustomMarker(new google.maps.LatLng(data.Latitude, data.Longtitude), map, images, bikeNumber, IsOnline)
+                            new CustomMarker(new google.maps.LatLng(data.Latitude, data.Longitude), map, images, bikeNumber, IsOnline)
 
                         };
                     });
@@ -148,11 +148,11 @@
             } else {
                 $scope.NoLocation = "No Location Found"
                 var map;
-                    map = new google.maps.Map(document.getElementById('map123'), {
-                        center: { lat: 0 , lng: 0},
-                        zoom: 2
-                    });
-                
+                map = new google.maps.Map(document.getElementById('map123'), {
+                    center: { lat: 0, lng: 0 },
+                    zoom: 2
+                });
+
             }
         }
 
@@ -196,9 +196,9 @@
                 // Create a overlay text DIV
                 div = this.div_ = document.createElement('div');
                 // Create the DIV representing our CustomMarker
-                if(this.IsOnline == 'false'){
+                if (this.IsOnline == 'false') {
                     div.className = "customMarkerPetShop"
-                    
+
                     div.id = this.BikeID
                     if (this.imageSrc != '') {
                         var img = document.createElement("img");
@@ -211,7 +211,7 @@
                         div.appendChild(TextDiv);
                     };
 
-                } else{ 
+                } else {
                     div.className = "customMarker1"
 
                     div.id = this.BikeID

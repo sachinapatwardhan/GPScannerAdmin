@@ -14,7 +14,7 @@
                 Id: '',
                 Datetime: '',
                 Latitude: '',
-                Longtitude: '',
+                Longitude: '',
                 GPSPositioning: '',
                 Speed: '',
                 Direction: '',
