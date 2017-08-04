@@ -211,13 +211,15 @@
 
                         $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike').success(function(data) {
                             $scope.lstActiveVehicle = data.data;
+                            console.log($scope.lstActiveVehicle);
 
                             function setActiveVehicle(i) {
                                 if (i < $scope.lstActiveVehicle.length) {
                                     var ImageURL = '';
                                     // var IsWireCut = $scope.lstActiveVehicle[i].IsWireCut;
                                     var VehicleID = $scope.lstActiveVehicle[i].Name;
-                                    new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude), map, VehicleID)
+                                    var objVehicle = $scope.lstActiveVehicle[i];
+                                    new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude), map, VehicleID, objVehicle)
                                         // var marker = new google.maps.Marker();
                                         // marker = new google.maps.Marker({
                                         //     position: new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude),
@@ -259,10 +261,12 @@
 
         $scope.getCurrentLocation(false);
 
-        function CustomMarker(latlng, map, VehicleID) {
+        function CustomMarker(latlng, map, VehicleID, objVehicle) {
             this.latlng_ = latlng;
             // this.imageSrc = imageSrc;
             this.VehicleID = VehicleID;
+            this.IsOnline = objVehicle.IsOnline;
+            this.IsEngine = objVehicle.IsEngine;
             // this.Authorised = Authorised;
 
             // Once the LatLng and text are set, add the overlay to the map.  This will
@@ -285,12 +289,23 @@
                 // } else {
                 //     div.className = "customMarker2"
                 // };
-                div.className = "customMarker2"
+                div.className = "customMarker2";
+                if (this.IsOnline == 0) {
+                    div.className += " offline";
+                } else {
+                    if (this.IsEngine == 0) {
+                        div.className += " online";
+                    } else {
+                        div.className += " active";
+                    }
+                }
+                console.log(div);
                 div.id = this.VehicleID
                 var TextDiv = document.createElement("div");
                 TextDiv.innerHTML = this.VehicleID;
                 $(TextDiv).addClass('my-text-shadow');
                 div.appendChild(TextDiv);
+                // console.log(div);
                 // if (this.imageSrc != '') {
 
                 //     var img = document.createElement("img");

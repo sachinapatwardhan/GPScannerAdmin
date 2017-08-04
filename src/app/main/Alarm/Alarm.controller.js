@@ -22,7 +22,6 @@
             $scope.searchDevice = "";
             $scope.GetAllGpsDevice();
             AlarmCode();
-
         }
 
         $scope.GetSerch = function(Search) {
@@ -63,6 +62,7 @@
         $scope.FilterStatus = 1;
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+            DTColumnBuilder.newColumn('Date').renderWith(Datetimefun).notSortable(),
             DTColumnBuilder.newColumn('AlarmCode').renderWith(CodeFun),
             DTColumnBuilder.newColumn('DeviceId'),
             DTColumnBuilder.newColumn('Latitude'),
@@ -107,7 +107,7 @@
             .withOption('processing', true) //for show progress bar
             .withOption('serverSide', true) // for server side processing
             .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
-            .withDisplayLength(10) // Page size
+            .withDisplayLength(25) // Page size
             .withOption('aaSorting', [0, 'desc'])
             .withOption('responsive', true)
             .withOption('createdRow', createdRow)
@@ -149,6 +149,14 @@
             }
         }
 
+        function Datetimefun(data, type, full, meta) {
+            if (data != '' && data != null && data != undefined) {
+                var newdate = data * 1000;
+                return moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm A");
+            } else {
+                return '';
+            }
+        }
 
         function CodeFun(data, type, full, meta) {
 

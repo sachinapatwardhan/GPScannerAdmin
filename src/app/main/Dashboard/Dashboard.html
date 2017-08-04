@@ -1,5 +1,4 @@
 <md-content>
-
     <div id="dashboard-project" class="page-layout simple fullwidth doc-page element-doc-page">
         <div class="header md-accent-bg layout-align-space-between-stretch layout-row" layout="row" layout-align="space-between">
             <div layout="column" layout-align="center start" class="layout-align-center-start layout-column">
@@ -291,13 +290,25 @@
     
     .customMarker2 {
         height: 60px;
-        background-image: url(/assets/images/marker2.png);
+        background-image: url(/assets/images/icon-map-car-active2.png);
         width: 43px;
         background-size: contain;
         background-repeat: no-repeat;
         position: absolute;
         margin-left: -21px;
         margin-top: -31px;
+    }
+    
+    .customMarker2.online {
+        background-image: url(/assets/images/icon-map-car-on2.png);
+    }
+    
+    .customMarker2.offline {
+        background-image: url(/assets/images/icon-map-car--off2.png);
+    }
+    
+    .customMarker2.active {
+        background-image: url(/assets/images/icon-map-car-active2.png);
     }
     
     .customMarker1 .my-text-shadow {
