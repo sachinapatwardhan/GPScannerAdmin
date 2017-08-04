@@ -360,6 +360,31 @@ table.dataTable.dtr-inline.collapsed.dtr-inline.collapsed>tbody>tr>th:first-chil
 .dataTables_scrollHead th span {
     text-align: center;
 }
+table.dataTable.cell-border thead th {
+    /*border-top: 1px solid rgba(0, 0, 0, 0.12);*/
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+.dataTables_wrapper .bottom .left{
+    display: block;
+}
+.dataTables_wrapper .bottom .left .info{
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    background: red ;
+}
+.dataTables_wrapper .bottom .left .info .dataTables_info{
+    padding-top: 4px;
+}
+
+.dataTables_scrollHead th span {
+    text-align: center;
+}
+.dataTables_wrapper .dataTables_scroll .dataTables_scrollHead{
+    min-height: auto;
+}
+
+
 
 .actionSubMenu {
     border-radius: 10px !important;

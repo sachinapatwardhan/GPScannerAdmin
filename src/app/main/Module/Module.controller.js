@@ -87,14 +87,15 @@
             .withPaginationType('full_numbers')
             .withDisplayLength(10)
             .withOption('responsive', true)
-            //.withOption('autoWidth', false)
+            // .withOption('autoWidth', true)
             .withOption('aaSorting', [0, 'asc'])
             .withOption('deferRender', true)
             .withOption('language', {
                 'zeroRecords': "No Record Found",
                 'emptyTable': "No Record Found"
             })
-            .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"info"i><"pagination"p>>>')
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
             .withOption('scrollY', 'auto'),
 
             vm.dtColumnDefs = [
