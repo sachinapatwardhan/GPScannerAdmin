@@ -361,20 +361,12 @@
 
         $scope.UpdateStatus = function(id, IsActive) {
             if (IsActive == true) {
-                var d = new Date();
-                var year = d.getFullYear();
-                var month = d.getMonth();
-                var day = d.getDate();
-                var c = new Date(year + 1, month, day)
                 IsActive = 1;
-                var ExpiryDate = c;
             } else {
                 IsActive = 0;
-                ExpiryDate = null;
             }
             var params = {
                 IsActive: IsActive,
-                ExpiryDate: ExpiryDate,
                 id: id,
             }
             $http.get($rootScope.RoutePath + "PetDevice/UpdateStatus", { params: params }).then(function(data) {
