@@ -13,10 +13,18 @@
                 <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
                     <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
                         <md-content class="md-padding">
+
                             <form name="formVehicledetails1" novalidate class="md-inline-form" aria-invalid="false">
                                 <div class="content">
                                     <div layout="row" layout-wrap>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
+                                        <!--Loader start -->
+                                        <div id="processing1" style="display: none">
+                                            <div layout="row" layout-sm="column" layout-align="space-around">
+                                                <md-progress-circular md-mode="indeterminate" value="..." md-diameter="100" class="page-loader"></md-progress-circular>
+                                            </div>
+                                        </div>
+                                        <!-- Loader End -->
+                                        <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <md-checkbox class="md-secondary" ng-model="model.IsACC" value="{{model.IsACC}}" ng-true-value="1" ng-false-value="0" flex></md-checkbox>&nbsp;&nbsp;Is ACC
                                             <div ng-messages="formVehicledetails1.IsACC.$error" ng-if="formVehicledetails1.IsACC.$touched" role="alert">
                                                 <div ng-message="required">
@@ -29,7 +37,7 @@
                                                 <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
                                                 <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
                                             </md-button>
-                                        </md-input-container>
+                                        </md-input-container>-->
                                         <md-input-container class="md-block" flex="100" flex-gt-sm="40">
                                             <label>Max Speed </label>
                                             <input type="number" name="MaxSpeed" ng-model="model.MaxSpeed">
@@ -234,4 +242,24 @@
             </div>
         </md-dialog-content>
     </form>
+    <style type="text/css" media="screen">
+        #processing1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: rgba(203, 203, 203, 0.6);
+        }
+        
+        #processing1 .page-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: -100px;
+            z-index: 2;
+        }
+    </style>
 </md-dialog>
