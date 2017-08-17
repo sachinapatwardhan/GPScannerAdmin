@@ -9,6 +9,10 @@
     function ViewDetailCtrl($http, $mdDialog, $scope, ModalMethod, $rootScope, $mdToast, idVehicle, objVehicle) {
         var vm = this;
         $scope.model = objVehicle;
+        // vm.HideLoader = HideLoader;
+        $scope.init = function() {
+            // HideLoader();
+        };
         // if (objVehicle.IsACC == 1) {
         //     $scope.model.IsACC = true;
         // } else {
@@ -56,28 +60,41 @@
         };
 
         $scope.SaveModule = function(objModel, name) {
-            if (name == 'IsACC') {
+            ShowLoader();
+            if (name == 'MaxSpeed') {
 
-            } else if (name == 'MaxSpeed') {
                 if (objModel >= 0 && objModel <= 200) {
                     var params = {
                         DeviceId: objVehicle.deviceid,
                         Speed: objModel
                     }
                     $http.get($rootScope.RoutePath + "socketapi/SendSpeedData", { params: params }).then(function(data) {
-                        if (data.success == true) {
+                        if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.message)
+                                .textContent(data.data.message)
                                 .position('top right')
                                 .hideDelay(3000)
                             );
                         } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
                             $scope.reload();
+
                         }
+                        HideLoader();
                     })
                 } else {
-                    // $scope.reload();
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent("Please Enter Speed between 0 to 200 km/h")
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
                     return;
                 }
             } else if (name == 'SleepMode') {
@@ -86,16 +103,23 @@
                     SleepMode: objModel
                 }
                 $http.get($rootScope.RoutePath + "socketapi/SetSleepMode", { params: params }).then(function(data) {
-                    if (data.success == true) {
+                    if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
+                            .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
                         $scope.reload();
                     }
+                    HideLoader();
                 })
             } else if (name == 'GPRSInterval') {
                 if (parseInt(objModel) % 10 == 0) {
@@ -104,16 +128,23 @@
                         TimeInterval: objModel
                     }
                     $http.get($rootScope.RoutePath + "socketapi/SetGPRSInterval", { params: params }).then(function(data) {
-                        if (data.success == true) {
+                        if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.message)
+                                .textContent(data.data.message)
                                 .position('top right')
                                 .hideDelay(3000)
                             );
                         } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
                             $scope.reload();
                         }
+                        HideLoader();
                     })
                 } else {
                     return;
@@ -125,16 +156,23 @@
                         TimeInterval: objModel
                     }
                     $http.get($rootScope.RoutePath + "socketapi/SetGPRSIntervalStopCar", { params: params }).then(function(data) {
-                        if (data.success == true) {
+                        if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.message)
+                                .textContent(data.data.message)
                                 .position('top right')
                                 .hideDelay(3000)
                             );
                         } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
                             $scope.reload();
                         }
+                        HideLoader();
                     })
                 } else {
                     return;
@@ -145,16 +183,23 @@
                     Arm: objModel
                 }
                 $http.get($rootScope.RoutePath + "socketapi/SetArmSettings", { params: params }).then(function(data) {
-                    if (data.success == true) {
+                    if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
+                            .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
                         $scope.reload();
                     }
+                    HideLoader();
                 })
             } else if (name == 'OdoMeter') {
                 if (objModel <= 9999) {
@@ -166,13 +211,20 @@
                         if (data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.message)
+                                .textContent(data.data.message)
                                 .position('top right')
                                 .hideDelay(3000)
                             );
                         } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
                             $scope.reload();
                         }
+                        HideLoader();
                     })
                 } else {
                     return;
@@ -184,16 +236,23 @@
                         TimeInterval: objModel
                     }
                     $http.get($rootScope.RoutePath + "socketapi/SetHeartBeatInterval", { params: params }).then(function(data) {
-                        if (data.success == true) {
+                        if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.message)
+                                .textContent(data.data.message)
                                 .position('top right')
                                 .hideDelay(3000)
                             );
                         } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
                             $scope.reload();
                         }
+                        HideLoader();
                     })
                 } else {
                     return;
@@ -204,16 +263,23 @@
                     Relay: objModel
                 }
                 $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
-                    if (data.success == true) {
+                    if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
+                            .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
                         $scope.reload();
                     }
+                    HideLoader();
                 })
             } else if (name == 'Siren') {
                 var params = {
@@ -221,16 +287,23 @@
                     Siren: objModel
                 }
                 $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
-                    if (data.success == true) {
+                    if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
+                            .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
                         $scope.reload();
                     }
+                    HideLoader();
                 })
             } else if (name == 'UserDefined') {
                 var params = {
@@ -238,16 +311,17 @@
                     UserDefined: objModel
                 }
                 $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
-                    if (data.success == true) {
+                    if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
+                            .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else {
                         $scope.reload();
                     }
+                    HideLoader();
                 })
             } else if (name == 'DoorLock') {
                 var params = {
@@ -258,13 +332,20 @@
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
+                            .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
                         $scope.reload();
                     }
+                    HideLoader();
                 })
             } else if (name == 'DoorUnlock') {
                 var params = {
@@ -272,20 +353,39 @@
                     DoorUnLock: objModel
                 }
                 $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
-                    if (data.success == true) {
+                    if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
+                            .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
                         $scope.reload();
                     }
+                    HideLoader();
                 })
             } else if (name == 'TimeZone') {
                 console.log(objModel);
             }
         }
+
+        function ShowLoader() {
+            document.getElementById('processing1').style.display = "block";
+            document.body.scrollTop = "0px";
+        }
+
+        function HideLoader() {
+            document.getElementById('processing1').style.display = "none";
+        }
+        $scope.init();
     }
+
+
 })();
