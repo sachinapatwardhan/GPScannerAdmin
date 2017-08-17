@@ -393,7 +393,7 @@
                             return obj.tblmodulemgmt.Module == 'Owner Customer';
                         });
                         if (lstOwnerCustomer.length > 0) {
-                            msNavigationService.saveItem('GPS Scanner.Customer', {
+                            msNavigationService.saveItem('Maark.Customer', {
                                 title: 'Customer',
                                 state: 'app.OwnerCustomer',
                                 order: lstOwnerCustomer[0].tblmodulemgmt.DisplayOrder,
@@ -406,7 +406,7 @@
                             return obj.tblmodulemgmt.Module == 'Owner Vehicle';
                         });
                         if (lstownerbike.length > 0) {
-                            msNavigationService.saveItem('GPS Scanner.Vehicle', {
+                            msNavigationService.saveItem('Maark.Vehicle', {
                                 title: 'Vehicle',
                                 state: 'app.ownerVehicle',
                                 order: lstownerbike[0].tblmodulemgmt.DisplayOrder,
@@ -419,7 +419,7 @@
                             return obj.tblmodulemgmt.Module == 'Gps';
                         });
                         if (gps.length > 0) {
-                            msNavigationService.saveItem('GPS Scanner.Gps', {
+                            msNavigationService.saveItem('Maark.Gps', {
                                 title: 'Gps',
                                 state: 'app.gps',
                                 order: gps[0].tblmodulemgmt.DisplayOrder,
@@ -431,7 +431,7 @@
                             return obj.tblmodulemgmt.Module == 'Alarm';
                         });
                         if (Alarm.length > 0) {
-                            msNavigationService.saveItem('GPS Scanner.Alarm', {
+                            msNavigationService.saveItem('Maark.Alarm', {
                                 title: 'Alarm',
                                 state: 'app.alarm',
                                 order: Alarm[0].tblmodulemgmt.DisplayOrder,
@@ -444,7 +444,7 @@
                             return obj.tblmodulemgmt.Module == 'CanBus Data';
                         });
                         if (CanBusData.length > 0) {
-                            msNavigationService.saveItem('GPS Scanner.CanBus', {
+                            msNavigationService.saveItem('Maark.CanBus', {
                                 title: 'CanBus',
                                 state: 'app.CanBusData',
                                 order: CanBusData[0].tblmodulemgmt.DisplayOrder,
@@ -457,7 +457,7 @@
                             return obj.tblmodulemgmt.Module == 'Driving Behaviour';
                         });
                         if (DrivingBehaviour.length > 0) {
-                            msNavigationService.saveItem('GPS Scanner.Driving Behaviour', {
+                            msNavigationService.saveItem('Maark.Driving Behaviour', {
                                 title: 'Driving Behaviour',
                                 state: 'app.DrivingBehaviour',
                                 order: DrivingBehaviour[0].tblmodulemgmt.DisplayOrder,
