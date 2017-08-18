@@ -1,7 +1,8 @@
 <md-dialog class="task-dialog" aria-label="New Task">
     <md-toolbar class="md-accent md-hue-2">
-        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-            <span class="title">Export Excel File</span>
+        <div class="md-toolbar-tools">
+            <h2>Export Excel File</h2>
+            <span flex></span>
             <md-button class="md-icon-button" ng-click="closeModel()">
                 <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
             </md-button>
@@ -11,31 +12,31 @@
         <md-content class="widget-page">
             <!-- <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
                 <md-tab label="Export Excel File"> -->
-                    <md-content >
-                        <form Name="formExport" class="md-inline-form">
-                            <md-content class="md-padding">
-                                <md-input-container class="md-block" flex-gt-sm="50">
-                                    <label>Language
+            <md-content>
+                <form Name="formExport" class="md-inline-form">
+                    <md-content class="md-padding">
+                        <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>Language
                                         <md-icon class="md-warn">*</md-icon>
                                     </label>
-                                    <md-select name="Language" ng-model="model.LanguageId" ng-required="true">
-                                        <md-option ng-repeat="o in lstlanguage" value="{{o.Id}}">{{o.Name}}</md-option>
-                                    </md-select>
-                                     <div ng-messages="formExport.Language.$error" ng-if="formExport.Language.$touched">
-                                        <div ng-message="required">
-                                            <span>Language is required</span>
-                                        </div>
-                                    </div>
-                                </md-input-container>
-                            </md-content>
-                            <div align="left">
-                                <md-button class="md-raised md-primary" ng-disabled="!formExport.$valid" ng-click="Export(model)">Export</md-button>
-                                <!-- <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button> -->
+                            <md-select name="Language" ng-model="model.LanguageId" ng-required="true">
+                                <md-option ng-repeat="o in lstlanguage" value="{{o.Id}}">{{o.Name}}</md-option>
+                            </md-select>
+                            <div ng-messages="formExport.Language.$error" ng-if="formExport.Language.$touched">
+                                <div ng-message="required">
+                                    <span>Language is required</span>
+                                </div>
                             </div>
-                        </form>
-             <!--        </md-content>
+                        </md-input-container>
+                    </md-content>
+                    <div align="left">
+                        <md-button class="md-raised md-primary" ng-disabled="!formExport.$valid" ng-click="Export(model)">Export</md-button>
+                        <!-- <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button> -->
+                    </div>
+                </form>
+                <!--        </md-content>
                 </md-tab> -->
-            </md-tabs>
-        </md-content>
+                </md-tabs>
+            </md-content>
     </md-dialog-content>
 </md-dialog>
