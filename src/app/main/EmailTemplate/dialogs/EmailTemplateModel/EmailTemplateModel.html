@@ -1,7 +1,16 @@
 <md-dialog class="flex-50">
-    <md-toolbar class="md-accent md-hue-2">
+    <!--<md-toolbar class="md-accent md-hue-2">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between">
             <span class="title">Compose Email</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>-->
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Import Discount From Excel</h2>
+            <span flex></span>
             <md-button class="md-icon-button" ng-click="closeModel()">
                 <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
             </md-button>
@@ -26,12 +35,12 @@
                             <md-option value="Confirm Order Email">Confirm Order Email</md-option>
                             <md-option value="Cancel Order Email">Cancel Order Email</md-option>
                             <md-option value="Complete Order Email">Complete Order Email</md-option>
-							<md-option value="Panding Order Email">Pending Order Email</md-option>
-							<md-option value="Ready to Ship Order Email">Ready to Ship Order Email</md-option>
-							<md-option value="Shipped Order Email">Shipped Order Email</md-option>
-							<md-option value="Delivery failed Order Email">Delivery failed Order Email</md-option>
-							<md-option value="Returned Order Email">Returned Order Email</md-option>
-							<md-option value="Default Email">Default Email</md-option>
+                            <md-option value="Panding Order Email">Pending Order Email</md-option>
+                            <md-option value="Ready to Ship Order Email">Ready to Ship Order Email</md-option>
+                            <md-option value="Shipped Order Email">Shipped Order Email</md-option>
+                            <md-option value="Delivery failed Order Email">Delivery failed Order Email</md-option>
+                            <md-option value="Returned Order Email">Returned Order Email</md-option>
+                            <md-option value="Default Email">Default Email</md-option>
                             <md-option value="Other Email">Other Email</md-option>
                         </md-select>
                         <div ng-messages="formEmailTemplate.Type.$error" role="alert">
