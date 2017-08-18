@@ -126,7 +126,8 @@
             .withOption('aaSorting', [2, 'desc'])
             .withOption('responsive', true)
             .withOption('createdRow', createdRow)
-            .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            //.withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
             .withOption('scrollY', 'auto');
         $scope.dtInstance = {};
 
