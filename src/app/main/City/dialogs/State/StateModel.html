@@ -1,51 +1,52 @@
 <md-dialog class="task-dialog" aria-label="New Task">
-  <md-toolbar class="md-accent md-hue-2">
-    <div class="md-toolbar-tools">
-      <h2>State Management</h2>
-      <span flex></span>
-      <md-button class="md-icon-button" ng-click="closeModel()">
-        <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
-      </md-button>
-    </div>
-  </md-toolbar>
-  <md-dialog-content ms-scroll>
-    <md-content class="widget-page">
-      <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
-        <md-tab label="List of State">
-          <div class="custom-content">
-            <md-content class="md-padding" md-selected="selectedIndex">
-              <!--    <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
-              <table class="dataTable row-border hover text-center" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
-                <thead>
-                  <tr>
-                    <th class="secondary-text">
-                      <div class="table-header">
-                        <span class="column-title">No</span>
-                      </div>
-                    </th>
-                    <th class="secondary-text">
-                      <div class="table-header">
-                        <span class="column-title">Country Name</span>
-                      </div>
-                    </th>
-                    <th class="secondary-text">
-                      <div class="table-header">
-                        <span class="column-title">State Name</span>
-                      </div>
-                    </th>
-                    <th class="secondary-text">
-                      <div class="table-header">
-                        <span class="column-title">Short Name</span>
-                      </div>
-                    </th>
-                    <th class="secondary-text">
-                      <div class="table-header">
-                        <span class="column-title">Action</span>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                <!-- <tbody>
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>State Management</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content ms-scroll>
+        <md-content class="widget-page">
+            <md-tabs md-dynamic-height md-selected="tab.selectedIndex" md-border-bottom>
+                <md-tab label="List of State">
+                    <div class="custom-content">
+                        <md-content class="md-padding" md-selected="selectedIndex">
+                            <!--    <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
+                            <table class="dataTable row-border hover text-center" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
+                                <thead>
+                                    <tr>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">No</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Country Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">State Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Short Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Action</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <!-- <tbody>
                                 <tr ng-repeat="o in lstCountryState">
                                     <td>{{ $index+1 }}</td>
                                     <td>{{ o.tblcountrymgmt.Country }}</td>
@@ -61,53 +62,53 @@
                                     </td>
                                 </tr>
                             </tbody> -->
-              </table>
-            </md-content>
-          </div>
-        </md-tab>
-        <md-tab label="Manage State" ng-click="ResetModel()">
-          <div class="custom-content">
-            <md-content class="md-padding">
-              <form name="formState" class="md-inline-form">
-                <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
-                  <label>Id</label>
-                  <input ng-model="model.id">
-                </md-input-container>
-                <md-input-container class="md-block" flex-gt-sm="50">
-                  <label>Country name
+                            </table>
+                        </md-content>
+                    </div>
+                </md-tab>
+                <md-tab label="Manage State" ng-click="ResetModel()">
+                    <div class="custom-content">
+                        <md-content class="md-padding">
+                            <form name="formState" class="md-inline-form">
+                                <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                                    <label>Id</label>
+                                    <input ng-model="model.id">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>Country name
                   </label>
-                  <md-select name="CountryName" ng-model="model.idCountry" ng-required="true">
-                    <md-option ng-repeat="o in lstCountry" value="{{o.id}}">{{o.Country}}</md-option>
-                  </md-select>
-                </md-input-container>
-                <md-input-container class="md-block" flex-gt-sm="50">
-                  <label>State name </label>
-                  <input name="StateName" ng-model="model.Name" maxlength="30" ng-required="true" maxlength="50" md-maxlength="50">
-                  <div ng-messages="formState.StateName.$error" ng-if="formState.StateName.$touched">
-                    <div ng-message="required">
-                      <span>State name is required</span>
+                                    <md-select name="CountryName" ng-model="model.idCountry" ng-required="true">
+                                        <md-option ng-repeat="o in lstCountry" value="{{o.id}}">{{o.Country}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>State name </label>
+                                    <input name="StateName" ng-model="model.Name" maxlength="30" ng-required="true" maxlength="50" md-maxlength="50">
+                                    <div ng-messages="formState.StateName.$error" ng-if="formState.StateName.$touched">
+                                        <div ng-message="required">
+                                            <span>State name is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm="50">
+                                    <label>Short name </label>
+                                    <input name="ShortName" ng-model="model.ShortName" maxlength="10" ng-required="true" maxlength="10" md-maxlength="10">
+                                    <div ng-messages="formState.ShortName.$error" ng-if="formState.ShortName.$touched">
+                                        <div ng-message="required">
+                                            <span>Short name is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <div align="left">
+                                    <md-button class="md-raised md-primary" ng-disabled="!formState.$valid" ng-click="CreateState(model)">Save</md-button>
+                                    <md-button class="md-accent md-raised" ng-click="ResetModel()">Reset</md-button>
+                                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                </div>
+                            </form>
+                        </md-content>
                     </div>
-                  </div>
-                </md-input-container>
-                <md-input-container class="md-block" flex-gt-sm="50">
-                  <label>Short name </label>
-                  <input name="ShortName" ng-model="model.ShortName" maxlength="10" ng-required="true" maxlength="10" md-maxlength="10">
-                  <div ng-messages="formState.ShortName.$error" ng-if="formState.ShortName.$touched">
-                    <div ng-message="required">
-                      <span>Short name is required</span>
-                    </div>
-                  </div>
-                </md-input-container>
-                <div align="left">
-                  <md-button class="md-raised md-primary" ng-disabled="!formState.$valid" ng-click="CreateState(model)">Save</md-button>
-                  <md-button class="md-accent md-raised" ng-click="ResetModel()">Reset</md-button>
-                  <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
-                </div>
-              </form>
-            </md-content>
-          </div>
-        </md-tab>
-      </md-tabs>
-    </md-content>
-  </md-dialog-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </md-dialog-content>
 </md-dialog>
