@@ -142,7 +142,6 @@
 
                 $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike').success(function(data) {
                     $scope.lstActiveVehicle = data.data;
-                    console.log($scope.lstActiveVehicle);
 
                     callDeviceStatus();
 
@@ -285,7 +284,6 @@
                             DeviceID = lstclassName[t];
                         }
                     }
-                    console.log(DeviceID)
                     $(".custom-infowinow." + DeviceID).css("visibility", "visible");
 
                 });
@@ -486,6 +484,7 @@
                 var date = $scope.custCurrentDay + '-' + $scope.listMonthbyName[$scope.custCurrentMonth - 1] + '-' + $scope.custCurrentYear;
                 var objCustomer = new Object();
                 objCustomer.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
+
                 if ($scope.model.CountryName == 'All') {
                     var Customer = _.filter($scope.lstCustomerGraph, function(item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay)) {
@@ -520,6 +519,8 @@
                     //     }
                     // });
                 }
+
+
                 objCustomer.y = Customer.length;
                 $scope.lstCustomer.push(objCustomer);
 
@@ -584,6 +585,7 @@
                     //     }
                     // });
                 }
+
                 if (User.length > 0) {
                     var sum = 0;
                     angular.forEach(User, function(value, key) {
@@ -655,153 +657,163 @@
             CallGraphData();
         }
         $scope.SearchData = function(o) {
-            if (o.Year != "0" && o.MonthId != "0") {
-                var oneDay = 24 * 60 * 60 * 1000;
-                var firstDate = new Date(parseInt(o.Year), parseInt(o.MonthId) - 1, 1);
-                var secondDate = new Date(parseInt(o.Year), parseInt(o.MonthId), 0);
-                var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay))) + 1;
-
-                // $scope.lstShopUserSearch = [];
-                // $scope.lstShopCustomerSearch = [];
-                // $scope.lstOwnerUserSearch = [];
-                // $scope.lstOwnerCustomerSearch = [];
-
-                $scope.lstUserSearch = [];
-                $scope.lstCustomerSearch = [];
-
-                var custDate = firstDate,
-                    locale = "en-us",
-                    stingmonth = custDate.toLocaleString(locale, { month: "long" });
-                $scope.custCurrentYear = parseInt(o.Year);
-                $scope.custCurrentMonth = parseInt(o.MonthId);
-                $scope.custCurrentDay = parseInt(custDate.getDate());
-                for (var k = 0; k < diffDays; k++) {
-                    var date1 = k + 1 + '-' + $scope.listMonthbyName[$scope.custCurrentMonth - 1] + '-' + $scope.custCurrentYear;
-                    //1
-                    var objCustomer = new Object();
-                    objCustomer.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
-                    if (o.CountryName == 'All') {
-                        var Customer = _.filter($scope.lstCustomerGraph, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
-                                return item;
-                            }
-                        });
-                    } else if (o.CountryName == '' || o.CountryName == null) {
-                        var Customer = _.filter($scope.lstCustomerGraph, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
-                                return item;
-                            }
-                        });
-                    } else {
-                        var Customer = _.filter($scope.lstCustomerGraph, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryName)) {
-                                return item;
-                            }
-                        });
-                    }
-                    objCustomer.y = Customer.length;
-                    $scope.lstCustomerSearch.push(objCustomer);
-                    // //2
-                    // var objOwnerCustomer = new Object();
-                    // objOwnerCustomer.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
-                    // if (o.CountryName == 'All') {
-                    //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both')) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // } else if (o.CountryName == '' || o.CountryName == null) {
-                    //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == '' || item.country == null)) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // } else {
-                    //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == o.CountryName)) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // }
-                    // objOwnerCustomer.y = OwnerCustomer.length;
-                    // $scope.lstOwnerCustomerSearch.push(objOwnerCustomer);
-                    //3
-                    var objUser = new Object();
-                    objUser.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
-                    if (o.CountryName == 'All') {
-                        var User = _.filter($scope.userslist, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
-                                return item;
-                            }
-                        });
-                    } else if (o.CountryName == '' || o.CountryName == null) {
-                        var User = _.filter($scope.userslist, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
-                                return item;
-                            }
-                        });
-                    } else {
-                        var User = _.filter($scope.userslist, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryName)) {
-                                return item;
-                            }
-                        });
-                    }
-                    if (User.length > 0) {
-                        var sum = 0;
-                        angular.forEach(User, function(value, key) {
-                            sum = sum + parseInt(value.Total);
-                        })
-                        objUser.y = sum;
-                    } else {
-                        objUser.y = 0;
-                    }
-                    $scope.lstUserSearch.push(objUser);
-                    //4
-                    // var objOwnerUser = new Object();
-                    // if (o.CountryName == 'All') {
-                    //     var ownerUser = _.filter($scope.userslist, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both')) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // } else if (o.CountryName == '' || o.CountryName == null) {
-                    //     var ownerUser = _.filter($scope.userslist, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == '' || item.country == null)) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // } else {
-                    //     var ownerUser = _.filter($scope.userslist, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == o.CountryName)) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // }
-                    // objOwnerUser.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
-                    // if (ownerUser.length > 0) {
-                    //     var sum1 = 0;
-                    //     angular.forEach(ownerUser, function(value, key) {
-                    //         sum1 = sum1 + parseInt(value.Total);
-                    //     })
-                    //     objOwnerUser.y = sum1;
-                    // } else {
-                    //     objOwnerUser.y = 0;
-                    // }
-                    // $scope.lstOwnerUserSearch.push(objOwnerUser);
-                }
-                $scope.dashboardData = [{
-                        "key": "User",
-                        "values": $scope.lstUserSearch
-                    },
-                    {
-                        "key": "Customer",
-                        "values": $scope.lstCustomerSearch
-                    }
-                ];
-                CallGraphData();
+            if (o.MonthId == 0) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent("Please Select Month..")
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+                // o.MonthId = 1;
             } else {
-                $scope.CustomerAndUser(true);
+                if (o.Year != "0" && o.MonthId != "0") {
+                    var oneDay = 24 * 60 * 60 * 1000;
+                    var firstDate = new Date(parseInt(o.Year), parseInt(o.MonthId) - 1, 1);
+                    var secondDate = new Date(parseInt(o.Year), parseInt(o.MonthId), 0);
+                    var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay))) + 1;
+
+                    // $scope.lstShopUserSearch = [];
+                    // $scope.lstShopCustomerSearch = [];
+                    // $scope.lstOwnerUserSearch = [];
+                    // $scope.lstOwnerCustomerSearch = [];
+
+                    $scope.lstUserSearch = [];
+                    $scope.lstCustomerSearch = [];
+
+                    var custDate = firstDate,
+                        locale = "en-us",
+                        stingmonth = custDate.toLocaleString(locale, { month: "long" });
+                    $scope.custCurrentYear = parseInt(o.Year);
+                    $scope.custCurrentMonth = parseInt(o.MonthId);
+                    $scope.custCurrentDay = parseInt(custDate.getDate());
+                    for (var k = 0; k < diffDays; k++) {
+                        var date1 = k + 1 + '-' + $scope.listMonthbyName[$scope.custCurrentMonth - 1] + '-' + $scope.custCurrentYear;
+                        //1
+                        var objCustomer = new Object();
+                        objCustomer.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
+                        if (o.CountryName == 'All') {
+                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
+                                    return item;
+                                }
+                            });
+                        } else if (o.CountryName == '' || o.CountryName == null) {
+                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
+                                    return item;
+                                }
+                            });
+                        } else {
+                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryName)) {
+                                    return item;
+                                }
+                            });
+                        }
+                        objCustomer.y = Customer.length;
+                        $scope.lstCustomerSearch.push(objCustomer);
+                        // //2
+                        // var objOwnerCustomer = new Object();
+                        // objOwnerCustomer.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
+                        // if (o.CountryName == 'All') {
+                        //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both')) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // } else if (o.CountryName == '' || o.CountryName == null) {
+                        //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == '' || item.country == null)) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // } else {
+                        //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == o.CountryName)) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // }
+                        // objOwnerCustomer.y = OwnerCustomer.length;
+                        // $scope.lstOwnerCustomerSearch.push(objOwnerCustomer);
+                        //3
+                        var objUser = new Object();
+                        objUser.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
+                        if (o.CountryName == 'All') {
+                            var User = _.filter($scope.userslist, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
+                                    return item;
+                                }
+                            });
+                        } else if (o.CountryName == '' || o.CountryName == null) {
+                            var User = _.filter($scope.userslist, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
+                                    return item;
+                                }
+                            });
+                        } else {
+                            var User = _.filter($scope.userslist, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryName)) {
+                                    return item;
+                                }
+                            });
+                        }
+                        if (User.length > 0) {
+                            var sum = 0;
+                            angular.forEach(User, function(value, key) {
+                                sum = sum + parseInt(value.Total);
+                            })
+                            objUser.y = sum;
+                        } else {
+                            objUser.y = 0;
+                        }
+                        $scope.lstUserSearch.push(objUser);
+                        //4
+                        // var objOwnerUser = new Object();
+                        // if (o.CountryName == 'All') {
+                        //     var ownerUser = _.filter($scope.userslist, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both')) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // } else if (o.CountryName == '' || o.CountryName == null) {
+                        //     var ownerUser = _.filter($scope.userslist, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == '' || item.country == null)) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // } else {
+                        //     var ownerUser = _.filter($scope.userslist, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == o.CountryName)) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // }
+                        // objOwnerUser.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
+                        // if (ownerUser.length > 0) {
+                        //     var sum1 = 0;
+                        //     angular.forEach(ownerUser, function(value, key) {
+                        //         sum1 = sum1 + parseInt(value.Total);
+                        //     })
+                        //     objOwnerUser.y = sum1;
+                        // } else {
+                        //     objOwnerUser.y = 0;
+                        // }
+                        // $scope.lstOwnerUserSearch.push(objOwnerUser);
+                    }
+                    $scope.dashboardData = [{
+                            "key": "User",
+                            "values": $scope.lstUserSearch
+                        },
+                        {
+                            "key": "Customer",
+                            "values": $scope.lstCustomerSearch
+                        }
+                    ];
+                    CallGraphData();
+                } else {
+                    $scope.CustomerAndUser(true);
+                }
             }
         }
 
@@ -1153,272 +1165,281 @@
         }
 
         $scope.SearchDataAcc = function(o) {
-            if (o.YearAcc != "0" && o.MonthIdAcc != "0") {
-                var oneDay = 24 * 60 * 60 * 1000;
-                var firstDate = new Date(parseInt(o.YearAcc), parseInt(o.MonthIdAcc) - 1, 1);
-                var secondDate = new Date(parseInt(o.YearAcc), parseInt(o.MonthIdAcc), 0);
-                var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay))) + 1;
-
-
-                $scope.weekDays = '';
-                $scope.weekMonths = '';
-                $scope.lstUserAccSearch = [];
-                $scope.lstCustomerAccSearch = [];
-
-                var custDate = firstDate,
-                    locale = "en-us",
-                    stingmonth = custDate.toLocaleString(locale, { month: "long" });
-                $scope.custCurrentYear = parseInt(o.YearAcc);
-                $scope.custCurrentMonth = parseInt(o.MonthIdAcc);
-                $scope.custCurrentDay = parseInt(custDate.getDate());
-                var sum1Acc = 0;
-                var sum2Acc = 0;
-                var sum3Acc = 0;
-                var sum4Acc = 0;
-                var objcurrentDate = new Date($scope.custCurrentYear.toString() + "-" + $scope.custCurrentMonth.toString() + "-" + $scope.custCurrentDay.toString());
-
-                var lstInitialCustomerdata = [];
-                if ($scope.model.CountryNameAcc == 'All') {
-                    lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
-                        var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                        if ((objdate < objcurrentDate)) {
-                            return obj;
-                        };
-                    })
-                } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                    lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
-                        var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                        if ((objdate < objcurrentDate && obj.country == null)) {
-                            return obj;
-                        };
-                    })
-                } else {
-                    lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
-                        var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                        if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc)) {
-                            return obj;
-                        };
-                    })
-                }
-                sum1Acc = lstInitialCustomerdata.length;
-
-                // var lstInitialOwnerCustomerdata = [];
-                // if ($scope.model.CountryNameAcc == 'All') {
-                //     lstInitialOwnerCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
-                //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                //         if ((objdate < objcurrentDate) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
-                //             return obj;
-                //         };
-                //     })
-                // } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                //     lstInitialOwnerCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
-                //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                //         if ((objdate < objcurrentDate && obj.country == null) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
-                //             return obj;
-                //         };
-                //     })
-                // } else {
-                //     lstInitialOwnerCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
-                //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                //         if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
-                //             return obj;
-                //         };
-                //     })
-                // }
-                // sum2Acc = lstInitialOwnerCustomerdata.length;
-
-                var lstInitialUserdata = [];
-                if ($scope.model.CountryNameAcc == 'All') {
-                    lstInitialUserdata = _.filter($scope.userslist, function(obj) {
-                        var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                        if ((objdate < objcurrentDate)) {
-                            return obj;
-                        };
-                    })
-                } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                    lstInitialUserdata = _.filter($scope.userslist, function(obj) {
-                        var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                        if ((objdate < objcurrentDate && obj.country == null)) {
-                            return obj;
-                        };
-                    })
-                } else {
-                    lstInitialUserdata = _.filter($scope.userslist, function(obj) {
-                        var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                        if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc)) {
-                            return obj;
-                        };
-                    })
-                }
-                var TempUsersum = 0;
-                angular.forEach(lstInitialUserdata, function(value, key) {
-                    TempUsersum = TempUsersum + parseInt(value.Total);
-                })
-                sum3Acc = TempUsersum;
-
-                // var lstInitialOwnerUserdata = [];
-                // if ($scope.model.CountryNameAcc == 'All') {
-                //     lstInitialOwnerUserdata = _.filter($scope.userslist, function(obj) {
-                //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                //         if ((objdate < objcurrentDate) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
-                //             return obj;
-                //         };
-                //     })
-                // } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                //     lstInitialOwnerUserdata = _.filter($scope.userslist, function(obj) {
-                //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                //         if ((objdate < objcurrentDate && obj.country == null) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
-                //             return obj;
-                //         };
-                //     })
-                // } else {
-                //     lstInitialOwnerUserdata = _.filter($scope.userslist, function(obj) {
-                //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
-                //         if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
-                //             return obj;
-                //         };
-                //     })
-                // }
-                // var TempOwnerUsersum = 0;
-                // angular.forEach(lstInitialOwnerUserdata, function(value, key) {
-                //     TempOwnerUsersum = TempOwnerUsersum + parseInt(value.Total);
-                // })
-                // sum4Acc = TempOwnerUsersum;
-
-
-
-
-                for (var k = 0; k < diffDays; k++) {
-                    var date = k + 1 + '-' + $scope.listMonthbyName[$scope.custCurrentMonth - 1] + '-' + $scope.custCurrentYear;
-                    //1                
-                    var objCustomer = new Object();
-                    objCustomer.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
-                    if (o.CountryName == 'All') {
-                        var Customer = _.filter($scope.lstCustomerGraph, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
-                                return item;
-                            }
-                        });
-                    } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
-                        var Customer = _.filter($scope.lstCustomerGraph, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
-                                return item;
-                            }
-                        });
-                    } else {
-                        var Customer = _.filter($scope.lstCustomerGraph, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryNameAcc)) {
-                                return item;
-                            }
-                        });
-                    }
-                    sum1Acc = sum1Acc + Customer.length
-                    objCustomer.y = sum1Acc;
-                    $scope.lstCustomerAccSearch.push(objCustomer);
-                    //2
-                    // var objCustomer = new Object();
-                    // objCustomer.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
-                    // if (o.CountryName == 'All') {
-                    //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both')) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
-                    //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == '' || item.country == null)) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // } else {
-                    //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == o.CountryNameAcc)) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // }
-                    // sum2Acc = sum2Acc + OwnerCustomer.length
-                    // objOwnerCustomer.y = sum2Acc;
-                    // $scope.lstOwnerCustomerAccSearch.push(objOwnerCustomer);
-                    //3
-                    var objUser = new Object();
-                    if (o.CountryName == 'All') {
-                        var User = _.filter($scope.userslist, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
-                                return item;
-                            }
-                        });
-                    } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
-                        var User = _.filter($scope.userslist, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
-                                return item;
-                            }
-                        });
-                    } else {
-                        var User = _.filter($scope.userslist, function(item) {
-                            if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryNameAcc)) {
-                                return item;
-                            }
-                        });
-                    }
-                    objUser.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
-                    if (User.length > 0) {
-                        var sum = 0;
-                        angular.forEach(User, function(value, key) {
-                            sum = sum + parseInt(value.Total);
-                        })
-                        sum3Acc = sum3Acc + sum;
-                        objUser.y = sum3Acc;
-                    } else {
-                        objUser.y = sum3Acc;
-                    }
-                    $scope.lstUserAccSearch.push(objUser);
-                    //4
-                    // var objOwnerUser = new Object();
-                    // if (o.CountryName == 'All') {
-                    //     var ownerUser = _.filter($scope.userslist, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both')) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
-                    //     var ownerUser = _.filter($scope.userslist, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == '' || item.country == null)) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // } else {
-                    //     var ownerUser = _.filter($scope.userslist, function(item) {
-                    //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == o.CountryNameAcc)) {
-                    //             return item;
-                    //         }
-                    //     });
-                    // }
-                    // objOwnerUser.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
-                    // if (ownerUser.length > 0) {
-                    //     var sumowneruser = 0;
-                    //     angular.forEach(ownerUser, function(value, key) {
-                    //         sumowneruser = sumowneruser + parseInt(value.Total);
-                    //     })
-                    //     sum4Acc = sum4Acc + sumowneruser;
-                    //     objOwnerUser.y = sum4Acc;
-                    // } else {
-                    //     objOwnerUser.y = sum4Acc;
-                    // }
-                    // $scope.lstOwnerUserAccSearch.push(objOwnerUser);
-                }
-                $scope.dashboardData1 = [{
-                        "key": "User",
-                        "values": $scope.lstUserAccSearch
-                    },
-                    {
-                        "key": "Customer",
-                        "values": $scope.lstCustomerAccSearch
-                    }
-                ];
-                CallGraphDataAcc();
+            if (o.MonthIdAcc == 0) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent("Please Select Month..")
+                    .position('top right')
+                    .hideDelay(3000)
+                );
             } else {
-                $scope.CustomerAndUserAcc(true);
+                if (o.YearAcc != "0" && o.MonthIdAcc != "0") {
+                    var oneDay = 24 * 60 * 60 * 1000;
+                    var firstDate = new Date(parseInt(o.YearAcc), parseInt(o.MonthIdAcc) - 1, 1);
+                    var secondDate = new Date(parseInt(o.YearAcc), parseInt(o.MonthIdAcc), 0);
+                    var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay))) + 1;
+
+
+                    $scope.weekDays = '';
+                    $scope.weekMonths = '';
+                    $scope.lstUserAccSearch = [];
+                    $scope.lstCustomerAccSearch = [];
+
+                    var custDate = firstDate,
+                        locale = "en-us",
+                        stingmonth = custDate.toLocaleString(locale, { month: "long" });
+                    $scope.custCurrentYear = parseInt(o.YearAcc);
+                    $scope.custCurrentMonth = parseInt(o.MonthIdAcc);
+                    $scope.custCurrentDay = parseInt(custDate.getDate());
+                    var sum1Acc = 0;
+                    var sum2Acc = 0;
+                    var sum3Acc = 0;
+                    var sum4Acc = 0;
+                    var objcurrentDate = new Date($scope.custCurrentYear.toString() + "-" + $scope.custCurrentMonth.toString() + "-" + $scope.custCurrentDay.toString());
+
+                    var lstInitialCustomerdata = [];
+                    if ($scope.model.CountryNameAcc == 'All') {
+                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                            var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                            if ((objdate < objcurrentDate)) {
+                                return obj;
+                            };
+                        })
+                    } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
+                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                            var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                            if ((objdate < objcurrentDate && obj.country == null)) {
+                                return obj;
+                            };
+                        })
+                    } else {
+                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                            var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                            if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc)) {
+                                return obj;
+                            };
+                        })
+                    }
+                    sum1Acc = lstInitialCustomerdata.length;
+
+                    // var lstInitialOwnerCustomerdata = [];
+                    // if ($scope.model.CountryNameAcc == 'All') {
+                    //     lstInitialOwnerCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                    //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                    //         if ((objdate < objcurrentDate) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
+                    //             return obj;
+                    //         };
+                    //     })
+                    // } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
+                    //     lstInitialOwnerCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                    //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                    //         if ((objdate < objcurrentDate && obj.country == null) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
+                    //             return obj;
+                    //         };
+                    //     })
+                    // } else {
+                    //     lstInitialOwnerCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                    //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                    //         if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
+                    //             return obj;
+                    //         };
+                    //     })
+                    // }
+                    // sum2Acc = lstInitialOwnerCustomerdata.length;
+
+                    var lstInitialUserdata = [];
+                    if ($scope.model.CountryNameAcc == 'All') {
+                        lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                            var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                            if ((objdate < objcurrentDate)) {
+                                return obj;
+                            };
+                        })
+                    } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
+                        lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                            var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                            if ((objdate < objcurrentDate && obj.country == null)) {
+                                return obj;
+                            };
+                        })
+                    } else {
+                        lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                            var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                            if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc)) {
+                                return obj;
+                            };
+                        })
+                    }
+                    var TempUsersum = 0;
+                    angular.forEach(lstInitialUserdata, function(value, key) {
+                        TempUsersum = TempUsersum + parseInt(value.Total);
+                    })
+                    sum3Acc = TempUsersum;
+
+                    // var lstInitialOwnerUserdata = [];
+                    // if ($scope.model.CountryNameAcc == 'All') {
+                    //     lstInitialOwnerUserdata = _.filter($scope.userslist, function(obj) {
+                    //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                    //         if ((objdate < objcurrentDate) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
+                    //             return obj;
+                    //         };
+                    //     })
+                    // } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
+                    //     lstInitialOwnerUserdata = _.filter($scope.userslist, function(obj) {
+                    //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                    //         if ((objdate < objcurrentDate && obj.country == null) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
+                    //             return obj;
+                    //         };
+                    //     })
+                    // } else {
+                    //     lstInitialOwnerUserdata = _.filter($scope.userslist, function(obj) {
+                    //         var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
+                    //         if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc) && (obj.Type == 'Owner' || obj.Type == 'Both')) {
+                    //             return obj;
+                    //         };
+                    //     })
+                    // }
+                    // var TempOwnerUsersum = 0;
+                    // angular.forEach(lstInitialOwnerUserdata, function(value, key) {
+                    //     TempOwnerUsersum = TempOwnerUsersum + parseInt(value.Total);
+                    // })
+                    // sum4Acc = TempOwnerUsersum;
+
+
+
+
+                    for (var k = 0; k < diffDays; k++) {
+                        var date = k + 1 + '-' + $scope.listMonthbyName[$scope.custCurrentMonth - 1] + '-' + $scope.custCurrentYear;
+                        //1                
+                        var objCustomer = new Object();
+                        objCustomer.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
+                        if (o.CountryName == 'All') {
+                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
+                                    return item;
+                                }
+                            });
+                        } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
+                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
+                                    return item;
+                                }
+                            });
+                        } else {
+                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryNameAcc)) {
+                                    return item;
+                                }
+                            });
+                        }
+                        sum1Acc = sum1Acc + Customer.length
+                        objCustomer.y = sum1Acc;
+                        $scope.lstCustomerAccSearch.push(objCustomer);
+                        //2
+                        // var objCustomer = new Object();
+                        // objCustomer.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
+                        // if (o.CountryName == 'All') {
+                        //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both')) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
+                        //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == '' || item.country == null)) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // } else {
+                        //     var OwnerCustomer = _.filter($scope.lstCustomerGraph, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == o.CountryNameAcc)) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // }
+                        // sum2Acc = sum2Acc + OwnerCustomer.length
+                        // objOwnerCustomer.y = sum2Acc;
+                        // $scope.lstOwnerCustomerAccSearch.push(objOwnerCustomer);
+                        //3
+                        var objUser = new Object();
+                        if (o.CountryName == 'All') {
+                            var User = _.filter($scope.userslist, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
+                                    return item;
+                                }
+                            });
+                        } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
+                            var User = _.filter($scope.userslist, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
+                                    return item;
+                                }
+                            });
+                        } else {
+                            var User = _.filter($scope.userslist, function(item) {
+                                if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryNameAcc)) {
+                                    return item;
+                                }
+                            });
+                        }
+                        objUser.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
+                        if (User.length > 0) {
+                            var sum = 0;
+                            angular.forEach(User, function(value, key) {
+                                sum = sum + parseInt(value.Total);
+                            })
+                            sum3Acc = sum3Acc + sum;
+                            objUser.y = sum3Acc;
+                        } else {
+                            objUser.y = sum3Acc;
+                        }
+                        $scope.lstUserAccSearch.push(objUser);
+                        //4
+                        // var objOwnerUser = new Object();
+                        // if (o.CountryName == 'All') {
+                        //     var ownerUser = _.filter($scope.userslist, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both')) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
+                        //     var ownerUser = _.filter($scope.userslist, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == '' || item.country == null)) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // } else {
+                        //     var ownerUser = _.filter($scope.userslist, function(item) {
+                        //         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.Type == 'Owner' || item.Type == 'Both') && (item.country == o.CountryNameAcc)) {
+                        //             return item;
+                        //         }
+                        //     });
+                        // }
+                        // objOwnerUser.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
+                        // if (ownerUser.length > 0) {
+                        //     var sumowneruser = 0;
+                        //     angular.forEach(ownerUser, function(value, key) {
+                        //         sumowneruser = sumowneruser + parseInt(value.Total);
+                        //     })
+                        //     sum4Acc = sum4Acc + sumowneruser;
+                        //     objOwnerUser.y = sum4Acc;
+                        // } else {
+                        //     objOwnerUser.y = sum4Acc;
+                        // }
+                        // $scope.lstOwnerUserAccSearch.push(objOwnerUser);
+                    }
+                    $scope.dashboardData1 = [{
+                            "key": "User",
+                            "values": $scope.lstUserAccSearch
+                        },
+                        {
+                            "key": "Customer",
+                            "values": $scope.lstCustomerAccSearch
+                        }
+                    ];
+                    CallGraphDataAcc();
+                } else {
+                    $scope.CustomerAndUserAcc(true);
+                }
             }
         }
 
@@ -1767,7 +1788,7 @@
             $scope.lstTotalUser = monthwiselist.reduce(function(total, item) {
                 return total + item;
             }, 0);
-            // $scope.ManageCustomerGraph();
+            $scope.ManageCustomerGraph();
             $timeout(function() {
                 $scope.CustomerAndUser(false);
                 $scope.CustomerAndUserAcc(false);
