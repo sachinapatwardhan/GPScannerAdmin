@@ -657,7 +657,7 @@
             CallGraphData();
         }
         $scope.SearchData = function(o) {
-            if (o.MonthId == 0) {
+            if (o.Year != 0 && o.MonthId == 0) {
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent("Please Select Month..")
@@ -1165,7 +1165,7 @@
         }
 
         $scope.SearchDataAcc = function(o) {
-            if (o.MonthIdAcc == 0) {
+            if (o.YearAcc != 0 && o.MonthIdAcc == 0) {
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent("Please Select Month..")
