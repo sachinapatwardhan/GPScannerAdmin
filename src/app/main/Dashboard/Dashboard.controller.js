@@ -812,7 +812,7 @@
                     options: {
                         chart: {
                             type: 'lineChart',
-                            color: [ /*'#4caf50',*/ '#2196F3', /*'#ff5722',*/ '#5C6BC0'],
+                            color: [ /*'#4caf50',*/ '#2196F3', /*'#ff5722',*/ '#1a237e'],
                             height: 320,
                             margin: {
                                 top: 32,
@@ -1429,7 +1429,7 @@
                     options: {
                         chart: {
                             type: 'lineChart',
-                            color: [ /*'#4caf50',*/ '#2196F3', /*'#ff5722',*/ '#5C6BC0'],
+                            color: [ /*'#4caf50',*/ '#2196F3', /*'#ff5722',*/ '#1a237e'],
                             height: 320,
                             margin: {
                                 top: 32,
