@@ -14,7 +14,7 @@
         </div>
         <div class="content">
             <div class="widget-group" layout="row" flex="100" layout-wrap>
-                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="25" flex-gt-md="25" href="#">
+                <!-- <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20" href="#">
                     <ms-widget-front class="white-bg">
                         <div class="pt-40 pb-30" layout="column" layout-align="center center">
                             <div class="light-blue-fg font-size-72 line-height-72" align="center">
@@ -25,8 +25,38 @@
                         </div>
                         <a href="" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Total Users</a>
                     </ms-widget-front>
+                </ms-widget> -->
+                <ms-widget layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20">
+                    <ms-widget-front class="p-16 blue-bg white-fg" layout="row" flex>
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="lstDashBoardInfo.TotalUser==null" class="s70">0</span>
+                                <span ng-if="lstDashBoardInfo.TotalUser!=null" class="s70">{{lstDashBoardInfo.TotalUser}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Total Users</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-account-multiple" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
                 </ms-widget>
-                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="25" flex-gt-md="25" href="#">
+                <ms-widget layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20">
+                    <ms-widget-front class="p-16 indigo-400-bg white-fg" layout="row" flex>
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="lstTotalCustomer==null" class="s70">0</span>
+                                <span ng-if="lstTotalCustomer!=null" class="s70">{{lstTotalCustomer}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Total Customers</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-account-multiple" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+                <!-- <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20" href="#">
                     <ms-widget-front class="white-bg">
                         <div class="pt-40 pb-30" layout="column" layout-align="center center">
                             <div class="light-black-fg font-size-72 line-height-72" align="center">
@@ -37,25 +67,94 @@
                         </div>
                         <a href="" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Total Customers</a>
                     </ms-widget-front>
+                </ms-widget> -->
+                <ms-widget layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20">
+                    <ms-widget-front class="p-16 deep-orange-800-bg white-fg" layout="row" flex>
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="ActiveDevice==null && NotActiveDevice==null">0</span>
+                                <span ng-if="ActiveDevice!=null && NotActiveDevice!=null">{{ActiveDevice.length + NotActiveDevice.length}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Total Device</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-album" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
                 </ms-widget>
-                <!--<ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="25" flex-gt-md="25" href="/#/owneruser">
+                <ms-widget layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20">
+                    <ms-widget-front class="p-16 green-900-bg white-fg" layout="row" flex>
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="ActiveDevice==null">0</span>
+                                <span ng-if="ActiveDevice!=null">{{ActiveDevice.length}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Online Device</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-link-variant" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+                <ms-widget layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20">
+                    <ms-widget-front class="p-16 grey-700-bg white-fg" layout="row" flex>
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="NotActiveDevice==null">0</span>
+                                <span ng-if="NotActiveDevice!=null">{{NotActiveDevice.length}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Offline Device</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-link-variant-off" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+                <!-- <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20" href="#">
                     <ms-widget-front class="white-bg">
                         <div class="pt-40 pb-30" layout="column" layout-align="center center">
                             <div class="light-black-fg font-size-72 line-height-72" align="center">
-                                <span ng-if="lstTotalOwner==null" class="s70">0</span>
-                                <span ng-if="lstTotalOwner!=null" class="s70">{{TotalOwnerCustomer}}</span>
+                                <span ng-if="ActiveDevice==null && NotActiveDevice==null">0</span>
+                                <span ng-if="ActiveDevice!=null && NotActiveDevice!=null">{{ActiveDevice.length + NotActiveDevice.length}}</span>
                             </div>
                             <md-icon md-font-icon="icon-account-multiple" class="s30"></md-icon>
                         </div>
-                        <a href="/#/OwnerCustomer" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Total Owner</a>
+                        <a href="" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Total Device</a>
                     </ms-widget-front>
-                </ms-widget>-->
+                </ms-widget>
+                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20" href="#">
+                    <ms-widget-front class="white-bg">
+                        <div class="pt-40 pb-30" layout="column" layout-align="center center">
+                            <div class="light-black-fg font-size-72 line-height-72" align="center">
+                                <span ng-if="ActiveDevice==null">0</span>
+                                <span ng-if="ActiveDevice!=null">{{ActiveDevice.length}}</span>
+                            </div>
+                            <md-icon md-font-icon="icon-account-multiple" class="s30"></md-icon>
+                        </div>
+                        <a href="" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Online Device</a>
+                    </ms-widget-front>
+                </ms-widget>
+                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="20" flex-gt-md="20" href="#">
+                    <ms-widget-front class="white-bg">
+                        <div class="pt-40 pb-30" layout="column" layout-align="center center">
+                            <div class="light-black-fg font-size-72 line-height-72" align="center">
+                                <span ng-if="NotActiveDevice==null">0</span>
+                                <span ng-if="NotActiveDevice!=null">{{NotActiveDevice.length}}</span>
+                            </div>
+                            <md-icon md-font-icon="icon-account-multiple" class="s30"></md-icon>
+                        </div>
+                        <a href="" style="text-decoration:none;" class="p-16 grey-50-bg border-top h3" align="center">Offline Device</a>
+                    </ms-widget-front>
+                </ms-widget> -->
             </div>
             <div class="content" layout-gt-sm="row" layout="row">
                 <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
                     <ms-widget-front class="white-bg">
                         <div class="content" layout-gt-sm="row" layout="row">
-                            <div class="widget-group text-left" flex="100" flex-gt-sm="30" flex-gt-md="20" flex-gt-xs="40">
+                            <!-- <div class="widget-group text-left" flex="100" flex-gt-sm="30" flex-gt-md="20" flex-gt-xs="40">
                                 <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
                                     <div class="pt-0 pb-30">
                                         <a style="text-decoration:none;" class="green-fg p-16 h3" align="center">Total Device </a>
@@ -78,25 +177,33 @@
                                         <span ng-if="NotActiveDevice!=null">{{NotActiveDevice.length}}</span>
                                         </span>
                                     </div>
-                                    <!--<div class="pt-0 pb-30">
-                                        <a style="text-decoration:none;" class="green-fg p-16 h3" align="center">Owner  Device </a>
-                                        <span class="s200">
-                                            <span ng-if="OwnerDevice==null">0</span>
-                                        <span ng-if="OwnerDevice!=null">{{OwnerDevice.length}}</span>
-                                        </span>
-                                    </div>-->
-
                                     <span class="border-top pt-0 pb-30"></span>
 
                                 </ms-widget>
-                            </div>
-                            <div class="widget-group text-left" flex="100" flex-gt-sm="70" flex-gt-md="80" flex-gt-xs="60">
+                            </div> -->
+                            <div class="widget-group text-left" flex="100" flex-gt-sm="100" flex-gt-md="100" flex-gt-xs="100">
                                 <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
                                     <md-content class="text-right">
                                         <div>
                                             <div layout-gt-sm="row">
                                                 <div style="width: 100%;">
+
                                                     <div id="map123" style="height: 500px;"></div>
+                                                    <div class="pt-32" layout="row" layout-align="center center">
+                                                        <div layout="row" layout-align="start center">
+                                                            <img src="/assets/images/icon-map-car--off2.png" style="width:46px">
+                                                            <span class="pl-8">Offline Vehicle</span>
+                                                        </div>
+
+                                                        <div class="pl-16" layout="row" layout-align="start center">
+                                                            <img src="/assets/images/icon-map-car-active2.png" style="width:46px">
+                                                            <span class="pl-8">Engine OFF Vehicle</span>
+                                                        </div>
+                                                        <div class="pl-16" layout="row" layout-align="start center">
+                                                            <img src="/assets/images/icon-map-car-on2.png" style="width:46px">
+                                                            <span class="pl-8">Engine ON Vehicle</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,7 +230,7 @@
                         <br />
                         <div layout="row" class="chart-container">
                             <div layout="column" flex="100" layout-align="left">
-                                <canvas id="bar" class="chart chart-bar" chart-data="dataUsresOrders" chart-labels="labelsMonth" chart-series="series" chart-options="options"> </canvas>
+                                <canvas id="bar" class="chart chart-bar" chart-colours="dataUsresbgcolor" chart-data="dataUsresOrders" chart-labels="labelsMonth" chart-series="series" height="50" chart-options="options"> </canvas>
                             </div>
                         </div>
                     </ms-widget-front>
@@ -278,57 +385,62 @@
 
 <style>
     .customMarker1 {
-        height: 60px;
-        background-image: url(/assets/images/marker1.png);
-        width: 43px;
+        height: 20px;
+        /* background-image: url(img/icon-map-car-on2.png); */
+        width: 46px;
         background-size: contain;
         background-repeat: no-repeat;
         position: absolute;
-        margin-left: -21px;
-        margin-top: -31px;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
     }
     
-    .customMarker2 {
-        height: 60px;
-        background-image: url(/assets/images/icon-map-car-active2.png);
-        width: 43px;
+    .customMarkercar {
+        height: 20px;
+        /* background-image: url(img/icon-map-car-on2.png); */
+        width: 46px;
         background-size: contain;
         background-repeat: no-repeat;
         position: absolute;
-        margin-left: -21px;
-        margin-top: -31px;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
     }
     
-    .customMarker2.online {
+    .customMarkercar.online {
         background-image: url(/assets/images/icon-map-car-on2.png);
     }
     
-    .customMarker2.offline {
+    .customMarkercar.offline {
         background-image: url(/assets/images/icon-map-car--off2.png);
     }
     
-    .customMarker2.active {
+    .customMarkercar.active {
         background-image: url(/assets/images/icon-map-car-active2.png);
     }
     
-    .customMarker1 .my-text-shadow {
+    .customMarkercar .my-text-shadow {
         color: white;
         position: absolute;
-        left: -44px;
+        left: -25px;
         top: -15px;
-        text-shadow: -2px -2px 0 #ee0600, -2px -1px 0 #ee0600, -2px 0px 0 #ee0600, -2px 1px 0 #ee0600, -2px 2px 0 #ee0600, -1px -2px 0 #ee0600, -1px -1px 0 #ee0600, -1px 0px 0 #ee0600, -1px 1px 0 #ee0600, -1px 2px 0 #ee0600, 0px -2px 0 #ee0600, 0px -1px 0 #ee0600, 0px 0px 0 #ee0600, 0px 1px 0 #ee0600, 0px 2px 0 #ee0600, 1px -2px 0 #ee0600, 1px -1px 0 #ee0600, 1px 0px 0 #ee0600, 1px 1px 0 #ee0600, 1px 2px 0 #ee0600, 2px -2px 0 #ee0600, 2px -1px 0 #ee0600, 2px 0px 0 #ee0600, 2px 1px 0 #ee0600, 2px 2px 0 #ee0600;
+        /* text-shadow: -2px -2px 0 #0cad00, -2px -1px 0 #0cad00, -2px 0px 0 #0cad00, -2px 1px 0 #0cad00, -2px 2px 0 #0cad00, -1px -2px 0 #0cad00, -1px -1px 0 #0cad00, -1px 0px 0 #0cad00, -1px 1px 0 #0cad00, -1px 2px 0 #0cad00, 0px -2px 0 #0cad00, 0px -1px 0 #0cad00, 0px 0px 0 #0cad00, 0px 1px 0 #0cad00, 0px 2px 0 #0cad00, 1px -2px 0 #0cad00, 1px -1px 0 #0cad00, 1px 0px 0 #0cad00, 1px 1px 0 #0cad00, 1px 2px 0 #0cad00, 2px -2px 0 #0cad00, 2px -1px 0 #0cad00, 2px 0px 0 #0cad00, 2px 1px 0 #0cad00, 2px 2px 0 #0cad00; */
         font-size: 14px;
         width: 100px;
+        text-align: center;
     }
     
-    .customMarker2 .my-text-shadow {
-        color: white;
-        position: absolute;
-        left: -44px;
-        top: -15px;
-        text-shadow: -2px -2px 0 #0cad00, -2px -1px 0 #0cad00, -2px 0px 0 #0cad00, -2px 1px 0 #0cad00, -2px 2px 0 #0cad00, -1px -2px 0 #0cad00, -1px -1px 0 #0cad00, -1px 0px 0 #0cad00, -1px 1px 0 #0cad00, -1px 2px 0 #0cad00, 0px -2px 0 #0cad00, 0px -1px 0 #0cad00, 0px 0px 0 #0cad00, 0px 1px 0 #0cad00, 0px 2px 0 #0cad00, 1px -2px 0 #0cad00, 1px -1px 0 #0cad00, 1px 0px 0 #0cad00, 1px 1px 0 #0cad00, 1px 2px 0 #0cad00, 2px -2px 0 #0cad00, 2px -1px 0 #0cad00, 2px 0px 0 #0cad00, 2px 1px 0 #0cad00, 2px 2px 0 #0cad00;
-        font-size: 14px;
-        width: 100px;
+    .customMarkercar .my-text-shadow.online {
+        text-shadow: -2px -2px 0 #007f00, -2px -1px 0 #007f00, -2px 0px 0 #007f00, -2px 1px 0 #007f00, -2px 2px 0 #007f00, -1px -2px 0 #007f00, -1px -1px 0 #007f00, -1px 0px 0 #007f00, -1px 1px 0 #007f00, -1px 2px 0 #007f00, 0px -2px 0 #007f00, 0px -1px 0 #007f00, 0px 0px 0 #007f00, 0px 1px 0 #007f00, 0px 2px 0 #007f00, 1px -2px 0 #007f00, 1px -1px 0 #007f00, 1px 0px 0 #007f00, 1px 1px 0 #007f00, 1px 2px 0 #007f00, 2px -2px 0 #007f00, 2px -1px 0 #007f00, 2px 0px 0 #007f00, 2px 1px 0 #007f00, 2px 2px 0 #007f00;
+    }
+    
+    .customMarkercar .my-text-shadow.offline {
+        text-shadow: -2px -2px 0 #7f7f7f, -2px -1px 0 #7f7f7f, -2px 0px 0 #7f7f7f, -2px 1px 0 #7f7f7f, -2px 2px 0 #7f7f7f, -1px -2px 0 #7f7f7f, -1px -1px 0 #7f7f7f, -1px 0px 0 #7f7f7f, -1px 1px 0 #7f7f7f, -1px 2px 0 #7f7f7f, 0px -2px 0 #7f7f7f, 0px -1px 0 #7f7f7f, 0px 0px 0 #7f7f7f, 0px 1px 0 #7f7f7f, 0px 2px 0 #7f7f7f, 1px -2px 0 #7f7f7f, 1px -1px 0 #7f7f7f, 1px 0px 0 #7f7f7f, 1px 1px 0 #7f7f7f, 1px 2px 0 #7f7f7f, 2px -2px 0 #7f7f7f, 2px -1px 0 #7f7f7f, 2px 0px 0 #7f7f7f, 2px 1px 0 #7f7f7f, 2px 2px 0 #7f7f7f;
+    }
+    
+    .customMarkercar .my-text-shadow.active {
+        text-shadow: -2px -2px 0 #ff9900, -2px -1px 0 #ff9900, -2px 0px 0 #ff9900, -2px 1px 0 #ff9900, -2px 2px 0 #ff9900, -1px -2px 0 #ff9900, -1px -1px 0 #ff9900, -1px 0px 0 #ff9900, -1px 1px 0 #ff9900, -1px 2px 0 #ff9900, 0px -2px 0 #ff9900, 0px -1px 0 #ff9900, 0px 0px 0 #ff9900, 0px 1px 0 #ff9900, 0px 2px 0 #ff9900, 1px -2px 0 #ff9900, 1px -1px 0 #ff9900, 1px 0px 0 #ff9900, 1px 1px 0 #ff9900, 1px 2px 0 #ff9900, 2px -2px 0 #ff9900, 2px -1px 0 #ff9900, 2px 0px 0 #ff9900, 2px 1px 0 #ff9900, 2px 2px 0 #ff9900;
     }
     
     .nvtooltip {
@@ -353,5 +465,105 @@
         border: 10px solid transparent;
         border-top-color: rgba(0, 0, 0, 0.87);
         transform: translateX(-20%);
+    }
+    
+    .custom-infowinow {
+        color: black;
+        background-color: white;
+        position: absolute;
+        width: 250px;
+        padding: 0px;
+        font-weight: bold;
+        font-size: 12px;
+        border: none;
+        border-radius: 7px;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+        background: #fff;
+        cursor: default;
+        color: rgba(255, 255, 255, 0.9);
+        text-align: left;
+    }
+    
+    .custom-infowinow h3 {
+        background: #000;
+        color: #fff;
+        padding: 5px;
+        border-bottom: 1px solid #ccc;
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+        padding-left: 12px;
+        font-size: 1.2em;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    
+    .custom-infowinow .content {
+        padding: 10px;
+        display: block;
+        color: #000;
+    }
+    
+    .custom-infowinow i {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .custom-infowinow .leftside {
+        position: absolute;
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        bottom: -30px;
+        width: 16px;
+        height: 30px;
+    }
+    
+    .custom-infowinow .leftside span {
+        position: absolute;
+        left: 6px;
+        background-color: #fff;
+        transform: skewX(22.6deg);
+        -webkit-transform: skewX(22.6deg);
+        transform-origin: 0px 0px 0px;
+        -webkit-transform-origin: 0px 0px 0px;
+        height: 24px;
+        width: 10px;
+        box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 6px;
+    }
+    
+    .custom-infowinow .rightside {
+        position: absolute;
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(0%);
+        -webkit-transform: translateX(0%);
+        bottom: -30px;
+        width: 16px;
+        height: 30px;
+    }
+    
+    .custom-infowinow .rightside span {
+        position: absolute;
+        right: 6px;
+        background-color: #fff;
+        transform: skewX(-22.6deg);
+        -webkit-transform: skewX(-22.6deg);
+        transform-origin: 10px 0px 0px;
+        -webkit-transform-origin: 10px 0px 0px;
+        height: 24px;
+        width: 10px;
+        box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 6px;
+    }
+    
+    .closeBtn {
+        background: url('assets/images/closeMapLabel.png') no-repeat center center;
+        width: 13px;
+        height: 13px;
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        cursor: pointer;
     }
 </style>

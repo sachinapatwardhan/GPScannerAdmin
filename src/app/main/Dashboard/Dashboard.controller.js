@@ -8,23 +8,58 @@
     function DashboardController($http, $scope, $mdDialog, $document, $mdToast, $cookieStore, DTOptionsBuilder, DTColumnDefBuilder, $rootScope, $timeout, $filter) {
 
         var vm = this;
+        var map;
+        var socket = io($rootScope.Socket_URL, {
+            'forceNew': true
+        });
 
-        var socket = io($rootScope.Socket_URL);
-        socket.on('BikeDeviceStatus', function(msg) {
-            var obj = JSON.parse(msg);
-            $scope.$apply(function() {
-                if ($scope.lstDevices != undefined) {
-                    if ($scope.lstDevices.DeviceStatus != null && $scope.lstDevices.DeviceStatus != undefined) {
-                        for (var i = 0; i < $scope.lstDevices.DeviceStatus.length; i++) {
-                            if ($scope.lstDevices.DeviceStatus[i].id == obj.PetId) {
-                                $scope.lstDevices.DeviceStatus[i].IsOnline = obj.Status;
-                                $scope.ActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: true });
-                                $scope.NotActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: false });
+        function callDeviceStatus() {
+            for (var t = 0; t < $scope.lstActiveVehicle.length; t++) {
+                socket.on($scope.lstActiveVehicle[t].deviceid + 'BikeDeviceStatus', function(msg) {
+                    var obj = JSON.parse(msg);
+                    $scope.$apply(function() {
+                        if ($scope.lstDevices != undefined) {
+                            if ($scope.lstActiveVehicle != null && $scope.lstActiveVehicle != undefined) {
+                                for (var i = 0; i < $scope.lstActiveVehicle.length; i++) {
+                                    if ($scope.lstActiveVehicle[t].deviceid == obj.DeviceId) {
+                                        $scope.lstActiveVehicle[t].IsOnline = obj.Status;
+                                        $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: true });
+                                        $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: false });
+                                        var VehicleID = $scope.lstActiveVehicle[t].Name;
+                                        new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude), map, VehicleID, $scope.lstActiveVehicle[t])
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            });
+                    });
+                });
+
+                socket.on($scope.lstActiveVehicle[t].deviceid + 'BikeRoute', function(msg) {
+                    var obj = JSON.parse(msg);
+                    $scope.$apply(function() {
+                        if ($scope.lstActiveVehicle) {
+                            var lstVehicle = _.filter($scope.lstActiveVehicle, { deviceid: obj.Deviceid });
+                            if (lstVehicle != null && lstVehicle != undefined && lstVehicle != '' && lstVehicle.length > 0) {
+                                var objVehicle = lstVehicle[0];
+                                objVehicle.Date = obj.Date;
+                                objVehicle.IsEngine = obj.IsEngine;
+                                objVehicle.Speed = parseFloat(obj.Speed).toFixed(2);
+                                objVehicle.Direction = obj.Direction;
+                                objVehicle.Latitude = obj.Latitude;
+                                objVehicle.Longitude = obj.Longitude;
+
+                                var VehicleID = objVehicle.Name;
+
+                                new CustomMarker(new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude), map, VehicleID, objVehicle)
+                            };
+                        }
+                    });
+                });
+            }
+        }
+
+        $scope.$on('$stateChangeStart', function(e, to) {
+            socket.disconnect();
         });
 
         $scope.init = function() {
@@ -51,7 +86,7 @@
             $scope.ManageGraph();
             $scope.GetCustomer();
             $scope.TotalCustomerbyCountry();
-            $scope.GetAllDevice();
+            // $scope.GetAllDevice();
             $scope.GetAllMontName();
             $scope.GetAllYearName();
 
@@ -99,140 +134,37 @@
             var CurrentLatLang = new google.maps.LatLng(CurrentLat, CurrentLang);
 
             setTimeout(function() {
-                var map = new google.maps.Map(document.getElementById("map123"),
+                map = new google.maps.Map(document.getElementById("map123"),
                     myOptions);
-                var MethodCallFlag = true;
+                // var MethodCallFlag = true;
 
-                function setMarkers(map, locations) {
-
-                    var marker, i
-                    for (i = 0; i < locations.length; i++) {
-                        var loan = locations[i].lat
-                        var lat = locations[i].lat
-                        var long = locations[i].lang
-                        var add = locations[i].lang
-                        var Phone = locations[i].lang
-                        var ImageURL = null
-                        var VehicleId = locations[i].id
-                            // var Authorised = locations[i].IsAuthorised
-                            // var IsWireCut = locations[i].IsWireCut
-                        latlngset = new google.maps.LatLng(lat, long);
-                        var icon = {
-                            url: $rootScope.RoutePath + "MediaUploads/" + ImageURL, // url
-                            scaledSize: new google.maps.Size(50, 50), // scaled size
-                            origin: new google.maps.Point(0, 0), // origin
-                            anchor: new google.maps.Point(0, 50), // anchor
-                        };
-                        var marker = new google.maps.Marker();
-                        if (ImageURL != "" && ImageURL != null) {
-                            new CustomMarker(new google.maps.LatLng(lat, long), map, $rootScope.RoutePath + "MediaUploads/" + ImageURL, VehicleId)
-                        } else {
-                            marker = new google.maps.Marker({
-                                position: latlngset,
-                                map: map,
-                                title: loan,
-                            });
-                        }
-
-                        var latlng = lat + ',' + long;
-                        var content = "";
-
-                        if (ionic.Platform.isIOS()) {
-                            content = "<b>" + locations[i][0] + '</b><br />' + locations[i][3] + '<br /> <b>tel :</b><a href="tel:' + Phone + '" target="_system">' + Phone + '</a><br> <b>Location :</b><a href="http://maps.apple.com/?ll=' + latlng + '&q=' + loan + '" target="_system">Navigate</a>'
-                        } else {
-                            content = "<a onclick='callmethod()'>navigate</a><br><button onclick='callmethod()'>Click me</button>"
-                        }
-                        $ionicLoading.hide();
-                        var infowindow = new google.maps.InfoWindow()
-                        google.maps.event.addListener(marker, 'click', (function(marker, content, infowindow, loan, add, Phone, lat, long) {
-                            return function() {
-                                var latlng = lat + ',' + long;
-                                alertPopup = $ionicPopup.show({
-                                    template: add + '<br /> <b>tel : </b>' + Phone,
-                                    title: '<b>' + loan + '</b>',
-                                    scope: $scope,
-                                    buttons: [{
-                                        text: '',
-                                        type: 'button-custom-blue button icon ion-ios-telephone',
-                                        onTap: function(e) {
-                                            return 'Phone';
-                                        }
-                                    }, {
-                                        text: '',
-                                        type: 'button-custom-blue button icon ion-ios-location',
-                                        onTap: function(e) {
-                                            return 'Navigation';
-                                        }
-                                    }, {
-                                        text: '',
-                                        type: 'button-custom-blue button icon ion-ios-close-outline',
-                                        onTap: function(e) {
-                                            return null;
-                                        }
-                                    }]
-                                }).then(function(res) {
-                                    if (res == 'Phone') {
-                                        Phone = Phone.replace(/\-/g, '').replace(/\ /g, '');
-                                        $cordovaInAppBrowser.open('tel:' + Phone, '_system');
-                                    } else if (res == 'Navigation') {
-                                        if (ionic.Platform.isIOS()) {
-                                            $cordovaInAppBrowser.open('http://maps.apple.com/?ll=' + latlng + '&q=' + loan, '_system');
-                                        } else {
-                                            $cordovaInAppBrowser.open('geo:' + latlng + '?q=' + latlng + '(' + loan + ')', '_system');
-                                        }
-                                    };
-                                }, function(err) {
-                                    //  console.log('Err:', err);
-                                }, function(msg) {
-                                    //console.log('message:', msg);
-                                });
-                            };
-                        })(marker, content, infowindow, loan, add, Phone, lat, long));
-                    }
-                }
                 var FoundLocation = 0;
 
-                google.maps.event.addListener(map, 'idle', function(ev) {
-                    if (MethodCallFlag) {
-                        // update the coordinates here
-                        var bounds = map.getBounds();
-                        var ne = bounds.getNorthEast(); // LatLng of the north-east corner
-                        var sw = bounds.getSouthWest(); // LatLng of the south-west corder
-                        var nw = new google.maps.LatLng(ne.lat(), sw.lng());
-                        var se = new google.maps.LatLng(sw.lat(), ne.lng());
+                $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike').success(function(data) {
+                    $scope.lstActiveVehicle = data.data;
+                    console.log($scope.lstActiveVehicle);
 
-                        var MapCoords = [
-                            { lat: nw.lat(), lng: nw.lng() },
-                            { lat: ne.lat(), lng: ne.lng() },
-                            { lat: se.lat(), lng: se.lng() },
-                            { lat: sw.lat(), lng: sw.lng() }
-                        ];
+                    callDeviceStatus();
 
+                    $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 1 });
+                    $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0 });
 
-                        $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike').success(function(data) {
-                            $scope.lstActiveVehicle = data.data;
-                            console.log($scope.lstActiveVehicle);
-
-                            function setActiveVehicle(i) {
-                                if (i < $scope.lstActiveVehicle.length) {
-                                    var ImageURL = '';
-                                    // var IsWireCut = $scope.lstActiveVehicle[i].IsWireCut;
-                                    var VehicleID = $scope.lstActiveVehicle[i].Name;
-                                    var objVehicle = $scope.lstActiveVehicle[i];
-                                    new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude), map, VehicleID, objVehicle)
-                                        // var marker = new google.maps.Marker();
-                                        // marker = new google.maps.Marker({
-                                        //     position: new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude),
-                                        //     map: map,
-                                        //     title: idVehicle,
-                                        // });
-                                    setActiveVehicle(i + 1);
-                                }
+                    function setActiveVehicle(i) {
+                        if (i < $scope.lstActiveVehicle.length) {
+                            var ImageURL = '';
+                            // var IsWireCut = $scope.lstActiveVehicle[i].IsWireCut;
+                            var VehicleID = $scope.lstActiveVehicle[i].Name;
+                            var objVehicle = $scope.lstActiveVehicle[i];
+                            if ($scope.lstActiveVehicle[i].Latitude != null && $scope.lstActiveVehicle[i].Longitude != null) {
+                                new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude), map, VehicleID, objVehicle)
                             }
-                            setActiveVehicle(0);
-                        });
-                    };
+                            setActiveVehicle(i + 1);
+                        }
+                    }
+                    setActiveVehicle(0);
                 });
+                //     };
+                // });
 
                 if ($scope.CurrentLatitude != '' && $scope.CurrentLongitude != '') {} else {
                     if (Redirectflag) {
@@ -241,7 +173,7 @@
                         $scope.getCurrentLocation(true);
                     }
                 }
-            }, 800)
+            })
         }
 
         $scope.getCurrentLocation = function(flag) {
@@ -265,8 +197,9 @@
             this.latlng_ = latlng;
             // this.imageSrc = imageSrc;
             this.VehicleID = VehicleID;
-            this.IsOnline = objVehicle.IsOnline;
-            this.IsEngine = objVehicle.IsEngine;
+            this.objVehicle = objVehicle;
+            // this.IsOnline = objVehicle.IsOnline;
+            // this.IsEngine = objVehicle.IsEngine;
             // this.Authorised = Authorised;
 
             // Once the LatLng and text are set, add the overlay to the map.  This will
@@ -274,68 +207,193 @@
             this.setMap(map);
         }
 
-
-        // if ($rootScope.GoogleMap) {
         CustomMarker.prototype = new google.maps.OverlayView();
         CustomMarker.prototype.draw = function() {
-            // Check if the div has been created.
-            var div = this.div_;
+            var div = null;
+            var animatediv = null;
+
+            var CustomeInfoWindowdiv = null;
+            var animatCustomeInfoWindowdiv = null;
+
+            var EngineStatus = 'Engine OFF';
+
+            if (this.objVehicle.IsEngine == true) {
+                EngineStatus = 'Engine ON';
+            }
+
+            var DeviceDatetime = moment(moment.utc(new Date(this.objVehicle.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
+
+
+            div = this.div_ = $('.customMarkercar.' + this.objVehicle.deviceid)[0];
+            animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
+
+            CustomeInfoWindowdiv = this.CustomeInfoWindowdiv_ = $('.custom-infowinow.' + this.objVehicle.deviceid)[0];
+            animatCustomeInfoWindowdiv = $('.custom-infowinow.' + this.objVehicle.deviceid);
+
             if (!div) {
-                // Create a overlay text DIV
                 div = this.div_ = document.createElement('div');
-                // Create the DIV representing our CustomMarker
-                // if (this.Authorised) {
-                //     div.className = "customMarker1"
-                // } else {
-                //     div.className = "customMarker2"
-                // };
-                div.className = "customMarker2";
-                if (this.IsOnline == 0) {
-                    div.className += " offline";
+                // var TextDiv = document.createElement("div");
+                // TextDiv.innerHTML = this.objVehicle.Name;
+
+
+                CustomeInfoWindowdiv = this.CustomeInfoWindowdiv_ = document.createElement('div');
+
+                CustomeInfoWindowdiv.className = 'custom-infowinow ' + this.objVehicle.deviceid;
+
+                if (this.objVehicle.IsOnline == false) {
+                    div.className = "customMarkercar offline " + this.objVehicle.deviceid;
+                    // $(TextDiv).addClass('my-text-shadow offline');
                 } else {
-                    if (this.IsEngine == 0) {
-                        div.className += " online";
+                    if (this.objVehicle.IsEngine == false) {
+                        div.className = "customMarkercar active " + this.objVehicle.deviceid;
+                        // $(TextDiv).addClass('my-text-shadow active');
                     } else {
-                        div.className += " active";
+                        div.className = "customMarkercar online " + this.objVehicle.deviceid;
+                        // $(TextDiv).addClass('my-text-shadow online');
                     }
                 }
-                console.log(div);
-                div.id = this.VehicleID
-                var TextDiv = document.createElement("div");
-                TextDiv.innerHTML = this.VehicleID;
-                $(TextDiv).addClass('my-text-shadow');
-                div.appendChild(TextDiv);
-                // console.log(div);
-                // if (this.imageSrc != '') {
 
-                //     var img = document.createElement("img");
-                //     img.src = this.imageSrc;
-                //     div.appendChild(img);
-                // } else {
-                //     // if (this.Authorised) {
+                var BikeNameP = document.createElement("div");
+                var leftDiv = document.createElement("div");
+                var RightDiv = document.createElement("div");
+                var closeBtn = document.createElement("div");
 
-                //     //     var TextDiv = document.createElement("div");
-                //     //     TextDiv.innerHTML = this.VehicleID;
-                //     //     $(TextDiv).addClass('my-text-shadow');
-                //     //     div.appendChild(TextDiv);
-                //     // } else {
-                //     //     var TextDiv = document.createElement("div");
-                //     //     TextDiv.innerHTML = this.VehicleID;
-                //     //     $(TextDiv).addClass('my-text-shadow');
-                //     //     div.appendChild(TextDiv);
-                //     // }
-                // };
+                BikeNameP.innerHTML = '<div class="MapMarkerLable"><h3>' + this.objVehicle.Name + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + this.objVehicle.deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + this.objVehicle.deviceid + '">' + parseFloat(this.objVehicle.Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + this.objVehicle.deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+
+                $(leftDiv).addClass('leftside');
+                leftDiv.innerHTML = '<span> </span>';
+                $(RightDiv).addClass('rightside');
+                RightDiv.innerHTML = '<span> </span>';
+                $(closeBtn).addClass('closeBtn ' + this.objVehicle.deviceid);
+
+                CustomeInfoWindowdiv.appendChild(BikeNameP);
+                CustomeInfoWindowdiv.appendChild(leftDiv);
+                CustomeInfoWindowdiv.appendChild(RightDiv);
+                CustomeInfoWindowdiv.appendChild(closeBtn);
+
+                CustomeInfoWindowdiv.style.visibility = "hidden";
+
+                // $(TextDiv).addClass('my-text-shadow');
+                // div.appendChild(TextDiv);
+
+                google.maps.event.addDomListener(div, "click", function(event) {
+
+                    var lstclassName = event.srcElement.className.split(' ')
+                    var DeviceID = "";
+                    for (var t = 0; t < lstclassName.length; t++) {
+                        if (lstclassName[t] != "customMarkercar" && lstclassName[t] != "active" && lstclassName[t] != "online" && lstclassName[t] != "offline") {
+                            DeviceID = lstclassName[t];
+                        }
+                    }
+                    console.log(DeviceID)
+                    $(".custom-infowinow." + DeviceID).css("visibility", "visible");
+
+                });
 
                 var panes = this.getPanes();
                 panes.overlayImage.appendChild(div);
+                panes.overlayImage.appendChild(CustomeInfoWindowdiv);
+                // panes.overlayImage.appendChild(DrivingDataDiv);
+
+                // $(".custom-driving-infowinow").css("visibility", "hidden");
+
+                $(".closeBtn." + this.objVehicle.deviceid).click(function(event) {
+
+                    var lstclassName = event.currentTarget.className.split(' ');
+                    var DeviceID = "";
+                    for (var t = 0; t < lstclassName.length; t++) {
+                        if (lstclassName[t] != "customMarkercar" && lstclassName[t] != "active" && lstclassName[t] != "online" && lstclassName[t] != "offline") {
+                            DeviceID = lstclassName[t];
+                        }
+                    }
+                    $(".custom-infowinow." + DeviceID).css("visibility", "hidden");
+                });
+
+                if (this.objVehicle.IsOnline == false) {
+                    animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
+                } else {
+                    if (this.objVehicle.IsEngine == false) {
+                        animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
+                    } else {
+                        animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
+                    }
+                }
+            } else {
+                if (this.objVehicle.IsOnline == false) {
+                    $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("online");
+                    $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("active");
+                    $('.customMarkercar.' + this.objVehicle.deviceid).addClass("offline");
+
+                    // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("online");
+                    // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("active");
+                    // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("offline");
+
+                } else {
+                    if (this.objVehicle.IsEngine == false) {
+                        $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("online");
+                        $('.customMarkercar.' + this.objVehicle.deviceid).addClass("active");
+                        $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("offline");
+
+                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("online");
+                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("active");
+                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("offline");
+                    } else {
+                        $('.customMarkercar.' + this.objVehicle.deviceid).addClass("online");
+                        $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("active");
+                        $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("offline");
+
+                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("online");
+                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("active");
+                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("offline");
+                    }
+                }
             }
+
+            $(".localDate." + this.objVehicle.deviceid).text(DeviceDatetime);
+            $(".localEngin." + this.objVehicle.deviceid).text(EngineStatus);
+            $(".localSpeed." + this.objVehicle.deviceid).text(parseFloat(this.objVehicle.Speed).toFixed(2) + " km/h");
+
 
             var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
 
             if (point) {
 
-                div.style.left = point.x + 'px';
-                div.style.top = point.y + 'px';
+                // console.log(this.IsAnimation)
+                if (this.IsAnimation == true) {
+                    $scope.IsAnimationStart = true;
+                    animatediv.animate({
+                        'left': point.x + 'px',
+                        'top': point.y + 'px'
+                    }, 1000, function() {});
+
+                    setTimeout(function() {
+                        $scope.IsAnimationStart = false;
+                    }, 1200);
+
+                    animatCustomeInfoWindowdiv.animate({
+                        'left': (point.x - 125) + 'px',
+                        'top': (point.y - 180) + 'px'
+                    }, 800, function() {});
+
+                    this.IsAnimation = false;
+                    var heading = parseFloat(this.objVehicle.Direction) + 90;
+                    div.style.transform = 'rotate(' + heading + 'deg)';
+                    animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                } else {
+                    $scope.IsAnimationStart = true;
+                    setTimeout(function() {
+                        $scope.IsAnimationStart = false;
+                    }, 10);
+                    div.style.left = point.x + 'px';
+                    div.style.top = point.y + 'px';
+
+                    CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
+                    CustomeInfoWindowdiv.style.top = (point.y - 180) + 'px';
+
+                    var heading = parseFloat(this.objVehicle.Direction) + 90;
+                    div.style.transform = 'rotate(' + heading + 'deg)';
+                    animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                }
             }
         };
 
@@ -754,7 +812,7 @@
                     options: {
                         chart: {
                             type: 'lineChart',
-                            color: [ /*'#4caf50',*/ '#3f51b5', /*'#ff5722',*/ '#FFFF00'],
+                            color: [ /*'#4caf50',*/ '#2196F3', /*'#ff5722',*/ '#5C6BC0'],
                             height: 320,
                             margin: {
                                 top: 32,
@@ -1371,7 +1429,7 @@
                     options: {
                         chart: {
                             type: 'lineChart',
-                            color: [ /*'#4caf50',*/ '#3f51b5', /*'#ff5722',*/ '#FFFF00'],
+                            color: [ /*'#4caf50',*/ '#2196F3', /*'#ff5722',*/ '#5C6BC0'],
                             height: 320,
                             margin: {
                                 top: 32,
@@ -1661,6 +1719,12 @@
             // var monthwiseOwnerlist = [];
             // var monthwiseorderlist = [];
             $scope.listMonthbyName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            $scope.dataUsresbgcolor = [{
+                fillColor: 'rgba(33, 150, 243, 0.6)',
+                strokeColor: 'rgba(33, 150, 243, 1)',
+                highlightFill: 'rgba(33, 150, 243, 1)',
+                highlightStroke: 'rgba(33, 150, 243, 1)'
+            }];
             $scope.labelsMonth = [];
             for (var i = 0; i < 12; i++) {
                 var objUser = _.where($scope.userslist, { month: $scope.CurrentMonth, year: $scope.CurrentYear });
@@ -1703,7 +1767,12 @@
             $scope.lstTotalUser = monthwiselist.reduce(function(total, item) {
                 return total + item;
             }, 0);
-            $scope.ManageCustomerGraph();
+            // $scope.ManageCustomerGraph();
+            $timeout(function() {
+                $scope.CustomerAndUser(false);
+                $scope.CustomerAndUserAcc(false);
+                // $scope.CustomerGraph();
+            }, 300);
         }
 
         $scope.ManageGraphOrderTotalByDuration = function(Duration) {
@@ -1771,10 +1840,6 @@
             }
             $http.get($rootScope.RoutePath + "dashboard/GetBikeTotalDevice", { params: params }).then(function(data) {
                 $scope.lstDevices = data.data;
-                $scope.ActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: 1 });
-                $scope.NotActiveDevice = _.where($scope.lstDevices.DeviceStatus, { IsOnline: 0 });
-                // $scope.ShoperDevice = _.where($scope.lstDevices.DeviceStatus, { DeviceType: 'M2' });
-                // $scope.OwnerDevice = _.where($scope.lstDevices.DeviceStatus, { DeviceType: 'M2-U' });
 
 
             });
