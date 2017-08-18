@@ -1,27 +1,38 @@
 <md-dialog class="task-dialog" aria-label="New Task">
     <form name="taskForm" class="md-inline-form" novalidate>
-        <md-toolbar class="md-accent md-hue-2">
+        <!-- <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">Location</span>
+                <h2 class="">Location</h2>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar> -->
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools">
+                <h2>{{model.Name}} Location</h2>
+                <span flex></span>
                 <md-button class="md-icon-button" ng-click="closeModel()">
                     <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
-        <md-dialog-content ms-scroll>
-            <label style="text-align: center; margin-left: 40%" class="green-fg p-16 h3">{{NoLocation}}</label>
-            <div class="widget-group text-left" flex-gt-sm="100">
-                <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="100">
-                    <md-content class="text-right">
-                        <div>
-                            <div layout-gt-sm="row">
-                                <div style="width: 100%;">
-                                    <div id="map123" style="height: 500px;"></div>
-                                </div>
-                            </div>
+        <md-dialog-content ms-scroll style="padding:0">
+            <div layout-gt-sm="row">
+                <div style="width: 100%;">
+                    <div id="mapLocation" style="height: 500px;"></div>
+                    <div layout="row" layout-align="center center" class="md-hue-2 md-accent">
+                        <div layout="row" layout-align="start center">
+                            <md-icon md-font-icon="icon-speedometer green-900-fg" class="s16"></md-icon>
+                            <span class="pl-8">{{model.CurrentSpeed}} km/h</span>
                         </div>
-                    </md-content>
-                </ms-widget>
+
+                        <div class="pl-16" layout="row" layout-align="start center">
+                            <md-icon md-font-icon="icon-clock amber-600-fg" class="s16"></md-icon>
+                            <span class="pl-8">{{model.CurrentDate}}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </md-dialog-content>
 
@@ -29,44 +40,104 @@
 </md-dialog>
 
 <style>
-    .customMarker1 {
-        height: 60px;
-        background-image: url(/assets/images/marker2.png);
-        width: 43px;
+    .customMarkeroncar {
+        height: 20px;
+        background-image: url(/assets/images/icon-map-car-on2.png);
+        width: 46px;
         background-size: contain;
         background-repeat: no-repeat;
         position: absolute;
-        margin-left: -21px;
-        margin-top: -31px;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
     }
     
-    .customMarkerPetShop {
-        height: 60px;
-        background-image: url(/assets/images/marker1.png);
-        width: 43px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        position: absolute;
-        margin-left: -20px;
-        margin-top: -60px;
-    }
-    
-    .customMarker1 .my-text-shadow {
+    .customMarkeroncar .my-text-shadow {
         color: white;
         position: absolute;
-        left: -44px;
+        left: 0px;
         top: -15px;
         text-shadow: -2px -2px 0 #0cad00, -2px -1px 0 #0cad00, -2px 0px 0 #0cad00, -2px 1px 0 #0cad00, -2px 2px 0 #0cad00, -1px -2px 0 #0cad00, -1px -1px 0 #0cad00, -1px 0px 0 #0cad00, -1px 1px 0 #0cad00, -1px 2px 0 #0cad00, 0px -2px 0 #0cad00, 0px -1px 0 #0cad00, 0px 0px 0 #0cad00, 0px 1px 0 #0cad00, 0px 2px 0 #0cad00, 1px -2px 0 #0cad00, 1px -1px 0 #0cad00, 1px 0px 0 #0cad00, 1px 1px 0 #0cad00, 1px 2px 0 #0cad00, 2px -2px 0 #0cad00, 2px -1px 0 #0cad00, 2px 0px 0 #0cad00, 2px 1px 0 #0cad00, 2px 2px 0 #0cad00;
         font-size: 14px;
         width: 100px;
     }
     
-    .customMarkerPetShop .my-text-shadow {
+    .amap-marker.customanimationchina,
+    .amap-info.customanimationchina {
+        -webkit-transition: all 0.8s ease;
+        -moz-transition: all 0.8s ease;
+        -o-transition: all 0.8s ease;
+        -ms-transition: all 0.8s ease;
+        transition: all 0.8s ease;
+    }
+    
+    .customMarkeroffcar {
+        height: 20px;
+        background-image: url(/assets/images/icon-map-car--off2.png);
+        width: 46px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
+    }
+    
+    .customMarkeroffcar .my-text-shadow {
         color: white;
         position: absolute;
-        left: 25px;
-        top: 5px;
-        text-shadow: -2px -2px 0 #ee0600, -2px -1px 0 #ee0600, -2px 0px 0 #ee0600, -2px 1px 0 #ee0600, -2px 2px 0 #ee0600, -1px -2px 0 #ee0600, -1px -1px 0 #ee0600, -1px 0px 0 #ee0600, -1px 1px 0 #ee0600, -1px 2px 0 #ee0600, 0px -2px 0 #ee0600, 0px -1px 0 #ee0600, 0px 0px 0 #ee0600, 0px 1px 0 #ee0600, 0px 2px 0 #ee0600, 1px -2px 0 #ee0600, 1px -1px 0 #ee0600, 1px 0px 0 #ee0600, 1px 1px 0 #ee0600, 1px 2px 0 #ee0600, 2px -2px 0 #ee0600, 2px -1px 0 #ee0600, 2px 0px 0 #ee0600, 2px 1px 0 #ee0600, 2px 2px 0 #ee0600;
+        left: 0px;
+        top: -15px;
+        text-shadow: -2px -2px 0 #717171, -2px -1px 0 #717171, -2px 0px 0 #717171, -2px 1px 0 #717171, -2px 2px 0 #717171, -1px -2px 0 #717171, -1px -1px 0 #717171, -1px 0px 0 #717171, -1px 1px 0 #717171, -1px 2px 0 #717171, 0px -2px 0 #717171, 0px -1px 0 #717171, 0px 0px 0 #717171, 0px 1px 0 #717171, 0px 2px 0 #717171, 1px -2px 0 #717171, 1px -1px 0 #717171, 1px 0px 0 #717171, 1px 1px 0 #717171, 1px 2px 0 #717171, 2px -2px 0 #717171, 2px -1px 0 #717171, 2px 0px 0 #717171, 2px 1px 0 #717171, 2px 2px 0 #717171;
         font-size: 14px;
+        width: 100px;
+    }
+    
+    .customMarkeractivecar {
+        height: 20px;
+        background-image: url(/assets/images/icon-map-car-active2.png);
+        width: 46px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
+    }
+    
+    .customMarker1 {
+        height: 20px;
+        /* background-image: url(img/icon-map-car-on2.png); */
+        width: 46px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
+    }
+    
+    .customMarkercar {
+        height: 20px;
+        /* background-image: url(img/icon-map-car-on2.png); */
+        width: 46px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
+    }
+    
+    .customMarkercar.online {
+        background-image: url(/assets/images/icon-map-car-on2.png);
+    }
+    
+    .customMarkercar.offline {
+        background-image: url(/assets/images/icon-map-car--off2.png);
+    }
+    
+    .customMarkercar.active {
+        background-image: url(/assets/images/icon-map-car-active2.png);
     }
 </style>

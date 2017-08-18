@@ -8,7 +8,42 @@
     /** @ngInject */
     function Location1Controller($http, $mdDialog, $scope, deviceid, Tasks, event, MediaVM, $rootScope, $mdToast, Name, IsOnline) {
         var vm = this;
+        var map;
         $scope.RoutePath = $rootScope.RoutePath;
+        var LastDirection = '000.00';
+
+        $scope.model = {
+            Name: Name,
+            CurrentDate: '',
+            CurrentSpeed: '0'
+        }
+
+        var socket = io($rootScope.Socket_URL, {
+            'forceNew': true
+        });
+        socket.on(deviceid + 'BikeDeviceStatus', function(msg) {
+            var obj = JSON.parse(msg);
+            $scope.$apply(function() {
+                if (deviceid == obj.DeviceId) {
+                    IsOnline = obj.Status;
+                }
+            });
+        });
+
+        socket.on(deviceid + 'BikeRoute', function(msg) {
+            var obj = JSON.parse(msg);
+            $scope.$apply(function() {
+                if ($scope.lstlocation) {
+                    if (deviceid == obj.Deviceid) {
+                        var DeviceDatetime = moment(moment.utc(new Date(obj.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
+                        $scope.model.CurrentDate = DeviceDatetime;
+                        $scope.model.CurrentSpeed = obj.Speed.toFixed(2);
+                        new CustomMarker12(new google.maps.LatLng(obj.Latitude, obj.Longitude), map, obj.IsEngine, DeviceDatetime, obj.Direction, true)
+                    }
+                }
+            });
+        });
+
         //google map
         $scope.IntializeGoogleMap = function(data) {
             if (data != null) {
@@ -27,127 +62,21 @@
                 var CurrentLatLang = new google.maps.LatLng(CurrentLat, CurrentLang);
 
                 setTimeout(function() {
-                    var map = new google.maps.Map(document.getElementById("map123"),
+                    map = new google.maps.Map(document.getElementById("mapLocation"),
                         myOptions);
-                    var MethodCallFlag = true;
-
-
-
-                    function setMarkers(map, locations) {
-
-                        var marker, i
-                        for (i = 0; i < locations.length; i++) {
-                            var loan = locations[i].lat
-                            var lat = locations[i].lat
-                            var long = locations[i].lang
-                            var add = locations[i].lang
-                            var Phone = locations[i].lang
-                            var ImageURL = null
-                            var PetShopId = locations[i].id
-                            var Authorised = locations[i].IsAuthorised
-                            latlngset = new google.maps.LatLng(lat, long);
-                            var icon = {
-                                url: $rootScope.API_URL + "MediaUploads/" + ImageURL, // url
-                                scaledSize: new google.maps.Size(50, 50), // scaled size
-                                origin: new google.maps.Point(0, 0), // origin
-                                anchor: new google.maps.Point(0, 50), // anchor
-                            };
-                            var marker = new google.maps.Marker();
-                            if (ImageURL != "" && ImageURL != null) {
-                                new CustomMarker(new google.maps.LatLng(lat, long), map, PetShopId, Authorised)
-                            } else {
-                                marker = new google.maps.Marker({
-                                    position: latlngset,
-                                    map: map,
-                                    title: loan,
-                                });
-                            }
-
-                            var latlng = lat + ',' + long;
-                            var content = "";
-
-                            if (ionic.Platform.isIOS()) {
-                                content = "<b>" + locations[i][0] + '</b><br />' + locations[i][3] + '<br /> <b>tel :</b><a href="tel:' + Phone + '" target="_system">' + Phone + '</a><br> <b>Location :</b><a href="http://maps.apple.com/?ll=' + latlng + '&q=' + loan + '" target="_system">Navigate</a>'
-                            } else {
-                                //content = "<b>" + locations[i][0] + '</b><br />' + locations[i][3] + '<br /> <b>tel :</b><a href="tel:' + Phone + '"  target="_system">' + Phone + '</a><br> <b>Location :</b><a href="geo:' + latlng + '?q=' + latlng + '(' + loan + ')" target="_system">Navigate</a>'
-                                content = "<a onclick='callmethod()'>navigate</a><br><button onclick='callmethod()'>Click me</button>"
-                            }
-                            $ionicLoading.hide();
-                            var infowindow = new google.maps.InfoWindow()
-                            google.maps.event.addListener(marker, 'click', (function(marker, content, infowindow, loan, add, Phone, lat, long) {
-                                return function() {
-                                    var latlng = lat + ',' + long;
-                                    alertPopup = $ionicPopup.show({
-                                        template: add + '<br /> <b>tel : </b>' + Phone,
-                                        title: '<b>' + loan + '</b>',
-                                        scope: $scope,
-                                        buttons: [{
-                                            text: '',
-                                            type: 'button-custom-blue button icon ion-ios-telephone',
-                                            onTap: function(e) {
-                                                return 'Phone';
-                                            }
-                                        }, {
-                                            text: '',
-                                            type: 'button-custom-blue button icon ion-ios-location',
-                                            onTap: function(e) {
-                                                return 'Navigation';
-                                            }
-                                        }, {
-                                            text: '',
-                                            type: 'button-custom-blue button icon ion-ios-close-outline',
-                                            onTap: function(e) {
-                                                return null;
-                                            }
-                                        }]
-                                    }).then(function(res) {
-                                        if (res == 'Phone') {
-                                            Phone = Phone.replace(/\-/g, '').replace(/\ /g, '');
-                                            $cordovaInAppBrowser.open('tel:' + Phone, '_system');
-                                        } else if (res == 'Navigation') {
-                                            if (ionic.Platform.isIOS()) {
-                                                $cordovaInAppBrowser.open('http://maps.apple.com/?ll=' + latlng + '&q=' + loan, '_system');
-                                            } else {
-                                                $cordovaInAppBrowser.open('geo:' + latlng + '?q=' + latlng + '(' + loan + ')', '_system');
-                                            }
-                                        };
-                                    }, function(err) {
-                                        console.log('Err:', err);
-                                    }, function(msg) {
-                                        console.log('message:', msg);
-                                    });
-                                };
-                            })(marker, content, infowindow, loan, add, Phone, lat, long));
-                        }
-                    }
-                    var FoundLocation = 0;
-
-                    google.maps.event.addListener(map, 'idle', function(ev) {
-                        if (MethodCallFlag) {
-                            // update the coordinates here
-                            var bounds = map.getBounds();
-                            var ne = bounds.getNorthEast(); // LatLng of the north-east corner
-                            var sw = bounds.getSouthWest(); // LatLng of the south-west corder
-                            var nw = new google.maps.LatLng(ne.lat(), sw.lng());
-                            var se = new google.maps.LatLng(sw.lat(), ne.lng());
-
-                            var MapCoords = [
-                                { lat: nw.lat(), lng: nw.lng() },
-                                { lat: ne.lat(), lng: ne.lng() },
-                                { lat: se.lat(), lng: se.lng() },
-                                { lat: sw.lat(), lng: sw.lng() }
-                            ];
-                            new CustomMarker(new google.maps.LatLng(data.Latitude, data.Longitude), map, Name, IsOnline)
-                        };
-                    });
-
+                    var DeviceDatetime = moment(moment.utc(new Date(data.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
+                    LastDirection = data.Direction;
+                    $scope.$apply(function() {
+                        $scope.model.CurrentDate = DeviceDatetime;
+                        $scope.model.CurrentSpeed = parseFloat(data.Speed).toFixed(2);
+                    })
+                    new CustomMarker12(new google.maps.LatLng(data.Latitude, data.Longitude), map, data.IsEngine, DeviceDatetime, data.Direction, false)
 
                     // $ionicLoading.hide();
                 }, 800)
             } else {
                 $scope.NoLocation = "No Location Found"
-                var map;
-                map = new google.maps.Map(document.getElementById('map123'), {
+                map = new google.maps.Map(document.getElementById('mapLocation'), {
                     center: { lat: 0, lng: 0 },
                     zoom: 2
                 });
@@ -162,7 +91,6 @@
 
             $http.get($rootScope.RoutePath + 'vehicles/GetVehicleCurrentLocation', { params: params }).success(function(data) {
                 $scope.lstlocation = data.data;
-
                 $scope.IntializeGoogleMap($scope.lstlocation);
 
             });
@@ -173,99 +101,176 @@
         $scope.GetBikeGps(false);
 
         //adapted from http://gmaps-samples-v3.googlecode.com/svn/trunk/overlayview/custommarker.html
-        function CustomMarker(latlng, map, Name, IsOnline, Authorised) {
+        function CustomMarker12(latlng, mapLocation, IsEngine, LocalTime, direction, isAnimation) {
             this.latlng_ = latlng;
-            // this.imageSrc = imageSrc;
-            this.BikeID = Name;
-            this.Authorised = Authorised;
-            this.IsOnline = IsOnline;
-            // Once the LatLng and text are set, add the overlay to the map.  This will
-            // trigger a call to panes_changed which should in turn call draw.
-            this.setMap(map);
+            this.datetime = LocalTime;
+
+            if (direction != '000.00') {
+                LastDirection = direction;
+            }
+            this.direction = LastDirection;
+            this.IsAnimation = isAnimation;
+            this.IsEngineStatus = IsEngine;
+            this.setMap(mapLocation);
         }
 
 
-        // if ($rootScope.GoogleMap) {
-        CustomMarker.prototype = new google.maps.OverlayView();
-        CustomMarker.prototype.draw = function() {
-            // Check if the div has been created.
-            var div = this.div_;
-            if (!div) {
-                // Create a overlay text DIV
-                div = this.div_ = document.createElement('div');
-                // Create the DIV representing our CustomMarker
-                if (this.IsOnline == 'false') {
-                    div.className = "customMarkerPetShop"
+        CustomMarker12.prototype = new google.maps.OverlayView();
+        CustomMarker12.prototype.draw = function() {
 
-                    div.id = this.BikeID
-                        // if (this.imageSrc != '') {
-                        //     var img = document.createElement("img");
-                        //     img.src = this.imageSrc;
-                        //     div.appendChild(img);
-                        // } else {
-                        //     var TextDiv = document.createElement("div");
-                        //     TextDiv.innerHTML = this.BikeID;
-                        //     $(TextDiv).addClass('my-text-shadow');
-                        //     div.appendChild(TextDiv);
-                        // };
-
-                    var TextDiv = document.createElement("div");
-                    TextDiv.innerHTML = this.BikeID;
-                    $(TextDiv).addClass('my-text-shadow');
-                    div.appendChild(TextDiv);
-
+            var div = null;
+            var CustomeInfoWindowdiv = null;
+            // var DrivingDataDiv = null;
+            var animatCustomeInfoWindowdiv = null;
+            var animatediv = null;
+            if (IsOnline == false) {
+                div = this.div_ = $('.customMarkeroffcar')[0];
+                animatediv = $('.customMarkeroffcar');
+            } else {
+                if (this.IsEngineStatus == false) {
+                    div = this.div_ = $('.customMarkeractivecar')[0];
+                    animatediv = $('.customMarkeractivecar');
                 } else {
-                    div.className = "customMarker1"
-                    div.id = this.BikeID
-                        // if (this.imageSrc != '') {
-
-                    //     var img = document.createElement("img");
-                    //     img.src = this.imageSrc;
-                    //     div.appendChild(img);
-                    // } else {
-                    //     var TextDiv = document.createElement("div");
-                    //     TextDiv.innerHTML = this.BikeID;
-                    //     $(TextDiv).addClass('my-text-shadow');
-                    //     div.appendChild(TextDiv);;
-                    // };
-                    var TextDiv = document.createElement("div");
-                    TextDiv.innerHTML = this.BikeID;
-                    $(TextDiv).addClass('my-text-shadow');
-                    div.appendChild(TextDiv);;
-
+                    div = this.div_ = $('.customMarkeroncar')[0];
+                    animatediv = $('.customMarkeroncar');
                 }
+            }
+            CustomeInfoWindowdiv = this.CustomeInfoWindowdiv_ = $('.custom-infowinow')[0];
+            animatCustomeInfoWindowdiv = $('.custom-infowinow');
+            if (!div) {
+                div = this.div_ = document.createElement('div');
+
+                // CustomeInfoWindowdiv = this.CustomeInfoWindowdiv_ = document.createElement('div');
+
+                // CustomeInfoWindowdiv.className = 'custom-infowinow';
+                if (IsOnline == false) {
+                    div.className = "customMarkeroffcar";
+                } else {
+                    if (this.IsEngineStatus == false) {
+                        div.className = "customMarkeractivecar";
+                    } else {
+                        div.className = "customMarkeroncar";
+                    }
+                }
+
+                // var BikeNameP = document.createElement("div");
+                // var leftDiv = document.createElement("div");
+                // var RightDiv = document.createElement("div");
+                // var closeBtn = document.createElement("div");
+
+                // if ($scope.IsEngine == true) {
+                // if (this.isAddress) {
+                //     BikeNameP.innerHTML = '<div class="MapMarkerLable"><h3>' + $stateParams.Name + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate">' + this.datetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed">' + $scope.objPetLocation.Speed + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine"> ' + this.IsEngineStatus + ' </span></div><div class="col2"><i class="ion-ios-location" style="color:blue;"></i><span class="newAddress">' + this.newlocation + '</span></div></div></div>';
+                // } else {
+                //     BikeNameP.innerHTML = '<div class="MapMarkerLable"><h3>' + $stateParams.Name + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate">' + this.datetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed">' + $scope.objPetLocation.Speed + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine"> ' + this.IsEngineStatus + ' </span></div></div></div>';
+                // }
+
+
+                // $(leftDiv).addClass('leftside');
+                // leftDiv.innerHTML = '<span> </span>';
+                // $(RightDiv).addClass('rightside');
+                // RightDiv.innerHTML = '<span> </span>';
+                // $(closeBtn).addClass('closeBtn');
+
+                // CustomeInfoWindowdiv.appendChild(BikeNameP);
+                // CustomeInfoWindowdiv.appendChild(leftDiv);
+                // CustomeInfoWindowdiv.appendChild(RightDiv);
+                // CustomeInfoWindowdiv.appendChild(closeBtn);
+
                 // google.maps.event.addDomListener(div, "click", function(event) {
-                //     $state.go('app.petshopdetail', { id: parseInt(div.id) })
+                //     $(".custom-infowinow").css("visibility", "visible");
                 // });
 
-                // Then add the overlay to the DOM
                 var panes = this.getPanes();
                 panes.overlayImage.appendChild(div);
+                // panes.overlayImage.appendChild(CustomeInfoWindowdiv);
+
+                // $(".closeBtn").click(function() {
+                //     $(".custom-infowinow").css("visibility", "hidden");
+                // });
+
+                if (IsOnline == false) {
+                    animatediv = $('.customMarkeroffcar');
+                } else {
+                    if (this.IsEngineStatus == false) {
+                        animatediv = $('.customMarkeractivecar');
+                    } else {
+                        animatediv = $('.customMarkeroncar');
+                    }
+                }
             }
 
-            // Position the overlay 
+            // $(".localDate").text(this.datetime);
+            // // $(".newAddress").text(this.newlocation);
+            // $(".localEngine").text(this.IsEngineStatus);
+            // $(".localSpeed").text($scope.objPetLocation.Speed + " km/h");
+
             var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
 
             if (point) {
 
-                div.style.left = point.x + 'px';
-                div.style.top = point.y + 'px';
+                if (this.IsAnimation == true) {
+
+                    animatediv.animate({
+                        'left': point.x + 'px',
+                        'top': point.y + 'px'
+                    }, 1000, function() {});
+
+                    // animatCustomeInfoWindowdiv.animate({
+                    //     'left': (point.x - 125) + 'px',
+                    //     'top': (point.y - 230) + 'px'
+                    // }, 800, function() {});
+
+                    this.IsAnimation = false;
+
+                    var heading = parseFloat(this.direction) + 90;
+                    div.style.transform = 'rotate(' + heading + 'deg)';
+                    animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                } else {
+                    div.style.left = point.x + 'px';
+                    div.style.top = point.y + 'px';
+                    // CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
+                    // CustomeInfoWindowdiv.style.top = (point.y - 230) + 'px';
+
+                    var heading = parseFloat(this.direction) + 90;
+                    div.style.transform = 'rotate(' + heading + 'deg)';
+                    animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                }
             }
         };
 
-        CustomMarker.prototype.remove = function() {
-            // Check if the overlay was on the map and needs to be removed.
+
+        CustomMarker12.prototype.animateBounce = function() {
+            dynamics.stop(this.div_);
+            dynamics.css(this.div_, {
+                'transform': 'none',
+            });
+            dynamics.animate(this.div_, {
+                scale: 1.1
+            }, {
+                type: dynamics.forceWithGravity,
+                complete: function(o) {
+                    dynamics.stop(o);
+                    dynamics.css(o, {
+                        'transform': 'none',
+                    });
+                }
+            });
+        }
+
+        CustomMarker12.prototype.remove = function() {
             if (this.div_) {
                 this.div_.parentNode.removeChild(this.div_);
                 this.div_ = null;
             }
         };
 
-        CustomMarker.prototype.getPosition = function() {
+        CustomMarker12.prototype.getPosition = function() {
             return this.latlng_;
         };
 
         $scope.closeModel = function() {
+            socket.disconnect();
             $mdDialog.hide();
         }
     }
