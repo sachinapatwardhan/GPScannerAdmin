@@ -74,7 +74,7 @@
       DTColumnBuilder.newColumn('HistoryHighestRotation'),
       DTColumnBuilder.newColumn('TotalHarshAcceleration'),
       DTColumnBuilder.newColumn('TotalHarshBrake'),
-      DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
+      // DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
     ]
 
     $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
