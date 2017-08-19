@@ -2,7 +2,7 @@
     <div id="login-form-wrapper" layout="column" layout-align="center center">
         <div id="login-form" class="md-whiteframe-8dp">
             <div class="logo md-accent-bg">
-                
+
             </div>
             <div class="title" translate="LOGIN.TITLE">Log in to your account</div>
             <!-- ng-pattern="/^.+@.+\..+$/" -->
@@ -32,7 +32,7 @@
                     <md-checkbox class="remember-me" ng-model="model.RemeberMe" aria-label="Remember Me">
                         <span>Remember Me</span>
                     </md-checkbox>
-                    <a class="forgot-password md-accent-color"  ui-sref="app.Forgotpassword" >Forgot Password?</a>
+                    <a class="forgot-password md-accent-color" ui-sref="app.Forgotpassword">Forgot Password?</a>
                 </div>
                 <md-button type="submit" class="md-raised md-accent submit-button" aria-label="LOG IN" ng-click="Login(model)" ng-disabled="loginForm.$invalid || loginForm.$pristine">
                     LOG IN
@@ -59,9 +59,14 @@
                 </div>
             </md-button> -->
             <div class="register" layout="row" layout-sm="column" layout-align="center center">
-                <span class="text" >Don't have an account?</span>
+                <span class="text">Don't have an account?</span>
                 <a class="link" ui-sref="app.Register">Create an account</a>
             </div>
         </div>
     </div>
+    <video poster="/assets/images/backgrounds/bg-map.jpg" id="bgvid" playsinline autoplay muted loop>
+  <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+<!-- <source src="http://thenewcode.com/assets/videos/polina.webm" type="video/webm"> -->
+ <source src="/assets/images/backgrounds/bg-map.mp4" type="video/mp4"> 
+</video>
 </div>
