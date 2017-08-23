@@ -108,7 +108,7 @@
             .withOption('serverSide', true) // for server side processing
             .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
             .withDisplayLength(25) // Page size
-            .withOption('aaSorting', [0, 'desc'])
+            .withOption('aaSorting', [1, 'desc'])
             .withOption('responsive', true)
             .withOption('createdRow', createdRow)
             // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
@@ -144,7 +144,7 @@
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
                 // return $filter('date')(data, "dd-MM-yyyy");
-                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
+                return moment(moment.utc(data).toDate()).format("DD-MM-YYYY");
             } else {
                 return '';
             }
@@ -153,7 +153,7 @@
         function Datetimefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
                 var newdate = data * 1000;
-                return moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm A");
+                return moment(moment.utc(newdate).toDate()).format("DD-MM-YYYY hh:mm:ss A");
             } else {
                 return '';
             }
