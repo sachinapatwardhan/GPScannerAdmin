@@ -176,9 +176,31 @@
                             </md-input-container>
 
 
-
-
                         </div>
+
+                        <div ng-show="FlgImage" class="row" flex="100" flex-gt-xs="100">
+                            <img ng-src="{{myCroppedImage}}" id="UploadedImage" err-src="assets/images/no-image.png" width="150px" />
+
+                            <br />
+                            <md-button class="md-raised md-primary" ng-click="RemoveImage()">Remove</md-button>
+                        </div>
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
+                                <label>Image</label>
+                                <md-input-container class="md-block" flex>
+                                    <!--<lf-ng-md-file-input id="fileInput" name="files00" lf-files="Mediafiles" lf-api="apiMedia" ng-click="removeAllFiles()" onchange="angular.element(this).scope().setFiles(this)" lf-mimetype="image/*" base-sixty-four-input></lf-ng-md-file-input>-->
+                                    <lf-ng-md-file-input name="files01 " lf-placeholder="App Logo " lf-files="AppLogo" lf-api="apiMedia" onchange="angular.element(this).scope().setFiles(this) " lf-mimetype="image/* " preview></lf-ng-md-file-input>
+                                    <div ng-messages="AddUserForm.files01.$error" style="color:red;">
+                                        <div ng-message="mimetype">Only image file supported</div>
+                                    </div>
+                                </md-input-container>
+                            </md-input-container>
+                        </div>
+                        <!--<div layout-gt-sm="row" flex="100" ng-show="FlgCropImage==1">
+                            <div class="cropArea">
+                                <img-crop image="myImage" result-image="myCroppedImage" on-change="CropImageToFile()" result-image-size="300" area-min-size="300" area-type="square"></img-crop>
+                            </div>
+                        </div>-->
                         <div align="left">
                             <md-button class="md-raised md-primary" ng-disabled="!formAppInfo.$valid" ng-click="SaveAppInfo(model)">Save</md-button>
                             <md-button class="md-accent md-raised" ng-click="Reset()">Reset</md-button>
