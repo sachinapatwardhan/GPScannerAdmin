@@ -57,5 +57,6 @@
             'app.CanBusData',
             'app.DrivingBehaviour',
             'app.telco',
+            'app.appinfo',
         ]);
 })();

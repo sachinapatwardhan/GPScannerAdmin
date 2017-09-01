@@ -477,6 +477,20 @@
                                 weight: 1
                             });
                         }
+
+                        //App Info
+                        var AppInfo = _.filter(lstAllPages, function(obj) {
+                            return obj.tblmodulemgmt.Module == 'App Info';
+                        });
+                        if (AppInfo.length > 0) {
+                            console.log(AppInfo)
+                            msNavigationService.saveItem('App Info', {
+                                title: 'App Info',
+                                state: 'app.appinfo',
+                                order: AppInfo[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
                     }
                 });
             }
