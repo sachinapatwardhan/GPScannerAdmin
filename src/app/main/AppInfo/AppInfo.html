@@ -1,0 +1,192 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="App Info">App Info</span>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-raised md-background" ng-click="Reset()">
+                        <span translate="Add New App Info">Add New Vehicle</span>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <div class="content-card" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table id="AppInfo" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">App Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Bundle Id</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IOS Certificate</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IOS Key</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Android Id</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Android Key</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created By</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action  </span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed" layout="column" ng-show="flag">
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to Vehicle" ng-click="ResetModel()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="App Info">App Info</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content" layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-content class="md-padding">
+                <form name="formAppInfo" novalidate class="md-inline-form" aria-invalid="false">
+                    <div class="content">
+                        <div layout="row" layout-wrap>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>App Name</label>
+                                <input type="text" name="AppName" ng-model="model.AppName" required>
+                                <div ng-messages="formAppInfo.Name.$error" ng-if="formAppInfo.Name.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>App Name field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Bundle Id</label>
+                                <input type="text" name="BundleId" ng-model="model.BundleId" required>
+                                <div ng-messages="formAppInfo.BundleId.$error" ng-if="formAppInfo.BundleId.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Bundle Id field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Android Id</label>
+                                <input type="text" name="AndroidId" ng-model="model.AndroidId">
+                                <div ng-messages="formAppInfo.AndroidId.$error" ng-if="formAppInfo.AndroidId.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Android Id field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Android Sender Id</label>
+                                <input type="text" name="AndroidSenderId" ng-model="model.AndroidSenderId">
+                                <div ng-messages="formAppInfo.AndroidSenderId.$error" ng-if="formAppInfo.AndroidSenderId.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Android Sender Id field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+
+
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
+                                <label>IOS Certificate</label>
+                                <md-input-container class="md-block" flex ng-show="IOSC !=''">
+                                    <span>{{IOSC}}</span>
+                                    <md-button class="md-raised md-primary" ng-click="RemoveIOSCertificat()">Remove</md-button>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex ng-show="IOSC ==''">
+                                    <lf-ng-md-file-input name="file1" lf-files="IOSCertificate" lf-placeholder="IOS Certificate" lf-mimetype="text/plain" lf-maxcount="1" lf-api="apiResetIC" lf-filesize="10MB"></lf-ng-md-file-input>
+                                    <div ng-messages="formAppInfo.file1.$error" role="alert">
+                                        <div ng-message="mimetype">
+                                            <span>Only text file is Supported</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
+                                <label>IOS Key</label>
+                                <md-input-container class="md-block" flex ng-show="IOSK !=''">
+                                    <span>{{IOSK}}</span>
+                                    <md-button class="md-raised md-primary" ng-click="RemoveIOSKey()">Remove</md-button>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex ng-show="IOSK ==''">
+                                    <lf-ng-md-file-input name="file2" lf-files="IOSKey" lf-placeholder="IOS Key" lf-mimetype="text/plain" lf-maxcount="1" lf-api="apiResetIK" lf-filesize="10MB"></lf-ng-md-file-input>
+                                    <div ng-messages="formAppInfo.file2.$error" role="alert">
+                                        <div ng-message="mimetype">
+                                            <span>Only text file is Supported</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </md-input-container>
+
+
+
+
+                        </div>
+                        <div align="left">
+                            <md-button class="md-raised md-primary" ng-disabled="!formAppInfo.$valid" ng-click="SaveAppInfo(model)">Save</md-button>
+                            <md-button class="md-accent md-raised" ng-click="Reset()">Reset</md-button>
+                            <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+                        </div>
+                    </div>
+                </form>
+            </md-content>
+        </div>
+    </div>
+</div>
