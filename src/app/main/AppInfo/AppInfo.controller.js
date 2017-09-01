@@ -10,16 +10,18 @@
 
         $scope.init = function() {
             $scope.model = {
-                    Id: 0,
-                    AppName: '',
-                    BundleId: '',
-                    IOSCertificate: '',
-                    IOSKey: '',
-                    AndroidId: '',
-                    AndroidSenderId: '',
+                Id: 0,
+                AppName: '',
+                BundleId: '',
+                IOSCertificate: '',
+                IOSKey: '',
+                AndroidId: '',
+                AndroidSenderId: '',
+                AppLogo: '',
 
-                }
-                // $scope.IOSCertificate = '';
+            }
+            $scope.FlgImage = '';
+            $scope.ImageLogo = '';
             $scope.IOSC = '';
             $scope.IOSK = '';
             $scope.Search = '';
@@ -33,18 +35,25 @@
             o.IOSCertificate = $scope.IOSC;
             o.IOSKey = $scope.IOSK;
             $http.post($rootScope.RoutePath + "appinfo/SaveAppInfo", o).then(function(data) {
-                console.log(data.data.data);
                 var Id;
+
                 if (o.Id != 0) {
                     Id = o.Id;
                 } else {
-                    Id = data.data.data.Id;
+                    Id = data.data.data[0].Id;
                 }
-                if ($scope.IOSCertificate.length > 0 || $scope.IOSKey.length > 0) {
+                if ($scope.IOSCertificate.length > 0 || $scope.IOSKey.length > 0 || $scope.AppLogo.length > 0) {
                     var formData = new FormData();
                     // angular.forEach($scope.IOSCertificate, function(obj) {
                     //     formData.append(Id, obj.lfFile);
                     // });
+                    if ($scope.AppLogo.length > 0) {
+                        angular.forEach($scope.AppLogo, function(obj) {
+                            var Logo = Id + ',' + 'logo';
+
+                            formData.append(Logo, obj.lfFile);
+                        });
+                    }
 
                     if ($scope.IOSCertificate.length > 0) {
                         angular.forEach($scope.IOSCertificate, function(obj) {
@@ -68,6 +77,7 @@
                     }).then(function(data) {
                         // $scope.IOSCertificate = '';
                         // $scope.IOSKey = '';
+                        $scope.apiMedia.removeAll();
                         $scope.apiResetIC.removeAll();
                         $scope.apiResetIK.removeAll();
                         $rootScope.FlgAddedEditlocal = false;
@@ -97,6 +107,64 @@
                 $scope.ResetModel();
             });
         }
+
+        $scope.setFiles = function(element) {
+            $scope.FlgImage = 0;
+            $scope.myCroppedProfileImage = $rootScope.RoutePath + 'MediaUploads/EmployeeProfile/' + $scope.model.Document;
+        };
+
+        $scope.removeAllFiles = function() {
+
+                function callMethod(i) {
+                    if (i < 2) {
+                        $timeout(function() {
+                            if ($scope.Mediafiles.length > 0) {
+                                $scope.FlgImage = 1;
+                                $scope.FlgCropImage = 1;
+
+                                $scope.myImage = $scope.Mediafiles[0].lfDataUrl;
+
+                            } else {
+                                $scope.myImage = '';
+
+                                if ($scope.model.image != '' && $scope.model.image != null && $scope.model.image != undefined) {
+                                    $scope.$apply(function() {
+                                        $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
+                                        $scope.FlgImage = 1;
+                                    })
+
+                                    // $('#UploadedImage').attr('src','');
+                                    //$('#UploadedImage').remove();
+                                    // $('#UploadedImage')[0].removeAttribute("src");
+                                    // $('#UploadedImage')[0].src = $scope.myCroppedImage;
+                                    // document.getElementById("UploadedImage").src = $scope.myCroppedImage;
+                                    //document.getElementById("UploadedImage").innerHTML = "<img src\= " + $scope.myCroppedImage + " width='150px' />";
+                                } else {
+                                    $scope.$apply(function() {
+                                        $scope.myCroppedImage = '';
+                                    })
+
+                                    $scope.FlgImage = 0;
+                                };
+                                $scope.FlgCropImage = 0;
+                                callMethod(i + 1);
+
+                            }
+                        });
+                    };
+                }
+                callMethod(0);
+            }
+            // $scope.$watch('myCroppedImage', function(newval) {
+            //     if ($scope.myCroppedImage != '' && $scope.myCroppedImage != $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image && $scope.Mediafiles.length > 0) {
+            //         var image = $scope.myCroppedImage;
+            //         var blob = b64toBlob(image.split(",")[1], $scope.Mediafiles[0].lfFile.type, 512);
+            //         file = new File([blob], $scope.Mediafiles[0].lfFileName, {
+            //             type: $scope.Mediafiles[0].lfFile.type
+            //         });
+            //     }
+            // })
+
 
 
         //Dynamic Pagging
@@ -140,7 +208,6 @@
                 type: "get",
                 dataSrc: function(json) {
                     if (json.success != false) {
-                        // console.log(json.data);
                         $scope.lstAppInfo = json.data;
                         $scope.lstTotal = json.recordsTotal;
                         return json.data;
@@ -169,15 +236,11 @@
         $scope.dtInstance = {};
         $scope.reloadData = function() {}
 
-        function callback(json) {
-            // console.log(json);
-        }
-
+        function callback(json) {}
 
         function actionsHtml(data, type, full, meta) {
             var btns = '<div layout="row">';
 
-            // console.log($rootScope.FlgModifiedAccess, $rootScope.FlgDeletedAccess)
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="EditAppinfo(' + data.Id + ')" aria-label="Edit Location">' +
                     '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
@@ -205,7 +268,6 @@
 
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
-                // return $filter('date')(data, "dd-MM-yyyy");
                 return moment(moment.utc(data).toDate()).format("DD-MM-YYYY HH:mm");
             } else {
                 return '';
@@ -220,7 +282,6 @@
 
         // Edit app Info........
         $scope.EditAppinfo = function(Id) {
-            console.log("Edir...")
             if ($rootScope.FlgAddedAccess == true) {
                 $rootScope.FlgAddedEditlocal = true;
             }
@@ -230,7 +291,20 @@
             $scope.model = o;
             $scope.IOSC = o.IOSCertificate;
             $scope.IOSK = o.IOSKey;
+            // $scope.AppLogo = o.ImageLogo;
+            $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.ImageLogo; //$scope.AppLogo;
+            if (o.ImageLogo != null && o.ImageLogo != '' && o.ImageLogo != undefined) {
+                $scope.FlgImage = 1;
+            } else {
+                $scope.FlgImage = 0;
+            }
         }
+        $scope.RemoveImage = function() {
+            $scope.myImage = '';
+            $scope.FlgImage = 0;
+            $scope.model.image = '';
+        }
+
 
         //Delete app info....................
         $scope.DeleteAppInfo = function(Id) {
@@ -284,43 +358,44 @@
         $scope.ResetModel = function() {
             $scope.model = '';
             $scope.flag = false;
+
             $scope.apiResetIC.removeAll();
             $scope.apiResetIK.removeAll();
+            $scope.apiMedia.removeAll();
             $scope.resetForm();
         }
         $scope.Reset = function() {
-                $scope.model = {
-                        Id: '',
-                        AppName: '',
-                        BundleId: '',
-                        IOSCertificate: '',
-                        IOSKey: '',
-                        AndroidId: '',
-                        AndroidSenderId: '',
-                        CreatedDate: '',
-                        CreatedBy: '',
-                        tblappinfocol: '',
-                    }
-                    // $scope.IOSCertificate = '';
-                    // $scope.IOSKey = '';
-                    // // $scope.apiReset.removeAll()
-                $scope.IOS_C = '';
-                $scope.apiResetIC.removeAll();
-                $scope.apiResetIK.removeAll();
-                $scope.Search = '';
-                $rootScope.FlgAddedEditlocal = false;
-                if ($rootScope.FlgAddedAccess == true) {
-                    $rootScope.FlgAddedEditlocal = true;
-                }
-                $scope.flag = true;
-                $scope.resetForm();
-
+            $scope.model = {
+                Id: '',
+                AppName: '',
+                BundleId: '',
+                IOSCertificate: '',
+                IOSKey: '',
+                AndroidId: '',
+                AndroidSenderId: '',
+                CreatedDate: '',
+                CreatedBy: '',
+                AppLogo: '',
             }
-            // $scope.apiResetFile = function() {
-            //     $scope.apiReset.removeAll()
-            // }
+            $scope.FlgImage = '';
+            $scope.IOS_C = '';
+            $scope.apiMedia.removeAll();
+            $scope.apiResetIC.removeAll();
+            $scope.apiResetIK.removeAll();
+            $scope.Search = '';
+            $rootScope.FlgAddedEditlocal = false;
+            if ($rootScope.FlgAddedAccess == true) {
+                $rootScope.FlgAddedEditlocal = true;
+            }
+            $scope.flag = true;
+            $scope.resetForm();
+
+        }
+
 
         $scope.init();
+
+
     }
 
 })();
