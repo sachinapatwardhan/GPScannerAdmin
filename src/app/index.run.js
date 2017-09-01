@@ -16,15 +16,23 @@
             };
         }
 
-        // $rootScope.RoutePath = "http://localhost:7212/";
+        $rootScope.RoutePath = "http://localhost:7212/";
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
-        $rootScope.RoutePath = "http://bugzstudio.com:7212/";
-        $rootScope.Socket_URL = "http://bugzstudio.com:7212";
-        // $rootScope.Socket_URL = "http://localhost:7212";
+        // $rootScope.RoutePath = "http://bugzstudio.com:7212/";
+        // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
+        $rootScope.Socket_URL = "http://localhost:7212";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
 
+        $rootScope.appName = 'Android';
+        var params = {
+            AppName: $rootScope.appName,
+        }
+        $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
+            $cookieStore.put('appId', data.Id);
+            $rootScope.appId = data.Id;
+        })
 
         $rootScope.CurrencyCode = "RM";
 
@@ -478,12 +486,24 @@
                             });
                         }
 
+                        //Telephone Company
+                        var Logs = _.filter(lstAllPages, function(obj) {
+                            return obj.tblmodulemgmt.Module == 'Logs';
+                        });
+                        if (Logs.length > 0) {
+                            msNavigationService.saveItem('Maark.Logs', {
+                                title: 'Logs',
+                                state: 'app.Logs',
+                                order: Logs[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
                         //App Info
                         var AppInfo = _.filter(lstAllPages, function(obj) {
                             return obj.tblmodulemgmt.Module == 'App Info';
                         });
                         if (AppInfo.length > 0) {
-                            console.log(AppInfo)
                             msNavigationService.saveItem('App Info', {
                                 title: 'App Info',
                                 state: 'app.appinfo',
