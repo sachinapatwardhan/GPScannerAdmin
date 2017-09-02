@@ -107,11 +107,13 @@
                     } else {
                         d.EndDate = ''
                     }
+                    d.appId = $rootScope.appId;
                     return d;
                 },
                 type: "get",
                 dataSrc: function(json) {
                     if (json.success != false) {
+                        console.log(json.data)
                         $scope.lstdata = json.data;
                         return json.data;
                     } else {
