@@ -25,14 +25,14 @@
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
 
-        $rootScope.appName = 'Android';
-        var params = {
-            AppName: $rootScope.appName,
-        }
-        $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
-            $cookieStore.put('appId', data.Id);
-            $rootScope.appId = data.Id;
-        })
+        // $rootScope.appName = 'Android';
+        // var params = {
+        //     AppName: $rootScope.appName,
+        // }
+        // $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
+        //     $cookieStore.put('appId', data.Id);
+        //     $rootScope.appId = data.Id;
+        // })
 
         $rootScope.CurrencyCode = "RM";
 
@@ -130,6 +130,17 @@
 
             // console.log(token1);
             if (token1 != "" && token1 != undefined) {
+                var params = {
+                    appId: $cookieStore.get('appId'),
+                }
+                $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
+                    $cookieStore.put('appName', data.AppName);
+                    $rootScope.Added = $cookieStore.get('appId');
+                    $rootScope.AppName = data.AppName;
+                    $rootScope.appId = data.Id;
+                    $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
+                })
+
                 $http.defaults.headers.common['Authorization'] = token1;
                 // var params = {
                 //     tablename: "Dashboard",
@@ -401,7 +412,9 @@
                             return obj.tblmodulemgmt.Module == 'Owner Customer';
                         });
                         if (lstOwnerCustomer.length > 0) {
-                            msNavigationService.saveItem('Maark.Customer', {
+                            var MenuName = $rootScope.AppName + '.Customer';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.Customer', {
                                 title: 'Customer',
                                 state: 'app.OwnerCustomer',
                                 order: lstOwnerCustomer[0].tblmodulemgmt.DisplayOrder,
@@ -414,7 +427,9 @@
                             return obj.tblmodulemgmt.Module == 'Owner Vehicle';
                         });
                         if (lstownerbike.length > 0) {
-                            msNavigationService.saveItem('Maark.Vehicle', {
+                            var MenuName = $rootScope.AppName + '.Vehicle';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.Vehicle', {
                                 title: 'Vehicle',
                                 state: 'app.ownerVehicle',
                                 order: lstownerbike[0].tblmodulemgmt.DisplayOrder,
@@ -427,7 +442,9 @@
                             return obj.tblmodulemgmt.Module == 'Gps';
                         });
                         if (gps.length > 0) {
-                            msNavigationService.saveItem('Maark.Gps', {
+                            var MenuName = $rootScope.AppName + '.Gps';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.Gps', {
                                 title: 'Gps',
                                 state: 'app.gps',
                                 order: gps[0].tblmodulemgmt.DisplayOrder,
@@ -439,7 +456,9 @@
                             return obj.tblmodulemgmt.Module == 'Alarm';
                         });
                         if (Alarm.length > 0) {
-                            msNavigationService.saveItem('Maark.Alarm', {
+                            var MenuName = $rootScope.AppName + '.Alarm';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.Alarm', {
                                 title: 'Alarm',
                                 state: 'app.alarm',
                                 order: Alarm[0].tblmodulemgmt.DisplayOrder,
@@ -452,7 +471,9 @@
                             return obj.tblmodulemgmt.Module == 'CanBus Data';
                         });
                         if (CanBusData.length > 0) {
-                            msNavigationService.saveItem('Maark.CanBus', {
+                            var MenuName = $rootScope.AppName + '.CanBus';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.CanBus', {
                                 title: 'CanBus',
                                 state: 'app.CanBusData',
                                 order: CanBusData[0].tblmodulemgmt.DisplayOrder,
@@ -465,7 +486,9 @@
                             return obj.tblmodulemgmt.Module == 'Driving Behaviour';
                         });
                         if (DrivingBehaviour.length > 0) {
-                            msNavigationService.saveItem('Maark.Driving Behaviour', {
+                            var MenuName = $rootScope.AppName + '.Driving Behaviour';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.Driving Behaviour', {
                                 title: 'Driving Behaviour',
                                 state: 'app.DrivingBehaviour',
                                 order: DrivingBehaviour[0].tblmodulemgmt.DisplayOrder,
@@ -491,7 +514,9 @@
                             return obj.tblmodulemgmt.Module == 'Logs';
                         });
                         if (Logs.length > 0) {
-                            msNavigationService.saveItem('Maark.Logs', {
+                            var MenuName = $rootScope.AppName + '.Logs';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.Logs', {
                                 title: 'Logs',
                                 state: 'app.Logs',
                                 order: Logs[0].tblmodulemgmt.DisplayOrder,
