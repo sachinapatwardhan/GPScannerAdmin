@@ -20,6 +20,8 @@
             $scope.Search = "";
             $scope.searchAlarm = "";
             $scope.searchDevice = "";
+            $rootScope.appId = $cookieStore.get('appId');
+            console.log($rootScope.appId);
             $scope.GetAllGpsDevice();
             AlarmCode();
         }
@@ -92,6 +94,7 @@
                         d.EndDate = ''
                     }
                     d.AlarmCode = $scope.ModelSearch.AlarmCode == 'All' ? '' : $scope.ModelSearch.AlarmCode;
+                    d.idApp = $rootScope.appId;
                     return d;
                 },
                 type: "get",
