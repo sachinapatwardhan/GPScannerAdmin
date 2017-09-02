@@ -25,14 +25,16 @@
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
 
-        // $rootScope.appName = 'Android';
-        // var params = {
-        //     AppName: $rootScope.appName,
-        // }
-        // $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
-        //     $cookieStore.put('appId', data.Id);
-        //     $rootScope.appId = data.Id;
-        // })
+        $rootScope.appName = 'Android';
+        var params = {
+            AppName: $rootScope.appName,
+        }
+        $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
+            $cookieStore.put('appId', data.Id);
+            $rootScope.appId = data.Id;
+            $cookieStore.put('appName', data.AppName);
+            $rootScope.AppName = data.AppName;
+        })
 
         $rootScope.CurrencyCode = "RM";
 
@@ -130,16 +132,16 @@
 
             // console.log(token1);
             if (token1 != "" && token1 != undefined) {
-                var params = {
-                    appId: $cookieStore.get('appId'),
-                }
-                $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
-                    $cookieStore.put('appName', data.AppName);
-                    $rootScope.Added = $cookieStore.get('appId');
-                    $rootScope.AppName = data.AppName;
-                    $rootScope.appId = data.Id;
-                    $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
-                })
+                // var params = {
+                //     appId: $cookieStore.get('appId'),
+                // }
+                // $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
+                //     $cookieStore.put('appName', data.AppName);
+                //     $rootScope.Added = $cookieStore.get('appId');
+                //     $rootScope.AppName = data.AppName;
+                //     $rootScope.appId = data.Id;
+                //     $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
+                // })
 
                 $http.defaults.headers.common['Authorization'] = token1;
                 // var params = {
