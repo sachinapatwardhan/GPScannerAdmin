@@ -166,8 +166,10 @@
                 DTColumnBuilder.newColumn('IMEI'),
                 DTColumnBuilder.newColumn('Version'),
                 DTColumnBuilder.newColumn('SimNum'),
-                DTColumnBuilder.newColumn('tbltelco.Name').renderWith(TelCompanyHtml),
-                DTColumnBuilder.newColumn('tbluserinformation.username').renderWith(SalesAgentHtml),
+                // DTColumnBuilder.newColumn('tbltelco.Name').renderWith(TelCompanyHtml),
+                // DTColumnBuilder.newColumn('tbluserinformation.username').renderWith(SalesAgentHtml),
+                DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                 DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('CreatedBy'),
@@ -186,6 +188,7 @@
                     d.UserRoles = $rootScope.UserRoles;
                     d.UserId = $rootScope.UserId;
                     d.CountryList = $rootScope.CountryList;
+                    d.appId = $rootScope.appId;
                     return d;
                 },
                 type: "get",
@@ -197,7 +200,6 @@
                             }
                         }
                         $scope.lstdata = json.data;
-                        // console.log($scope.lstdata);
                         $scope.TotalTrackers = json.recordsTotal
                         return json.data;
                     } else {
@@ -256,15 +258,21 @@
         }
 
         function TelCompanyHtml(data, type, full, meta) {
-            if (full.tbltelco != null) {
-                return full.tbltelco.Name;
+            // if (full.tbltelco != null) {
+            //     return full.tbltelco.Name;
+            // }
+            if (full.Name != null) {
+                return full.Name;
             }
             return '';
         }
 
         function SalesAgentHtml(data, type, full, meta) {
-            if (full.tbluserinformation != null) {
-                return full.tbluserinformation.username;
+            // if (full.tbluserinformation != null) {
+            //     return full.tbluserinformation.username;
+            // }
+            if (full.username != null) {
+                return full.username;
             }
             return '';
         }
