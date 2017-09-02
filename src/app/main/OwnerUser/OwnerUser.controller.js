@@ -311,7 +311,6 @@
                     dataSrc: function(json) {
                         // console.log(json);
                         if (json.success != false) {
-                            console.log(json.data);
                             $scope.lstdata = json.data;
                             return json.data;
                         } else {
