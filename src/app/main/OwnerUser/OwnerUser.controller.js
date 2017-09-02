@@ -287,8 +287,8 @@
                 DTColumnBuilder.newColumn('username').withOption('width', '12%'),
                 DTColumnBuilder.newColumn('email').withOption('width', '13%'),
                 DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(roleHtml),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(AppHtml),
+                DTColumnBuilder.newColumn('RoleName').renderWith(roleHtml),
+                DTColumnBuilder.newColumn('AppName').renderWith(AppHtml),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
             ]
 
@@ -300,6 +300,7 @@
                         } else {
                             d.search = $scope.Search;
                         }
+                        d.appId = $rootScope.appId;
                         d.UserCountry = $rootScope.UserCountry;
                         d.UserRoles = $rootScope.UserRoles;
                         d.CountryList = $rootScope.CountryList;
@@ -309,7 +310,7 @@
                     dataSrc: function(json) {
                         // console.log(json);
                         if (json.success != false) {
-                            // console.log(json.data);
+                            console.log(json.data);
                             $scope.lstdata = json.data;
                             return json.data;
                         } else {
@@ -358,34 +359,35 @@
         }
 
         function AppHtml(data, type, full, meta) {
+            // console.log(full)
             var appname = '';
-            if (data.tblappinfo != null) {
-                if (data.tblappinfo.AppName != null && data.tblappinfo.AppName != undefined && data.tblappinfo.AppName != '') {
-                    appname = data.tblappinfo.AppName;
-                }
+
+            if (full.AppName != null && full.AppName != undefined && full.AppName != '') {
+                appname = full.AppName;
             }
+
             return appname;
         }
 
         function roleHtml(data, type, full, meta) {
             var varspan = '';
             // console.log(full);
-            if (full.tbluserinroles.length > 0) {
-                for (var i = 0; i < full.tbluserinroles.length; i++) {
-                    if (i == 0) {
-                        varspan = full.tbluserinroles[i].tblrole.RoleName;
-                    } else {
-                        varspan = varspan + ', ' + full.tbluserinroles[i].tblrole.RoleName;
-                    }
-                }
-            } else {
-                varspan = 'N/A';
-            }
-            // if (full.tbluserinrole != null) {
-            //     varspan = full.tbluserinrole.tblrole.RoleName;
+            // if (full.tbluserinroles.length > 0) {
+            //     for (var i = 0; i < full.tbluserinroles.length; i++) {
+            //         if (i == 0) {
+            //             varspan = full.tbluserinroles[i].tblrole.RoleName;
+            //         } else {
+            //             varspan = varspan + ', ' + full.tbluserinroles[i].tblrole.RoleName;
+            //         }
+            //     }
             // } else {
             //     varspan = 'N/A';
             // }
+            if (full.RoleName != null) {
+                varspan = full.RoleName;
+            } else {
+                varspan = 'N/A';
+            }
             return varspan;
         };
 
