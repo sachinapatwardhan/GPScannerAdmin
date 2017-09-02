@@ -12,7 +12,8 @@
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
-
+                $rootScope.appId = $cookieStore.get('appId');
+                console.log($rootScope.appId);
             }
             //Dynamic Pagging
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
@@ -32,6 +33,8 @@
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "user/GetAllDynamicOwnerCustomer",
                     data: function(d) {
+                        d.appId = $rootScope.appId;
+                        console.log(d.appId);
                         if ($scope.Search != "") {
                             d.search = $scope.Search;
                         } else {
@@ -103,6 +106,7 @@
         }
 
         function NumberHtml(data, type, full, meta) {
+
             return (meta.row + 1);
         }
 
