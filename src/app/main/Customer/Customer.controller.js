@@ -11,7 +11,7 @@
         var vm = this;
 
         $scope.init = function() {
-            console.log("Hell....");
+            $rootScope.appId = $cookieStore.get('appId');
         }
 
         //Dynamic Pagging

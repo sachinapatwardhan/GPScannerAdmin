@@ -46,6 +46,7 @@
                 $scope.flgSalesAgent = true;
                 $scope.model.idSalesAgent = $rootScope.UserId;
             }
+            $rootScope.appId = $cookieStore.get('appId');
         }
 
         $scope.GetAllCountry = function() {

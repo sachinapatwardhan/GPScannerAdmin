@@ -46,6 +46,7 @@
             // $scope.query = '';
             $scope.Search = '';
             $scope.flag = false;
+            $rootScope.appId = $cookieStore.get('appId');
         }
 
         $scope.gotoVehicleList = function() {

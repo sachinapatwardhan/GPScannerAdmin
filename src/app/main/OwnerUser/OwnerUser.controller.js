@@ -40,6 +40,7 @@
 
             $scope.Search = '';
             $scope.flag = false;
+            $rootScope.appId = $cookieStore.get('appId');
         }
 
         $scope.clearSearchTerm = function() {
