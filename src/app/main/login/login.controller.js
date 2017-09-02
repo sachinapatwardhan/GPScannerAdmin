@@ -23,7 +23,6 @@
                 password: o.Password
             }
             $http.get($rootScope.RoutePath + "account/login", { params: params }).then(function(data) {
-
                 if (data.data.success == true) {
 
                     $scope.RoleWiseCountry = data.data.RolewiseCountryList;
@@ -48,7 +47,7 @@
                     $cookieStore.put('UserName', o.UserName);
                     $cookieStore.put('token', data.data.token);
                     $cookieStore.put('CountryList', _.uniq($scope.splitCountryList));
-
+                    $cookieStore.put('appId', data.data.appId);
                     $http.defaults.headers.common['Authorization'] = data.data.token; // jshint ignore:line
                     $rootScope.MenuSet();
                     $window.location.href = '/#/Dashboard';
