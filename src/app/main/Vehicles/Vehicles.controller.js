@@ -197,6 +197,7 @@
                     if ($rootScope.UserRoles == "Sales Agent") {
                         d.UserId = $rootScope.UserId;
                     }
+                    d.appId = $rootScope.appId;
                     return d;
                 },
                 type: "get",
