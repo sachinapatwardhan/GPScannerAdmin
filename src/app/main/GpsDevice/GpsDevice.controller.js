@@ -190,6 +190,7 @@
                     d.UserId = $rootScope.UserId;
                     d.CountryList = $rootScope.CountryList;
                     d.appId = $rootScope.appId;
+                    // console.log($rootScope.appId)
                     return d;
                 },
                 type: "get",
@@ -201,6 +202,7 @@
                             }
                         }
                         $scope.lstdata = json.data;
+                        // console.log($scope.lstdata);
                         $scope.TotalTrackers = json.recordsTotal
                         return json.data;
                     } else {
