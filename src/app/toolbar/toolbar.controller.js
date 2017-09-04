@@ -16,6 +16,8 @@
             search: ''
         };
 
+        $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
+
         $rootScope.logout = function() {
             $cookieStore.remove('UserName');
             $cookieStore.remove('token');

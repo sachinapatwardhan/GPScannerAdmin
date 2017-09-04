@@ -1,5 +1,4 @@
-(function ()
-{
+(function() {
     'use strict';
 
     angular
@@ -7,16 +6,14 @@
         .directive('msSplashScreen', msSplashScreenDirective);
 
     /** @ngInject */
-    function msSplashScreenDirective($animate)
-    {
+    function msSplashScreenDirective($animate, $rootScope, $cookieStore) {
+        console.log($cookieStore.get('Logo'));
+        $('.logo').css('background-image', 'url(' + $cookieStore.get('Logo') + ')');
         return {
             restrict: 'E',
-            link    : function (scope, iElement)
-            {
-                var splashScreenRemoveEvent = scope.$on('msSplashScreen::remove', function ()
-                {
-                    $animate.leave(iElement).then(function ()
-                    {
+            link: function(scope, iElement) {
+                var splashScreenRemoveEvent = scope.$on('msSplashScreen::remove', function() {
+                    $animate.leave(iElement).then(function() {
                         // De-register scope event
                         splashScreenRemoveEvent();
 

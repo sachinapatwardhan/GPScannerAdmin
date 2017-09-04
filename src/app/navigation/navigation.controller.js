@@ -1,5 +1,4 @@
-(function ()
-{
+(function() {
     'use strict';
 
     angular
@@ -7,8 +6,7 @@
         .controller('NavigationController', NavigationController);
 
     /** @ngInject */
-    function NavigationController($scope)
-    {
+    function NavigationController($scope, $rootScope) {
         var vm = this;
 
         // Data
@@ -18,6 +16,8 @@
             suppressScrollX: true
         };
 
+        $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
+
         // Methods
         vm.toggleMsNavigationFolded = toggleMsNavigationFolded;
 
@@ -26,14 +26,12 @@
         /**
          * Toggle folded status
          */
-        function toggleMsNavigationFolded()
-        {
+        function toggleMsNavigationFolded() {
             vm.folded = !vm.folded;
         }
 
         // Close the mobile menu on $stateChangeSuccess
-        $scope.$on('$stateChangeSuccess', function ()
-        {
+        $scope.$on('$stateChangeSuccess', function() {
             vm.bodyEl.removeClass('ms-navigation-horizontal-mobile-menu-active');
         });
     }
