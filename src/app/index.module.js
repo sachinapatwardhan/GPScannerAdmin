@@ -58,6 +58,6 @@
             'app.DrivingBehaviour',
             'app.telco',
             'app.appinfo',
-            'app.Logs',
+            // 'app.Logs',
         ]);
 })();
