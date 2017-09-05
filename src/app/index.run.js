@@ -15,7 +15,6 @@
                 $http.defaults.headers.common['Authorization'] = token;
             };
         }
-        console.log($cookieStore.remove('appId'))
         $rootScope.RoutePath = "http://localhost:7212/";
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
@@ -34,6 +33,9 @@
             $rootScope.appId = data.Id;
             $cookieStore.put('appName', data.AppName);
             $rootScope.AppName = data.AppName;
+            $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
+            // console.log($rootScope.Logo)
+            $cookieStore.put('Logo', $rootScope.Logo)
         })
 
         $rootScope.CurrencyCode = "RM";
@@ -512,19 +514,19 @@
                         }
 
                         //Telephone Company
-                        var Logs = _.filter(lstAllPages, function(obj) {
-                            return obj.tblmodulemgmt.Module == 'Logs';
-                        });
-                        if (Logs.length > 0) {
-                            var MenuName = $rootScope.AppName + '.Logs';
-                            msNavigationService.saveItem(MenuName, {
-                                // msNavigationService.saveItem('Maark.Logs', {
-                                title: 'Logs',
-                                state: 'app.Logs',
-                                order: Logs[0].tblmodulemgmt.DisplayOrder,
-                                weight: 1
-                            });
-                        }
+                        // var Logs = _.filter(lstAllPages, function(obj) {
+                        //     return obj.tblmodulemgmt.Module == 'Logs';
+                        // });
+                        // if (Logs.length > 0) {
+                        //     var MenuName = $rootScope.AppName + '.Logs';
+                        //     msNavigationService.saveItem(MenuName, {
+                        //         // msNavigationService.saveItem('Maark.Logs', {
+                        //         title: 'Logs',
+                        //         state: 'app.Logs',
+                        //         order: Logs[0].tblmodulemgmt.DisplayOrder,
+                        //         weight: 1
+                        //     });
+                        // }
 
                         //App Info
                         var AppInfo = _.filter(lstAllPages, function(obj) {
