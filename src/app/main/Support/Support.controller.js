@@ -79,9 +79,9 @@
 
         $scope.SaveSupport = function(o) {
 
-            console.log(o);
+            // console.log(o);
             $http.post($rootScope.RoutePath + "user/SaveSupportUser", o).then(function(data) {
-                console.log(data);
+                // console.log(data);
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
@@ -110,7 +110,7 @@
         }
 
         $scope.FetchSupportById = function(id) {
-            console.log($scope.lstdata);
+            // console.log($scope.lstdata);
             var o = _.findWhere($scope.lstdata, { id: id });
             $scope.tab.selectedIndex = 1;
             $scope.FlgEditMode = true;
@@ -199,7 +199,7 @@
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function() {
-                console.log($scope.obj.email);
+                // console.log($scope.obj.email);
                 $http.get($rootScope.RoutePath + "account/forgotpassword?email=" + $scope.obj.email).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(

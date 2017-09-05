@@ -10,7 +10,7 @@
         var vm = this;
         vm.FlgDeletedAccess = FlgDeletedAccess
         vm.CountrydtColumnDefs1 = CountrydtColumnDefs1
-        console.log(vm.CountrydtColumnDefs1)
+            // console.log(vm.CountrydtColumnDefs1)
         $scope.init = function() {
             $scope.model = {
                 Country: 'All',

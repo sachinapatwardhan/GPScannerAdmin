@@ -209,6 +209,7 @@
 
         //Create New User With It's Role
         $scope.CreateUser = function(o) {
+
             o.roleId = _.where($scope.lstRoles, {
                 checked: true
             });
@@ -226,6 +227,7 @@
                         $cookieStore.put('UserImage', null);
                         $rootScope.UserImage = $cookieStore.get('UserImage');
                     }
+                    o.idApp = $cookieStore.get('appId');
                     $http.post($rootScope.RoutePath + "user/SaveUser", o).then(function(data) {
                         //$scope.SaveUserInRole(o);
                         if (data.data.success == true) {

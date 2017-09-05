@@ -372,7 +372,7 @@
                     HideLoader();
                 })
             } else if (name == 'TimeZone') {
-                console.log(objModel);
+                // console.log(objModel);
             }
         }
 

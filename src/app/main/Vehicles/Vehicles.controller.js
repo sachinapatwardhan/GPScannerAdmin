@@ -85,7 +85,12 @@
         }
 
         $scope.GetUserByName = function(query) {
-            $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            var params = {
+                    UserName: query,
+                    appId: $cookieStore.get('appId'),
+                }
+                // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function(data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -208,8 +213,8 @@
                         $scope.lstTotal = json.recordsTotal;
                         return json.data;
                     } else {
-                        return [];
                         $scope.lstTotal = 0;
+                        return [];
 
                     }
                 },
@@ -401,7 +406,7 @@
 
         $scope.chkTrackerId = function(idDevice) {
             $http.get($rootScope.RoutePath + "PetDevice/GetGPSDeviceById?DeviceId=" + idDevice).success(function(data) {
-                console.log(data);
+                // console.log(data);
                 if (data != null) {
                     $scope.model.idSalesAgent = data.idSalesAgent;
                     $scope.model.DeviceType = data.Type;
