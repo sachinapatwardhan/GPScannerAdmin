@@ -9,7 +9,7 @@
     function ImportPetDeviceController($http, $mdDialog, $mdToast, $scope, $rootScope, Tasks, event, Obj, lstCarrier, lstCountry) {
         var vm = this;
 
-        console.log("call");
+        // console.log("call");
         $scope.init = function() {
             $scope.model = {
                 Type: '',
@@ -24,7 +24,7 @@
 
         $scope.Import = function(o) {
             // if (o.Type == "Z3" && o.CarrierId != null && o.CarrierId != "" && o.CarrierId != undefined) {
-                // o.CountryId = _.findWhere($scope.lstCarrier, { id: parseInt(o.CarrierId) }).idCountry.toString();
+            // o.CountryId = _.findWhere($scope.lstCarrier, { id: parseInt(o.CarrierId) }).idCountry.toString();
             // }
             var formData = new FormData();
             angular.forEach($scope.Productfiles, function(obj) {
@@ -33,7 +33,7 @@
                 formData.append('IsOldDevice', o.IsOldDevice);
                 formData.append('CreatedBy', o.CreatedBy);
                 formData.append('CountryId', o.CountryId);
-                formData.append('CarrierId',o.CarrierId);
+                formData.append('CarrierId', o.CarrierId);
             });
             $http.post($rootScope.RoutePath + "PetDevice/uploadExcelDevice", formData, {
                 transformRequest: angular.identity,

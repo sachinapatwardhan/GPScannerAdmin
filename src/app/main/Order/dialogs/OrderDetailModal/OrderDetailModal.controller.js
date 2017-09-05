@@ -33,7 +33,7 @@
 
         $scope.GetOrderDetailByOrderId = function() {
             $http.get($scope.RoutePath + 'order/GetOrderDetailByOrderId?idOrder=' + objorder.id).then(function(data) {
-                console.log(data);
+                // console.log(data);
                 if (data.data.length > 0) {
                     for (var i = 0; i < data.data.length; i++) {
 
@@ -56,7 +56,7 @@
                 } else {
                     $scope.lstOrderDetail = [];
                 }
-                console.log($scope.lstOrderDetail)
+                // console.log($scope.lstOrderDetail)
             });
         }
 

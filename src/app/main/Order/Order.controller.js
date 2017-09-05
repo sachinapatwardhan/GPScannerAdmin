@@ -491,7 +491,7 @@
             $mdDialog.show(confirm).then(function() {
                 $http.get($rootScope.RoutePath + "order/UpdateOrderStatus", { params: params }).success(function(response) {
                     if (response.success == true) {
-                        console.log(response);
+                        // console.log(response);
                         // message
                         $mdToast.show(
                             $mdToast.simple()

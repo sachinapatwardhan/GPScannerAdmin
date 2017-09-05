@@ -7,13 +7,13 @@
 
     /** @ngInject */
     function OwnerCustomerController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
-
+        // console.log("Hell..");
         var vm = this;
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
                 $rootScope.appId = $cookieStore.get('appId');
-                console.log($rootScope.appId);
+                // console.log($rootScope.appId);
             }
             //Dynamic Pagging
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
@@ -34,7 +34,6 @@
                     url: $rootScope.RoutePath + "user/GetAllDynamicOwnerCustomer",
                     data: function(d) {
                         d.appId = $rootScope.appId;
-                        console.log(d.appId);
                         if ($scope.Search != "") {
                             d.search = $scope.Search;
                         } else {
@@ -144,7 +143,6 @@
                 '<md-tooltip md-visible="" md-direction="">Show Devices</md-tooltip>' +
                 '</md-button>';
             if ($rootScope.FlgModifiedAccess) {
-
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword(' + data.id + ')" aria-label="">' +
                     '<md-icon md-font-icon="icon-account-alert"  class="s18 red-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +

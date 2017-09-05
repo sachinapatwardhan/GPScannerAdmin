@@ -26,7 +26,7 @@
             };
 
             $scope.deviceid = objUser.deviceid;
-            console.log($scope.deviceid)
+            // console.log($scope.deviceid)
             $scope.GetAlarmByDeviceId($scope.deviceid);
         }
 

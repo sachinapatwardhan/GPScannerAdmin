@@ -112,9 +112,9 @@
                                             }
                                         };
                                     }, function(err) {
-                                        console.log('Err:', err);
+                                        // console.log('Err:', err);
                                     }, function(msg) {
-                                        console.log('message:', msg);
+                                        // console.log('message:', msg);
                                     });
                                 };
                             })(marker, content, infowindow, loan, add, Phone, lat, long));
@@ -162,7 +162,7 @@
             }
 
             $http.get($rootScope.RoutePath + 'bike/GetPetCurrentLocation', { params: params }).success(function(data) {
-                console.log(data)
+                // console.log(data)
                 $scope.lstlocation = data.data;
 
                 $scope.IntializeGoogleMap($scope.lstlocation);

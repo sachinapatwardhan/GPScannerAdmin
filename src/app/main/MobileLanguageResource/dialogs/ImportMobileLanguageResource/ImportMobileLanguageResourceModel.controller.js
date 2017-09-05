@@ -10,10 +10,10 @@
         var vm = this;
 
         $scope.Import = function() {
-            console.log("call");
+            // console.log("call");
             var formData = new FormData();
             angular.forEach($scope.Productfiles, function(obj) {
-                console.log(obj.lfFile);
+                // console.log(obj.lfFile);
                 formData.append('files[]', obj.lfFile);
             });
 
@@ -21,7 +21,7 @@
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
             }).then(function(response) {
-                console.log(response);
+                // console.log(response);
                 if (response.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()

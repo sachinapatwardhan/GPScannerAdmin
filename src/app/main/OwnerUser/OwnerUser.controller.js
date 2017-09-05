@@ -185,6 +185,7 @@
                     $cookieStore.put('UserImage', null);
                     $rootScope.UserImage = $cookieStore.get('UserImage');
                 }
+                o.idApp = $cookieStore.get('appId');
                 $http.post($rootScope.RoutePath + "user/SaveUser", o).then(function(data) {
                     //$scope.SaveUserInRole(o);
                     if (data.data.success == true) {
@@ -288,8 +289,8 @@
                 DTColumnBuilder.newColumn('username').withOption('width', '12%'),
                 DTColumnBuilder.newColumn('email').withOption('width', '13%'),
                 DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
-                DTColumnBuilder.newColumn('RoleName').renderWith(roleHtml),
-                DTColumnBuilder.newColumn('AppName').renderWith(AppHtml),
+                DTColumnBuilder.newColumn(null).renderWith(roleHtml),
+                // DTColumnBuilder.newColumn('AppName').renderWith(AppHtml),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
             ]
 
@@ -371,23 +372,22 @@
 
         function roleHtml(data, type, full, meta) {
             var varspan = '';
-            // console.log(full);
-            // if (full.tbluserinroles.length > 0) {
-            //     for (var i = 0; i < full.tbluserinroles.length; i++) {
-            //         if (i == 0) {
-            //             varspan = full.tbluserinroles[i].tblrole.RoleName;
-            //         } else {
-            //             varspan = varspan + ', ' + full.tbluserinroles[i].tblrole.RoleName;
-            //         }
-            //     }
-            // } else {
-            //     varspan = 'N/A';
-            // }
-            if (full.RoleName != null) {
-                varspan = full.RoleName;
+            if (full.tbluserinroles.length > 0) {
+                for (var i = 0; i < full.tbluserinroles.length; i++) {
+                    if (i == 0) {
+                        varspan = full.tbluserinroles[i].tblrole.RoleName;
+                    } else {
+                        varspan = varspan + ', ' + full.tbluserinroles[i].tblrole.RoleName;
+                    }
+                }
             } else {
                 varspan = 'N/A';
             }
+            // if (full.RoleName != null) {
+            //     varspan = full.RoleName;
+            // } else {
+            //     varspan = 'N/A';
+            // }
             return varspan;
         };
 
