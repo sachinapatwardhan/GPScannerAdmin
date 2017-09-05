@@ -164,7 +164,7 @@
 
         $scope.SendPushNotification = function(o) {
             $http.post($rootScope.RoutePath + "pushnotification/SendPushNotification", o).then(function(response) {
-                console.log(response)
+                // console.log(response)
                 if (response.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
@@ -234,7 +234,7 @@
                     $scope.ResetSettings();
                     $scope.GetAllFacebookTimeSettings();
                     $http.get($rootScope.RoutePath + "socketapi/UpdateAutoSendPushNotificationTime").then(function(data) {
-                        console.log(data);
+                        // console.log(data);
                     });
 
                 } else {
@@ -301,7 +301,7 @@
                 TaxSettingName: 'PushFacebookCountrySetting'
             }
             $http.get($rootScope.RoutePath + "settings/GetTaxSettingByName", { params: params }).then(function(data) {
-                console.log(data)
+                // console.log(data)
                 if (data.data.success == true) {
                     if (data.data.data.Value != "") {
                         $scope.FacebookCountry = data.data.data.Value;
@@ -321,8 +321,8 @@
         $scope.DeleteFacebookCountry = function(Country) {
             var value = "";
             for (var i = 0; i < $scope.lstFacbookCountry.length; i++) {
-                console.log($scope.lstFacbookCountry[i])
-                console.log(Country)
+                // console.log($scope.lstFacbookCountry[i])
+                // console.log(Country)
                 if (Country != $scope.lstFacbookCountry[i]) {
                     if (value != "") {
                         value = value + "," + $scope.lstFacbookCountry[i];
@@ -366,10 +366,10 @@
 
         //Dynamic Pagging
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
-            console.log($rootScope.FlgAddedEditlocal)
+            // console.log($rootScope.FlgAddedEditlocal)
             vm.FlgAddedEditlocal = $rootScope.FlgAddedEditlocal;
 
-            
+
             $scope.FilterStatus = 1;
             $scope.dtColumns1 = [
                 DTColumnBuilder.newColumn('id').renderWith(NumberHtml),

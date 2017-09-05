@@ -8,13 +8,15 @@
     /** @ngInject */
     function LoginController($scope, $state, $rootScope, $timeout, $http, $cookieStore, $mdDialog, $document, $mdToast, $stateParams, $window) {
         var vm = this;
-
+        $rootScope.Logo = $cookieStore.get('Logo');
+        $('.logo').css('background-image', 'url(' + $rootScope.Logo + ')');
         $scope.init = function() {
             $scope.model = {
                 UserName: '',
                 Password: '',
                 RemeberMe: false
             }
+
         }
 
         $scope.Login = function(o) {
@@ -47,7 +49,7 @@
                     $cookieStore.put('UserName', o.UserName);
                     $cookieStore.put('token', data.data.token);
                     $cookieStore.put('CountryList', _.uniq($scope.splitCountryList));
-                    $cookieStore.put('appId', data.data.appId);
+                    // $cookieStore.put('appId', data.data.appId);
                     $http.defaults.headers.common['Authorization'] = data.data.token; // jshint ignore:line
                     $rootScope.MenuSet();
                     $window.location.href = '/#/Dashboard';

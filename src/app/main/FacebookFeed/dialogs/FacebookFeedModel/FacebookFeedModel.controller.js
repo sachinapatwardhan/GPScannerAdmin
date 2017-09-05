@@ -36,7 +36,7 @@
             if (!IsCountryExist) {
 
                 var Value = "";
-                console.log(FacebookCountry)
+                // console.log(FacebookCountry)
                 if (FacebookCountry == "") {
                     Value = country;
                     FacebookCountry = Value;
@@ -44,7 +44,7 @@
                     Value = FacebookCountry + "," + country;
                     FacebookCountry = Value;
                 }
-                console.log()
+                // console.log()
 
                 var obj = {
                     Name: "PushFacebookCountrySetting",
