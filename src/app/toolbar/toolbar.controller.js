@@ -21,7 +21,10 @@
         $rootScope.logout = function() {
             $cookieStore.remove('UserName');
             $cookieStore.remove('token');
-            $cookieStore.remove('UserImage')
+            $cookieStore.remove('UserImage');
+            $cookieStore.remove('AppName');
+            // $cookieStore.remove('Logo');
+            $cookieStore.remove('appId');
             $rootScope.UserImage = '';
             $http.defaults.headers.common.Authorization = '';
             // $state.go('app.login');
@@ -31,6 +34,7 @@
             $timeout(function() {
                 $window.location.reload();
             });
+            // console.log($cookieStore.get('appId'));
         }
 
         vm.bodyEl = angular.element('body');
