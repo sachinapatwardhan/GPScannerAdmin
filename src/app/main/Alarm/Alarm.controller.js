@@ -21,7 +21,7 @@
             $scope.searchAlarm = "";
             $scope.searchDevice = "";
             $rootScope.appId = $cookieStore.get('appId');
-            console.log($rootScope.appId);
+            // console.log($rootScope.appId);
             $scope.GetAllGpsDevice();
             AlarmCode();
         }
