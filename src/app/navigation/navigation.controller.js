@@ -6,7 +6,7 @@
         .controller('NavigationController', NavigationController);
 
     /** @ngInject */
-    function NavigationController($scope, $rootScope) {
+    function NavigationController($scope, $rootScope, $cookieStore) {
         var vm = this;
 
         // Data
@@ -15,7 +15,7 @@
         vm.msScrollOptions = {
             suppressScrollX: true
         };
-
+        $rootScope.Logo = $cookieStore.get('Logo');
         $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
 
         // Methods
