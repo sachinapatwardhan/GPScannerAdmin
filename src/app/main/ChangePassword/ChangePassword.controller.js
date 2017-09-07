@@ -11,7 +11,7 @@
 
         $scope.init = function() {
             $scope.model = {
-                username: $cookieStore.get('UserName'),
+                UserId: $cookieStore.get('UserId'),
                 oldpassword: '',
                 password: '',
                 confirmpassword: '',

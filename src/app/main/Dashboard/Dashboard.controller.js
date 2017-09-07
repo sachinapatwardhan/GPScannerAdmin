@@ -12,6 +12,7 @@
         var socket = io($rootScope.Socket_URL, {
             'forceNew': true
         });
+        $rootScope.appId = $cookieStore.get('appId');
 
         function callDeviceStatus() {
             for (var t = 0; t < $scope.lstActiveVehicle.length; t++) {
@@ -139,8 +140,7 @@
                 // var MethodCallFlag = true;
 
                 var FoundLocation = 0;
-
-                $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike').success(function(data) {
+                $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike?idApp=' + $rootScope.appId).success(function(data) {
                     $scope.lstActiveVehicle = data.data;
 
                     callDeviceStatus();
@@ -411,13 +411,15 @@
                 var params = {
                     countryName: $rootScope.UserCountry,
                     CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin
+                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    idApp: $rootScope.appId,
                 }
             } else {
                 var params = {
                     countryName: null,
                     CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin
+                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    idApp: $rootScope.appId,
                 }
             }
             $http.get($rootScope.RoutePath + "dashboard/GetGraphCustomer", { params: params }).then(function(data) {
@@ -1564,13 +1566,15 @@
                 var params = {
                     countryName: $rootScope.UserCountry,
                     CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin
+                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    idApp: $rootScope.appId,
                 }
             } else {
                 var params = {
                     countryName: null,
                     CountryList: [],
-                    IsSuperAdmin: $scope.FlgSuperAdmin
+                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    idApp: $rootScope.appId,
                 }
             }
 
@@ -1694,13 +1698,15 @@
                 var params = {
                     countryName: $rootScope.UserCountry,
                     CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin
+                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    idApp: $rootScope.appId,
                 }
             } else {
                 var params = {
                     countryName: null,
                     CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin
+                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    idApp: $rootScope.appId,
                 }
             }
 
@@ -1717,13 +1723,13 @@
             var params = {
                 countryName: $rootScope.UserCountry,
                 CountryList: $rootScope.CountryList,
-                IsSuperAdmin: $scope.FlgSuperAdmin
+                IsSuperAdmin: $scope.FlgSuperAdmin,
+                idApp: $rootScope.appId,
             }
 
 
             $http.get($rootScope.RoutePath + "dashboard/GetTotalCustomer", { params: params }).then(function(data) {
                 $scope.lstTotalCustomer = data.data[0].Count;
-
             });
         }
 
@@ -1853,19 +1859,6 @@
 
         }
 
-        $scope.GetAllDevice = function() {
-            var params = {
-                countryName: $rootScope.UserCountry,
-                CountryList: $rootScope.CountryList,
-                IsSuperAdmin: $scope.FlgSuperAdmin
-            }
-            $http.get($rootScope.RoutePath + "dashboard/GetBikeTotalDevice", { params: params }).then(function(data) {
-                $scope.lstDevices = data.data;
-
-
-            });
-        }
-
         $scope.dtOptionstable = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
             .withDisplayLength(5)
@@ -1895,7 +1888,7 @@
 
 
         $scope.TotalCustomerbyCountry = function() {
-            $http.get($rootScope.RoutePath + "dashboard/GetTotalCustomerByCountry").then(function(data) {
+            $http.get($rootScope.RoutePath + "dashboard/GetTotalCustomerByCountry?idApp=" + $rootScope.appId).then(function(data) {
                 if (data.data.success == true) {
                     $scope.lstTotalCustomerbyCountry = data.data.data;
                     $scope.lst = [];

@@ -141,7 +141,6 @@
             };
             $scope.dtInstance.reloadData(callback, resetPaging);
             $('#TRACKERDetail').dataTable()._fnAjaxUpdate();
-
         }
 
         $scope.clearSearchTerm = function() {

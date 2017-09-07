@@ -51,7 +51,7 @@
         //GetDevice
 
         $scope.GetAllGpsDevice = function() {
-            $http.get($rootScope.RoutePath + "gpsdata/GetAllGpsDevice").then(function(resdata) {
+            $http.get($rootScope.RoutePath + "gpsdata/GetAllGpsDevice?idApp=" + $rootScope.appId).then(function(resdata) {
                 if (resdata.data.length > 0) {
                     $scope.lstdevice = resdata.data;
                 } else {
@@ -107,8 +107,7 @@
                     } else {
                         d.EndDate = ''
                     }
-                    d.appId = $rootScope.appId;
-                    return d;
+d.idApp = $rootScope.appId;                    return d;
                 },
                 type: "get",
                 dataSrc: function(json) {
@@ -202,8 +201,7 @@
 
         //Dynamic Pagging End
         $scope.Export = function() {
-            window.location.href = $rootScope.RoutePath + "canbusdata/ExportAllCanbusData?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate;
-
+            window.location.href = $rootScope.RoutePath + "canbusdata/ExportAllCanbusData?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&idApp=" + $rootScope.appId + "&search=" + $scope.Search;
         }
 
         $scope.init();
