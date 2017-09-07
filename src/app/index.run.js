@@ -24,13 +24,12 @@
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
 
-        $rootScope.appName = 'Android';
+        $rootScope.appName = '11';
         var params = {
             AppName: $rootScope.appName,
         }
         $rootScope.App_name = $rootScope.appName + '-Admin';
         $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
-            console.log(data)
             if (data != null) {
                 $cookieStore.put('appId', data.Id);
                 $rootScope.appId = data.Id;
@@ -40,7 +39,19 @@
                 // console.log($rootScope.Logo)
                 $cookieStore.put('Logo', $rootScope.Logo)
             } else {
-                $cookieStore.put('appId', -1);
+                $rootScope.appName = 'MAARK'
+                var params = {
+                    AppName: $rootScope.appName,
+                }
+                $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
+                    $cookieStore.put('appId', data.Id);
+                    $rootScope.appId = data.Id;
+                    $cookieStore.put('appName', data.AppName);
+                    $rootScope.AppName = data.AppName;
+                    $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
+                    // console.log($rootScope.Logo)
+                    $cookieStore.put('Logo', $rootScope.Logo)
+                });
             }
         })
 
