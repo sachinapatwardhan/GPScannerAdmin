@@ -151,10 +151,10 @@
                                     <md-button class="md-raised md-primary" ng-click="RemoveIOSCertificat()">Remove</md-button>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex ng-show="IOSC ==''">
-                                    <lf-ng-md-file-input name="file1" lf-required lf-files="IOSCertificate" lf-placeholder="IOS Certificate" lf-mimetype="text/plain" lf-maxcount="1" lf-api="apiResetIC" lf-filesize="10MB"></lf-ng-md-file-input>
+                                    <lf-ng-md-file-input name="file1" lf-required lf-files="IOSCertificate" lf-placeholder="IOS Certificate" lf-maxcount="1" lf-api="apiResetIC" lf-filesize="10MB"></lf-ng-md-file-input>
                                     <div ng-messages="formAppInfo.file1.$error" role="alert">
                                         <div ng-message="mimetype">
-                                            <span>Only text file is Supported</span>
+                                            <span>Only .pem file is Supported</span>
                                         </div>
                                     </div>
                                 </md-input-container>
@@ -166,10 +166,10 @@
                                     <md-button class="md-raised md-primary" ng-click="RemoveIOSKey()">Remove</md-button>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex ng-show="IOSK ==''">
-                                    <lf-ng-md-file-input name="file2" lf-files="IOSKey" lf-required lf-placeholder="IOS Key" lf-mimetype="text/plain" lf-maxcount="1" lf-api="apiResetIK" lf-filesize="10MB"></lf-ng-md-file-input>
+                                    <lf-ng-md-file-input name="file2" lf-files="IOSKey" lf-required lf-placeholder="IOS Key" lf-maxcount="1" lf-api="apiResetIK" lf-filesize="10MB"></lf-ng-md-file-input>
                                     <div ng-messages="formAppInfo.file2.$error" role="alert">
                                         <div ng-message="mimetype">
-                                            <span>Only text file is Supported</span>
+                                            <span>Only .pem file is Supported</span>
                                         </div>
                                     </div>
                                 </md-input-container>
