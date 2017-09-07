@@ -18,7 +18,7 @@
         $rootScope.RoutePath = "http://localhost:7212/";
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
-        // $rootScope.RoutePath = "http://bugzstudio.com:7212/";
+        // $rootScope.RoutePath = "http://bugzstudio.com:7215/";
         // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
         $rootScope.Socket_URL = "http://localhost:7212";
 
@@ -30,14 +30,18 @@
         }
         $rootScope.App_name = $rootScope.appName + '-Admin';
         $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
-            $cookieStore.put('appId', data.Id);
-            $rootScope.appId = data.Id;
-            $cookieStore.put('appName', data.AppName);
-            $rootScope.AppName = data.AppName;
-            $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
-            // console.log($rootScope.Logo)
-            $cookieStore.put('Logo', $rootScope.Logo)
-
+            console.log(data)
+            if (data != null) {
+                $cookieStore.put('appId', data.Id);
+                $rootScope.appId = data.Id;
+                $cookieStore.put('appName', data.AppName);
+                $rootScope.AppName = data.AppName;
+                $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
+                // console.log($rootScope.Logo)
+                $cookieStore.put('Logo', $rootScope.Logo)
+            } else {
+                $cookieStore.put('appId', -1);
+            }
         })
 
         $rootScope.CurrencyCode = "RM";
