@@ -43,6 +43,7 @@
                 var params = {
                     AppName: $rootScope.appName,
                 }
+                $rootScope.App_name = $rootScope.appName + '-Admin';
                 $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
                     $cookieStore.put('appId', data.Id);
                     $rootScope.appId = data.Id;
