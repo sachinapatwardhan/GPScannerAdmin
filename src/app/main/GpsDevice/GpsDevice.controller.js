@@ -178,7 +178,7 @@
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "PetDevice/GetAllGPSDevice",
+                url: $rootScope.RoutePath + "PetDevice/GetAllGPSDeviceold",
                 data: function(d) {
                     if ($scope.Search == '') {
                         d.search = '';
@@ -307,6 +307,8 @@
                 } else {
                     o.ExpiryDate = null;
                 }
+                o.AppName = $cookieStore.get('appName');
+                console.log(o);
                 $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
