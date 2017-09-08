@@ -16,6 +16,8 @@
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.CountryList = $cookieStore.get('CountryList');
+        $rootScope.AppName = $cookieStore.get('appName');
+        console.log($rootScope.AppName);
         $scope.init = function() {
             $scope.model = {
                 id: 0,
@@ -178,17 +180,20 @@
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "PetDevice/GetAllGPSDeviceold",
+                url: $rootScope.RoutePath + "PetDevice/GetAllGPSDevice",
                 data: function(d) {
                     if ($scope.Search == '') {
                         d.search = '';
                     } else {
                         d.search = $scope.Search;
                     }
+                    if ($rootScope.UserRoles == 'Sales Agent') {
+                        d.UserId = $rootScope.UserId;
+                    }
                     d.UserRoles = $rootScope.UserRoles;
-                    d.UserId = $rootScope.UserId;
+
                     d.CountryList = $rootScope.CountryList;
-                    d.appId = $rootScope.appId;
+                    d.AppName = $rootScope.AppName;
                     // console.log($rootScope.appId)
                     return d;
                 },
@@ -308,7 +313,6 @@
                     o.ExpiryDate = null;
                 }
                 o.AppName = $cookieStore.get('appName');
-                console.log(o);
                 $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
