@@ -21,11 +21,11 @@
 
         $scope.Login = function(o) {
             var params = {
-                username: o.UserName,
-                password: o.Password,
-                appId: $cookieStore.get('appId'),
-            }
-            console.log(params)
+                    username: o.UserName,
+                    password: o.Password,
+                    appId: $cookieStore.get('appId'),
+                }
+                // console.log(params)
             $http.get($rootScope.RoutePath + "account/login", { params: params }).then(function(data) {
                 if (data.data.success == true) {
 
