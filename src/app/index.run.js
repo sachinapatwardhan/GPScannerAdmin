@@ -15,16 +15,16 @@
                 $http.defaults.headers.common['Authorization'] = token;
             };
         }
-        $rootScope.RoutePath = "http://localhost:7212/";
+        // $rootScope.RoutePath = "http://localhost:7212/";
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
-        // $rootScope.RoutePath = "http://bugzstudio.com:7215/";
-        // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
-        $rootScope.Socket_URL = "http://localhost:7212";
+        $rootScope.RoutePath = "http://bugzstudio.com:7212/";
+        $rootScope.Socket_URL = "http://bugzstudio.com:7212";
+        // $rootScope.Socket_URL = "http://localhost:7212";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
 
-        $rootScope.appName = '11';
+        $rootScope.appName = 'Maark';
         var params = {
             AppName: $rootScope.appName,
         }
