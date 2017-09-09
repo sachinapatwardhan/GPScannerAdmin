@@ -151,7 +151,7 @@
                                     <md-button class="md-raised md-primary" ng-click="RemoveIOSCertificat()">Remove</md-button>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex ng-show="IOSC ==''">
-                                    <lf-ng-md-file-input name="file1" lf-required lf-files="IOSCertificate" lf-placeholder="IOS Certificate" lf-maxcount="1" lf-api="apiResetIC" lf-filesize="10MB"></lf-ng-md-file-input>
+                                    <lf-ng-md-file-input name="file1" lf-files="IOSCertificate" lf-placeholder="IOS Certificate" lf-maxcount="1" lf-api="apiResetIC" lf-filesize="10MB"></lf-ng-md-file-input>
                                     <div ng-messages="formAppInfo.file1.$error" role="alert">
                                         <div ng-message="mimetype">
                                             <span>Only .pem file is Supported</span>
@@ -166,7 +166,7 @@
                                     <md-button class="md-raised md-primary" ng-click="RemoveIOSKey()">Remove</md-button>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex ng-show="IOSK ==''">
-                                    <lf-ng-md-file-input name="file2" lf-files="IOSKey" lf-required lf-placeholder="IOS Key" lf-maxcount="1" lf-api="apiResetIK" lf-filesize="10MB"></lf-ng-md-file-input>
+                                    <lf-ng-md-file-input name="file2" lf-files="IOSKey" lf-placeholder="IOS Key" lf-maxcount="1" lf-api="apiResetIK" lf-filesize="10MB"></lf-ng-md-file-input>
                                     <div ng-messages="formAppInfo.file2.$error" role="alert">
                                         <div ng-message="mimetype">
                                             <span>Only .pem file is Supported</span>
@@ -189,8 +189,8 @@
                                 <label>Image</label>
                                 <md-input-container class="md-block" flex>
                                     <!--<lf-ng-md-file-input id="fileInput" name="files00" lf-files="Mediafiles" lf-api="apiMedia" ng-click="removeAllFiles()" onchange="angular.element(this).scope().setFiles(this)" lf-mimetype="image/*" base-sixty-four-input></lf-ng-md-file-input>-->
-                                    <lf-ng-md-file-input name="files01 " lf-required lf-placeholder="App Logo " lf-files="AppLogo" lf-api="apiMedia" onchange="angular.element(this).scope().setFiles(this) " lf-mimetype="image/* " preview></lf-ng-md-file-input>
-                                    <div ng-messages="AddUserForm.files01.$error" style="color:red;">
+                                    <lf-ng-md-file-input name="files01 " lf-placeholder="App Logo " lf-files="AppLogo" lf-api="apiMedia" onchange="angular.element(this).scope().setFiles(this) " lf-mimetype="image/* " preview></lf-ng-md-file-input>
+                                    <div ng-messages="formAppInfo.files01.$error" style="color:red;">
                                         <div ng-message="mimetype">Only image file supported</div>
                                     </div>
                                 </md-input-container>
