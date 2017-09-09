@@ -8,10 +8,12 @@
     /** @ngInject */
     function LoginController($scope, $state, $rootScope, $timeout, $http, $cookieStore, $mdDialog, $document, $mdToast, $stateParams, $window) {
         var vm = this;
-        setTimeout(function() {
+        fun.apply();
+
+        function fun() {
             $rootScope.Logo = $cookieStore.get('Logo');
             $('.logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-        }, 300);
+        }
         $scope.init = function() {
             $scope.model = {
                 UserName: '',
