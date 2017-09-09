@@ -13,7 +13,7 @@
         setTimeout(function() {
             $rootScope.Logo = $cookieStore.get('Logo');
             $('.logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-        }, 200);
+        }, 250);
 
         $scope.init = function() {
             $scope.model = {
