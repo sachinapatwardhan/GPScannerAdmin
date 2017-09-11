@@ -17,7 +17,6 @@
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.CountryList = $cookieStore.get('CountryList');
         $rootScope.AppName = localStorage.getItem('appName');
-        console.log($rootScope.AppName);
         $scope.init = function() {
             $scope.model = {
                 id: 0,
