@@ -31,15 +31,17 @@
         $rootScope.App_name = $rootScope.appName + '-Admin';
         $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
             if (data != null) {
-                $cookieStore.put('appId', data.Id);
                 $rootScope.appId = data.Id;
-                $cookieStore.put('appName', data.AppName);
                 $rootScope.AppName = data.AppName;
                 $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
-                $cookieStore.put('Logo', $rootScope.Logo)
-                $('.logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-                $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
 
+                localStorage.setItem('appId', data.Id)
+                localStorage.setItem('appName', data.AppName);
+                localStorage.setItem('Logo', $rootScope.Logo)
+
+                $cookieStore.put('appId', data.Id);
+
+                $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
             } else {
                 $rootScope.appName = 'MAARK'
                 var params = {
@@ -47,14 +49,17 @@
                 }
                 $rootScope.App_name = $rootScope.appName + '-Admin';
                 $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
-                    $cookieStore.put('appId', data.Id);
                     $rootScope.appId = data.Id;
-                    $cookieStore.put('appName', data.AppName);
                     $rootScope.AppName = data.AppName;
                     $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
-                    $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
-                    $('.logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-                    $cookieStore.put('Logo', $rootScope.Logo)
+
+                    localStorage.setItem('appId', data.Id)
+                    localStorage.setItem('appName', data.AppName);
+                    localStorage.setItem('Logo', $rootScope.Logo)
+
+                    $cookieStore.put('appId', data.Id);
+
+                    $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
                 });
             }
         })

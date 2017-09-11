@@ -15,8 +15,8 @@
         vm.msScrollOptions = {
             suppressScrollX: true
         };
-        $rootScope.Logo = $cookieStore.get('Logo');
-        $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
+
+        $('.logo-image').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
 
         // Methods
         vm.toggleMsNavigationFolded = toggleMsNavigationFolded;

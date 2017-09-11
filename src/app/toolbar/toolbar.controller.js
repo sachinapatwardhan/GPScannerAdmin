@@ -15,16 +15,16 @@
         $rootScope.global = {
             search: ''
         };
-
         $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
 
         $rootScope.logout = function() {
             $cookieStore.remove('UserName');
             $cookieStore.remove('token');
             $cookieStore.remove('UserImage');
-            $cookieStore.remove('AppName');
-            // $cookieStore.remove('Logo');
-            $cookieStore.remove('appId');
+            // $cookieStore.remove('AppName');
+            localStorage.setItem('AppName', '');
+            localStorage.setItem('appId');
+            // $cookieStore.remove('appId');
             $rootScope.UserImage = '';
             $http.defaults.headers.common.Authorization = '';
             // $state.go('app.login');
