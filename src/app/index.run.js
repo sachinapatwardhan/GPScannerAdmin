@@ -36,8 +36,10 @@
                 $cookieStore.put('appName', data.AppName);
                 $rootScope.AppName = data.AppName;
                 $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
-                // console.log($rootScope.Logo)
                 $cookieStore.put('Logo', $rootScope.Logo)
+                $('.logo').css('background-image', 'url(' + $rootScope.Logo + ')');
+                $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
+
             } else {
                 $rootScope.appName = 'MAARK'
                 var params = {
@@ -50,7 +52,8 @@
                     $cookieStore.put('appName', data.AppName);
                     $rootScope.AppName = data.AppName;
                     $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
-                    // console.log($rootScope.Logo)
+                    $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
+                    $('.logo').css('background-image', 'url(' + $rootScope.Logo + ')');
                     $cookieStore.put('Logo', $rootScope.Logo)
                 });
             }
