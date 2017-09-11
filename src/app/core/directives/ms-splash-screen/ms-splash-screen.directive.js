@@ -7,11 +7,7 @@
 
     /** @ngInject */
     function msSplashScreenDirective($animate, $rootScope, $cookieStore) {
-        fun.apply();
-
-        function fun() {
-            $('.logo').css('background-image', 'url(' + $cookieStore.get('Logo') + ')');
-        }
+        $('.logo').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
         return {
             restrict: 'E',
             link: function(scope, iElement) {
