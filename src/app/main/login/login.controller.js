@@ -8,7 +8,8 @@
     /** @ngInject */
     function LoginController($scope, $state, $rootScope, $timeout, $http, $cookieStore, $mdDialog, $document, $mdToast, $stateParams, $window) {
         var vm = this;
-        $('.logo').css('background-image', 'url(' + $cookieStore.get('Logo') + ')');
+        $('.logo').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
+        //  $('#forgot-password-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
         $scope.init = function() {
             $scope.model = {
                 UserName: '',
@@ -22,7 +23,7 @@
             var params = {
                     username: o.UserName,
                     password: o.Password,
-                    appId: $cookieStore.get('appId'),
+                    appId: localStorage.getItem('appId'),
                 }
                 // console.log(params)
             $http.get($rootScope.RoutePath + "account/login", { params: params }).then(function(data) {
