@@ -46,7 +46,7 @@
             // $scope.query = '';
             $scope.Search = '';
             $scope.flag = false;
-            $rootScope.appId = $cookieStore.get('appId');
+            $rootScope.appId = localStorage.getItem('appId'),
         }
 
         $scope.gotoVehicleList = function() {
@@ -87,7 +87,7 @@
         $scope.GetUserByName = function(query) {
             var params = {
                     UserName: query,
-                    appId: $cookieStore.get('appId'),
+                    appId: localStorage.getItem('appId'),
                 }
                 // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
             $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function(data) {

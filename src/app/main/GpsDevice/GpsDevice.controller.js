@@ -16,7 +16,7 @@
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.CountryList = $cookieStore.get('CountryList');
-        $rootScope.AppName = $cookieStore.get('appName');
+        $rootScope.AppName = localStorage.getItem('appName');
         console.log($rootScope.AppName);
         $scope.init = function() {
             $scope.model = {
@@ -48,7 +48,7 @@
                 $scope.flgSalesAgent = true;
                 $scope.model.idSalesAgent = $rootScope.UserId;
             }
-            $rootScope.appId = $cookieStore.get('appId');
+            $rootScope.appId = localStorage.getItem('appId');
         }
 
         $scope.GetAllCountry = function() {
@@ -312,7 +312,7 @@
                 } else {
                     o.ExpiryDate = null;
                 }
-                o.AppName = $cookieStore.get('appName');
+                o.AppName = localStorage.getItem('appName');
                 $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(

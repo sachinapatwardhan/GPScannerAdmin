@@ -70,7 +70,7 @@
         $scope.Register = function(o) {
             o.IsMobileVerify = false;
             o.createdby = o.username;
-            o.idApp = $cookieStore.get('appId');
+            o.idApp = localStorage.getItem('appId');
             if (o.password.length < 6) {
                 $mdToast.show(
                     $mdToast.simple()

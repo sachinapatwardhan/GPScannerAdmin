@@ -40,7 +40,7 @@
 
             $scope.Search = '';
             $scope.flag = false;
-            $rootScope.appId = $cookieStore.get('appId');
+            $rootScope.appId = localStorage.getItem('appId');
         }
 
         $scope.clearSearchTerm = function() {
@@ -185,7 +185,7 @@
                     $cookieStore.put('UserImage', null);
                     $rootScope.UserImage = $cookieStore.get('UserImage');
                 }
-                o.idApp = $cookieStore.get('appId');
+                o.idApp = localStorage.getItem('appId');
                 $http.post($rootScope.RoutePath + "user/SaveUser", o).then(function(data) {
                     //$scope.SaveUserInRole(o);
                     if (data.data.success == true) {

@@ -227,7 +227,7 @@
                         $cookieStore.put('UserImage', null);
                         $rootScope.UserImage = $cookieStore.get('UserImage');
                     }
-                    o.idApp = $cookieStore.get('appId');
+                    o.idApp = localStorage.getItem('appId');
                     $http.post($rootScope.RoutePath + "user/SaveUser", o).then(function(data) {
                         //$scope.SaveUserInRole(o);
                         if (data.data.success == true) {

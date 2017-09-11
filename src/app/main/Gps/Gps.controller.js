@@ -19,7 +19,7 @@
             $scope.Search = "";
             $scope.searchDevice = "";
             $scope.GetAllGpsDevice();
-            $rootScope.appId = $cookieStore.get('appId');
+            $rootScope.appId = localStorage.getItem('appId');
         }
 
         $scope.GetSerch = function(Search) {

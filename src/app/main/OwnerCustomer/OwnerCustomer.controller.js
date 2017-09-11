@@ -12,7 +12,7 @@
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
-                $rootScope.appId = $cookieStore.get('appId');
+                $rootScope.appId = localStorage.getItem('appId');
                 // console.log($rootScope.appId);
             }
             //Dynamic Pagging

@@ -7,8 +7,8 @@
 
     /** @ngInject */
     function ForgotpasswordController($scope, $state, $rootScope, $http, $cookieStore, $mdDialog, $document, $mdToast, $timeout) {
-        $rootScope.Logo = $cookieStore.get('Logo');
-        $('.logo').css('background-image', 'url(' + $rootScope.Logo + ')');
+
+        $('.logo').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
         $scope.init = function() {
             $scope.model = {
                 email: ''

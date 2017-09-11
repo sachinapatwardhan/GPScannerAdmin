@@ -30,7 +30,7 @@
             $scope.Search = '';
             $scope.flag = false;
             $scope.GetAllGpsDevice();
-            $rootScope.appId = $cookieStore.get('appId');
+            $rootScope.appId = localStorage.getItem('appId');
         }
 
         $scope.GetAllGpsDevice = function() {
