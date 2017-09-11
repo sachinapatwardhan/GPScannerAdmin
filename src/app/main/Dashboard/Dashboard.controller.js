@@ -12,7 +12,7 @@
         var socket = io($rootScope.Socket_URL, {
             'forceNew': true
         });
-        $rootScope.appId = $cookieStore.get('appId');
+        $rootScope.appId = localStorage.getItem('appId');
 
         function callDeviceStatus() {
             for (var t = 0; t < $scope.lstActiveVehicle.length; t++) {

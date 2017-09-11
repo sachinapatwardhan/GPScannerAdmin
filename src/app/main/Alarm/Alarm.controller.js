@@ -20,8 +20,7 @@
             $scope.Search = "";
             $scope.searchAlarm = "";
             $scope.searchDevice = "";
-            $rootScope.appId = $cookieStore.get('appId');
-            // console.log($rootScope.appId);
+            $rootScope.appId = localStorage.getItem('appId');
             $scope.GetAllGpsDevice();
             AlarmCode();
         }
