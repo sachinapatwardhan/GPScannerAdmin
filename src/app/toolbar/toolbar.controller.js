@@ -23,7 +23,7 @@
             $cookieStore.remove('UserImage');
             // $cookieStore.remove('AppName');
             localStorage.setItem('AppName', '');
-            localStorage.setItem('appId');
+            localStorage.setItem('appId', '');
             // $cookieStore.remove('appId');
             $rootScope.UserImage = '';
             $http.defaults.headers.common.Authorization = '';
