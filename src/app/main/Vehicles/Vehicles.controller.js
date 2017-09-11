@@ -46,7 +46,7 @@
             // $scope.query = '';
             $scope.Search = '';
             $scope.flag = false;
-            $rootScope.appId = localStorage.getItem('appId'),
+            $rootScope.appId = localStorage.getItem('appId');
         }
 
         $scope.gotoVehicleList = function() {
