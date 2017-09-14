@@ -16,6 +16,7 @@
                 IOSVersion: '',
                 AndroidURL: '',
                 IOSURL: '',
+                UpdateAppText: '',
             }
             $scope.FlgAddedEditlocal = true;
             $scope.flag = false;
@@ -75,7 +76,9 @@
             $scope.model.Name = o.Name;
             $scope.model.AndroidVersion = o.AndroidVersion;
             $scope.model.IOSVersion = o.IOSVersion;
-
+            $scope.model.AndroidURL = o.AndroidURL;
+            $scope.model.IOSURL = o.IOSURL;
+            $scope.model.UpdateAppText = o.UpdateAppText;
         }
 
         $scope.DeleteAppVersion = function(Id) {
@@ -123,6 +126,7 @@
                 IOSVersion: '',
                 AndroidURL: '',
                 IOSURL: '',
+                UpdateAppText: '',
             }
             $rootScope.FlgAddedEditlocal = false;
             if ($rootScope.FlgAddedAccess == true) {
@@ -140,6 +144,7 @@
                 IOSVersion: '',
                 AndroidURL: '',
                 IOSURL: '',
+                UpdateAppText: '',
             }
             $scope.flag = false;
             $scope.nameflag = false;
@@ -151,9 +156,10 @@
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
             DTColumnDefBuilder.newColumnDef(3),
-            // DTColumnDefBuilder.newColumnDef(4),
-            // DTColumnDefBuilder.newColumnDef(5),
-            DTColumnDefBuilder.newColumnDef(4).notSortable()
+            DTColumnDefBuilder.newColumnDef(4),
+            DTColumnDefBuilder.newColumnDef(5),
+            DTColumnDefBuilder.newColumnDef(6),
+            DTColumnDefBuilder.newColumnDef(7).notSortable()
         ];
 
         $scope.dtInstance = {};

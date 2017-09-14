@@ -42,22 +42,27 @@
                                     <span class="column-title">Android Version</span>
                                 </div>
                             </th>
-                            <!--<th class="secondary-text">
+                            <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Android URL</span>
                                 </div>
-                            </th>-->
+                            </th>
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">IOS Version</span>
                                 </div>
                             </th>
 
-                            <!--<th class="secondary-text">
+                            <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">IOS URL</span>
                                 </div>
-                            </th>-->
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Update App Text</span>
+                                </div>
+                            </th>
                             <th class="all">
                                 <div class="table-header">
                                     <span class="column-title">Action</span>
@@ -70,9 +75,10 @@
                             <td>{{ $index+1 }}</td>
                             <td>{{o.Name}} </td>
                             <td>{{o.AndroidVersion}} </td>
-                            <!--<td>{{o.AndroidURL}} </td>-->
+                            <td>{{o.AndroidURL}} </td>
                             <td>{{o.IOSVersion}} </td>
-                            <!--<td>{{o.IOSURL}} </td>-->
+                            <td>{{o.IOSURL}} </td>
+                            <td>{{o.UpdateAppText}} </td>
                             <td>
                                 <md-button class="edit-button md-icon-button" ng-click="editAppVersionById(o)">
                                     <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
@@ -145,6 +151,34 @@
                                 <div ng-messages="formAppSetting.IOSVersion.$error" ng-if="formAppSetting.IOSVersion.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>IOS Versionr field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="100">
+                                <label>Android URL</label>
+                                <input type="text" name="AndroidURL" ng-model="model.AndroidURL" required>
+                                <div ng-messages="formAppSetting.AndroidURL.$error" ng-if="formAppSetting.AndroidURL.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Android URL field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="100">
+                                <label>IOS URL Version</label>
+                                <input type="text" name="IOSURL" ng-model="model.IOSURL" required>
+                                <div ng-messages="formAppSetting.IOSURL.$error" ng-if="formAppSetting.IOSURL.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>IOS URL field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="100">
+                                <label>Update App Text</label>
+                                <input type="text" name="UpdateAppText" ng-model="model.UpdateAppText" required>
+                                <div ng-messages="formAppSetting.UpdateAppText.$error" ng-if="formAppSetting.UpdateAppText.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Update App Text field is required</span>
                                     </div>
                                 </div>
                             </md-input-container>
