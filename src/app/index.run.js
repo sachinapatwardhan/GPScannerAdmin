@@ -299,7 +299,7 @@
                             return obj.tblmodulemgmt.Module == 'Setting';
                         });
                         if (lstSetting.length > 0) {
-                            msNavigationService.saveItem('Settings.Setting', {
+                            msNavigationService.saveItem('CMS.Setting', {
                                 title: 'Setting',
                                 state: 'app.Setting',
                                 order: lstSetting[0].tblmodulemgmt.DisplayOrder,
