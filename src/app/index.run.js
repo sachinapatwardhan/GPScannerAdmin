@@ -42,6 +42,7 @@
                 $cookieStore.put('appId', data.Id);
                 $rootScope.MenuSet();
                 $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
+                $('.logo-image').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
             } else {
                 $rootScope.appName = 'MAARK'
                 var params = {
@@ -60,6 +61,7 @@
                     $cookieStore.put('appId', data.Id);
                     $rootScope.MenuSet();
                     $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
+                    $('.logo-image').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
                 });
             }
         })
