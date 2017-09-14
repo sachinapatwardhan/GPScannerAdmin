@@ -162,13 +162,15 @@
         }
 
         function CodeFun(data, type, full, meta) {
-
             var code = '';
-
             if (data != '' && data != undefined && data != null) {
                 var List = _.findWhere($scope.ResponseAlarm, { AlarmCode: data });
                 if (List != null && List != undefined && List != '') {
-                    code = List.Alarm;
+                    if (data == '66' || data == '6') {
+                        code = full.FenceName + " " + List.Alarm;
+                    } else {
+                        code = List.Alarm;
+                    }
                 }
             }
 
@@ -273,6 +275,15 @@
             obj.AlarmCode = "81";
             obj.Alarm = "Fuel loss alarm";
             $scope.ResponseAlarm.push(obj);
+            var obj = new Object();
+            obj.AlarmCode = "66";
+            obj.Alarm = "Fence OUT";
+            $scope.ResponseAlarm.push(obj);
+            var obj = new Object();
+            obj.AlarmCode = "6";
+            obj.Alarm = "Fence IN";
+            $scope.ResponseAlarm.push(obj);
+
 
         }
         $scope.init();
