@@ -59,5 +59,6 @@
             'app.telco',
             'app.appinfo',
             // 'app.Logs',
+            'app.SIM',
         ]);
 })();
