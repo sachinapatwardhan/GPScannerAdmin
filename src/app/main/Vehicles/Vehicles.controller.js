@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.ownerVehicle')
+        .module('app.Vehicle')
         .controller('VehiclesController', VehiclesController);
 
     /** @ngInject */

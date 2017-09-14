@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('app.user', [])
+        .module('app.user1', [])
         .config(config);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider) {
         // State
         $stateProvider
-            .state('app.user', {
+            .state('app.user1', {
                 url: '/user',
                 views: {
                     'content@app': {

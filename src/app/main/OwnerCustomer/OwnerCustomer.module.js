@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('app.OwnerCustomer', [])
+        .module('app.Customer', [])
         .config(config);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider) {
         // State
         $stateProvider
-            .state('app.OwnerCustomer', {
+            .state('app.Customer', {
                 url: '/Customer',
                 views: {
                     'content@app': {
@@ -17,8 +17,8 @@
                         controller: 'OwnerCustomerController as vm'
                     }
                 },
-                bodyClass: 'Owner Customer',
-                ModuleName: 'Owner Customer'
+                bodyClass: 'Customer',
+                ModuleName: 'Customer'
             });
 
         // Translation

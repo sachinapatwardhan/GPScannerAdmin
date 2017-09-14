@@ -2,23 +2,23 @@
     'use strict';
 
     angular
-        .module('app.Customer', [])
+        .module('app.Customer1', [])
         .config(config);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider) {
         // State
         $stateProvider
-            .state('app.Customer', {
-                url: '/Customer',
+            .state('app.Customer1', {
+                url: '/Customer1',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/Customer/Customer.html',
                         controller: 'CustomerController as vm'
                     }
                 },
-                bodyClass: 'Customer',
-                ModuleName: 'Customer'
+                bodyClass: 'Customer1',
+                ModuleName: 'Customer1'
             });
 
         // Translation

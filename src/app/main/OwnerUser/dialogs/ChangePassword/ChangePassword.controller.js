@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.owneruser')
+        .module('app.user')
         .controller('ChangePassword1Controller', ChangePassword1Controller);
 
     /** @ngInject */

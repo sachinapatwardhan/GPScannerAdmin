@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('app.ownerVehicle', [])
+        .module('app.Vehicle', [])
         .config(config);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider) {
         // State
         $stateProvider
-            .state('app.ownerVehicle', {
+            .state('app.Vehicle', {
                 url: '/Vehicle',
                 views: {
                     'content@app': {
@@ -17,8 +17,8 @@
                         controller: 'VehiclesController as vm'
                     }
                 },
-                bodyClass: 'Owner Vehicle',
-                ModuleName: 'Owner Vehicle'
+                bodyClass: 'Vehicle',
+                ModuleName: 'Vehicle'
             });
 
         // Translation

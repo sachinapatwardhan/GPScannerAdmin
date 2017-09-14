@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.OwnerCustomer')
+        .module('app.Customer')
         .controller('DeviceModelController', DeviceModelController);
 
     /** @ngInject */

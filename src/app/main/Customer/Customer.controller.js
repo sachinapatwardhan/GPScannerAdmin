@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.Customer')
+        .module('app.Customer1')
         .controller('CustomerController', CustomerController);
 
     /** @ngInject */

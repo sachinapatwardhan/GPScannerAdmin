@@ -2,23 +2,23 @@
     'use strict';
 
     angular
-        .module('app.owneruser', [])
+        .module('app.user', [])
         .config(config);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider) {
         // State
         $stateProvider
-            .state('app.owneruser', {
-                url: '/owneruser',
+            .state('app.user', {
+                url: '/user',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/OwnerUser/OwnerUser.html',
                         controller: 'OwnerUserController as vm'
                     }
                 },
-                bodyClass: 'Owner Users',
-                ModuleName: 'Owner Users'
+                bodyClass: 'Users',
+                ModuleName: 'Users'
             });
 
         // Translation
