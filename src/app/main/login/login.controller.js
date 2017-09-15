@@ -21,12 +21,11 @@
 
         $scope.Login = function(o) {
             var params = {
-                    username: o.UserName,
-                    password: o.Password,
-                    appId: localStorage.getItem('appId'),
-                }
-                // console.log(params)
-            $http.get($rootScope.RoutePath + "account/login", { params: params }).then(function(data) {
+                username: o.UserName,
+                password: o.Password,
+                appId: localStorage.getItem('appId'),
+            }
+            $http.get($rootScope.RoutePath + "account/loginNew", { params: params }).then(function(data) {
                 if (data.data.success == true) {
 
                     $scope.RoleWiseCountry = data.data.RolewiseCountryList;
@@ -72,8 +71,6 @@
                         .hideDelay(3000)
                     );
                 };
-
-
             });
 
         }

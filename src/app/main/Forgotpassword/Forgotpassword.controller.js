@@ -7,17 +7,18 @@
 
     /** @ngInject */
     function ForgotpasswordController($scope, $state, $rootScope, $http, $cookieStore, $mdDialog, $document, $mdToast, $timeout) {
-
+        $rootScope.appId = localStorage.getItem('appId');
         $('.logo').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
         $scope.init = function() {
             $scope.model = {
-                email: ''
+                email: '',
+                idApp: $rootScope.appId,
             }
         }
 
         $scope.ResetPassword = function() {
             var Email = $scope.model.email;
-            $http.get($rootScope.RoutePath + "account/forgotpassword?email=" + Email.toLowerCase()).then(function(response) {
+            $http.get($rootScope.RoutePath + "account/forgotpasswordNew?email=" + Email.toLowerCase() + "&idApp=" + $scope.model.idApp).then(function(response) {
                 console.log(response);
                 if (response.data.success == true) {
                     $mdToast.show(

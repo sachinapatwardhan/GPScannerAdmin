@@ -103,23 +103,23 @@
 
 
         //show User Devices
-        $scope.ShowDeviceModal = function(ev, id) {
-            $scope.obj = _.findWhere($scope.lstdata, { id: id });
-            $mdDialog.show({
-                controller: 'DeviceModelController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/Support/dialogs/DeviceModel/DeviceModel.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    objUser: $scope.obj,
-                    Tasks: [],
-                    event: ev,
+        // $scope.ShowDeviceModal = function(ev, id) {
+        //     $scope.obj = _.findWhere($scope.lstdata, { id: id });
+        //     $mdDialog.show({
+        //         controller: 'DeviceModelController',
+        //         controllerAs: 'vm',
+        //         templateUrl: 'app/main/Support/dialogs/DeviceModel/DeviceModel.html',
+        //         parent: angular.element(document.body),
+        //         targetEvent: ev,
+        //         clickOutsideToClose: true,
+        //         locals: {
+        //             objUser: $scope.obj,
+        //             Tasks: [],
+        //             event: ev,
 
-                }
-            })
-        }
+        //         }
+        //     })
+        // }
 
 
         //Dynamic Pagging End

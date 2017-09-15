@@ -11,6 +11,7 @@
         var vm = this;
 
         $scope.init = function() {
+            console.log("called")
             $scope.model = {
                 id: '',
                 email: '',
@@ -100,6 +101,7 @@
             var o = _.findWhere($scope.lstdata, {
                 id: id
             });
+            console.log(o);
             $scope.flgEdit = true;
             $scope.tab.selectedIndex = 1;
             $scope.model.phone = o.phone;
@@ -228,7 +230,7 @@
                         $rootScope.UserImage = $cookieStore.get('UserImage');
                     }
                     o.idApp = localStorage.getItem('appId');
-                    $http.post($rootScope.RoutePath + "user/SaveUser", o).then(function(data) {
+                    $http.post($rootScope.RoutePath + "user/SaveUserNew", o).then(function(data) {
                         //$scope.SaveUserInRole(o);
                         if (data.data.success == true) {
                             var id;

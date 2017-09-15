@@ -76,14 +76,23 @@
             $rootScope.CountryList = [];
         }
         $rootScope.CheckPageRights = function(ModuleName, callback) {
+            $rootScope.UserRoles = $cookieStore.get('UserRoles');
             $rootScope.FlgAddedAccess = false;
             $rootScope.FlgModifiedAccess = false;
             $rootScope.FlgDeletedAccess = false;
-
-            var params = {
-                tablename: ModuleName,
+            for (var i = 0; i < $rootScope.UserRoles.length; i++) {
+                if ($rootScope.UserRoles[i] == 'Super Admin') {
+                    var params = {
+                        tablename: ModuleName,
+                    }
+                    break;
+                } else {
+                    var params = {
+                        tablename: ModuleName,
+                        idApp: localStorage.getItem('appId'),
+                    }
+                }
             }
-
             $http.get($rootScope.RoutePath + "userPermission/CheckRightsbyPage", { params: params }).then(function(data) {
                 if (data.data.success == true) {
                     var objpermission = data.data.data;
@@ -178,8 +187,21 @@
                     //     tablename: "Dashboard",
                     //     permission: "Show"
                     // }
+                    $rootScope.UserRoles = $cookieStore.get('UserRoles');
+                    for (var i = 0; i < $rootScope.UserRoles.length; i++) {
+                        if ($rootScope.UserRoles[i] == 'Super Admin') {
+                            var params = {
+                                idApp: '',
+                            }
+                            break;
+                        } else {
+                            var params = {
+                                idApp: localStorage.getItem('appId'),
+                            }
+                        }
+                    }
 
-                    $http.get($rootScope.RoutePath + "userPermission/GetAllPageRights").then(function(data) {
+                    $http.get($rootScope.RoutePath + "userPermission/GetAllPageRights", { params: params }).then(function(data) {
                         if (data.data.success == true) {
                             var lstAllPages = data.data.data;
                             // msNavigationService.clearNavigation();
@@ -541,20 +563,20 @@
                                 });
                             }
 
-                            //Telephone Company
-                            // var Logs = _.filter(lstAllPages, function(obj) {
-                            //     return obj.tblmodulemgmt.Module == 'Logs';
-                            // });
-                            // if (Logs.length > 0) {
-                            //     var MenuName = $rootScope.AppName + '.Logs';
-                            //     msNavigationService.saveItem(MenuName, {
-                            //         // msNavigationService.saveItem('Maark.Logs', {
-                            //         title: 'Logs',
-                            //         state: 'app.Logs',
-                            //         order: Logs[0].tblmodulemgmt.DisplayOrder,
-                            //         weight: 1
-                            //     });
-                            // }
+                            // // Logs
+                            var Logs = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Logs';
+                            });
+                            if (Logs.length > 0) {
+                                var MenuName = $rootScope.AppName + '.Logs';
+                                msNavigationService.saveItem(MenuName, {
+                                    // msNavigationService.saveItem('Maark.Logs', {
+                                    title: 'Logs',
+                                    state: 'app.Logs',
+                                    order: Logs[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
 
                             //App Info
                             var AppInfo = _.filter(lstAllPages, function(obj) {
@@ -611,11 +633,22 @@
                 }
 
                 //check Permission
-                var params = {
-                    tablename: to.ModuleName,
-                    permission: "Show"
+                $rootScope.UserRoles = $cookieStore.get('UserRoles');
+                for (var i = 0; i < $rootScope.UserRoles.length; i++) {
+                    if ($rootScope.UserRoles[i] == 'Super Admin') {
+                        var params = {
+                            tablename: to.ModuleName,
+                            permission: "Show"
+                        }
+                        break;
+                    } else {
+                        var params = {
+                            tablename: to.ModuleName,
+                            permission: "Show",
+                            idApp: localStorage.getItem('appId'),
+                        }
+                    }
                 }
-
                 $http.get($rootScope.RoutePath + "userPermission/CheckRights", { params: params }).then(function(data) {
                     if (data.data.success == false) {
                         e.preventDefault();

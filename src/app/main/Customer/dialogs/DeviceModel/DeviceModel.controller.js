@@ -1,35 +1,35 @@
-(function () {
+(function() {
     'use strict';
 
     angular
-        .module('app.Customer')
+        .module('app.Customer1')
         .controller('DeviceModelController', DeviceModelController);
 
     /** @ngInject */
     function DeviceModelController($http, $mdDialog, $mdToast, $scope, $cookieStore, $rootScope, objUser, Tasks, event) {
         var vm = this;
 
-        $scope.init = function () {
-            
+        $scope.init = function() {
+
             $scope.UserName = objUser.username;
             $scope.GetUserDevices($scope.UserName);
         }
-                
-        $scope.GetUserDevices = function (o) {
+
+        $scope.GetUserDevices = function(o) {
             var params = {
                 username: o
             }
-            
-            $http.get($rootScope.RoutePath + "bike/GetAllPetByUser", { params: params }).then(function (data) {
+
+            $http.get($rootScope.RoutePath + "bike/GetAllPetByUser", { params: params }).then(function(data) {
                 $scope.lstDevice = data.data;
             });
         }
 
-        $scope.Reset = function () {
+        $scope.Reset = function() {
             $mdDialog.hide();
         }
 
-        $scope.closeModel = function () {
+        $scope.closeModel = function() {
             $mdDialog.hide();
         }
 

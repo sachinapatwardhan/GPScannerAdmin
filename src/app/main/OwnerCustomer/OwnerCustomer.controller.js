@@ -199,11 +199,11 @@
 
         //show User Devices
         $scope.ShowDeviceModal = function(ev, id) {
-
+            console.log(id);
             $mdDialog.show({
                 controller: 'DeviceModelController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/OwnerCustomer/dialogs/DeviceModel/DeviceModel.html',
+                templateUrl: 'app/main/OwnerCustomer/dialogs/DeviceModel1/DeviceModel1.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -211,7 +211,6 @@
                     idUser: id,
                     Tasks: [],
                     event: ev,
-
                 }
             })
         }
