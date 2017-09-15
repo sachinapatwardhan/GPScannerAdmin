@@ -245,7 +245,20 @@
                                     </div>
                                 </div>
                             </md-input-container>
-
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>SIM Serial Number</label>
+                                <md-select Name="idSim" ng-model="model.idSim" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermidSim" type="search" placeholder="Search for a Serial Number.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstSIMInfo | filter:vm.searchTermidSim | orderBy: 'SerialNum'">{{o.SerialNum}}</md-option>
+                                </md-select>
+                                <div ng-messages="formTrackingdetails.idSim.$error" ng-if="formTrackingdetails.idSim.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Tel Company is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
                         </div>
                         <div layout="row">
                             <md-checkbox class="md-primary" ng-model="model.IsActive" aria-label="Checkbox 1">

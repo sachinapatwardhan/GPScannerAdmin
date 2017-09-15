@@ -32,6 +32,7 @@
                 idSalesAgent: 0,
                 IsActive: false,
                 ExpiryDate: null,
+                idSim: null,
             };
             $scope.GetAllCountry();
             $scope.GetAlltelco();
@@ -48,8 +49,13 @@
                 $scope.model.idSalesAgent = $rootScope.UserId;
             }
             $rootScope.appId = localStorage.getItem('appId');
+            $scope.GetAllSerialnumber();
         }
-
+        $scope.GetAllSerialnumber = function() {
+            $http.get($rootScope.RoutePath + "sim/GetAllSIMInfo").then(function(data) {
+                $scope.lstSIMInfo = data.data;
+            })
+        }
         $scope.GetAllCountry = function() {
             $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
                 $scope.lstCountry = data.data;
@@ -87,6 +93,7 @@
                 idSalesAgent: 0,
                 IsActive: false,
                 ExpiryDate: null,
+                idSim: null,
             };
             $scope.Search = '';
             $scope.flagEdit = false;
@@ -360,6 +367,7 @@
             $scope.model.CountryId = o.CountryId;
             $scope.model.TelCoId = o.TelCoId;
             $scope.model.SimNum = parseInt(o.SimNum);
+            $scope.model.idSim = o.idSim;
             if (o.idSalesAgent != null) {
                 $scope.model.idSalesAgent = o.idSalesAgent;
             }
@@ -416,6 +424,7 @@
                 idSalesAgent: 0,
                 IsActive: false,
                 ExpiryDate: null,
+                idSim: null,
             };
             $scope.resetForm();
         }
@@ -433,6 +442,7 @@
                 idSalesAgent: 0,
                 IsActive: false,
                 ExpiryDate: null,
+                idSim: null,
             };
             $scope.resetForm();
             $scope.flgSalesAgent = false;
