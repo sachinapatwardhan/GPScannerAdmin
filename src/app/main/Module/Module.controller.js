@@ -85,7 +85,7 @@
 
         $scope.dtCustomOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
-            .withDisplayLength(10)
+            .withDisplayLength(100)
             .withOption('responsive', true)
             // .withOption('autoWidth', true)
             .withOption('aaSorting', [0, 'asc'])

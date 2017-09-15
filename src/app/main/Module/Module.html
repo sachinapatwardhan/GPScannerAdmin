@@ -13,63 +13,63 @@
                 <input id="modelsearch" ng-model="Search" class="search-input" ng-change="GetSerch(Search)" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
         </div>
-        <!--<div class="content-card md-padding" layout="column" flex>-->
-        <div class="content fullpage-datatable" layout="column" flex>
-            <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%">
-                <thead>
-                    <tr>
-                        <th class="all">
-                            <div class="table-header">
-                                <span class="column-title">Module</span>
-                            </div>
-                        </th>
-                        <th class="all dt-center">
-                            <div class="table-header">
-                                <span class="column-title">Is Active</span>
-                            </div>
-                        </th>
-                        <th class="all">
-                            <div class="table-header">
-                                <span class="column-title">Display Order</span>
-                            </div>
-                        </th>
-                        <th class="all">
-                            <div class="table-header">
-                                <span class="column-title">Action</span>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="o in lstModules | filter: Search">
-                        <td>{{ o.Module }}</td>
-                        <td class="dt-center">
-                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.IsActive" ng-change="SaveModule(o)" class="md-primary"></md-checkbox>
-                        </td>
-                        <td ng-if="!o.IsUpdate">{{o.DisplayOrder}}</td>
-                        <td ng-if="o.IsUpdate">
-                            <md-input-container class="md-block margin-0" flex>
-                                <input type="number" ng-model="o.DisplayOrder">
-                            </md-input-container>
-                        </td>
-                        <td>
-                            <md-button class="edit-button md-icon-button" ng-if="!o.IsUpdate" ng-click="FetchmoduleById(o)">
-                                <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
-                                <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
-                            </md-button>
-                            <md-button class="edit-button md-icon-button" ng-if="o.IsUpdate" ng-disabled="o.DisplayOrder==''" ng-click="SaveModule(o)">
-                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
-                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
-                            </md-button>
-                            <md-button class="edit-button md-icon-button" ng-if="o.IsUpdate" ng-click="ResetEdit(o)">
-                                <md-icon md-font-icon="icon-close" class="s18 red-500-fg"></md-icon>
-                                <md-tooltip md-visible="" md-direction="">Cancel</md-tooltip>
-                            </md-button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="content-card md-padding" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Module</span>
+                                </div>
+                            </th>
+                            <th class="all dt-center">
+                                <div class="table-header">
+                                    <span class="column-title">Is Active</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Display Order</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="o in lstModules | filter: Search">
+                            <td>{{ o.Module }}</td>
+                            <td class="dt-center">
+                                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.IsActive" ng-change="SaveModule(o)" class="md-primary"></md-checkbox>
+                            </td>
+                            <td ng-if="!o.IsUpdate">{{o.DisplayOrder}}</td>
+                            <td ng-if="o.IsUpdate">
+                                <md-input-container class="md-block margin-0" flex>
+                                    <input type="number" ng-model="o.DisplayOrder">
+                                </md-input-container>
+                            </td>
+                            <td>
+                                <md-button class="edit-button md-icon-button" ng-if="!o.IsUpdate" ng-click="FetchmoduleById(o)">
+                                    <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-if="o.IsUpdate" ng-disabled="o.DisplayOrder==''" ng-click="SaveModule(o)">
+                                    <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-if="o.IsUpdate" ng-click="ResetEdit(o)">
+                                    <md-icon md-font-icon="icon-close" class="s18 red-500-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Cancel</md-tooltip>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <!--</div>-->
     </div>
 </div>
