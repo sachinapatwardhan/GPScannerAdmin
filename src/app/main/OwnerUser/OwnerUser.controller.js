@@ -9,6 +9,8 @@
     function OwnerUserController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
+        $rootScope.appId = localStorage.getItem('appId');
+        $rootScope.UserRoles = localStorage.getItem('UserRoles');
 
         $scope.init = function() {
             $scope.model = {
@@ -28,6 +30,7 @@
                 gender: '',
                 image: '',
                 IsMobileVerify: false,
+                idApp: $rootScope.appId,
             };
             //$scope.GetAllUser();
             $scope.GetAllRoles();
@@ -40,7 +43,6 @@
 
             $scope.Search = '';
             $scope.flag = false;
-            $rootScope.appId = localStorage.getItem('appId');
         }
 
         $scope.clearSearchTerm = function() {
@@ -176,6 +178,7 @@
 
         //Create New User With It's Role
         $scope.CreateUser = function(o) {
+            console.log(o);
             o.roleId = _.where($scope.lstRoles, {
                 checked: true
             });
@@ -186,7 +189,7 @@
                     $rootScope.UserImage = $cookieStore.get('UserImage');
                 }
                 o.idApp = localStorage.getItem('appId');
-                $http.post($rootScope.RoutePath + "user/SaveUser", o).then(function(data) {
+                $http.post($rootScope.RoutePath + "user/SaveUserNew", o).then(function(data) {
                     //$scope.SaveUserInRole(o);
                     if (data.data.success == true) {
                         var id;
@@ -721,6 +724,7 @@
                     gender: '',
                     image: '',
                     IsMobileVerify: false,
+                    idApp: $rootScope.appId,
                 };
                 $scope.tab = {
                     selectedIndex: 1
@@ -755,6 +759,7 @@
                 gender: '',
                 image: '',
                 IsMobileVerify: false,
+                idApp: $rootScope.appId,
             };
             $scope.FlgImage = 0;
             $scope.FlgCropImage = 0;
