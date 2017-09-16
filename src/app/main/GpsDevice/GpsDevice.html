@@ -236,7 +236,7 @@
                                     </div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Sim Number </label>
                                 <input name="SimNum" type="number" ng-model="model.SimNum">
                                 <div ng-messages="formTrackingdetails.SimNum.$error" ng-if="formTrackingdetails.SimNum.$touched">
@@ -244,7 +244,7 @@
                                         <span>Sim Number is required</span>
                                     </div>
                                 </div>
-                            </md-input-container>
+                            </md-input-container>-->
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>SIM Serial Number</label>
                                 <md-select Name="idSim" ng-model="model.idSim" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
@@ -255,7 +255,7 @@
                                 </md-select>
                                 <div ng-messages="formTrackingdetails.idSim.$error" ng-if="formTrackingdetails.idSim.$touched" role="alert">
                                     <div ng-message="required">
-                                        <span>Tel Company is required.</span>
+                                        <span>SIM Serial Number is required.</span>
                                     </div>
                                 </div>
                             </md-input-container>
