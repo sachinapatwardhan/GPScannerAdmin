@@ -355,8 +355,6 @@
             var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
 
             if (point) {
-
-                // console.log(this.IsAnimation)
                 if (this.IsAnimation == true) {
                     $scope.IsAnimationStart = true;
                     animatediv.animate({
@@ -407,24 +405,14 @@
         };
 
         $scope.ManageCustomerGraph = function() {
-            if (!$scope.FlgSuperAdmin) {
-                var params = {
-                    countryName: $rootScope.UserCountry,
-                    CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin,
-                    idApp: $rootScope.appId,
-                }
-            } else {
-                var params = {
-                    countryName: null,
-                    CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin,
-                    idApp: $rootScope.appId,
-                }
+            var params = {
+                // countryName: null,
+                // CountryList: $rootScope.CountryList,
+                // IsSuperAdmin: $scope.FlgSuperAdmin,
+                idApp: $rootScope.appId,
             }
             $http.get($rootScope.RoutePath + "dashboard/GetGraphCustomer", { params: params }).then(function(data) {
                 $scope.lstCustomerGraph = data.data.UserData;
-                // console.log($scope.lstCustomerGraph);
                 $scope.lstCountry = [];
                 for (var i = 0; i < $scope.lstCustomerGraph.length; i++) {
                     if ($scope.lstCustomerGraph[i].country == '' || $scope.lstCustomerGraph[i].country == null) {
@@ -673,7 +661,6 @@
                     var firstDate = new Date(parseInt(o.Year), parseInt(o.MonthId) - 1, 1);
                     var secondDate = new Date(parseInt(o.Year), parseInt(o.MonthId), 0);
                     var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay))) + 1;
-
                     // $scope.lstShopUserSearch = [];
                     // $scope.lstShopCustomerSearch = [];
                     // $scope.lstOwnerUserSearch = [];
@@ -1564,16 +1551,16 @@
         $scope.GetDashboardCount = function() {
             if (!$scope.FlgSuperAdmin) {
                 var params = {
-                    countryName: $rootScope.UserCountry,
-                    CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    // countryName: $rootScope.UserCountry,
+                    // CountryList: $rootScope.CountryList,
+                    // IsSuperAdmin: $scope.FlgSuperAdmin,
                     idApp: $rootScope.appId,
                 }
             } else {
                 var params = {
-                    countryName: null,
-                    CountryList: [],
-                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    // countryName: null,
+                    // CountryList: [],
+                    // IsSuperAdmin: $scope.FlgSuperAdmin,
                     idApp: $rootScope.appId,
                 }
             }
@@ -1696,16 +1683,16 @@
 
             if (!$scope.FlgSuperAdmin) {
                 var params = {
-                    countryName: $rootScope.UserCountry,
-                    CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    // countryName: $rootScope.UserCountry,
+                    // CountryList: $rootScope.CountryList,
+                    // IsSuperAdmin: $scope.FlgSuperAdmin,
                     idApp: $rootScope.appId,
                 }
             } else {
                 var params = {
-                    countryName: null,
-                    CountryList: $rootScope.CountryList,
-                    IsSuperAdmin: $scope.FlgSuperAdmin,
+                    // countryName: null,
+                    // CountryList: $rootScope.CountryList,
+                    // IsSuperAdmin: $scope.FlgSuperAdmin,
                     idApp: $rootScope.appId,
                 }
             }
@@ -1719,11 +1706,10 @@
         }
 
         $scope.GetCustomer = function() {
-
             var params = {
-                countryName: $rootScope.UserCountry,
-                CountryList: $rootScope.CountryList,
-                IsSuperAdmin: $scope.FlgSuperAdmin,
+                // countryName: $rootScope.UserCountry,
+                // CountryList: $rootScope.CountryList,
+                // IsSuperAdmin: $scope.FlgSuperAdmin,
                 idApp: $rootScope.appId,
             }
 
@@ -1759,7 +1745,6 @@
                     var newobjUser = _.each(objUser, function(item) {
                         $scope.sum = function(items, prop) {
                             return items.reduce(function(a, b) {
-                                // console.log(a + b[prop]);
                                 return a + b[prop];
                             }, 0);
                         };
@@ -1919,7 +1904,6 @@
                                     $scope.lstFinalTotalCustomerByCountry.push(obj);
                                 }
                             }
-                            // console.log($scope.lstFinalTotalCustomerByCountry);
                         };
                     }, 600);
                 }
