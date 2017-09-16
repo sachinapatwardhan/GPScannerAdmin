@@ -18,6 +18,7 @@
                 AndroidId: '',
                 AndroidSenderId: '',
                 AppLogo: '',
+                CreatedDate: new Date(),
 
             }
             $scope.FlgImage = '';
@@ -246,7 +247,7 @@
                 DTColumnBuilder.newColumn('IOSKey'),
                 DTColumnBuilder.newColumn('AndroidId'),
                 DTColumnBuilder.newColumn('AndroidSenderId'),
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
+                DTColumnBuilder.newColumn('DisplyCreatedDate').renderWith(Datefun),
                 DTColumnBuilder.newColumn('CreatedBy'),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
             ]
@@ -324,7 +325,8 @@
 
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
-                return moment(moment.utc(data).toDate()).format("DD-MM-YYYY HH:mm");
+                // return moment(moment.utc(data).toDate()).format("DD-MM-YYYY HH:mm");
+                return $rootScope.convertdateformat(data, 1);
             } else {
                 return '';
             }
@@ -344,7 +346,15 @@
             $scope.flag = true;
             var o = _.findWhere($scope.lstAppInfo, { Id: Id });
 
-            $scope.model = o;
+
+            $scope.model.Id = o.Id;
+            $scope.model.AppName = o.AppName;
+            $scope.model.BundleId = o.BundleId;
+            $scope.model.IOSCertificate = o.IOSCertificate;
+            $scope.model.IOSKey = o.IOSKey;
+            $scope.model.AndroidId = o.AndroidId;
+            $scope.model.AndroidSenderId = o.AndroidSenderId;
+            $scope.model.AppLogo = o.AppLogo;
             $scope.IOSC = o.IOSCertificate;
             $scope.IOSK = o.IOSKey;
             // $scope.AppLogo = o.ImageLogo;
@@ -429,9 +439,8 @@
                 IOSKey: '',
                 AndroidId: '',
                 AndroidSenderId: '',
-                CreatedDate: '',
-                CreatedBy: '',
                 AppLogo: '',
+                CreatedDate: new Date(),
             }
             $scope.FlgImage = '';
             $scope.IOS_C = '';

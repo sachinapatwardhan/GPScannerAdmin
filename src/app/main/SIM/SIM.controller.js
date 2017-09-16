@@ -127,7 +127,7 @@
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
             // DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4).notSortable()
+            DTColumnDefBuilder.newColumnDef(3).notSortable()
         ];
 
         $scope.dtInstance = {};

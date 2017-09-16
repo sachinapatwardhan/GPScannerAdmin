@@ -187,7 +187,7 @@
                 DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
                 DTColumnBuilder.newColumn('DeviceType'),
-                DTColumnBuilder.newColumn('HandshakDatetime').renderWith(dateFormat),
+                DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
             ]
@@ -328,7 +328,7 @@
             $scope.model.deviceid = o.deviceid;
             $scope.model.BatteryPercentage = o.BatteryPercentage;
             if (o.HandshakDatetime != null) {
-                $scope.model.HandshakDatetime = new Date(o.HandshakDatetime);
+                $scope.model.HandshakDatetime = new Date(o.DisplyHandshakDate);
             } else {
                 $scope.model.HandshakDatetime = null;
             }
