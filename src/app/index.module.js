@@ -60,5 +60,6 @@
             'app.appinfo',
             'app.Logs',
             'app.SIM',
+            'app.EmailTemplate',
         ]);
 })();

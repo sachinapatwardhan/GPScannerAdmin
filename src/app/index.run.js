@@ -42,7 +42,7 @@
                 $cookieStore.put('appId', data.Id);
                 $rootScope.MenuSet();
                 $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-                $('.logo-image').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
+                $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
             } else {
                 $rootScope.appName = 'MAARK'
                 var params = {
@@ -61,7 +61,7 @@
                     $cookieStore.put('appId', data.Id);
                     $rootScope.MenuSet();
                     $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-                    $('.logo-image').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
+                    $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
                 });
             }
         })
@@ -324,7 +324,7 @@
                             });
                             if (lstSetting.length > 0) {
                                 msNavigationService.saveItem('CMS.Setting', {
-                                    title: 'Setting',
+                                    title: 'Settings',
                                     state: 'app.Setting',
                                     order: lstSetting[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
@@ -600,6 +600,18 @@
                                     title: 'SIM',
                                     state: 'app.SIM',
                                     order: SIM[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            var lstEmailTemplate = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Email Template';
+                            });
+                            if (lstEmailTemplate.length > 0) {
+                                msNavigationService.saveItem('CMS.Email Template', {
+                                    title: 'Email Template',
+                                    state: 'app.EmailTemplate',
+                                    order: lstEmailTemplate[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
                                 });
                             }
