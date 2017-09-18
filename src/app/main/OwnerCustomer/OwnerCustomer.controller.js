@@ -13,6 +13,7 @@
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
                 $rootScope.appId = localStorage.getItem('appId');
+                $rootScope.AppName = localStorage.getItem('appName');
                 // console.log($rootScope.appId);
             }
             //Dynamic Pagging
@@ -59,7 +60,7 @@
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
-                .withDisplayLength(10) // Page size
+                .withDisplayLength(25) // Page size
                 .withOption('aaSorting', [0, 'DESC'])
                 .withOption('responsive', true).withOption('bAutoWidth', false)
                 .withOption('createdRow', createdRow)
@@ -139,19 +140,43 @@
 
         function actionsHtml(data, type, full, meta) {
             var btns = '<md-button class="edit-button md-icon-button"  ng-click="ShowDeviceModal($event,' + data.id + ')" aria-label="">' +
-                '<md-icon md-font-icon="icon-timer"  class="s18 blue-500-fg"></md-icon>' +
+                '<md-icon md-font-icon="icon-timer"  class="s18 purple-500-fg"></md-icon>' +
                 '<md-tooltip md-visible="" md-direction="">Show Devices</md-tooltip>' +
                 '</md-button>';
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword(' + data.id + ')" aria-label="">' +
-                    '<md-icon md-font-icon="icon-account-alert"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
                     '</md-button>';
 
             }
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
+                    '</md-button>';
+            }
             return btns;
         };
 
+        $scope.ChangePassword = function(ev, id) {
+            console.log(id)
+            var obj = _.findWhere($scope.lstdata, { id: id })
+            $mdDialog.show({
+                controller: 'ChangePasswordCustomerController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/OwnerCustomer/dialogs/ChangePassword/ChangePassword.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    obj: obj,
+                    Tasks: [],
+                    event: ev,
+                    VM: vm
+                }
+            });
+        }
         $scope.GetSerch = function(Search) {
             $scope.Search = Search;
             $scope.GetAllUser(true);
@@ -162,11 +187,16 @@
             $scope.obj = _.findWhere($scope.lstdata, { id: id });
 
             var confirm = $mdDialog.confirm()
-                .title('Are you sure to Reset Password of this User ?')
+                .title('Are you sure to Reset Password of this Customer ?')
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function() {
-                $http.get($rootScope.RoutePath + "account/forgotpasswordfromOwnerCustomer?email=" + $scope.obj.email).then(function(data) {
+                var params = {
+                    // email: $scope.obj.email,
+                    // idApp: $rootScope.appId,
+                    id: id
+                }
+                $http.get($rootScope.RoutePath + "account/forgotpasswordfromOwnerCustomer", { params: params }).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
@@ -199,11 +229,10 @@
 
         //show User Devices
         $scope.ShowDeviceModal = function(ev, id) {
-            console.log(id);
             $mdDialog.show({
                 controller: 'DeviceModelController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/OwnerCustomer/dialogs/DeviceModel1/DeviceModel1.html',
+                templateUrl: 'app/main/OwnerCustomer/dialogs/DeviceModel/DeviceModel.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,

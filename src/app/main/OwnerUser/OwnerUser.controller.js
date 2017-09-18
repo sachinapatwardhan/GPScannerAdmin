@@ -7,7 +7,6 @@
 
     /** @ngInject */
     function OwnerUserController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
-
         var vm = this;
         $rootScope.appId = localStorage.getItem('appId');
         $rootScope.UserRoles = localStorage.getItem('UserRoles');
@@ -507,7 +506,11 @@
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function() {
-                $http.get($rootScope.RoutePath + "account/forgotpassword?email=" + $scope.obj.email).then(function(data) {
+                var params = {
+                    email: $scope.obj.email,
+                    idApp: $rootScope.appId,
+                }
+                $http.get($rootScope.RoutePath + "account/forgotpassword", { params: params }).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
@@ -540,7 +543,7 @@
         $scope.ChangePassword = function(ev, id) {
             var obj = _.findWhere($scope.lstdata, { id: id })
             $mdDialog.show({
-                controller: 'ChangePassword1Controller',
+                controller: 'ChangePasswordController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/OwnerUser/dialogs/ChangePassword/ChangePassword.html',
                 parent: angular.element($document.body),

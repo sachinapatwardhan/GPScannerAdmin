@@ -3,10 +3,10 @@
 
     angular
         .module('app.user')
-        .controller('ChangePassword1Controller', ChangePassword1Controller);
+        .controller('ChangePasswordController', ChangePasswordController);
 
     /** @ngInject */
-    function ChangePassword1Controller($mdToast, $http, $mdDialog, $scope, obj, Tasks, event, VM, $rootScope) {
+    function ChangePasswordController($mdToast, $http, $mdDialog, $scope, obj, Tasks, event, VM, $rootScope) {
 
         var vm = this;
         $scope.RoutePath = $rootScope.RoutePath;
@@ -16,6 +16,7 @@
                 oldpassword: '',
                 password: '',
                 confirmpassword: '',
+                UserId: obj.id,
             };
         }
         $scope.ChangePassword = function(o) {
