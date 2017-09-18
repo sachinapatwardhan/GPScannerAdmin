@@ -22,6 +22,15 @@
                             <md-option name="Type5" value="MT05">MT05</md-option>
                         </md-select>
                     </md-input-container>
+                    <md-input-container flex ng-if="flag">
+                        <label>AppName</label>
+                        <md-select Name="AppName" ng-model="model.AppName" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTermAppName" type="search" placeholder="Search for a App Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="o.AppName" ng-repeat="o in lstAppName |filter:vm.searchTermAppName| orderBy: 'AppName'">{{o.AppName}}</md-option>
+                        </md-select>
+                    </md-input-container>
                     <md-input-container flex>
                         <label>Country name</label>
                         <md-select Name="CountryId" ng-model="model.CountryId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">

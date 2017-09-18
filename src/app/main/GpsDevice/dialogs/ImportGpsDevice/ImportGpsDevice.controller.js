@@ -6,18 +6,30 @@
         .controller('ImportGpsDeviceController', ImportGpsDeviceController);
 
     /** @ngInject */
-    function ImportGpsDeviceController($http, $mdDialog, $mdToast, $scope, $rootScope, Tasks, event, Obj, lstCountry) {
+    function ImportGpsDeviceController($http, $cookieStore, $mdDialog, $mdToast, $scope, $rootScope, Tasks, event, Obj, lstCountry) {
         var vm = this;
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
             $scope.model = {
                 Type: '',
                 IsOldDevice: 0,
                 CountryId: null,
                 CreatedBy: $rootScope.UserName,
+                AppName: '',
             };
+            if ($rootScope.UserRoles == "Super Admin") {
+                $scope.flag = true;
+            } else {
+                $scope.flag = false;
+            }
+            $scope.GetAllAppName();
         }
         $scope.lstCountry = lstCountry;
-
+        $scope.GetAllAppName = function() {
+            $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo").then(function(data) {
+                $scope.lstAppName = data.data;
+            })
+        }
         $scope.Import = function(o) {
             // if (o.Type == "Z3" && o.CarrierId != null && o.CarrierId != "" && o.CarrierId != undefined) {
             // o.CountryId = _.findWhere($scope.lstCarrier, { id: parseInt(o.CarrierId) }).idCountry.toString();
@@ -30,6 +42,7 @@
                 formData.append('CreatedBy', o.CreatedBy);
                 formData.append('CountryId', o.CountryId);
                 formData.append('CarrierId', o.CarrierId);
+                formData.append('AppName', o.AppName);
             });
             $http.post($rootScope.RoutePath + "PetDevice/uploadExcelDevice", formData, {
                 transformRequest: angular.identity,
