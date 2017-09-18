@@ -200,7 +200,6 @@
 
                     d.CountryList = $rootScope.CountryList;
                     d.AppName = $rootScope.AppName;
-                    // console.log($rootScope.appId)
                     return d;
                 },
                 type: "get",
@@ -403,6 +402,14 @@
                 $scope.init();
                 GetPetDevice(true);
             });
+
+        }
+        $scope.Export = function() {
+            var UserId = '';
+            if ($rootScope.UserRoles == 'Sales Agent') {
+                UserId = $rootScope.UserId;
+            }
+            window.location.href = $rootScope.RoutePath + "PetDevice/ExportTracker?AppName=" + $rootScope.AppName + "&UserId=" + UserId + "&search=" + $scope.Search;
 
         }
 
