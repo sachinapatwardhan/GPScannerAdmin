@@ -20,7 +20,7 @@
             $scope.FilterStatus = 1;
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
+                // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
                 DTColumnBuilder.newColumn('email'), ,
                 // DTColumnBuilder.newColumn('OwnerName'),
                 DTColumnBuilder.newColumn('phone'),
