@@ -17,6 +17,7 @@
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.CountryList = $cookieStore.get('CountryList');
         $rootScope.AppName = localStorage.getItem('appName');
+        $rootScope.idApp = localStorage.getItem('appId');
         $scope.init = function() {
             $scope.model = {
                 id: 0,
@@ -33,10 +34,19 @@
                 IsActive: false,
                 ExpiryDate: null,
                 idSim: null,
+                AppName: $rootScope.AppName,
+                idApp: $rootScope.idApp,
             };
             $scope.GetAllCountry();
             $scope.GetAlltelco();
             $scope.GetAllUserBySalesRole();
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.GetAllInfoList();
+            } else if ($rootScope.UserRoles == "Sales Agent") {
+                $scope.flgSalesAgent = true;
+                $scope.model.idSalesAgent = $rootScope.UserId;
+            }
+
             $scope.Search = '';
             $scope.flag = false;
             $scope.flagEdit = false;
@@ -44,16 +54,19 @@
             $scope.tab = {
                 selectedIndex: 0
             };
-            if ($rootScope.UserRoles == "Sales Agent") {
-                $scope.flgSalesAgent = true;
-                $scope.model.idSalesAgent = $rootScope.UserId;
-            }
+
             $rootScope.appId = localStorage.getItem('appId');
             $scope.GetAllSerialnumber();
         }
         $scope.GetAllSerialnumber = function() {
             $http.get($rootScope.RoutePath + "sim/GetAllSIMInfo").then(function(data) {
                 $scope.lstSIMInfo = data.data;
+            })
+        }
+
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstAppInfo = data.data;
             })
         }
         $scope.GetAllCountry = function() {
@@ -94,6 +107,8 @@
                 IsActive: false,
                 ExpiryDate: null,
                 idSim: null,
+                AppName: $rootScope.AppName,
+                idApp: $rootScope.idApp,
             };
             $scope.Search = '';
             $scope.flagEdit = false;
@@ -147,8 +162,15 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            $scope.dtInstance.reloadData(callback, resetPaging);
-            $('#TRACKERDetail').dataTable()._fnAjaxUpdate();
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.dtInstance.reloadData(callback, resetPaging);
+
+                $('#TRACKERDetail').dataTable()._fnAjaxUpdate();
+            } else {
+                $scope.dtInstance1.reloadData(callback, resetPaging);
+
+                $('#TRACKERDetail1').dataTable()._fnAjaxUpdate();
+            }
         }
 
         $scope.clearSearchTerm = function() {
@@ -166,7 +188,6 @@
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
 
             $scope.FilterStatus = '';
-
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
                 DTColumnBuilder.newColumn('DeviceId'),
@@ -175,7 +196,6 @@
                 DTColumnBuilder.newColumn('Version'),
                 DTColumnBuilder.newColumn('SerialNum'),
                 DTColumnBuilder.newColumn('PhoneNum'),
-                // DTColumnBuilder.newColumn('tbluserinformation.username').renderWith(SalesAgentHtml),
                 DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
                 DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                 DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
@@ -184,6 +204,7 @@
                 DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable(),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
             ]
+
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "PetDevice/GetAllGPSDevice",
@@ -199,7 +220,9 @@
                     d.UserRoles = $rootScope.UserRoles;
 
                     d.CountryList = $rootScope.CountryList;
-                    d.AppName = $rootScope.AppName;
+                    if ($rootScope.UserRoles != 'Super Admin') {
+                        d.AppName = $rootScope.AppName;
+                    }
                     return d;
                 },
                 type: "get",
@@ -211,7 +234,6 @@
                             }
                         }
                         $scope.lstdata = json.data;
-                        // console.log($scope.lstdata);
                         $scope.TotalTrackers = json.recordsTotal
                         return json.data;
                     } else {
@@ -303,6 +325,7 @@
         };
         $scope.formsubmit = false;
         $scope.CreateGpsDevice = function(o, form) {
+            o.AppName = _.findWhere($scope.lstAppInfo, { id: o.idApp }).AppName;
             if (form.$invalid) {
                 $scope.formsubmit = true;
             } else {
@@ -317,7 +340,6 @@
                 } else {
                     o.ExpiryDate = null;
                 }
-                o.AppName = localStorage.getItem('appName');
                 $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
@@ -359,14 +381,19 @@
 
             $scope.flagEdit = true;
             $scope.model.id = o.id;
-            $scope.model.DeviceId = parseInt(o.DeviceId);
+            $scope.model.DeviceId = o.DeviceId;
             $scope.model.Version = o.Version;
-            $scope.model.IMEI = parseInt(o.IMEI);
+            $scope.model.IMEI = o.IMEI
             $scope.model.Type = o.Type;
             $scope.model.CountryId = o.CountryId;
             $scope.model.TelCoId = o.TelCoId;
             $scope.model.SimNum = parseInt(o.SimNum);
             $scope.model.idSim = o.idSim;
+            $scope.model.AppName = o.AppName;
+            if ($scope.model.AppName != null) {
+                $scope.model.idApp = _.findWhere($scope.lstAppInfo, { AppName: o.AppName }).id;
+            }
+
             if (o.idSalesAgent != null) {
                 $scope.model.idSalesAgent = o.idSalesAgent;
             }
@@ -409,8 +436,11 @@
             if ($rootScope.UserRoles == 'Sales Agent') {
                 UserId = $rootScope.UserId;
             }
-            window.location.href = $rootScope.RoutePath + "PetDevice/ExportTracker?AppName=" + $rootScope.AppName + "&UserId=" + UserId + "&search=" + $scope.Search;
-
+            if ($rootScope.UserRoles == 'Super Admin') {
+                window.location.href = $rootScope.RoutePath + "PetDevice/ExportTracker?UserId=" + UserId + "&search=" + $scope.Search;
+            } else {
+                window.location.href = $rootScope.RoutePath + "PetDevice/ExportTracker?AppName=" + $rootScope.AppName + "&UserId=" + UserId + "&search=" + $scope.Search;
+            }
         }
 
         $scope.resetForm = function() {
@@ -432,33 +462,10 @@
                 IsActive: false,
                 ExpiryDate: null,
                 idSim: null,
+                AppName: $rootScope.AppName,
+                idApp: $rootScope.idApp,
             };
             $scope.resetForm();
-        }
-
-        $scope.ResetModel = function() {
-            $scope.model = {
-                id: 0,
-                DeviceId: '',
-                IMEI: '',
-                Type: '',
-                Version: '',
-                CountryId: null,
-                TelCoId: null,
-                SimNum: '',
-                idSalesAgent: 0,
-                IsActive: false,
-                ExpiryDate: null,
-                idSim: null,
-            };
-            $scope.resetForm();
-            $scope.flgSalesAgent = false;
-            if ($rootScope.UserRoles == "Sales Agent") {
-                $scope.flgSalesAgent = true;
-                $scope.model.idSalesAgent = $rootScope.UserId;
-            }
-            $scope.flagEdit = false;
-            $scope.flag = false;
         }
 
         $scope.init();

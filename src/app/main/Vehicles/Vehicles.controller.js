@@ -144,11 +144,10 @@
             };
             $scope.dtInstance.reloadData(callback, resetPaging);
             $('#VehicleDetail').dataTable()._fnAjaxUpdate();
-
         }
 
         $scope.CreateVehicleDetails = function(o) {
-            $http.post($rootScope.RoutePath + "vehicles/SaveVehicle", o).then(function(data) {
+            $http.get($rootScope.RoutePath + "bike/SaveVehicle", { params: o }).then(function(data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()

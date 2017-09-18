@@ -178,7 +178,6 @@
 
         //Create New User With It's Role
         $scope.CreateUser = function(o) {
-            console.log(o);
             o.roleId = _.where($scope.lstRoles, {
                 checked: true
             });

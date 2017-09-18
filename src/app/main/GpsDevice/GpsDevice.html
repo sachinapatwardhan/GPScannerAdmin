@@ -80,6 +80,7 @@
                                     <span class="column-title">SIM Phone Number</span>
                                 </div>
                             </th>
+
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Tel Company</span>
@@ -150,15 +151,15 @@
                         <div layout="row" layout-wrap>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>IMEI</label>
-                                <input name="IMEI" type="number" ng-model="model.IMEI" ng-disabled="flagEdit" ng-required="true" max="999999999999999" min="100000000000000" ng-blur="GetDeviceId(model.IMEI)">
+                                <input name="IMEI" type="text" ng-model="model.IMEI" ng-disabled="flagEdit" ng-required="true" ng-maxlength="15" ng-minlength="15" ng-blur="GetDeviceId(model.IMEI)">
                                 <div ng-messages="formTrackingdetails.IMEI.$error" ng-if="formTrackingdetails.IMEI.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>IMEI is required</span>
                                     </div>
-                                    <div ng-message="max">
+                                    <div ng-message="maxlength">
                                         <span>IMEI should not Grater than 15 digit</span>
                                     </div>
-                                    <div ng-message="min">
+                                    <div ng-message="minlength">
                                         <span>IMEI should not less than 15 digit</span>
                                     </div>
                                 </div>
@@ -200,13 +201,13 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Country</label>
-                                <md-select Name="idCountry" ng-model="model.CountryId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                <md-select Name="CountryId" ng-model="model.CountryId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
                                     <md-select-header class="demo-select-header">
                                         <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                                     </md-select-header>
                                     <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">{{o.Country}}</md-option>
                                 </md-select>
-                                <div ng-messages="formTrackingdetails.idCountry.$error" ng-if="formTrackingdetails.idCountry.$touched" role="alert">
+                                <div ng-messages="formTrackingdetails.CountryId.$error" ng-if="formTrackingdetails.CountryId.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>Country is required.</span>
                                     </div>
@@ -263,6 +264,15 @@
                                         <span>SIM Serial Number is required.</span>
                                     </div>
                                 </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="UserRoles == 'Super Admin'">
+                                <label>App Name</label>
+                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName">{{o.AppName}}</md-option>
+                                </md-select>
                             </md-input-container>
                         </div>
                         <div layout="row">
