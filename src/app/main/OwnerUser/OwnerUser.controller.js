@@ -507,8 +507,9 @@
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function() {
                 var params = {
-                    email: $scope.obj.email,
-                    idApp: $rootScope.appId,
+                    // email: $scope.obj.email,
+                    // idApp: $rootScope.appId,
+                    id: id,
                 }
                 $http.get($rootScope.RoutePath + "account/forgotpassword", { params: params }).then(function(data) {
                     if (data.data.success == true) {
