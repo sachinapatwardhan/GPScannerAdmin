@@ -31,11 +31,11 @@
         //     weight: 1
         // });
 
-        msNavigationServiceProvider.saveItem('Settings.EmailTemplate', {
-            title: 'Email Template',
-            state: 'app.EmailTemplate',
-            icon: 'icon-lock',
-            weight: 1
-        });
+        // msNavigationServiceProvider.saveItem('CMS.EmailTemplate', {
+        //     title: 'Email Template',
+        //     state: 'app.EmailTemplate',
+
+        //     weight: 1
+        // });
     }
 })();
