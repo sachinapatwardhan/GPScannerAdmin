@@ -90,6 +90,7 @@
             // .withOption('autoWidth', true)
             .withOption('aaSorting', [0, 'asc'])
             .withOption('deferRender', true)
+            .withOption('paging', false)
             .withOption('language', {
                 'zeroRecords': "No Record Found",
                 'emptyTable': "No Record Found"
