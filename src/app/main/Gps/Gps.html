@@ -22,8 +22,8 @@
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button>
                 <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length>0 && Search == ''"> -->
-                    <!-- <md-icon md-font-icon="icon-file-excel"></md-icon> -->
-                    <!-- <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip> -->
+                <!-- <md-icon md-font-icon="icon-file-excel"></md-icon> -->
+                <!-- <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip> -->
                 <!-- </md-button> -->
             </div>
         </div>
@@ -46,7 +46,7 @@
             </md-select>
           </md-input-container> -->
                     <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                        <label>DeviceId</label>
+                        <label>Device Id</label>
                         <md-select Name="DeviceId" ng-model="ModelSearch.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllGpsData(true)">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="searchDevice" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
@@ -78,12 +78,12 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">DeviceId</span>
+                                    <span class="column-title">Device Id</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Datetime</span>
+                                    <span class="column-title">Date Time</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -98,7 +98,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">GPSPositioning</span>
+                                    <span class="column-title">GPS Positioning</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -153,7 +153,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">CreatedDate</span>
+                                    <span class="column-title">Created Date</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -173,7 +173,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">OdoMeter</span>
+                                    <span class="column-title">Odo Meter</span>
                                 </div>
                             </th>
                         </tr>
