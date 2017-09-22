@@ -349,7 +349,7 @@
                                     <md-select-header class="demo-select-header">
                                         <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName">{{o.AppName}}</md-option>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
                                 </md-select>
                             </md-input-container>
                         </div>

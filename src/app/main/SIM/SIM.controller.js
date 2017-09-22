@@ -15,7 +15,6 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: '',
-                CreatedDate: '',
             }
 
             $scope.FlgAddedEditlocal = true;
@@ -46,7 +45,7 @@
                         .hideDelay(3000)
                     );
                     $scope.flag = false;
-                    $scope.getAllSIMInfo();
+                    getAllSIMInfo();
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
@@ -63,7 +62,6 @@
             $scope.model.SerialNum = o.SerialNum;
             $scope.model.PhoneNum = parseInt(o.PhoneNum);
             $scope.model.idTelCo = o.idTelCo;
-            $scope.model.CreatedDate = o.CreatedDate;
             $scope.flag = true;
         }
 
@@ -86,7 +84,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
-                        $scope.getAllSIMInfo();
+                        getAllSIMInfo();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -110,7 +108,6 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: '',
-                CreatedDate: '',
             }
 
             $rootScope.FlgAddedEditlocal = false;
@@ -127,7 +124,6 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: '',
-                CreatedDate: '',
             }
 
             $scope.flag = false;
