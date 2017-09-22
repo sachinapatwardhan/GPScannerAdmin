@@ -38,7 +38,7 @@
                 idApp: $rootScope.idApp,
             };
             $scope.GetAllCountry();
-            $scope.GetAlltelco();
+            // $scope.GetAlltelco();
             $scope.GetAllUserBySalesRole();
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.GetAllInfoList();
@@ -54,8 +54,6 @@
             $scope.tab = {
                 selectedIndex: 0
             };
-
-            $rootScope.appId = localStorage.getItem('appId');
             $scope.GetAllSerialnumber();
         }
         $scope.GetAllSerialnumber = function() {
@@ -162,13 +160,12 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            if ($rootScope.UserRoles == 'Super Admin') {
-                $scope.dtInstance.reloadData(callback, resetPaging);
 
+            if ($rootScope.UserRoles == 'Super Admin') {
+                vm.dtInstance.reloadData(callback, resetPaging);
                 $('#TRACKERDetail').dataTable()._fnAjaxUpdate();
             } else {
-                $scope.dtInstance1.reloadData(callback, resetPaging);
-
+                vm.dtInstance1.reloadData(callback, resetPaging);
                 $('#TRACKERDetail1').dataTable()._fnAjaxUpdate();
             }
         }
@@ -188,23 +185,42 @@
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
 
             $scope.FilterStatus = '';
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
-                DTColumnBuilder.newColumn('DeviceId'),
-                DTColumnBuilder.newColumn('Type'),
-                DTColumnBuilder.newColumn('IMEI'),
-                DTColumnBuilder.newColumn('Version'),
-                DTColumnBuilder.newColumn('SerialNum'),
-                DTColumnBuilder.newColumn('PhoneNum'),
-                DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
-                DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
-                DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
-                DTColumnBuilder.newColumn('CreatedBy'),
-                DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable(),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
-            ]
-
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('DeviceId'),
+                    DTColumnBuilder.newColumn('Type'),
+                    DTColumnBuilder.newColumn('IMEI'),
+                    DTColumnBuilder.newColumn('Version'),
+                    DTColumnBuilder.newColumn('SerialNum'),
+                    DTColumnBuilder.newColumn('PhoneNum'),
+                    DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                    // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
+                    DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('CreatedBy'),
+                    DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable(),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                ]
+            } else {
+                $scope.dtColumns1 = [
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('DeviceId'),
+                    DTColumnBuilder.newColumn('Type'),
+                    DTColumnBuilder.newColumn('IMEI'),
+                    DTColumnBuilder.newColumn('Version'),
+                    DTColumnBuilder.newColumn('SerialNum'),
+                    DTColumnBuilder.newColumn('PhoneNum'),
+                    DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                    // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
+                    DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('CreatedBy'),
+                    DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable(),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                ]
+            }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "PetDevice/GetAllGPSDevice",
@@ -246,7 +262,7 @@
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
-                .withOption('aaSorting', [1, 'asc'])
+                .withOption('aaSorting', [10, 'desc'])
                 .withOption('responsive', true)
                 .withOption('autoWidth', true)
                 // .withOption('deferRender', true)
@@ -255,7 +271,8 @@
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
-        $scope.dtInstance = {};
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
 
         function dateFormat(date) {
             if (date != null) {
@@ -325,7 +342,7 @@
         };
         $scope.formsubmit = false;
         $scope.CreateGpsDevice = function(o, form) {
-            o.AppName = _.findWhere($scope.lstAppInfo, { id: o.idApp }).AppName;
+            o.AppName = _.findWhere($scope.lstAppInfo, { id: parseInt(o.idApp) }).AppName;
             if (form.$invalid) {
                 $scope.formsubmit = true;
             } else {
@@ -378,7 +395,6 @@
             var o = _.findWhere($scope.lstdata, {
                 id: id
             });
-
             $scope.flagEdit = true;
             $scope.model.id = o.id;
             $scope.model.DeviceId = o.DeviceId;
@@ -386,7 +402,7 @@
             $scope.model.IMEI = o.IMEI
             $scope.model.Type = o.Type;
             $scope.model.CountryId = o.CountryId;
-            $scope.model.TelCoId = o.TelCoId;
+            // $scope.model.TelCoId = o.TelCoId;
             $scope.model.SimNum = parseInt(o.SimNum);
             $scope.model.idSim = o.idSim;
             $scope.model.AppName = o.AppName;

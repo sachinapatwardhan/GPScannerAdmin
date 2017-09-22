@@ -1,163 +1,249 @@
 <div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
-  <div class="top-bg md-accent-bg"></div>
-  <div class="center" layout="column" flex>
-    <div class="header" layout="row" layout-wrap layout-align="space-between center">
-      <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
-        <div class="h1" layout="row" layout-align="start center">
-          <md-icon md-font-icon="icon-cube-outline"></md-icon>
-          <span translate="GPS TRACKER">GPS TRACKER</span>
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="GPS TRACKER">GPS TRACKER</span>
+                </div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Trackers :</span>
+                    <b>{{TotalTrackers}}</b>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length > 0">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportGpsDeviceModal($event)" aria-label="Search">
+                    <md-icon md-font-icon="icon-import"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search">
+                    <md-icon md-font-icon="icon-download"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
+                </md-button>
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-icon-button  md-raised md-hue-2" ng-click="vm.Reset()" aria-label="Search">
+                        <md-icon md-font-icon="icon-plus"></md-icon>
+                        <md-tooltip md-visible="" md-direction="">Add New TRACKER</md-tooltip>
+                    </md-button>
+                </div>
+            </div>
         </div>
-        <div class="product-count secondary-text" hide-xs>
-          <span>Total Trackers :</span>
-          <b>{{TotalTrackers}}</b>
+        <div class="content-card" layout="column" flex ng-if="UserRoles != 'Super Admin'">
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table id="TRACKERDetail" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device Id</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IMEI</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Version</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">SIM Serial Number</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">SIM Phone Number</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Tel Company</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Sales Agent</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Expiry Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">DATE</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created By</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IsActive</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-      </div>
-      <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
-        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-        <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
-      </div>
-      <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-        <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length > 0">
-          <md-icon md-font-icon="icon-file-excel"></md-icon>
-          <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
-        </md-button>
-        <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportGpsDeviceModal($event)" aria-label="Search">
-          <md-icon md-font-icon="icon-import"></md-icon>
-          <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
-        </md-button>
-        <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search">
-          <md-icon md-font-icon="icon-download"></md-icon>
-          <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
-        </md-button>
-        <div ng-if="FlgAddedEditlocal">
-          <md-button class="md-icon-button  md-raised md-hue-2" ng-click="vm.Reset()" aria-label="Search">
-            <md-icon md-font-icon="icon-plus"></md-icon>
-            <md-tooltip md-visible="" md-direction="">Add New TRACKER</md-tooltip>
-          </md-button>
+        <div class="content-card" layout="column" flex ng-if="UserRoles == 'Super Admin'">
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table id="TRACKERDetail" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device Id</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IMEI</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Version</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">SIM Serial Number</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">SIM Phone Number</span>
+                                </div>
+                            </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Tel Company</span>
+                                </div>
+                            </th>
+                            <!-- <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Sales Agent</span>
+                                </div>
+                            </th> -->
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">App Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Expiry Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">DATE</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created By</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IsActive</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="content-card" layout="column" flex>
-      <div class="content fullpage-datatable" layout="column" flex>
-        <table id="TRACKERDetail" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
-          <thead>
-            <tr>
-              <th class="all">
-                <div class="table-header">
-                  <span class="column-title">No</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">Device Id</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">Type</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">IMEI</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">Version</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">SIM Serial Number</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">SIM Phone Number</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">Tel Company</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">Sales Agent</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">Expiry Date</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">DATE</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">Created By</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">IsActive</span>
-                </div>
-              </th>
-              <th class="all">
-                <div class="table-header">
-                  <span class="column-title">Action</span>
-                </div>
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="page-layout simple tabbed" layout="column" ng-show="flag">
-  <div class="header md-accent-bg" layout="row" layout-align="start center">
-    <div class="white-fg" layout="row" layout-align="start center" flex>
-      <md-button class="goto-products-button md-icon-button" aria-label="Go to TRACKER" ng-click="gotoTRACKERList()">
-        <md-icon md-font-icon="icon-arrow-left"></md-icon>
-      </md-button>
-      <div layout="row" layout-align="start center">
-        <div layout="column" layout-align="start start">
-          <div class="subtitle secondary-text">
-            <span translate="TRACKER DETAIL">TRACKER Detail</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-    </div>
-  </div>
-  <div class="content" layout-margin>
-    <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
-      <md-content class="md-padding">
-        <form name="formTrackingdetails" novalidate class="md-inline-form" aria-invalid="false">
-          <div class="content">
-            <div layout="row" layout-wrap>
-              <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                <label>IMEI</label>
-                <input name="IMEI" type="text" ng-model="model.IMEI" ng-disabled="flagEdit" ng-required="true" ng-maxlength="15" ng-minlength="15" ng-blur="GetDeviceId(model.IMEI)">
-                <div ng-messages="formTrackingdetails.IMEI.$error" ng-if="formTrackingdetails.IMEI.$touched" role="alert">
-                  <div ng-message="required">
-                    <span>IMEI is required</span>
-                  </div>
-                  <div ng-message="maxlength">
-                    <span>IMEI should not Grater than 15 digit</span>
-                  </div>
-                  <div ng-message="minlength">
-                    <span>IMEI should not less than 15 digit</span>
-                  </div>
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to TRACKER" ng-click="gotoTRACKERList()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="TRACKER DETAIL">TRACKER Detail</span>
+                    </div>
                 </div>
-              </md-input-container>
-              <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content" layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-content class="md-padding">
+                <form name="formTrackingdetails" novalidate class="md-inline-form" aria-invalid="false">
+                    <div class="content">
+                        <div layout="row" layout-wrap>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>IMEI</label>
+                                <input name="IMEI" type="text" ng-model="model.IMEI" ng-disabled="flagEdit" ng-required="true" ng-maxlength="15" ng-minlength="15" ng-blur="GetDeviceId(model.IMEI)">
+                                <div ng-messages="formTrackingdetails.IMEI.$error" ng-if="formTrackingdetails.IMEI.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>IMEI is required</span>
+                                    </div>
+                                    <div ng-message="maxlength">
+                                        <span>IMEI should not Grater than 15 digit</span>
+                                    </div>
+                                    <div ng-message="minlength">
+                                        <span>IMEI should not less than 15 digit</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Device Id</label>
                                 <input name="DeviceId" id="DeviceId" type="number" ng-model="model.DeviceId" ng-required="true" ng-disabled="flagEdit" max="99999999999999" min="10000000000000">
                                 <div ng-messages="formTrackingdetails.DeviceId.$error" ng-if="formTrackingdetails.DeviceId.$touched" role="alert">
@@ -172,69 +258,69 @@
                                     </div>
                                 </div>
                             </md-input-container>-->
-              <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                <label>Type</label>
-                <md-select ng-model="model.Type" name="Type">
-                  <md-option name="Type1" value="TK510" selected="true">TK510</md-option>
-                  <md-option name="Type2" value="TK208">TK208</md-option>
-                  <md-option name="Type3" value="TK228">TK228</md-option>
-                  <md-option name="Type4" value="GT08">GT08</md-option>
-                  <md-option name="Type5" value="MT05">MT05</md-option>
-                </md-select>
-              </md-input-container>
-              <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                <label>Version </label>
-                <input name="Version" type="text" ng-model="model.Version">
-                <div ng-messages="formTrackingdetails.Version.$error" ng-if="formTrackingdetails.Version.$touched">
-                  <div ng-message="required">
-                    <span>Version is required</span>
-                  </div>
-                </div>
-              </md-input-container>
-              <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                <label>Country</label>
-                <md-select Name="CountryId" ng-model="model.CountryId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                  <md-select-header class="demo-select-header">
-                    <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                  </md-select-header>
-                  <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">{{o.Country}}</md-option>
-                </md-select>
-                <div ng-messages="formTrackingdetails.CountryId.$error" ng-if="formTrackingdetails.CountryId.$touched" role="alert">
-                  <div ng-message="required">
-                    <span>Country is required.</span>
-                  </div>
-                </div>
-              </md-input-container>
-              <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                <label>Sales Agent</label>
-                <md-select Name="idSalesAgent" ng-model="model.idSalesAgent" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                  <md-select-header class="demo-select-header">
-                    <input ng-model="vm.searchTermAgent" type="search" placeholder="Search for a Sales Agent.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                  </md-select-header>
-                  <md-option value="0">No Sales Agent</md-option>
-                  <md-option ng-value="{{o.id}}" ng-repeat="o in lstSaleAgent |filter:vm.searchTermAgent| orderBy: 'username'">{{o.username}}</md-option>
-                </md-select>
-                <div ng-messages="formTrackingdetails.idSalesAgent.$error" ng-if="formTrackingdetails.idSalesAgent.$touched" role="alert">
-                  <div ng-message="required">
-                    <span>Sales Agent is required.</span>
-                  </div>
-                </div>
-              </md-input-container>
-              <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                <label>Telephone Company</label>
-                <md-select Name="TelCoId" ng-model="model.TelCoId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                  <md-select-header class="demo-select-header">
-                    <input ng-model="vm.searchTermTelCoId" type="search" placeholder="Search for a Company.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                  </md-select-header>
-                  <md-option ng-value="{{o.id}}" ng-repeat="o in lstCompany | filter:vm.searchTermTelCoId | orderBy: 'Name'">{{o.Name}}</md-option>
-                </md-select>
-                <div ng-messages="formTrackingdetails.TelCoId.$error" ng-if="formTrackingdetails.TelCoId.$touched" role="alert">
-                  <div ng-message="required">
-                    <span>Tel Company is required.</span>
-                  </div>
-                </div>
-              </md-input-container>
-              <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Type</label>
+                                <md-select ng-model="model.Type" name="Type">
+                                    <md-option name="Type1" value="TK510" selected="true">TK510</md-option>
+                                    <md-option name="Type2" value="TK208">TK208</md-option>
+                                    <md-option name="Type3" value="TK228">TK228</md-option>
+                                    <md-option name="Type4" value="GT08">GT08</md-option>
+                                    <md-option name="Type5" value="MT05">MT05</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Version </label>
+                                <input name="Version" type="text" ng-model="model.Version">
+                                <div ng-messages="formTrackingdetails.Version.$error" ng-if="formTrackingdetails.Version.$touched">
+                                    <div ng-message="required">
+                                        <span>Version is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Country</label>
+                                <md-select Name="CountryId" ng-model="model.CountryId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">{{o.Country}}</md-option>
+                                </md-select>
+                                <div ng-messages="formTrackingdetails.CountryId.$error" ng-if="formTrackingdetails.CountryId.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Country is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Sales Agent</label>
+                                <md-select Name="idSalesAgent" ng-model="model.idSalesAgent" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermAgent" type="search" placeholder="Search for a Sales Agent.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option value="0">No Sales Agent</md-option>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstSaleAgent |filter:vm.searchTermAgent| orderBy: 'username'">{{o.username}}</md-option>
+                                </md-select>
+                                <div ng-messages="formTrackingdetails.idSalesAgent.$error" ng-if="formTrackingdetails.idSalesAgent.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Sales Agent is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Telephone Company</label>
+                                <md-select Name="TelCoId" ng-model="model.TelCoId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermTelCoId" type="search" placeholder="Search for a Company.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstCompany | filter:vm.searchTermTelCoId | orderBy: 'Name'">{{o.Name}}</md-option>
+                                </md-select>
+                                <div ng-messages="formTrackingdetails.TelCoId.$error" ng-if="formTrackingdetails.TelCoId.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Tel Company is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container> -->
+                            <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Sim Number </label>
                                 <input name="SimNum" type="number" ng-model="model.SimNum">
                                 <div ng-messages="formTrackingdetails.SimNum.$error" ng-if="formTrackingdetails.SimNum.$touched">
@@ -243,43 +329,43 @@
                                     </div>
                                 </div>
                             </md-input-container>-->
-              <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                <label>SIM Serial Number</label>
-                <md-select Name="idSim" ng-model="model.idSim" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                  <md-select-header class="demo-select-header">
-                    <input ng-model="vm.searchTermidSim" type="search" placeholder="Search for a Serial Number.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                  </md-select-header>
-                  <md-option ng-value="{{o.id}}" ng-repeat="o in lstSIMInfo | filter:vm.searchTermidSim | orderBy: 'SerialNum'">{{o.SerialNum}}</md-option>
-                </md-select>
-                <div ng-messages="formTrackingdetails.idSim.$error" ng-if="formTrackingdetails.idSim.$touched" role="alert">
-                  <div ng-message="required">
-                    <span>SIM Serial Number is required.</span>
-                  </div>
-                </div>
-              </md-input-container>
-              <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="UserRoles == 'Super Admin'">
-                <label>App Name</label>
-                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                  <md-select-header class="demo-select-header">
-                    <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                  </md-select-header>
-                  <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName">{{o.AppName}}</md-option>
-                </md-select>
-              </md-input-container>
-            </div>
-            <div layout="row">
-              <md-checkbox class="md-primary" ng-model="model.IsActive" aria-label="Checkbox 1">
-                <span>IsActive</span>
-              </md-checkbox>
-            </div>
-            <div align="left">
-              <md-button class="md-raised md-primary" ng-disabled="formTrackingdetails.$invalid" ng-click="CreateGpsDevice(model, formTrackingdetails)">Save</md-button>
-              <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>
-              <md-button class="md-raised md-warn" ng-click="gotoTRACKERList()">Cancel</md-button>
-            </div>
-          </div>
-        </form>
-      </md-content>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>SIM Serial Number</label>
+                                <md-select Name="idSim" ng-model="model.idSim" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermidSim" type="search" placeholder="Search for a Serial Number.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstSIMInfo | filter:vm.searchTermidSim | orderBy: 'SerialNum'">{{o.SerialNum}}</md-option>
+                                </md-select>
+                                <div ng-messages="formTrackingdetails.idSim.$error" ng-if="formTrackingdetails.idSim.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>SIM Serial Number is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="UserRoles == 'Super Admin'">
+                                <label>App Name</label>
+                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName">{{o.AppName}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div layout="row">
+                            <md-checkbox class="md-primary" ng-model="model.IsActive" aria-label="Checkbox 1">
+                                <span>IsActive</span>
+                            </md-checkbox>
+                        </div>
+                        <div align="left">
+                            <md-button class="md-raised md-primary" ng-disabled="formTrackingdetails.$invalid" ng-click="CreateGpsDevice(model, formTrackingdetails)">Save</md-button>
+                            <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>
+                            <md-button class="md-raised md-warn" ng-click="gotoTRACKERList()">Cancel</md-button>
+                        </div>
+                    </div>
+                </form>
+            </md-content>
+        </div>
     </div>
-  </div>
 </div>
