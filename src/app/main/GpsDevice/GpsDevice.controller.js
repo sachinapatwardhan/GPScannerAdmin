@@ -55,6 +55,7 @@
                 selectedIndex: 0
             };
             $scope.GetAllSerialnumber();
+            $rootScope.UserRoles = $cookieStore.get('UserRoles');
         }
         $scope.GetAllSerialnumber = function() {
             $http.get($rootScope.RoutePath + "sim/GetAllSIMInfo").then(function(data) {
@@ -239,6 +240,7 @@
                     if ($rootScope.UserRoles != 'Super Admin') {
                         d.AppName = $rootScope.AppName;
                     }
+                    d.UserRoles = $rootScope.UserRoles;
                     return d;
                 },
                 type: "get",
