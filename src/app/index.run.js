@@ -336,7 +336,7 @@
                                 return obj.tblmodulemgmt.Module == 'Manage Module';
                             });
                             if (lstModule.length > 0) {
-                                msNavigationService.saveItem('Module.Module', {
+                                msNavigationService.saveItem('Settings.Module', {
                                     title: 'Manage Module',
                                     state: 'app.Module',
                                     order: lstModule[0].tblmodulemgmt.DisplayOrder,
@@ -440,7 +440,7 @@
                                 return obj.tblmodulemgmt.Module == 'Trackers';
                             });
                             if (lstTrackers.length > 0) {
-                                msNavigationService.saveItem('Trackers', {
+                                msNavigationService.saveItem('Settings.Trackers', {
                                     title: 'Trackers',
                                     state: 'app.Trackers',
                                     order: lstTrackers[0].tblmodulemgmt.DisplayOrder,
@@ -596,7 +596,7 @@
                                 return obj.tblmodulemgmt.Module == 'SIM';
                             });
                             if (SIM.length > 0) {
-                                msNavigationService.saveItem('CMS.SIM', {
+                                msNavigationService.saveItem('Settings.SIM', {
                                     title: 'SIM',
                                     state: 'app.SIM',
                                     order: SIM[0].tblmodulemgmt.DisplayOrder,
