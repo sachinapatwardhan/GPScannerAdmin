@@ -544,7 +544,7 @@
         $scope.ChangePassword = function(ev, id) {
             var obj = _.findWhere($scope.lstdata, { id: id })
             $mdDialog.show({
-                controller: 'ChangePasswordController',
+                controller: 'UserChangePasswordController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/OwnerUser/dialogs/ChangePassword/ChangePassword.html',
                 parent: angular.element($document.body),
