@@ -75,6 +75,12 @@
         if ($rootScope.CountryList == null || $rootScope.CountryList == "" || $rootScope.CountryList == undefined) {
             $rootScope.CountryList = [];
         }
+
+        $http.get('http://bugzstudio.com:7212/country/GetCurrentCountry').success(function(data) {
+            if (data != null) {
+                $rootScope.CurrentTimeZone = data.time_zone;
+            }
+        })
         $rootScope.CheckPageRights = function(ModuleName, callback) {
             $rootScope.UserRoles = $cookieStore.get('UserRoles');
             $rootScope.FlgAddedAccess = false;
