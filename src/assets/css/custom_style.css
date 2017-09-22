@@ -360,31 +360,34 @@ table.dataTable.dtr-inline.collapsed.dtr-inline.collapsed>tbody>tr>th:first-chil
 .dataTables_scrollHead th span {
     text-align: center;
 }
+
 table.dataTable.cell-border thead th {
     /*border-top: 1px solid rgba(0, 0, 0, 0.12);*/
     border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
-.dataTables_wrapper .bottom .left{
+
+.dataTables_wrapper .bottom .left {
     display: block;
 }
-.dataTables_wrapper .bottom .left .info{
+
+.dataTables_wrapper .bottom .left .info {
     display: block;
     width: 100%;
     font-weight: bold;
-    background: red ;
+    background: red;
 }
-.dataTables_wrapper .bottom .left .info .dataTables_info{
+
+.dataTables_wrapper .bottom .left .info .dataTables_info {
     padding-top: 4px;
 }
 
 .dataTables_scrollHead th span {
     text-align: center;
 }
-.dataTables_wrapper .dataTables_scroll .dataTables_scrollHead{
+
+.dataTables_wrapper .dataTables_scroll .dataTables_scrollHead {
     min-height: auto;
 }
-
-
 
 .actionSubMenu {
     border-radius: 10px !important;
@@ -517,6 +520,23 @@ table.dataTable>tbody>tr.child ul .column-title::after {
 
 table.dataTable>tbody>tr.child ul .table-header {
     text-align: left;
+}
+
+@media (max-width:1280px) {
+    .fullpage-datatable .bottom .left {
+        flex: 1;
+    }
+    .fullpage-datatable .bottom .right {
+        flex: 1;
+    }
+}
+
+@media (max-width:600px) {
+    .fullpage-datatable .dataTables_paginate {
+        flex-wrap: wrap;
+        display: flex;
+        justify-content: center;
+    }
 }
 
 
