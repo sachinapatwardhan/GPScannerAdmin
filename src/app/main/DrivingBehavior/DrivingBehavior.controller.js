@@ -189,7 +189,7 @@
 
         //Dynamic Pagging End
         $scope.Export = function() {
-            window.location.href = $rootScope.RoutePath + "canbusdata/ExportAllDrivingData?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&search=" + $scope.Search + "&idApp=" + $rootScope.appId;
+            window.location.href = $rootScope.RoutePath + "canbusdata/ExportAllDrivingData?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&search=" + $scope.Search + "&idApp=" + $rootScope.appId + "&TimeZone=" + $rootScope.CurrentTimeZone;
 
         }
 

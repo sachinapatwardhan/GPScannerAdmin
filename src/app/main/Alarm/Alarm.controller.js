@@ -7,7 +7,6 @@
 
     /** @ngInject */
     function AlarmController($http, $scope, $rootScope, $filter, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile, $element) {
-
         var vm = this;
         $scope.ResponseAlarm = [];
         $scope.init = function() {
@@ -204,8 +203,7 @@
         //Dynamic Pagging End
 
         $scope.Export = function() {
-
-            window.location.href = $rootScope.RoutePath + "gpsdata/ExportAlarm?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&AlarmCode=" + $scope.ModelSearch.AlarmCode + "&idApp=" + $rootScope.appId;
+            window.location.href = $rootScope.RoutePath + "gpsdata/ExportAlarm?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&AlarmCode=" + $scope.ModelSearch.AlarmCode + "&idApp=" + $rootScope.appId + "&TimeZone=" + $rootScope.CurrentTimeZone;
 
         }
 
