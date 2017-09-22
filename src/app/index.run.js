@@ -24,7 +24,7 @@
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
 
-        $rootScope.appName = 'Maark';
+        $rootScope.appName = 'MAARK';
         var params = {
             AppName: $rootScope.appName,
         }
@@ -336,7 +336,7 @@
                                 return obj.tblmodulemgmt.Module == 'Manage Module';
                             });
                             if (lstModule.length > 0) {
-                                msNavigationService.saveItem('Settings.Module', {
+                                msNavigationService.saveItem('Module.Module', {
                                     title: 'Manage Module',
                                     state: 'app.Module',
                                     order: lstModule[0].tblmodulemgmt.DisplayOrder,
@@ -440,7 +440,7 @@
                                 return obj.tblmodulemgmt.Module == 'Trackers';
                             });
                             if (lstTrackers.length > 0) {
-                                msNavigationService.saveItem('Settings.Trackers', {
+                                msNavigationService.saveItem('Trackers', {
                                     title: 'Trackers',
                                     state: 'app.Trackers',
                                     order: lstTrackers[0].tblmodulemgmt.DisplayOrder,
@@ -596,7 +596,7 @@
                                 return obj.tblmodulemgmt.Module == 'SIM';
                             });
                             if (SIM.length > 0) {
-                                msNavigationService.saveItem('Settings.SIM', {
+                                msNavigationService.saveItem('CMS.SIM', {
                                     title: 'SIM',
                                     state: 'app.SIM',
                                     order: SIM[0].tblmodulemgmt.DisplayOrder,

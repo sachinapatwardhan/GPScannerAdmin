@@ -31,7 +31,7 @@
         //     weight: 1
         // });
 
-        // msNavigationServiceProvider.saveItem('Gpsina.ownerbike', {
+        // msNavigationServiceProvider.saveItem('ownerbike', {
         //     title: 'Owner Vehicle',
         //     state: 'app.ownerbike',
         //     icon: 'icon-lock',

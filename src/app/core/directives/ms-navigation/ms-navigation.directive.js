@@ -63,7 +63,6 @@
             // // var RoutePath = "http://localhost:10026/";
             // // var RoutePath = "http://182.70.126.194:10026/";
             // // var RoutePath = "http://45.64.169.32:4444/";
-            // var RoutePath = "http://api.gpsina.com/";
 
 
             // $http.get(RoutePath + "userPermission/CheckRights", { params: params }).then(function(data) {

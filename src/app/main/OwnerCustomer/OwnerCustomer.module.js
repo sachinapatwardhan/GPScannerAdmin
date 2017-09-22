@@ -31,7 +31,7 @@
         //     weight: 1
         // });
 
-        // msNavigationServiceProvider.saveItem('Gpsina.Owner Customer', {
+        // msNavigationServiceProvider.saveItem('Owner Customer', {
         //     title: 'Owner Customer',
         //     state: 'app.OwnerCustomer',
         //     icon: 'icon-lock',

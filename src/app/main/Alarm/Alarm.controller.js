@@ -48,7 +48,7 @@
         //GetDevice
 
         $scope.GetAllGpsDevice = function() {
-            $http.get($rootScope.RoutePath + "gpsdata/GetAllGpsDevice").then(function(resdata) {
+            $http.get($rootScope.RoutePath + "gpsdata/GetAllGpsDevice?idApp=" + $rootScope.appId).then(function(resdata) {
                 if (resdata.data.length > 0) {
                     $scope.lstdevice = resdata.data;
                 } else {

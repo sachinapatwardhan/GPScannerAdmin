@@ -397,6 +397,7 @@
             var o = _.findWhere($scope.lstdata, {
                 id: id
             });
+
             $scope.flagEdit = true;
             $scope.model.id = o.id;
             $scope.model.DeviceId = o.DeviceId;
@@ -409,7 +410,12 @@
             $scope.model.idSim = o.idSim;
             $scope.model.AppName = o.AppName;
             if ($scope.model.AppName != null) {
-                $scope.model.idApp = _.findWhere($scope.lstAppInfo, { AppName: o.AppName }).id;
+                if ($rootScope.UserRoles == 'Super Admin') {
+                    $scope.model.idApp = _.findWhere($scope.lstAppInfo, { AppName: o.AppName }).id;
+                } else {
+                    $scope.model.idApp = $rootScope.idApp;
+
+                }
             }
 
             if (o.idSalesAgent != null) {
@@ -422,6 +428,7 @@
             } else {
                 $scope.model.IsActive = false;
             }
+            console.log($scope.model);
 
             $scope.flag = true;
         }
