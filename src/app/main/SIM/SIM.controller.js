@@ -45,7 +45,8 @@
                         .hideDelay(3000)
                     );
                     $scope.flag = false;
-                    getAllSIMInfo();
+                    $scope.init();
+                    // $scope.getAllSIMInfo();
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
@@ -84,7 +85,8 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
-                        getAllSIMInfo();
+                        $scope.init();
+                        // $scope.getAllSIMInfo();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
