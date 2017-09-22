@@ -320,11 +320,11 @@
 
                             //Setting
                             var lstSetting = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Setting';
+                                return obj.tblmodulemgmt.Module == 'App Setting';
                             });
                             if (lstSetting.length > 0) {
-                                msNavigationService.saveItem('CMS.Setting', {
-                                    title: 'Settings',
+                                msNavigationService.saveItem('CMS.App Setting', {
+                                    title: 'App Setting',
                                     state: 'app.Setting',
                                     order: lstSetting[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1

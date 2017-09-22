@@ -17,8 +17,8 @@
                         controller: 'SettingController'
                     }
                 },
-                bodyClass: 'Setting',
-                ModuleName: 'Setting'
+                bodyClass: 'App Setting',
+                ModuleName: 'App Setting'
             });
 
         // Translation
