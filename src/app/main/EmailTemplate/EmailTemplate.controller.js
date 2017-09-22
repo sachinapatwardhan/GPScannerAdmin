@@ -55,17 +55,18 @@
         }
 
 
-        //vm.dtOptions = DTOptionsBuilder.newOptions()
-        //    .withPaginationType('full_numbers')
-        //    .withDisplayLength(10)
-        //    .withOption('responsive', true)
-        //    .withOption('autoWidth', true)
-        //     .withOption('language', {
-        //         'zeroRecords': "No Record Found",
-        //         'emptyTable': "No Record Found"
-        //     })
-        //    .withOption('dom', '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
-        // .withDOM('<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
+        vm.dtOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withDisplayLength(10)
+            .withOption('responsive', true)
+            .withOption('autoWidth', true)
+            .withOption('language', {
+                'zeroRecords': "No Record Found",
+                'emptyTable': "No Record Found"
+            })
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            // .withOption('dom', '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
+            // .withDOM('<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
         vm.dtColumnDefs = [
             DTColumnDefBuilder.newColumnDef(0),
             DTColumnDefBuilder.newColumnDef(1),
