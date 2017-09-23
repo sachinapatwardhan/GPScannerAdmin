@@ -114,7 +114,7 @@
             .withOption('serverSide', true) // for server side processing
             .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
             .withDisplayLength(25) // Page size
-            .withOption('aaSorting', [0, 'desc'])
+            .withOption('aaSorting', [2, 'desc'])
             .withOption('responsive', true)
             .withOption('createdRow', createdRow)
             .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
@@ -190,9 +190,7 @@
         //Dynamic Pagging End
         $scope.Export = function() {
             window.location.href = $rootScope.RoutePath + "canbusdata/ExportAllDrivingData?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&search=" + $scope.Search + "&idApp=" + $rootScope.appId + "&TimeZone=" + $rootScope.CurrentTimeZone;
-
         }
-
         $scope.init();
     }
 
