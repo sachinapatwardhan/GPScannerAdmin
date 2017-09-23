@@ -290,7 +290,7 @@
                 DTColumnBuilder.newColumn('username').withOption('width', '12%'),
                 DTColumnBuilder.newColumn('email').withOption('width', '13%'),
                 DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
-                DTColumnBuilder.newColumn(null).renderWith(roleHtml),
+                DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
                 // DTColumnBuilder.newColumn('AppName').renderWith(AppHtml),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
             ]
