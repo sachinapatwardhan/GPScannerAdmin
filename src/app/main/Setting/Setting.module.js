@@ -10,7 +10,7 @@
         // State
         $stateProvider
             .state('app.Setting', {
-                url: '/Setting',
+                url: '/AppSetting',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/Setting/Setting.html',
