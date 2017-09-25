@@ -62,7 +62,7 @@
         $scope.FilterStatus = 1;
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
-            DTColumnBuilder.newColumn('Date').renderWith(Datetimefun).notSortable(),
+            DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
             DTColumnBuilder.newColumn('AlarmCode').renderWith(CodeFun),
             DTColumnBuilder.newColumn('DeviceId'),
             DTColumnBuilder.newColumn('Latitude'),
