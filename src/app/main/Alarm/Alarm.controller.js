@@ -203,13 +203,16 @@
         //Dynamic Pagging End
 
         $scope.Export = function() {
+            console.log($scope.ModelSearch.EndDate)
+            var StartDate = '';
+            var EndDate = '';
             if ($scope.ModelSearch.EndDate != '') {
-                $scope.ModelSearch.EndDate = $scope.ModelSearch.EndDate.toUTCString()
+                EndDate = $scope.ModelSearch.EndDate.toUTCString()
             }
             if ($scope.ModelSearch.StartDate != '') {
-                $scope.ModelSearch.StartDate = $scope.ModelSearch.StartDate.toUTCString()
+                StartDate = $scope.ModelSearch.StartDate.toUTCString()
             }
-            window.location.href = $rootScope.RoutePath + "gpsdata/ExportAlarm?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch + "&EndDate=" + $scope.ModelSearch.EndDate.toUTCString() + "&AlarmCode=" + $scope.ModelSearch.AlarmCode + "&idApp=" + $rootScope.appId + "&TimeZone=" + $rootScope.CurrentTimeZone;
+            window.location.href = $rootScope.RoutePath + "gpsdata/ExportAlarm?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&AlarmCode=" + $scope.ModelSearch.AlarmCode + "&idApp=" + $rootScope.appId + "&TimeZone=" + $rootScope.CurrentTimeZone;
 
         }
 
