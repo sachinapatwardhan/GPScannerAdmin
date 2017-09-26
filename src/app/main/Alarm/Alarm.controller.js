@@ -145,7 +145,10 @@
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
                 // return $filter('date')(data, "dd-MM-yyyy");
-                return moment(moment.utc(data).toDate()).format("DD-MM-YYYY");
+                // return moment(moment(data).toDate()).format("DD-MM-YYYY hh:mm a");
+                var date = $rootScope.convertdateformat(data, 2);
+                return date;
+
             } else {
                 return '';
             }
@@ -212,7 +215,8 @@
             if ($scope.ModelSearch.StartDate != '') {
                 StartDate = $scope.ModelSearch.StartDate.toUTCString()
             }
-            window.location.href = $rootScope.RoutePath + "gpsdata/ExportAlarm?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&AlarmCode=" + $scope.ModelSearch.AlarmCode + "&idApp=" + $rootScope.appId + "&TimeZone=" + $rootScope.CurrentTimeZone;
+            var CurrentOffset = encodeURIComponent($rootScope.CurrentOffset);
+            window.location.href = $rootScope.RoutePath + "gpsdata/ExportAlarm?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&AlarmCode=" + $scope.ModelSearch.AlarmCode + "&idApp=" + $rootScope.appId + "&TimeZone=" + $rootScope.CurrentTimeZone + "&CurrentOffset=" + CurrentOffset;
 
         }
 
