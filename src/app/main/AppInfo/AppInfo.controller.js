@@ -132,6 +132,11 @@
                             }).then(function(data) {
                                 // $scope.IOSCertificate = '';
                                 // $scope.IOSKey = '';
+                                $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.data.data.Name;
+                                // localStorage.setItem('appName', data.AppName);
+                                localStorage.setItem('Logo', $rootScope.Logo)
+                                $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
+                                $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
                                 $scope.apiMedia.removeAll();
                                 $scope.apiResetIC.removeAll();
                                 $scope.apiResetIK.removeAll();
