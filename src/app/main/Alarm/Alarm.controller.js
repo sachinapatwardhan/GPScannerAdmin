@@ -146,9 +146,9 @@
             if (data != '' && data != null && data != undefined) {
                 // return $filter('date')(data, "dd-MM-yyyy");
                 // return moment(moment(data).toDate()).format("DD-MM-YYYY hh:mm a");
-                var date = $rootScope.convertdateformat(data, 2);
-                return date;
-
+                // var date = $rootScope.convertdateformat(data, 2);
+                // return date; 
+                return moment(data).format('DD-MM-YYYY hh:mm:ss a')
             } else {
                 return '';
             }

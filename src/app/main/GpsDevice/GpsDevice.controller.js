@@ -278,7 +278,8 @@
 
         function dateFormat(date) {
             if (date != null) {
-                return $rootScope.convertdateformat(date, 2);
+                // return $rootScope.convertdateformat(date, 2);
+                return moment(date).format('DD-MM-YYYY hh:mm:ss a')
             } else {
                 return '';
             }
