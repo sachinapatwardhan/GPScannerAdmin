@@ -181,7 +181,8 @@
             })
         }
         $scope.ExportExcel = function() {
-            window.location = $rootScope.RoutePath + "sim/Export";
+            var CurrentOffset = encodeURIComponent($rootScope.CurrentOffset);
+            window.location = $rootScope.RoutePath + "sim/Export?CurrentOffset=" + CurrentOffset;
         }
 
         $scope.init();
