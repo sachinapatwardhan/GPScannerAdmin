@@ -422,7 +422,17 @@
             GetAllDynamicAppInfo(true);
         }
         $scope.ResetModel = function() {
-            $scope.model = '';
+            $scope.model = {
+                Id: 0,
+                AppName: '',
+                BundleId: '',
+                IOSCertificate: '',
+                IOSKey: '',
+                AndroidId: '',
+                AndroidSenderId: '',
+                AppLogo: '',
+                CreatedDate: new Date(),
+            }
             $scope.flag = false;
 
             $scope.apiResetIC.removeAll();
@@ -432,7 +442,7 @@
         }
         $scope.Reset = function() {
             $scope.model = {
-                Id: '',
+                Id: 0,
                 AppName: '',
                 BundleId: '',
                 IOSCertificate: '',
