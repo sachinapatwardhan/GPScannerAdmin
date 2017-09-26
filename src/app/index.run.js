@@ -23,6 +23,9 @@
         // $rootScope.Socket_URL = "http://localhost:7212";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
+        var x = new Date();
+        var offset = -x.getTimezoneOffset();
+        $rootScope.CurrentOffset = (('00' + offset).slice(-2) >= 0 ? "+" : "-") + ('00' + parseInt(offset / 60).toString()).slice(-2) + ":" + offset % 60;
 
         $rootScope.appName = 'MAARK';
         var params = {
