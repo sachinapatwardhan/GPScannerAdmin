@@ -162,9 +162,13 @@
             $translate.use(lang.code);
         }
 
-        /**
-         * Toggle horizontal mobile menu
-         */
+        $scope.ChangePssword = function() {
+                console.log("Change pass..");
+                window.location.href = '/#/ChangePassword';
+            }
+            /**
+             * Toggle horizontal mobile menu
+             */
         function toggleHorizontalMobileMenu() {
             vm.bodyEl.toggleClass('ms-navigation-horizontal-mobile-menu-active');
         }
