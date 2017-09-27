@@ -183,7 +183,7 @@
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
                 DTColumnBuilder.newColumn('Name'),
-                DTColumnBuilder.newColumn('username'),
+                // DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
                 DTColumnBuilder.newColumn('DeviceType'),
                 DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
