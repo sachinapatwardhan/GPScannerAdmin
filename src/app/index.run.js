@@ -393,17 +393,17 @@
                             }
 
                             // Change Password
-                            var lstChangePassword = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Change Password';
-                            });
-                            if (lstChangePassword.length > 0) {
-                                msNavigationService.saveItem('Users.ChangePassword', {
-                                    title: 'Change Password',
-                                    state: 'app.ChangePassword',
-                                    order: lstChangePassword[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }
+                            // var lstChangePassword = _.filter(lstAllPages, function(obj) {
+                            //     return obj.tblmodulemgmt.Module == 'Change Password';
+                            // });
+                            // if (lstChangePassword.length > 0) {
+                            //     msNavigationService.saveItem('Users.ChangePassword', {
+                            //         title: 'Change Password',
+                            //         state: 'app.ChangePassword',
+                            //         order: lstChangePassword[0].tblmodulemgmt.DisplayOrder,
+                            //         weight: 1
+                            //     });
+                            // }
 
                             //  User
                             var lstuser = _.filter(lstAllPages, function(obj) {
