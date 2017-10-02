@@ -31,7 +31,7 @@
                 TelCoId: null,
                 SimNum: '',
                 idSalesAgent: 0,
-                IsActive: false,
+                // IsActive: false,
                 ExpiryDate: null,
                 idSim: null,
                 AppName: $rootScope.AppName,
@@ -103,7 +103,7 @@
                 TelCoId: null,
                 SimNum: '',
                 idSalesAgent: 0,
-                IsActive: false,
+                // IsActive: false,
                 ExpiryDate: null,
                 idSim: null,
                 AppName: $rootScope.AppName,
@@ -301,12 +301,16 @@
 
         function IsActiveHtml(data, type, full, meta) {
             var result = '';
-
+            var dateFlag = false;
+            data.ExpiryDate = moment(data.ExpiryDate).format('DD-MM-YYYY hh:mm:ss a')
+            if (data.ExpiryDate == 'Invalid date') {
+                dateFlag = true;
+            }
             if (data.IsActive == 1) {
-                result = '<span style="font-size: 20px;color: green" ng-click="UpdateStatus(' + data.id + ',false)"> &#x2714;</span>';
+                result = '<span style="font-size: 20px;color: green" ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;</span>';
             }
             if (data.IsActive == 0) {
-                result = '<span style="font-size: 20px;color: red" ng-click="UpdateStatus(' + data.id + ',true)">&#x2716;</span>';
+                result = '<span style="font-size: 20px;color: red" ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;</span>';
             }
             return result;
         }
@@ -349,17 +353,17 @@
             if (form.$invalid) {
                 $scope.formsubmit = true;
             } else {
-                if (o.IsActive == true) {
-                    var d = new Date();
-                    var year = d.getFullYear();
-                    var month = d.getMonth();
-                    var day = d.getDate();
-                    var c = new Date(year + 1, month, day)
-                    o.IsActive = 1;
-                    o.ExpiryDate = c;
-                } else {
-                    o.ExpiryDate = null;
-                }
+                // if (o.IsActive == true) {
+                //     var d = new Date();
+                //     var year = d.getFullYear();
+                //     var month = d.getMonth();
+                //     var day = d.getDate();
+                //     var c = new Date(year + 1, month, day)
+                //     o.IsActive = 1;
+                //     o.ExpiryDate = c;
+                // } else {
+                //     o.ExpiryDate = null;
+                // }
                 $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
@@ -424,26 +428,69 @@
             }
             $scope.model.CreatedDate = o.CreatedDate;
             $scope.model.CreatedBy = o.CreatedBy;
-            if (o.IsActive == 1) {
-                $scope.model.IsActive = true;
-            } else {
-                $scope.model.IsActive = false;
-            }
+            // if (o.IsActive == 1) {
+            //     $scope.model.IsActive = true;
+            // } else {
+            //     $scope.model.IsActive = false;
+            // }
             console.log($scope.model);
 
             $scope.flag = true;
         }
 
-        $scope.UpdateStatus = function(id, IsActive) {
+        $scope.UpdateStatus = function(id, IsActive, dateFlag) {
+            console.log(IsActive)
+            var message = '';
             if (IsActive == true) {
                 IsActive = 1;
+                message = 'Are you sure to Activate this SIM ?';
             } else {
                 IsActive = 0;
+                message = 'Are you sure to DeActivate this SIM ?';
             }
-            var params = {
-                IsActive: IsActive,
-                id: id,
-            }
+
+            var confirm = $mdDialog.confirm()
+                .title(message)
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function() {
+
+                var params = {
+                    IsActive: IsActive,
+                    id: id,
+                    flg: false,
+                    dateFlag: dateFlag,
+                }
+                if (IsActive == 1) {
+                    console.log(dateFlag);
+                    if (dateFlag == false) {
+                        var confirm = $mdDialog.confirm()
+                            .title('You want to Update Expiry Date?')
+                            .ok('YES')
+                            .cancel('NO')
+                        $mdDialog.show(confirm).then(function() {
+                            var params = {
+                                IsActive: IsActive,
+                                id: id,
+                                flg: true,
+                            }
+                            updateIsActiveStatus(params)
+                        }, function() {
+                            updateIsActiveStatus(params);
+                        });
+                    } else {
+                        updateIsActiveStatus(params);
+                    }
+                } else {
+                    updateIsActiveStatus(params);
+                }
+
+            });
+
+
+        }
+
+        function updateIsActiveStatus(params) {
             $http.get($rootScope.RoutePath + "PetDevice/UpdateStatus", { params: params }).then(function(data) {
                 $mdToast.show(
                     $mdToast.simple()
@@ -455,8 +502,8 @@
                 $scope.init();
                 GetPetDevice(true);
             });
-
         }
+
         $scope.Export = function() {
             var UserId = '';
             var CurrentOffset = encodeURIComponent($rootScope.CurrentOffset);
@@ -468,6 +515,9 @@
             } else {
                 window.location.href = $rootScope.RoutePath + "PetDevice/ExportTracker?AppName=" + $rootScope.AppName + "&UserId=" + UserId + "&search=" + $scope.Search + "&UserRoles=" + $rootScope.UserRoles + "&CurrentOffset=" + CurrentOffset;
             }
+        }
+        $scope.ExportSimTrackerReport = function() {
+            window.location.href = $rootScope.RoutePath + "PetDevice/ExportSimTrackerReport"
         }
 
         $scope.resetForm = function() {
@@ -486,7 +536,7 @@
                 TelCoId: null,
                 SimNum: '',
                 idSalesAgent: 0,
-                IsActive: false,
+                // IsActive: false,
                 ExpiryDate: null,
                 idSim: null,
                 AppName: $rootScope.AppName,
