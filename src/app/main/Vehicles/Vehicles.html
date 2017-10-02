@@ -127,7 +127,7 @@
                                     </div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Tracker Number</label>
                                 <input type="text" name="deviceid" ng-model="model.deviceid" ng-required="true" maxlength="50" ng-blur="chkTrackerId(model.deviceid)">
                                 <div ng-messages="formVehicledetails.deviceid.$error" ng-if="formVehicledetails.deviceid.$touched" role="alert">
@@ -135,7 +135,17 @@
                                         <span>Tracker Number field is required</span>
                                     </div>
                                 </div>
+                            </md-input-container>-->
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>IMEI Number</label>
+                                <input type="text" name="IMEI" ng-model="model.IMEI" ng-required="true" maxlength="50" ng-blur="chkTrackerId(model.IMEI)">
+                                <div ng-messages="formVehicledetails.IMEI.$error" ng-if="formVehicledetails.IMEI.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>IMEI Number field is required</span>
+                                    </div>
+                                </div>
                             </md-input-container>
+
                             <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Battery Percentage *</label>
                                 <input type="text" name="BatteryPercentage" ng-model="model.BatteryPercentage" ng-required="true" maxlength="50">

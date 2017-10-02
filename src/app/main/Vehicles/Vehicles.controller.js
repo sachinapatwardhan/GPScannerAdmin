@@ -40,6 +40,7 @@
                 IsDelete: 0,
                 idSalesAgent: '',
                 DeviceType: '',
+                IMEI: '',
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -76,6 +77,7 @@
                 IsDelete: 0,
                 idSalesAgent: '',
                 DeviceType: '',
+                IMEI: '',
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -135,6 +137,9 @@
         $scope.GetSerch = function(Search) {
             $scope.Search = Search;
             GetAllDynamicVehicles(true);
+        }
+        $scope.GetDeviceId = function(IMEI) {
+            $scope.model.deviceid = parseInt($scope.model.IMEI.toString().slice(1));
         }
 
         function GetAllDynamicVehicles(IsUpdate) {
@@ -356,6 +361,7 @@
             $scope.model.idSalesAgent = o.idSalesAgent;
             $scope.model.DeviceType = o.DeviceType;
             $scope.GetUserById(o.iduser);
+            $scope.model.IMEI = o.IMEI;
             setTimeout(function() {
                 $scope.$apply(function() {
                     $scope.selectedItem = $scope.objUser;
@@ -403,12 +409,13 @@
             });
         };
 
-        $scope.chkTrackerId = function(idDevice) {
-            $http.get($rootScope.RoutePath + "PetDevice/GetGPSDeviceById?DeviceId=" + idDevice).success(function(data) {
+        $scope.chkTrackerId = function(IMEI) {
+            $http.get($rootScope.RoutePath + "PetDevice/GetGPSDeviceById?IMEI=" + IMEI).success(function(data) {
                 // console.log(data);
                 if (data != null) {
                     $scope.model.idSalesAgent = data.idSalesAgent;
                     $scope.model.DeviceType = data.Type;
+                    $scope.GetDeviceId(IMEI);
                 } else {
                     $scope.model.deviceid = "";
                     $mdToast.show(
@@ -519,6 +526,7 @@
                 IsDelete: 0,
                 idSalesAgent: '',
                 DeviceType: '',
+                IMEI: '',
             };
             $scope.resetForm();
         }
@@ -549,6 +557,7 @@
                 IsDelete: 0,
                 idSalesAgent: '',
                 DeviceType: '',
+                IMEI: '',
             };
             $scope.selectedItem = null;
             // // $scope.query = '';
