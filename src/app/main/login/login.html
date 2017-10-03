@@ -34,7 +34,8 @@
                     </md-checkbox>
                     <a class="forgot-password md-accent-color" ui-sref="app.Forgotpassword">Forgot Password?</a>
                 </div>
-                <md-button type="submit" class="md-raised md-accent submit-button" aria-label="LOG IN" ng-click="Login(model)" ng-disabled="loginForm.$invalid || loginForm.$pristine">
+                <!--ng-disabled="loginForm.$invalid || loginForm.$pristine"-->
+                <md-button type="submit" class="md-raised md-accent submit-button" aria-label="LOG IN" ng-click="Login(model,loginForm.$valid,true)">
                     LOG IN
                 </md-button>
 
