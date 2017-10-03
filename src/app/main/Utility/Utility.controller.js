@@ -196,7 +196,6 @@
         };
 
         $scope.SendCommand = function() {
-            console.log($scope.selected)
             $http.get($rootScope.RoutePath + "vehicles/getAllDefaultValue").then(function(data) {
                 for (var i = 0; i < data.data.length; i++) {
                     if (data.data[i].Type == 'MaxSpeed') {

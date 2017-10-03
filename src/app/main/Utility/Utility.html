@@ -19,7 +19,7 @@
                     </md-button>
                 </div>
                 <div ng-if="FlgAddedEditlocal">
-                    <md-button class="md-raised md-background" ng-click="SendCommand()">
+                    <md-button class="md-raised md-background" ng-click="SendCommand()" ng-disabled="selected.length ==0">
                         <span translate="Send">Send</span>
                     </md-button>
                 </div>
