@@ -22,8 +22,8 @@
             $cookieStore.remove('token');
             $cookieStore.remove('UserImage');
             // $cookieStore.remove('AppName');
-            localStorage.setItem('AppName', '');
-            localStorage.setItem('appId', '');
+            // localStorage.setItem('AppName', '');
+            // localStorage.setItem('appId', '');
             // $cookieStore.remove('appId');
             $rootScope.UserImage = '';
             $http.defaults.headers.common.Authorization = '';
@@ -31,9 +31,10 @@
             // $window.location.reload();
             // $window.location.href = "/#/app/login";
             $window.location.href = "/#/app/login";
-            $timeout(function() {
-                $window.location.reload();
-            });
+            $cookieStore.put('FlagLogout', true);
+            // $timeout(function() {
+            //     $window.location.reload();
+            // });
             // console.log($cookieStore.get('appId'));
         }
 
