@@ -613,14 +613,26 @@
                                 });
                             }
 
-                            var lstEmailTemplate = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Email Template';
+                            // var lstEmailTemplate = _.filter(lstAllPages, function(obj) {
+                            //     return obj.tblmodulemgmt.Module == 'Email Template';
+                            // });
+                            // if (lstEmailTemplate.length > 0) {
+                            //     msNavigationService.saveItem('CMS.Email Template', {
+                            //         title: 'Email Template',
+                            //         state: 'app.EmailTemplate',
+                            //         order: lstEmailTemplate[0].tblmodulemgmt.DisplayOrder,
+                            //         weight: 1
+                            //     });
+                            // }
+
+                            var lstUtility = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Utility';
                             });
-                            if (lstEmailTemplate.length > 0) {
-                                msNavigationService.saveItem('CMS.Email Template', {
-                                    title: 'Email Template',
-                                    state: 'app.EmailTemplate',
-                                    order: lstEmailTemplate[0].tblmodulemgmt.DisplayOrder,
+                            if (lstUtility.length > 0) {
+                                msNavigationService.saveItem('Settings.Utility', {
+                                    title: 'Utility',
+                                    state: 'app.Utility',
+                                    order: lstUtility[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
                                 });
                             }
