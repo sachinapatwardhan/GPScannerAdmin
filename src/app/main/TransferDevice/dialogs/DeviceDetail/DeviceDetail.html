@@ -1,0 +1,41 @@
+<md-dialog class="flex-50">
+    <!--<md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Devices</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>-->
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Devices</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+
+
+            <label>Device Id</label>
+            <md-select Name="DeviceId" ng-model="DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                <md-select-header class="demo-select-header">
+                    <input ng-model="vm.searchTermDeviceId" type="search" placeholder="Search for a Device Id.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                </md-select-header>
+                <md-option ng-value="{{o.id}}" ng-repeat="o in lstDevice |filter:vm.searchTermDeviceId| orderBy: 'DeviceId'">{{o.DeviceId}}</md-option>
+            </md-select>
+            <div ng-messages="formTrackingdetails.DeviceId.$error" ng-if="formTrackingdetails.DeviceId.$touched" role="alert">
+                <div ng-message="required">
+                    <span>Device Id is required.</span>
+                </div>
+            </div>
+
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-disabled="DeviceId==''" ng-click="TransferDevicetoUser(DeviceId)">Transfer</md-button>
+        <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+
+    </md-dialog-content>
+</md-dialog>
