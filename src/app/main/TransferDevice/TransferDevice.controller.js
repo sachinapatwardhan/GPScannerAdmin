@@ -125,7 +125,7 @@
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="showDevice(' + full.id + ',' + full.deviceid.toString() + ',' + full.iduser + ')">' +
                     '<md-icon md-font-icon="icon-rotate-3d"  class="s18 blue-500- fg "></md-icon>' +
-                    '<md-tooltip md-visible="" md-direction="">Tranfer Device</md-tooltip>' +
+                    '<md-tooltip md-visible="" md-direction="">Transfer Device</md-tooltip>' +
                     '</md-button>';
             }
             btns += '</div>';
