@@ -636,6 +636,20 @@
                                     weight: 1
                                 });
                             }
+
+                            var lstTransferDevice = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Transfer Device';
+                            });
+                            if (lstTransferDevice.length > 0) {
+                                msNavigationService.saveItem('Settings.Transfer Device', {
+                                    title: 'Transfer Device',
+                                    state: 'app.TransferDevice',
+                                    order: lstTransferDevice[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+
                         }
                     });
                 }

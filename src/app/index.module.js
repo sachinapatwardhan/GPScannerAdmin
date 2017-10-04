@@ -60,7 +60,8 @@
             'app.appinfo',
             'app.Logs',
             'app.SIM',
-            'app.EmailTemplate',
+            // 'app.EmailTemplate',
             'app.Utility',
+            'app.TransferDevice',
         ]);
 })();
