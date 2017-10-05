@@ -216,8 +216,8 @@
 
         function dateFormat(data, type, full, meta) {
             if (data != null && data != '') {
-                // return $rootScope.convertdateformat(data, 1);
-                return moment(data).format('DD-MM-YYYY hh:mm:ss a')
+                return $rootScope.convertdateformat(data, 1);
+                // return moment(data).format('DD-MM-YYYY hh:mm:ss a')
             } else {
                 return "";
             }
