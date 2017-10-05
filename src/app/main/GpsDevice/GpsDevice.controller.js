@@ -23,7 +23,7 @@
                 id: 0,
                 DeviceId: '',
                 IMEI: '',
-                CreatedDate: '',
+                // CreatedDate: '',
                 Type: '',
                 Version: '',
                 CreatedBy: '',
@@ -95,7 +95,7 @@
                 id: 0,
                 DeviceId: '',
                 IMEI: '',
-                CreatedDate: '',
+                // CreatedDate: '',
                 Type: '',
                 Version: '',
                 CreatedBy: '',
@@ -428,7 +428,7 @@
             if (o.idSalesAgent != null) {
                 $scope.model.idSalesAgent = o.idSalesAgent;
             }
-            $scope.model.CreatedDate = o.CreatedDate;
+            // $scope.model.CreatedDate = o.CreatedDate;
             $scope.model.CreatedBy = o.CreatedBy;
             // if (o.IsActive == 1) {
             //     $scope.model.IsActive = true;
