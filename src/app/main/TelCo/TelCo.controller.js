@@ -34,8 +34,9 @@
                 'emptyTable': "No Record Found"
             })
             .withOption('scrollY', 'auto')
-            .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
-            .withDOM('rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
+            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+            // .withDOM('rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
 
         $scope.GetAlltelco = function() {
             $http.get($rootScope.RoutePath + "telco/GetAllCompany").then(function(data) {

@@ -164,7 +164,8 @@
 
         $scope.dtInstance = {};
         $scope.dtOptions = {
-            dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+
+            dom: 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>',
             columnDefs: [],
             initComplete: function() {
                 var api = this.api(),

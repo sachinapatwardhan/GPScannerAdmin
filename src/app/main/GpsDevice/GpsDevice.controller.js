@@ -270,7 +270,8 @@
                 // .withOption('deferRender', true)
                 .withOption('createdRow', createdRow)
                 // .withOption('bFilter', false)
-                .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+                .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+                // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
         vm.dtInstance = {};
@@ -365,6 +366,7 @@
                 //     o.ExpiryDate = null;
                 // }
                 $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
+                    console.log(o)
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()

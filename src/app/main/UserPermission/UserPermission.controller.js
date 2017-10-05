@@ -279,7 +279,8 @@
             .withDisplayLength(25) // Page size
             .withOption('aaSorting', [0, 'asc'])
             .withOption('responsive', true)
-            .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
             .withOption('scrollY', 'auto');
 
         $scope.dtColumnDefs = [

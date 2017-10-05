@@ -38,7 +38,7 @@
                 DoorUnlock: null,
                 TimeZone: null,
                 IsDelete: 0,
-                idSalesAgent: '',
+                idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
             };
@@ -75,7 +75,7 @@
                 DoorUnlock: null,
                 TimeZone: null,
                 IsDelete: 0,
-                idSalesAgent: '',
+                idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
             };
@@ -234,7 +234,8 @@
                 // .withOption('deferRender', true)
                 .withOption('createdRow', createdRow)
                 // .withOption('bFilter', false)
-                .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+                .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+                // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
         $scope.dtInstance = {};
@@ -524,7 +525,7 @@
                 DoorUnlock: null,
                 TimeZone: null,
                 IsDelete: 0,
-                idSalesAgent: '',
+                idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
             };
@@ -555,7 +556,7 @@
                 DoorUnlock: null,
                 TimeZone: null,
                 IsDelete: 0,
-                idSalesAgent: '',
+                idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
             };
