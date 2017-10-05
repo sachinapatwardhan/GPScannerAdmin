@@ -3,7 +3,24 @@
 
     angular
         .module('app.login')
-        .controller('LoginController', LoginController);
+        .controller('LoginController', LoginController)
+        .directive('autoFillableField', [
+            '$timeout',
+            function($timeout) {
+                return {
+                    require: '?ngModel',
+                    restrict: 'A',
+                    link: function(scope, element, attrs, ngModel) {
+
+                        $timeout(function() {
+                            if (ngModel.$viewValue !== element.val()) {
+                                ngModel.$setViewValue(element.val());
+                            }
+                        }, 1500);
+                    }
+                };
+            }
+        ]);
 
     /** @ngInject */
     function LoginController($scope, $state, $rootScope, $timeout, $http, $cookieStore, $mdDialog, $document, $mdToast, $stateParams, $window) {
@@ -39,6 +56,22 @@
             //     }
             // }
 
+        }
+
+        $scope.setUserName = function() {
+
+            if ($scope.model.UserName !== document.getElementsByName("email")[0].value) {
+                $scope.model.UserName = document.getElementsByName("email")[0].value;
+            }
+            // alert("Call")
+        }
+
+        $scope.setPassword = function() {
+
+            if ($scope.model.Password !== document.getElementsByName("password")[0].value) {
+                $scope.model.Password = document.getElementsByName("password")[0].value;
+            }
+            // alert("Call")
         }
 
         $scope.Login = function(o, form, isLogout) {

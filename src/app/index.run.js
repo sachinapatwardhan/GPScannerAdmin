@@ -27,7 +27,7 @@
         var offset = -x.getTimezoneOffset();
         $rootScope.CurrentOffset = (('00' + offset).slice(-2) >= 0 ? "+" : "-") + ('00' + parseInt(offset / 60).toString()).slice(-2) + ":" + offset % 60;
 
-        $rootScope.appName = 'MAARK';
+        $rootScope.appName = 'Maark';
         var params = {
             AppName: $rootScope.appName,
         }
@@ -681,31 +681,33 @@
 
                 //check Permission
                 $rootScope.UserRoles = $cookieStore.get('UserRoles');
-                for (var i = 0; i < $rootScope.UserRoles.length; i++) {
-                    if ($rootScope.UserRoles[i] == 'Super Admin') {
-                        var params = {
-                            tablename: to.ModuleName,
-                            permission: "Show"
-                        }
-                        break;
-                    } else {
-                        var params = {
-                            tablename: to.ModuleName,
-                            permission: "Show",
-                            idApp: localStorage.getItem('appId'),
+                if ($rootScope.UserRoles) {
+                    for (var i = 0; i < $rootScope.UserRoles.length; i++) {
+                        if ($rootScope.UserRoles[i] == 'Super Admin') {
+                            var params = {
+                                tablename: to.ModuleName,
+                                permission: "Show"
+                            }
+                            break;
+                        } else {
+                            var params = {
+                                tablename: to.ModuleName,
+                                permission: "Show",
+                                idApp: localStorage.getItem('appId'),
+                            }
                         }
                     }
-                }
-                $http.get($rootScope.RoutePath + "userPermission/CheckRights", { params: params }).then(function(data) {
-                    if (data.data.success == false) {
-                        e.preventDefault();
-                        if (window.location.href.indexOf('app/login') == -1 && window.location.href.indexOf('Forgotpassword') == -1 && window.location.href.indexOf('Register') == -1) {
-                            //$state.go("app.login");
-                            window.location.href = '/#/app/login';
-                        }
-                    };
+                    $http.get($rootScope.RoutePath + "userPermission/CheckRights", { params: params }).then(function(data) {
+                        if (data.data.success == false) {
+                            e.preventDefault();
+                            if (window.location.href.indexOf('app/login') == -1 && window.location.href.indexOf('Forgotpassword') == -1 && window.location.href.indexOf('Register') == -1) {
+                                //$state.go("app.login");
+                                window.location.href = '/#/app/login';
+                            }
+                        };
 
-                })
+                    })
+                }
             }
             $rootScope.Callfuntion();
 

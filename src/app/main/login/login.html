@@ -9,7 +9,7 @@
             <form name="loginForm" novalidate>
                 <md-input-container class="md-block" md-no-float>
                     <label>UserName</label>
-                    <input type="text" name="email" ng-model="model.UserName" required>
+                    <input type="text" name="email" auto-fillable-field ng-model="model.UserName" required ng-change="setUserName()">
                     <div ng-messages="loginForm.email.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span>UserName is required</span>
@@ -21,7 +21,7 @@
                 </md-input-container>
                 <md-input-container class="md-block" md-no-float>
                     <label>Password</label>
-                    <input type="password" name="password" ng-model="model.Password" required>
+                    <input type="password" name="password" auto-fillable-field ng-model="model.Password" required ng-change="setPassword()">
                     <div ng-messages="loginForm.password.$error" role="alert">
                         <div ng-message="required">
                             <span>Password is required</span>
