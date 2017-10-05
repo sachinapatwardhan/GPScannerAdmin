@@ -14,7 +14,7 @@
                 Id: 0,
                 SerialNum: '',
                 PhoneNum: '',
-                idTelCo: '',
+                idTelCo: null,
             }
 
             $scope.FlgAddedEditlocal = true;
@@ -109,7 +109,7 @@
                 Id: 0,
                 SerialNum: '',
                 PhoneNum: '',
-                idTelCo: '',
+                idTelCo: null,
             }
 
             $rootScope.FlgAddedEditlocal = false;
@@ -125,7 +125,7 @@
                 Id: 0,
                 SerialNum: '',
                 PhoneNum: '',
-                idTelCo: '',
+                idTelCo: null,
             }
 
             $scope.flag = false;
