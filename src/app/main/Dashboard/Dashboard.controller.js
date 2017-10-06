@@ -142,9 +142,13 @@
                 var FoundLocation = 0;
                 $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike?idApp=' + $rootScope.appId).success(function(data) {
                     $scope.lstActiveVehicle = data.data;
-
+                    console.log(data.data)
                     callDeviceStatus();
-
+                    for (var i = 0; i < $scope.lstActiveVehicle.length; i++) {
+                        if ($scope.lstActiveVehicle[i].IsOnline == null) {
+                            $scope.lstActiveVehicle[i].IsOnline = 0;
+                        }
+                    }
                     $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 1 });
                     $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0 });
 
@@ -1739,9 +1743,12 @@
                 highlightStroke: 'rgba(33, 150, 243, 1)'
             }];
             $scope.labelsMonth = [];
+            $scope.Bardata = [];
             for (var i = 0; i < 12; i++) {
+                var objbar = new Object();
                 var objUser = _.where($scope.userslist, { month: $scope.CurrentMonth, year: $scope.CurrentYear });
                 if (objUser.length > 0) {
+
                     var newobjUser = _.each(objUser, function(item) {
                         $scope.sum = function(items, prop) {
                             return items.reduce(function(a, b) {
@@ -1749,10 +1756,17 @@
                             }, 0);
                         };
                     });
+                    objbar.y = $scope.sum(newobjUser, 'Total');
+                    objbar.x = $scope.listMonthbyName[$scope.CurrentMonth - 1] + ' - ' + $scope.CurrentYear;
                     monthwiselist.push($scope.sum(newobjUser, 'Total'))
-
+                    objbar.series = 1;
+                    $scope.Bardata.push(objbar);
                 } else {
                     monthwiselist.push(0)
+                    objbar.y = 0;
+                    objbar.x = $scope.listMonthbyName[$scope.CurrentMonth - 1] + ' - ' + $scope.CurrentYear;
+                    objbar.series = 1;
+                    $scope.Bardata.push(objbar);
                 }
 
 
@@ -1776,6 +1790,11 @@
                 monthwiselist,
             ];
 
+            $scope.dashboardData3 = [{
+                "key": "User",
+                "values": $scope.Bardata,
+            }];
+            DrowChart();
             $scope.lstTotalUser = monthwiselist.reduce(function(total, item) {
                 return total + item;
             }, 0);
@@ -1920,5 +1939,73 @@
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.init();
         });
+
+        function DrowChart() {
+            $scope.TotalUser = {
+                title: 'Total User Data',
+                mainChart: {
+                    config: {
+                        refreshDataOnly: true,
+                        deepWatchData: true
+                    },
+                    options: {
+                        chart: {
+                            type: 'multiBarChart',
+                            color: ['#03a9f4'],
+                            height: 420,
+                            margin: {
+                                top: 8,
+                                right: 16,
+                                bottom: 32,
+                                left: 32
+                            },
+                            useInteractiveGuideline: false,
+                            clipEdge: true,
+                            // groupSpacing: 0.3,
+                            reduceXTicks: false,
+                            // stacked: true,
+                            duration: 250,
+                            showControls: false,
+                            x: function(d) {
+                                return d.x;
+                            },
+                            y: function(d) {
+                                return d.y;
+                            },
+                            xAxis: {
+                                tickFormat: function(d) {
+                                    return d;
+                                },
+                                showMaxMin: true
+                            },
+                            yAxis: {
+                                tickFormat: function(d) {
+                                    return d;
+                                }
+                            },
+                            legend: {
+                                margin: {
+                                    top: 8,
+                                    bottom: 32
+                                }
+                            },
+                            controls: {
+                                margin: {
+                                    top: 8,
+                                    bottom: 32
+                                }
+                            },
+                            tooltip: {
+                                gravity: 's',
+                                classes: 'gravity-s',
+                            },
+                        }
+                    },
+                    data: $scope.dashboardData3
+                }
+
+            };
+        }
+
     }
 })();
