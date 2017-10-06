@@ -1792,7 +1792,7 @@
 
             $scope.dashboardData3 = [{
                 "key": "User",
-                "values": $scope.Bardata,
+                "values": $scope.Bardata.reverse(),
             }];
             DrowChart();
             $scope.lstTotalUser = monthwiselist.reduce(function(total, item) {

@@ -222,16 +222,24 @@
                                 <span>This Year Users</span>
                             </h2>
                         </md-toolbar>
-                        <md-list-item>
-                            <span class="md-avatar" flex="25"></span>
-                            <span class="md-avatar" style="background-color:rgba(33, 150, 243, 0.6)!important;width:10px;height:10px;border: 2px solid rgba(33, 150, 243, 1);"></span>
+                        <!--<md-list-item>
+                            <span class="md-avatar" flex="25"></span>-->
+                        <!--<span class="md-avatar" style="background-color:rgba(33, 150, 243, 0.6)!important;width:10px;height:10px;border: 2px solid rgba(33, 150, 243, 1);"></span>-->
+                        <!--<span class="md-avatar" style="background-color:rgb(66, 190, 247)!important;width:10px;height:10px;border: 2px solid rgba(33, 150, 243, 1);"></span>
+
                             <p>Users</p>
-                        </md-list-item>
+                        </md-list-item>-->
                         <br />
-                        <div layout="row" class="chart-container">
+                        <!--<div layout="row" class="chart-container">
                             <div layout="column" flex="100" layout-align="left">
                                 <canvas id="bar" class="chart chart-bar" chart-colours="dataUsresbgcolor" chart-data="dataUsresOrders" chart-labels="labelsMonth" chart-series="series" height="50" chart-options="options"> </canvas>
                             </div>
+
+                        </div>-->
+                        <div>
+                            <ms-widget-front class="p-16 white-bg">
+                                <nvd3 class="h-420 remove-x-lines" config="TotalUser.mainChart.config" options="TotalUser.mainChart.options" data="TotalUser.mainChart.data"></nvd3>
+                            </ms-widget-front>
                         </div>
                     </ms-widget-front>
                 </ms-widget>
