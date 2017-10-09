@@ -2048,7 +2048,7 @@
 
             var displaydata = "";
             if (days > 0) {
-                displaydata = days;
+                displaydata = days + ' days';
             }
             return displaydata;
 
