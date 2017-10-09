@@ -416,11 +416,9 @@
                 idApp: $rootScope.appId,
             }
             $http.get($rootScope.RoutePath + "dashboard/GetGraphCustomer", { params: params }).then(function(data) {
-                console.log(data.data.UserData)
                 $scope.lstCustomerGraph = data.data.UserData;
 
                 $scope.lstCountry = [];
-                console.log($scope.lstCustomerGraph)
                 for (var i = 0; i < $scope.lstCustomerGraph.length; i++) {
                     if ($scope.lstCustomerGraph[i].country == '' || $scope.lstCustomerGraph[i].country == null) {
                         $scope.lstCustomerGraph[i].country = 'Other';
