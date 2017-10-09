@@ -93,6 +93,7 @@
 
             $scope.TotalShopperCustomer = 0;
             $scope.TotalOwnerCustomer = 0;
+            $scope.GetAllExpiredDevice();
         }
         $scope.GetAllMontName = function() {
             $scope.listMonthName = [
@@ -142,7 +143,6 @@
                 var FoundLocation = 0;
                 $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike?idApp=' + $rootScope.appId).success(function(data) {
                     $scope.lstActiveVehicle = data.data;
-                    console.log(data.data)
                     callDeviceStatus();
                     for (var i = 0; i < $scope.lstActiveVehicle.length; i++) {
                         if ($scope.lstActiveVehicle[i].IsOnline == null) {
@@ -416,8 +416,11 @@
                 idApp: $rootScope.appId,
             }
             $http.get($rootScope.RoutePath + "dashboard/GetGraphCustomer", { params: params }).then(function(data) {
+                console.log(data.data.UserData)
                 $scope.lstCustomerGraph = data.data.UserData;
+
                 $scope.lstCountry = [];
+                console.log($scope.lstCustomerGraph)
                 for (var i = 0; i < $scope.lstCustomerGraph.length; i++) {
                     if ($scope.lstCustomerGraph[i].country == '' || $scope.lstCustomerGraph[i].country == null) {
                         $scope.lstCustomerGraph[i].country = 'Other';
@@ -2006,6 +2009,52 @@
 
             };
         }
+        $scope.GetAllExpiredDevice = function() {
+            $scope.ExpiryDevicelist = [];
+            $http.get($rootScope.RoutePath + "bike/GetAllExpireDevice").then(function(data) {
+                for (var i = 0; i < data.data.length; i++) {
+                    data.data[i].diff = timeDifference(moment(data.data[i].ExpiryDate).format('MM-DD-YYYY hh:mm:ss a'))
 
+                }
+                $timeout(function() {
+                    $scope.ExpiryDevicelist = data.data;
+                }, 600);
+            });
+        }
+        $scope.dtColumnDefsC1 = [
+            DTColumnDefBuilder.newColumnDef(0).notSortable(),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+            DTColumnDefBuilder.newColumnDef(3),
+        ];
+
+        function timeDifference(Start) {
+
+            var one_day = 1000 * 60 * 60 * 24;
+            var date2 = new Date(Start);
+            var date1 = new Date();
+            date1.setHours(0);
+            date1.setMinutes(0);
+            date1.setSeconds(0);
+
+            var date1_ms = date1.getTime();
+            var date2_ms = date2.getTime();
+            var difference_ms = date2_ms - date1_ms;
+            difference_ms = difference_ms / 1000;
+            var seconds = Math.floor(difference_ms % 60);
+            difference_ms = difference_ms / 60;
+            var minutes = Math.floor(difference_ms % 60);
+            difference_ms = difference_ms / 60;
+            var hours = Math.floor(difference_ms % 24);
+            var days = Math.floor(difference_ms / 24);
+
+            var displaydata = "";
+            if (days > 0) {
+                displaydata = days;
+            }
+            return displaydata;
+
+
+        }
     }
 })();
