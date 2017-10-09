@@ -374,7 +374,7 @@ table.dataTable.cell-border thead th {
     display: block;
     width: 100%;
     font-weight: bold;
-    background: red;
+    /*background: red;  */
 }
 
 .dataTables_wrapper .bottom .left .info .dataTables_info {
