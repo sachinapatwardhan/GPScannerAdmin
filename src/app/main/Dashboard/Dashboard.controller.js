@@ -2009,10 +2009,12 @@
         }
         $scope.GetAllExpiredDevice = function() {
             $scope.ExpiryDevicelist = [];
-            $http.get($rootScope.RoutePath + "bike/GetAllExpireDevice").then(function(data) {
+            var params = {
+                AppName: localStorage.getItem('appName')
+            }
+            $http.get($rootScope.RoutePath + "bike/GetAllExpireDevice", { params: params }).then(function(data) {
                 for (var i = 0; i < data.data.length; i++) {
                     data.data[i].diff = timeDifference(moment(data.data[i].ExpiryDate).format('MM-DD-YYYY hh:mm:ss a'))
-
                 }
                 $timeout(function() {
                     $scope.ExpiryDevicelist = data.data;
