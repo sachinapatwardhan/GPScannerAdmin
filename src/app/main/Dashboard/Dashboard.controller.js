@@ -2048,13 +2048,33 @@
             var hours = Math.floor(difference_ms % 24);
             var days = Math.floor(difference_ms / 24);
 
+
             var displaydata = "";
             if (days > 0) {
                 displaydata = days + ' days';
             }
-            return displaydata;
+            // return displaydata;
+            var x = days;
+            var y = 365;
+            var y2 = 31;
+            var remainder = x % y;
+            var casio = remainder % y2;
+            var year = (x - remainder) / y;
+            var month = (remainder - casio) / y2;
+            var result = '';
+            if (year != 0) {
+                result = year + " year  ";
+            }
+            if (month != 0 && year == 0) {
+                result += month + " month  ";
+            }
+            if (casio != 0 && month == 0) {
+                result += casio + " days  ";
+            }
 
+            // var result = displaydata + "@--- Year ---" + year + "--- Month ---" + month + "--- Day ---" + casio;
 
+            return result;
         }
     }
 })();
