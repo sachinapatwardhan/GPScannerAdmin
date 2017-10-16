@@ -308,10 +308,12 @@
                 dateFlag = true;
             }
             if (data.IsActive == 1) {
-                result = '<span style="font-size: 20px;color: green" ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;</span>';
+                // result = '<span style="font-size: 20px;color: green" ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;</span>';
+                result = '<md-button  style="font-size: 20px;color: green"  ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;<md-tooltip md-visible="" md-direction="">DeActive</md-tooltip></md-button>';
             }
             if (data.IsActive == 0) {
-                result = '<span style="font-size: 20px;color: red" ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;</span>';
+                // result = '<span style="font-size: 20px;color: red" ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;</span>';
+                result = '<md-button style="font-size: 20px;color: red"  ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;<md-tooltip md-visible="" md-direction="">Active</md-tooltip></md-button>';
             }
             return result;
         }
@@ -350,7 +352,7 @@
         };
         $scope.formsubmit = false;
         $scope.CreateGpsDevice = function(o, form) {
-            o.AppName = _.findWhere($scope.lstAppInfo, { id: parseInt(o.idApp) }).AppName;
+            // o.AppName = _.findWhere($scope.lstAppInfo, { id: parseInt(o.idApp) }).AppName;
             if (form.$invalid) {
                 $scope.formsubmit = true;
             } else {
@@ -366,7 +368,6 @@
                 //     o.ExpiryDate = null;
                 // }
                 $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
-                    console.log(o)
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
@@ -380,7 +381,8 @@
                             $rootScope.FlgAddedEditlocal = true
                         }
                         $scope.resetForm();
-                        $scope.init();
+                        // $scope.init();
+                        $scope.flag = false;
                         GetPetDevice(true);
                     } else {
                         if (data.data.data == 'TOKEN') {
@@ -500,8 +502,8 @@
                     .position('top right')
                     .hideDelay(3000)
                 );
-                $scope.resetForm();
-                $scope.init();
+                // $scope.resetForm();
+                // $scope.init();
                 GetPetDevice(true);
             });
         }
