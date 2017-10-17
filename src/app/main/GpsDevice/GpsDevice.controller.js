@@ -515,7 +515,19 @@
                 UserId = $rootScope.UserId;
             }
             if ($rootScope.UserRoles == 'Super Admin') {
-                window.location.href = $rootScope.RoutePath + "PetDevice/ExportTracker?UserId=" + UserId + "&search=" + $scope.Search + "&UserRoles=" + $rootScope.UserRoles + "&CurrentOffset=" + CurrentOffset;
+                setTimeout(function() {
+                    $mdDialog.show({
+                        controller: 'AppTypeCtrl',
+                        controllerAs: 'vm',
+                        templateUrl: 'app/main/GpsDevice/dialogs/AppType/AppType.html',
+                        parent: angular.element($document.body),
+                        clickOutsideToClose: true,
+                        locals: {
+                            search: $scope.Search,
+                        }
+                    });
+                }, 100);
+                // window.location.href = $rootScope.RoutePath + "PetDevice/ExportTracker?UserId=" + UserId + "&search=" + $scope.Search + "&UserRoles=" + $rootScope.UserRoles + "&CurrentOffset=" + CurrentOffset;
             } else {
                 window.location.href = $rootScope.RoutePath + "PetDevice/ExportTracker?AppName=" + $rootScope.AppName + "&UserId=" + UserId + "&search=" + $scope.Search + "&UserRoles=" + $rootScope.UserRoles + "&CurrentOffset=" + CurrentOffset;
             }

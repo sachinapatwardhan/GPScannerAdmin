@@ -1,0 +1,40 @@
+<md-dialog class="flex-50">
+    <!--<md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Devices</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>-->
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Export Report By App</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+
+
+            <label>App Name</label>
+            <md-select Name="AppName" ng-model="AppName" data-md-container-class="selectdemoSelectHeader">
+                <md-option value=''>Selct App Name</md-option>
+                <md-option value="All">All</md-option>
+                <md-option ng-value="o.AppName" ng-repeat="o in lstAppinfo | orderBy: 'AppName'">{{o.AppName}}</md-option>
+            </md-select>
+            <div ng-messages="formTrackingdetails.AppName.$error" ng-if="formTrackingdetails.AppName.$touched" role="alert">
+                <div ng-message="required">
+                    <span>App Name is required.</span>
+                </div>
+            </div>
+
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-disabled="AppName==''" ng-click="Export(AppName)">Export</md-button>
+        <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+
+    </md-dialog-content>
+</md-dialog>
