@@ -1,0 +1,597 @@
+md-tabs-wrapper {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.custom-content {
+    margin-top: 48px;
+}
+
+.page-layout.simple.fullwidth>.header {
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    padding: 10px 24px;
+}
+
+.page-layout>.header .title {
+    font-size: 26px;
+}
+
+md-content {
+    background-color: transparent !important;
+}
+
+md-content md-option {
+    background-color: white !important;
+}
+
+table.simple tbody tr td,
+table.dataTable tbody td {
+    padding: 5px 4px;
+    /*padding: 5px 8px;*/
+}
+
+table tr td md-input-container {
+    margin: 0;
+}
+
+.md-inline-form table tr td md-input-container md-checkbox {
+    margin: 6px 0 18px;
+}
+
+
+/*Css for Mood Type*/
+
+.dogMoodList {
+    display: flex;
+    display: box;
+}
+
+.dogMoodList li {
+    margin: 0 3px;
+}
+
+.dogMoodList a {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+}
+
+.dogMoodList a.smiley {
+    background: url("../images/PetSmiles/dog-mood-01.png") no-repeat left top;
+}
+
+.dogMoodList a.smirk {
+    background: url("../images/PetSmiles/dog-mood-02.png") no-repeat left top;
+}
+
+.dogMoodList a.neutral {
+    background: url("../images/PetSmiles/dog-mood-03.png") no-repeat left top;
+}
+
+.dogMoodList a.angry {
+    background: url("../images/PetSmiles/dog-mood-04.png") no-repeat left top;
+}
+
+.dogMoodList a.confused {
+    background: url("../images/PetSmiles/dog-mood-05.png") no-repeat left top;
+}
+
+.dogMoodList a:hover {
+    background-position: 0 -22px;
+}
+
+.dogMoodList a.active {
+    background-position: 0 -22px;
+}
+
+
+/* Urvi's ShowContentBox code start*/
+
+
+/*.showBtn {
+    display: inline-table;
+    padding: 10px;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #333 !important;
+    line-height: 25px;
+}
+
+.showBtn i {
+    float: left;
+    margin-right: 5px;
+}
+
+.showBtn i.right {
+    float: right;
+    margin-right: 5px;
+}
+
+.showBtn:hover {
+    text-decoration: none;
+}
+
+.showBtn.active {
+    display: block;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    -webkit-transition: width 2s;
+    transition: width 2s;
+}
+
+.ShowContentBox {
+    display: none;
+    padding: 20px;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}*/
+
+.showBtn {
+    display: inline-table;
+    padding: 10px;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #333 !important;
+    line-height: 25px;
+}
+
+.showBtn-top {
+    display: inline-table;
+    padding: 5px 10px;
+    margin: 0 0 0 35px;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #333 !important;
+    line-height: 25px;
+}
+
+.showBtn i {
+    float: left;
+    margin-right: 5px;
+}
+
+.showBtn i.right {
+    float: right;
+    margin-right: 5px;
+}
+
+.showBtn:hover {
+    text-decoration: none;
+}
+
+.showBtn.active {
+    display: block;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    -webkit-transition: width 2s;
+    transition: width 2s;
+}
+
+.ShowContentBox {
+    display: none;
+    padding: 10px 20px 0 20px;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    position: relative;
+}
+
+.ShowContentBox .closeIcon {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
+
+
+/* Urvi's ShowContentBox code end*/
+
+
+/* Urvi's select dropdown style start*/
+
+.selectdemoSelectHeader {
+    /* Please note: All these selectors are only applied to children of elements with the 'selectdemoSelectHeader' class */
+}
+
+.selectdemoSelectHeader .demo-header-searchbox {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+
+.selectdemoSelectHeader .demo-select-header {
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+    padding-left: 10.667px;
+    height: 48px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: auto;
+}
+
+.selectdemoSelectHeader md-content._md {
+    max-height: 240px;
+}
+
+
+/* Urvi's select dropdown style end*/
+
+.page-layout.simple.tabbed>.header {
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+}
+
+
+/*============================================
+    jGajera style Start
+==============================================*/
+
+.tableD1 {
+    border: 1px solid #ccc !important;
+    /*border-radius: 10px;*/
+    margin: 10px 0 !important;
+    font-size: 12.9px;
+    width: 100%;
+}
+
+.tableD1 thead th {
+    border-right: 1px dotted #ccc;
+    background: #f1f1f1 !important;
+    text-align: center !important;
+    padding: 16px 4px;
+}
+
+.tableD1 thead th:last-child {
+    border-right: none;
+}
+
+.tableD1 tbody td {
+    padding: 5px 4px !important;
+    border-right: 1px dotted #ccc;
+    border-bottom: 1px dotted #ccc;
+}
+
+.tableD1 tbody td:last-child {
+    border-right: none;
+}
+
+.tableD1 tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+.tableD1 tr.even {
+    background: #f5f5f5;
+}
+
+.tableD1 tr:hover {
+    background: #fff8ce;
+    color: #000;
+}
+
+.tableD1 md-icon {
+    cursor: pointer;
+}
+
+table.dataTable.dtr-inline.collapsed.dtr-inline.collapsed>tbody>tr>td:first-child,
+table.dataTable.dtr-inline.collapsed.dtr-inline.collapsed>tbody>tr>th:first-child {
+    padding-left: 30px !important;
+}
+
+.pop-custom {
+    position: relative !important;
+}
+
+.pop-custom .iconClose {
+    position: absolute !important;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 3%;
+    cursor: pointer;
+}
+
+.tabsList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.tabsList li a {
+    font-size: 14px;
+    text-align: center;
+    line-height: 24px;
+    padding: 12px 24px;
+    -webkit-transition: background-color 0.35s cubic-bezier(0.35, 0, 0.25, 1);
+    transition: background-color 0.35s cubic-bezier(0.35, 0, 0.25, 1);
+    cursor: pointer;
+    white-space: nowrap;
+    text-transform: uppercase;
+    float: left;
+    font-weight: 400;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(0, 0, 0, 0.54);
+    text-decoration: none;
+}
+
+.tabsList li a.active {
+    border-bottom: 2px solid rgb(3, 155, 229);
+    color: rgba(0, 0, 0, 0.90);
+}
+
+.tabbed md-tab-content {
+    margin-top: 57px;
+}
+
+.fixHeightTable {
+    height: 300px;
+    overflow: auto;
+}
+
+.dataTables_scrollHead th,
+.dataTables_scrollBody td {
+    border-right: 1px dotted #ccc;
+}
+
+.dataTables_scrollHead th span {
+    text-align: center;
+}
+
+table.dataTable.cell-border thead th {
+    /*border-top: 1px solid rgba(0, 0, 0, 0.12);*/
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.dataTables_wrapper .bottom .left {
+    display: block;
+}
+
+.dataTables_wrapper .bottom .left .info {
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    /*background: red;  */
+}
+
+.dataTables_wrapper .bottom .left .info .dataTables_info {
+    padding-top: 4px;
+}
+
+.dataTables_scrollHead th span {
+    text-align: center;
+}
+
+.dataTables_wrapper .dataTables_scroll .dataTables_scrollHead {
+    min-height: auto;
+}
+
+.actionSubMenu {
+    border-radius: 10px !important;
+    margin: 0;
+    padding: 0;
+}
+
+.actionSubMenu md-menu-content {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.actionSubMenu md-menu-item {
+    margin: 0;
+    padding: 0;
+    height: 40px !important;
+}
+
+.angAccord01 .title {
+    background: #2196F3;
+    color: #fff;
+    font-size: 2rem;
+}
+
+.datePickerAlign {
+    margin: 32px 0 0 0;
+}
+
+.imgShowContainer {
+    border: 1px dashed #ccc;
+    padding: 7px;
+}
+
+.imgShowContainer .imgContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.imgShowContainer .imgContainer md-icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #000;
+    -webkit-text-stroke: 1px #fff;
+}
+
+.orderTrack {}
+
+.mainBar {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.10);
+    height: 15px;
+    border-radius: 12px;
+    position: relative;
+}
+
+.processBar {
+    background: #008a00;
+    height: 15px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.processPoint {
+    width: 15px;
+    height: 15px;
+    background: #003700;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.statusNew .processBar {
+    width: 0;
+}
+
+.statusNew .processPoint {
+    top: 0;
+    left: 0;
+}
+
+.statusProcess .processBar {
+    width: 50%;
+}
+
+.statusProcess .processPoint {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+}
+
+.statusComplete .processBar {
+    width: 100%;
+}
+
+.statusComplete .processPoint {
+    top: 0;
+    right: 0%;
+}
+
+.selectWhiteColor .md-select-value,
+.selectWhiteColor option {
+    color: #fff !important;
+    outline-color: #fff !important;
+}
+
+.selectWhiteColor.md-default-theme:not([disabled]):focus .md-select-value,
+.selectWhiteColor:not([disabled]):focus .md-select-value {
+    border-bottom-color: #fff;
+}
+
+.selectWhiteColor.md-default-theme .md-select-value,
+md-select .md-select-value {
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+    border-bottom-width: 2px;
+}
+
+.chairTrnsEdit {
+    display: block;
+    border-bottom: 1px dotted #666;
+}
+
+table.dataTable>tbody>tr.child ul {
+    width: 100%;
+}
+
+table.dataTable>tbody>tr.child ul .column-title::after {
+    content: " : ";
+}
+
+table.dataTable>tbody>tr.child ul .table-header {
+    text-align: left;
+}
+
+@media (max-width:1280px) {
+    .fullpage-datatable .bottom .left {
+        flex: 1;
+    }
+    .fullpage-datatable .bottom .right {
+        flex: 1;
+    }
+}
+
+@media (max-width:600px) {
+    .fullpage-datatable .dataTables_paginate {
+        flex-wrap: wrap;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+
+/*============================================
+    jGajera style end
+==============================================*/
+
+
+/*Urvi's table style start*/
+
+.tableD2 {
+    border: 1px solid #ccc !important;
+    /*border-radius: 10px;*/
+    /*margin: 10px 0 !important;*/
+    font-size: 12.9px;
+    width: 100%;
+}
+
+.tableD2 thead th {
+    border-right: 1px dotted #ccc;
+    background: #f5f5f5 !important;
+    text-align: center !important;
+    padding: 16px 4px;
+}
+
+.tableD2 thead th:last-child {
+    border-right: none;
+}
+
+.tableD2 tbody td {
+    padding: 5px 4px !important;
+    border-right: 1px dotted #ccc;
+    border-bottom: 1px dotted #ccc;
+}
+
+.tableD2 tbody td:last-child {
+    border-right: none;
+}
+
+.tableD2 tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+.tableD2 tr.even {
+    background: #f5f5f5;
+}
+
+.tableD2 tr:hover {
+    background: #f1f1f1;
+    color: #000;
+}
+
+.tableD2 md-icon {
+    cursor: pointer;
+}
+
+
+/*Urvi's table style end*/
