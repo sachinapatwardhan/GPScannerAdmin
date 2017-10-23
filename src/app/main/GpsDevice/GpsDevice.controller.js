@@ -352,7 +352,7 @@
         };
         $scope.formsubmit = false;
         $scope.CreateGpsDevice = function(o, form) {
-            // o.AppName = _.findWhere($scope.lstAppInfo, { id: parseInt(o.idApp) }).AppName;
+            o.AppName = _.findWhere($scope.lstAppInfo, { id: parseInt(o.idApp) }).AppName;
             if (form.$invalid) {
                 $scope.formsubmit = true;
             } else {
@@ -437,13 +437,11 @@
             // } else {
             //     $scope.model.IsActive = false;
             // }
-            console.log($scope.model);
 
             $scope.flag = true;
         }
 
         $scope.UpdateStatus = function(id, IsActive, dateFlag) {
-            console.log(IsActive)
             var message = '';
             if (IsActive == true) {
                 IsActive = 1;
@@ -466,7 +464,6 @@
                     dateFlag: dateFlag,
                 }
                 if (IsActive == 1) {
-                    console.log(dateFlag);
                     if (dateFlag == false) {
                         var confirm = $mdDialog.confirm()
                             .title('You want to Update Expiry Date?')
