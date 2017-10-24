@@ -666,18 +666,29 @@
                             }
                             if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
                                 //Module Managemet
-                                var lstVehicleType = _.filter(lstAllPages, function(obj) {
-                                    return obj.tblmodulemgmt.Module == 'Module Management';
+                                // var lstVehicleType = _.filter(lstAllPages, function(obj) {
+                                //     return obj.tblmodulemgmt.Module == 'Module Management';
+                                // });
+                                // if (lstVehicleType.length > 0) {
+                                msNavigationService.saveItem('Users.Module Management', {
+                                    title: 'Module Management',
+                                    state: 'app.ModuleMgmt',
+                                    // order: lstVehicleType[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
                                 });
-                                if (lstVehicleType.length > 0) {
-                                    msNavigationService.saveItem('Users.Module Management', {
-                                        title: 'Module Management',
-                                        state: 'app.ModuleMgmt',
-                                        order: lstVehicleType[0].tblmodulemgmt.DisplayOrder,
-                                        weight: 1
-                                    });
-                                }
+                                // }
                             }
+                            if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
+                                //
+                                msNavigationService.saveItem('Users.Setting', {
+                                    title: 'Setting',
+                                    state: 'app.MainSetting',
+                                    // order: lstVehicleType[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+
+                            }
+
 
                         }
                     });
@@ -710,32 +721,38 @@
 
                 //check Permission
                 $rootScope.UserRoles = $cookieStore.get('UserRoles');
-                if ($rootScope.UserRoles) {
-                    for (var i = 0; i < $rootScope.UserRoles.length; i++) {
-                        if ($rootScope.UserRoles[i] == 'Super Admin') {
-                            var params = {
-                                tablename: to.ModuleName,
-                                permission: "Show"
-                            }
-                            break;
-                        } else {
-                            var params = {
-                                tablename: to.ModuleName,
-                                permission: "Show",
-                                idApp: localStorage.getItem('appId'),
+                if (to.ModuleName != 'Setting' && to.ModuleName != 'Module Management') {
+
+
+                    if ($rootScope.UserRoles) {
+                        for (var i = 0; i < $rootScope.UserRoles.length; i++) {
+                            if ($rootScope.UserRoles[i] == 'Super Admin') {
+
+                                var params = {
+                                    tablename: to.ModuleName,
+                                    permission: "Show"
+                                }
+                                break;
+                            } else {
+                                var params = {
+                                    tablename: to.ModuleName,
+                                    permission: "Show",
+                                    idApp: localStorage.getItem('appId'),
+                                }
                             }
                         }
-                    }
-                    $http.get($rootScope.RoutePath + "userPermission/CheckRights", { params: params }).then(function(data) {
-                        if (data.data.success == false) {
-                            e.preventDefault();
-                            if (window.location.href.indexOf('app/login') == -1 && window.location.href.indexOf('Forgotpassword') == -1 && window.location.href.indexOf('Register') == -1) {
-                                //$state.go("app.login");
-                                window.location.href = '/#/app/login';
-                            }
-                        };
+                        console.log(params)
+                        $http.get($rootScope.RoutePath + "userPermission/CheckRights", { params: params }).then(function(data) {
+                            if (data.data.success == false) {
+                                e.preventDefault();
+                                if (window.location.href.indexOf('app/login') == -1 && window.location.href.indexOf('Forgotpassword') == -1 && window.location.href.indexOf('Register') == -1) {
+                                    //$state.go("app.login");
+                                    window.location.href = '/#/app/login';
+                                }
+                            };
 
-                    })
+                        })
+                    }
                 }
             }
             $rootScope.Callfuntion();

@@ -65,6 +65,6 @@
             'app.TransferDevice',
             'app.VehicleType',
             'app.ModuleMgmt',
-            // 'app.Module',
+            'app.MainSetting',
         ]);
 })();
