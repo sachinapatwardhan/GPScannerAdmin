@@ -80,7 +80,7 @@
                 var params = {
                     idModule: Id
                 };
-                $http.get($rootScope.RoutePath + "module/DeleteModule/" + Id, ).success(function(data) {
+                $http.get($rootScope.RoutePath + "module/DeleteModule/" + Id).success(function(data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
