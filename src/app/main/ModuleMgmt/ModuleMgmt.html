@@ -1,0 +1,148 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Module Management">Module Management</span>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Reset()" aria-label="Search ">
+                        <md-icon md-font-icon="icon-plus "></md-icon>
+                        <md-tooltip md-visible=" " md-direction=" ">Add New Module</md-tooltip>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <div class="content-card " layout="column " flex>
+            <div class="content fullpage-datatable " layout="column " flex>
+                <!--<table id="AppInfo " class="dataTable row-border hover " datatable=" " dt-instance="dtInstance " dt-columns="dtColumns " dt-options="dtOptions " width="100% ">-->
+                <!--<table class="dataTable cell-border row-border hover " datatable="ng " dt-options="dtCustomOptions " dt-instance="dtInstance " dt-column-defs="vm.dtColumnDefs " width="100% ">-->
+                <table class="dataTable row-border hover " datatable="ng " dt-instance="dtInstance " dt-options="dtOptions " dt-column-defs="dtColumnDefs ">
+                    <thead>
+                        <tr>
+                            <th class="all ">
+                                <div class="table-header ">
+                                    <span class="column-title ">No</span>
+                                </div>
+                            </th>
+                            <!--<th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">SIM Name</span>
+                                </div>
+                            </th>-->
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Module Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">IsActive</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Display Order</span>
+                                </div>
+                            </th>
+
+                            <th class="all ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="o in lstModule ">
+                            <td>{{ $index+1 }}</td>
+                            <td>{{o.Module}} </td>
+                            <td class="dt-center"><span style="font-size: 20px;color: green" ng-if="o.IsActive==1"> &#x2714;</span>
+                                <span style="font-size: 20px;color: red" ng-if="o.IsActive==0">&#x2716;</span>
+                            </td>
+                            <td>{{o.DisplayOrder}} </td>
+                            <td>
+                                <md-button class="edit-button md-icon-button " ng-click="editModuleById(o) ">
+                                    <md-icon md-font-icon="icon-pencil " class="s18 green-500-fg "></md-icon>
+                                    <md-tooltip md-visible=" " md-direction=" ">Edit</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button " ng-click="DeleteModule(o.id) ">
+                                    <md-icon md-font-icon="icon-trash " class="s18 red-500-fg "></md-icon>
+                                    <md-tooltip md-visible=" " md-direction=" ">Delete</md-tooltip>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed " layout="column " ng-show="flag ">
+    <div class="header md-accent-bg " layout="row " layout-align="start center ">
+        <div class="white-fg " layout="row " layout-align="start center " flex>
+            <md-button class="goto-products-button md-icon-button " aria-label="Go to Vehicle " ng-click="ResetModel() ">
+                <md-icon md-font-icon="icon-arrow-left "></md-icon>
+            </md-button>
+            <div layout="row " layout-align="start center ">
+                <div layout="column " layout-align="start start ">
+                    <div class="subtitle secondary-text ">
+                        <span translate="Module Management">Module Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content " layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp ">
+            <md-content class="md-padding ">
+                <form name="formModule " novalidate class="md-inline-form " aria-invalid="false ">
+                    <div class="content ">
+                        <div layout="row " layout-wrap>
+                            <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
+                                <label>Module Name</label>
+                                <input type="text " name="module" ng-model="model.Module" required>
+                                <div ng-messages="formModule.module.$error " ng-if="formModule.module.$touched " role="alert ">
+                                    <div ng-message="required ">
+                                        <span>Module Name field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
+                                <label>Display Order</label>
+                                <input type="number " name="DisplayOrder " ng-model="model.DisplayOrder ">
+                                <div ng-messages="formModule.DisplayOrder.$error " ng-if="formModule.DisplayOrder.$touched " role="alert ">
+                                    <div ng-message="required ">
+                                        <span>Display Order field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout="row " layout-wrap>
+                            <md-checkbox class="md-primary" ng-model="model.IsActive" aria-label="Checkbox 1">
+                                <span>IsActive</span>
+                            </md-checkbox>
+                        </div>
+                        <div align="left ">
+                            <md-button class="md-raised md-primary " ng-disabled="!formModule.$valid " ng-click="SaveModule(model) ">Save</md-button>
+                            <md-button class="md-accent md-raised " ng-click="Reset() ">Reset</md-button>
+                            <md-button class="md-raised md-warn " ng-click="ResetModel() ">Delete</md-button>
+                        </div>
+                    </div>
+                </form>
+            </md-content>
+        </div>
+    </div>
+</div>
