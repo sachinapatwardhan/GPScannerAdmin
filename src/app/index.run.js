@@ -28,7 +28,7 @@
         var x = new Date();
         var offset = -x.getTimezoneOffset();
         $rootScope.CurrentOffset = (('00' + offset).slice(-2) >= 0 ? "+" : "-") + ('00' + parseInt(offset / 60).toString()).slice(-2) + ":" + offset % 60;
-
+        $rootScope.AdminUserId = 1;
         $rootScope.appName = 'Maark';
         var params = {
             AppName: $rootScope.appName,
@@ -651,6 +651,33 @@
                                 });
                             }
 
+                            //VehicleType
+                            var lstVehicleType = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Vehicle Type';
+                            });
+                            if (lstVehicleType.length > 0) {
+                                var MenuName = $rootScope.AppName + '.Vehicle Type';
+                                msNavigationService.saveItem(MenuName, {
+                                    title: 'Vehicle Type',
+                                    state: 'app.VehicleType',
+                                    order: lstVehicleType[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+                            if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
+                                //Module Managemet
+                                var lstVehicleType = _.filter(lstAllPages, function(obj) {
+                                    return obj.tblmodulemgmt.Module == 'Module Management';
+                                });
+                                if (lstVehicleType.length > 0) {
+                                    msNavigationService.saveItem('Users.Module Management', {
+                                        title: 'Module Management',
+                                        state: 'app.ModuleMgmt',
+                                        order: lstVehicleType[0].tblmodulemgmt.DisplayOrder,
+                                        weight: 1
+                                    });
+                                }
+                            }
 
                         }
                     });

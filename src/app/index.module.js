@@ -63,5 +63,8 @@
             // 'app.EmailTemplate',
             'app.Utility',
             'app.TransferDevice',
+            'app.VehicleType',
+            'app.ModuleMgmt',
+            // 'app.Module',
         ]);
 })();
