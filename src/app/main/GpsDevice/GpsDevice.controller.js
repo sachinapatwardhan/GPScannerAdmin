@@ -37,6 +37,7 @@
                 AppName: $rootScope.AppName,
                 idApp: $rootScope.idApp,
             };
+
             $scope.GetAllCountry();
             // $scope.GetAlltelco();
             $scope.GetAllUserBySalesRole();
@@ -383,6 +384,7 @@
                         $scope.resetForm();
                         // $scope.init();
                         $scope.flag = false;
+                        $scope.GetSerch($scope.Search)
                         GetPetDevice(true);
                     } else {
                         if (data.data.data == 'TOKEN') {

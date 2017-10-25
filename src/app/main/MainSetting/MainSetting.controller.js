@@ -15,7 +15,10 @@
                 Value: '',
                 StoreId: 0,
             }
-            $scope.Search = '';
+
+            $scope.modelSearch = {
+                Search: '',
+            }
             $scope.FlgAddedEditlocal = true;
             $scope.flag = false;
             GetAllSetting();
@@ -104,7 +107,9 @@
                 Value: '',
                 StoreId: 0,
             }
-            $scope.Search = '';
+            $scope.modelSearch = {
+                Search: '',
+            }
             $rootScope.FlgAddedEditlocal = false;
             if ($rootScope.FlgAddedAccess == true) {
                 $rootScope.FlgAddedEditlocal = true;
@@ -120,7 +125,9 @@
                 Value: '',
                 StoreId: 0,
             }
-            $scope.Search = '';
+            $scope.modelSearch = {
+                Search: '',
+            }
             $scope.flag = false;
             $scope.resetForm();
         }

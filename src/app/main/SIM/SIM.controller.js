@@ -88,7 +88,6 @@
             })
         }
         $scope.editSIMById = function(o) {
-            console.log("==", $scope.modelSearch.Search)
             $scope.model.Id = o.id;
             $scope.model.SerialNum = o.SerialNum;
             $scope.model.PhoneNum = parseInt(o.PhoneNum);

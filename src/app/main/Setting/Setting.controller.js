@@ -18,6 +18,9 @@
                 IOSURL: '',
                 UpdateAppText: '',
             }
+            $scope.modelSearch = {
+                Search: '',
+            }
             $scope.FlgAddedEditlocal = true;
             $scope.flag = false;
             $scope.nameflag = false;
@@ -56,6 +59,7 @@
                     );
                     $scope.flag = false;
                     $scope.nameflag = true;
+                    $scope.ResetModel();
                     $scope.getAllAppName();
                     $scope.getAllAppVersion();
                 } else {
@@ -100,6 +104,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.ResetModel();
                         $scope.getAllAppName();
                         $scope.getAllAppVersion();
                     } else {
@@ -145,6 +150,9 @@
                 AndroidURL: '',
                 IOSURL: '',
                 UpdateAppText: '',
+            }
+            $scope.modelSearch = {
+                Search: '',
             }
             $scope.flag = false;
             $scope.nameflag = false;
