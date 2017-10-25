@@ -56,6 +56,11 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
+                                    <span class="column-title">Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
                                     <span class="column-title">HandShake Time</span>
                                 </div>
                             </th>
@@ -126,6 +131,15 @@
                                         <span>Vehicle Name field is required</span>
                                     </div>
                                 </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Vehicle Type</label>
+                                <md-select Name="idType" ng-model="model.idType" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermVehicleType" type="search" placeholder="Search for a Vehicle Type.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
+                                </md-select>
                             </md-input-container>
                             <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Tracker Number</label>

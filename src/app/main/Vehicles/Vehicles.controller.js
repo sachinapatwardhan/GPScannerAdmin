@@ -41,6 +41,7 @@
                 idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
+                idType: '',
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -48,6 +49,7 @@
             $scope.Search = '';
             $scope.flag = false;
             $rootScope.appId = localStorage.getItem('appId');
+            $scope.getAllVehicleType();
         }
 
         $scope.gotoVehicleList = function() {
@@ -78,6 +80,7 @@
                 idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
+                idType: '',
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -85,7 +88,17 @@
             $scope.Search = '';
             $scope.flag = false;
         }
-
+        $scope.getAllVehicleType = function() {
+            $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype").then(function(data) {
+                $scope.lstVehicleType = data.data
+            })
+        }
+        $scope.clearSearchTerm = function() {
+            vm.searchTermVehicleType = '';
+        };
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
         $scope.GetUserByName = function(query) {
             var params = {
                     UserName: query,
@@ -191,6 +204,7 @@
                 // DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
                 DTColumnBuilder.newColumn('DeviceType'),
+                DTColumnBuilder.newColumn('Type'),
                 DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
@@ -363,6 +377,7 @@
             $scope.model.DeviceType = o.DeviceType;
             $scope.GetUserById(o.iduser);
             $scope.model.IMEI = o.IMEI;
+            $scope.model.idType = o.idType;
             setTimeout(function() {
                 $scope.$apply(function() {
                     $scope.selectedItem = $scope.objUser;
@@ -528,6 +543,7 @@
                 idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
+                idType: '',
             };
             $scope.resetForm();
         }
@@ -559,6 +575,7 @@
                 idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
+                idType: '',
             };
             $scope.selectedItem = null;
             // // $scope.query = '';
