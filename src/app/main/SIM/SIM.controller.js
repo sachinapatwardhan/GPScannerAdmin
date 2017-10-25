@@ -8,7 +8,7 @@
     /** @ngInject */
     function SIMController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         var vm = this;
-        vm.getAllSIMInfo = getAllSIMInfo;
+        // vm.getAllSIMInfo = getAllSIMInfo;
         $scope.init = function() {
             $scope.model = {
                 Id: 0,
@@ -16,7 +16,10 @@
                 PhoneNum: '',
                 idTelCo: null,
             }
-
+            $scope.modelSearch = {
+                    Search: '',
+                }
+                // $scope.Search = '';  
             $scope.FlgAddedEditlocal = true;
             $scope.flag = false;
             getAllSIMInfo();
@@ -35,6 +38,31 @@
             })
         }
 
+        $scope.dtCustomOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withDisplayLength(25)
+            .withOption('responsive', true)
+            // .withOption('autoWidth', true)
+            .withOption('aaSorting', [0, 'asc'])
+            .withOption('deferRender', true)
+            .withOption('paging', true)
+            .withOption('language', {
+                'zeroRecords': "No Record Found",
+                'emptyTable': "No Record Found"
+            })
+            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"info"i><"pagination"p>>>')
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+            .withOption('scrollY', 'auto'),
+
+            vm.dtColumnDefs = [
+                DTColumnDefBuilder.newColumnDef(0),
+                DTColumnDefBuilder.newColumnDef(1),
+                DTColumnDefBuilder.newColumnDef(2),
+                // DTColumnDefBuilder.newColumnDef(3),
+                DTColumnDefBuilder.newColumnDef(3).notSortable()
+            ];
+        $scope.dtInstance = {};
+
         $scope.SaveSIMInfo = function(o) {
             $http.post($rootScope.RoutePath + "sim/SaveSIMInfo", o).then(function(data) {
                 if (data.data.success == true) {
@@ -45,8 +73,9 @@
                         .hideDelay(3000)
                     );
                     $scope.flag = false;
-                    $scope.init();
-                    // $scope.getAllSIMInfo();
+                    // $scope.init();
+                    $scope.ResetModel();
+                    getAllSIMInfo();
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
@@ -59,6 +88,7 @@
             })
         }
         $scope.editSIMById = function(o) {
+            console.log("==", $scope.modelSearch.Search)
             $scope.model.Id = o.id;
             $scope.model.SerialNum = o.SerialNum;
             $scope.model.PhoneNum = parseInt(o.PhoneNum);
@@ -85,8 +115,9 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
-                        $scope.init();
-                        // $scope.getAllSIMInfo();
+                        $scope.ResetModel();
+                        getAllSIMInfo();
+
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -126,42 +157,45 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
-            }
 
+            }
+            $scope.modelSearch = {
+                Search: '',
+            }
             $scope.flag = false;
             $scope.resetForm();
         }
 
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-            // DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(3).notSortable()
-        ];
+        // $scope.dtColumnDefs = [
+        //     DTColumnDefBuilder.newColumnDef(0),
+        //     DTColumnDefBuilder.newColumnDef(1),
+        //     DTColumnDefBuilder.newColumnDef(2),
+        //     // DTColumnDefBuilder.newColumnDef(3),
+        //     DTColumnDefBuilder.newColumnDef(3).notSortable()
+        // ];
 
-        $scope.dtInstance = {};
-        $scope.dtOptions = {
-            dom: 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>',
-            // dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            columnDefs: [],
-            initComplete: function() {
-                var api = this.api(),
-                    searchBox = angular.element('body').find('#modelsearch');
+        // $scope.dtInstance = {};
+        // $scope.dtOptions = {
+        //     dom: 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>',
+        //     // dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+        //     columnDefs: [],
+        //     initComplete: function() {
+        //         var api = this.api(),
+        //             searchBox = angular.element('body').find('#modelsearch');
 
-                // Bind an external input as a table wide search box
-                if (searchBox.length > 0) {
-                    searchBox.on('keyup', function(event) {
-                        api.search(event.target.value).draw();
-                    });
-                }
-            },
-            pagingType: 'full_numbers',
-            lengthMenu: [25, 30, 50, 100],
-            pageLength: 25,
-            scrollY: 'auto',
-            responsive: true
-        };
+        //         // Bind an external input as a table wide search box
+        //         if (searchBox.length > 0) {
+        //             searchBox.on('keyup', function(event) {
+        //                 api.search(event.target.value).draw();
+        //             });
+        //         }
+        //     },
+        //     pagingType: 'full_numbers',
+        //     lengthMenu: [25, 30, 50, 100],
+        //     pageLength: 25,
+        //     scrollY: 'auto',
+        //     responsive: true
+        // };
         $scope.DownloadExcelTemplate = function() {
             window.location = $rootScope.RoutePath + "sim/DownloadTemplate";
         }
@@ -186,9 +220,12 @@
             window.location = $rootScope.RoutePath + "sim/Export?CurrentOffset=" + CurrentOffset;
         }
 
+        $scope.GetSerch = function(Search) {
+            $scope.dtInstance.DataTable.search(Search);
+            $scope.dtInstance.DataTable.search(Search).draw();
+        };
+
         $scope.init();
-
-
     }
 
 })();
