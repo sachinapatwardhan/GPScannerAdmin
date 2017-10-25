@@ -146,6 +146,12 @@
                                 }
                                 GetAllDynamicAppInfo(true);
                                 $scope.init();
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                                );
                             }, function(err) {
 
                                 $mdToast.show(
@@ -157,12 +163,15 @@
                                 // do sometingh
                             });
                         }
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
+
+                        if ($scope.IOSCertificate.length == 0 && $scope.IOSKey.length == 0 && $scope.AppLogo.length == 0) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        }
                         GetAllDynamicAppInfo(true);
                         $scope.ResetModel();
                     });
