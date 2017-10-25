@@ -12,11 +12,14 @@
 
         $scope.init = function() {
             $scope.model = {
-                id: '',
+                id: 0,
                 Module: '',
-                IsActive: '',
-            };
+                IsActive: true,
+                DisplayOrder: 0,
+            }
             $scope.Search = '';
+            $scope.FlgAddedEditlocal = true;
+            $scope.flag = false;
             $scope.GetAllModule();
             $scope.tab = { selectedIndex: 0 };
         }
@@ -36,13 +39,10 @@
             });
         }
 
-        $scope.SaveModule = function(o) {
+        $scope.SaveModuleData = function(o) {
             $http.post($rootScope.RoutePath + "module/UpdateModule", o).then(function(data) {
                 if (data.data.success == false) {
                     if (data.data.data == 'TOKEN') {
-                        //$cookieStore.remove('UserName');
-                        //$cookieStore.remove('token');
-                        //window.location.href = '/app/login';
                         $rootScope.logout();
                     }
                 }
@@ -55,7 +55,31 @@
                 o.IsUpdate = false;
             });
         }
+        $scope.SaveModule = function(o) {
 
+            $http.post($rootScope.RoutePath + "module/CreateModule", o).then(function(data) {
+                if (data.data.success == true) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                    $scope.flag = false;
+                    $scope.ResetModel();
+                    $scope.GetAllModule();
+                    // $scope.getAllSIMInfo();
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                }
+
+            })
+        }
         $scope.FetchmoduleById = function(o) {
             o.IsUpdate = true;
         }
@@ -66,22 +90,71 @@
         }
 
 
+        // $scope.Reset = function() {
+        //     $scope.init();
+        // }
         $scope.Reset = function() {
-            $scope.init();
+            $scope.model = {
+                id: 0,
+                Module: '',
+                IsActive: true,
+                DisplayOrder: 0,
+            }
+            $scope.Search = '';
+            $rootScope.FlgAddedEditlocal = false;
+            if ($rootScope.FlgAddedAccess == true) {
+                $rootScope.FlgAddedEditlocal = true;
+            }
+            $scope.flag = true;
+            $scope.resetForm();
+        }
+        $scope.ResetModel = function() {
+            $scope.model = {
+                id: 0,
+                Module: '',
+                IsActive: true,
+                DisplayOrder: 0,
+            }
+            $scope.Search = '';
+            $scope.flag = false;
+            $scope.resetForm();
+        }
+        $scope.resetForm = function() {
+            $scope.formModule.$setUntouched();
+            $scope.formModule.$setPristine();
+        }
+        $scope.DeleteModule = function(Id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure to Delete this Module and user permission?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function() {
+                var params = {
+                    idModule: Id
+                };
+                $http.get($rootScope.RoutePath + "module/DeleteModuleAndpermission/" + Id).success(function(data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.ResetModel();
+                        $scope.GetAllModule();
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                });
+            });
         }
 
 
-        //vm.dtOptions = DTOptionsBuilder.newOptions()
-        //    .withPaginationType('full_numbers')
-        //    .withDisplayLength(10)
-        //    .withOption('responsive', true)
-        //    .withOption('autoWidth', true)
-        //     .withOption('language', {
-        //         'zeroRecords': "No Record Found",
-        //         'emptyTable': "No Record Found"
-        //     })
-        //    .withOption('dom', '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
-        // .withDOM('<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
 
         $scope.dtCustomOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
@@ -104,10 +177,6 @@
                 DTColumnDefBuilder.newColumnDef(1),
                 DTColumnDefBuilder.newColumnDef(2),
                 DTColumnDefBuilder.newColumnDef(3).notSortable(),
-                //DTColumnDefBuilder.newColumnDef(2),
-                //DTColumnDefBuilder.newColumnDef(3),
-                //DTColumnDefBuilder.newColumnDef(4),
-                // DTColumnDefBuilder.newColumnDef(5)
             ];
         $scope.dtInstance = {};
 
