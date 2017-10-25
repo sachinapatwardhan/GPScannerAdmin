@@ -664,20 +664,20 @@
                                     weight: 1
                                 });
                             }
-                            if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
-                                //Module Managemet
-                                // var lstVehicleType = _.filter(lstAllPages, function(obj) {
-                                //     return obj.tblmodulemgmt.Module == 'Module Management';
-                                // });
-                                // if (lstVehicleType.length > 0) {
-                                msNavigationService.saveItem('Users.Module Management', {
-                                    title: 'Module Management',
-                                    state: 'app.ModuleMgmt',
-                                    // order: lstVehicleType[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                                // }
-                            }
+                            // if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
+                            //     //Module Managemet
+                            //     // var lstVehicleType = _.filter(lstAllPages, function(obj) {
+                            //     //     return obj.tblmodulemgmt.Module == 'Module Management';
+                            //     // });
+                            //     // if (lstVehicleType.length > 0) {
+                            //     msNavigationService.saveItem('Users.Manage Module', {
+                            //         title: 'Manage Module',
+                            //         state: 'app.Module',
+                            //         // order: lstVehicleType[0].tblmodulemgmt.DisplayOrder,
+                            //         weight: 1
+                            //     });
+                            //     // }
+                            // }
                             if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
                                 //
                                 msNavigationService.saveItem('Users.Setting', {
@@ -721,7 +721,7 @@
 
                 //check Permission
                 $rootScope.UserRoles = $cookieStore.get('UserRoles');
-                if (to.ModuleName != 'Setting' && to.ModuleName != 'Module Management') {
+                if (to.ModuleName != 'Setting' && to.ModuleName != 'Manage Module') {
 
 
                     if ($rootScope.UserRoles) {
@@ -741,7 +741,6 @@
                                 }
                             }
                         }
-                        console.log(params)
                         $http.get($rootScope.RoutePath + "userPermission/CheckRights", { params: params }).then(function(data) {
                             if (data.data.success == false) {
                                 e.preventDefault();
