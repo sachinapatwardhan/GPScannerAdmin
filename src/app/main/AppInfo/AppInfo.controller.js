@@ -18,7 +18,6 @@
                 AndroidId: '',
                 AndroidSenderId: '',
                 AppLogo: '',
-                CreatedDate: new Date(),
 
             }
             $scope.FlgImage = '';
@@ -92,7 +91,7 @@
                 } else {
                     $http.post($rootScope.RoutePath + "appinfo/SaveAppInfo", o).then(function(data) {
                         var Id;
-
+                        var newAppName = data.config.data.AppName;
                         if (o.Id != 0) {
                             Id = o.Id;
                         } else {
@@ -130,13 +129,17 @@
                                     'Content-Type': undefined
                                 }
                             }).then(function(data) {
-                                // $scope.IOSCertificate = '';
-                                // $scope.IOSKey = '';
-                                $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.data.data.Name;
-                                // localStorage.setItem('appName', data.AppName);
-                                localStorage.setItem('Logo', $rootScope.Logo)
-                                $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-                                $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
+                                console.log(data)
+                                    // $scope.IOSCertificate = '';
+                                    // $scope.IOSKey = '';
+                                if (localStorage.getItem('appName') == newAppName) {
+                                    $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.data.data.ImageLogo;
+                                    // localStorage.setItem('appName', data.AppName);
+
+                                    localStorage.setItem('Logo', $rootScope.Logo)
+                                    $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
+                                    $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
+                                }
                                 $scope.apiMedia.removeAll();
                                 $scope.apiResetIC.removeAll();
                                 $scope.apiResetIK.removeAll();
@@ -446,7 +449,6 @@
                 AndroidId: '',
                 AndroidSenderId: '',
                 AppLogo: '',
-                CreatedDate: new Date(),
             }
             $scope.flag = false;
 
@@ -465,7 +467,6 @@
                 AndroidId: '',
                 AndroidSenderId: '',
                 AppLogo: '',
-                CreatedDate: new Date(),
             }
             $scope.FlgImage = '';
             $scope.IOS_C = '';
