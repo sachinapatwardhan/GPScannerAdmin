@@ -342,18 +342,18 @@
                                 });
                             }
 
-                            //Module
-                            var lstModule = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Manage Module';
-                            });
-                            if (lstModule.length > 0) {
-                                msNavigationService.saveItem('Settings.Module', {
-                                    title: 'Manage Module',
-                                    state: 'app.Module',
-                                    order: lstModule[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }
+                            // //Module
+                            // var lstModule = _.filter(lstAllPages, function(obj) {
+                            //     return obj.tblmodulemgmt.Module == 'Manage Module';
+                            // });
+                            // if (lstModule.length > 0) {
+                            //     msNavigationService.saveItem('Settings.Manage Module', {
+                            //         title: 'Manage Module',
+                            //         state: 'app.Module',
+                            //         order: lstModule[0].tblmodulemgmt.DisplayOrder,
+                            //         weight: 1
+                            //     });
+                            // }
 
                             //Roles
                             var lstRoles = _.filter(lstAllPages, function(obj) {
@@ -679,7 +679,13 @@
                             //     // }
                             // }
                             if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
-                                //
+                                msNavigationService.saveItem('Users.Manage Module', {
+                                    title: 'Manage Module',
+                                    state: 'app.Module',
+                                    // order: lstModule[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+
                                 msNavigationService.saveItem('Users.Setting', {
                                     title: 'Setting',
                                     state: 'app.MainSetting',
