@@ -29,17 +29,20 @@
         var offset = -x.getTimezoneOffset();
         $rootScope.CurrentOffset = (('00' + offset).slice(-2) >= 0 ? "+" : "-") + ('00' + parseInt(offset / 60).toString()).slice(-2) + ":" + offset % 60;
         $rootScope.AdminUserId = 1;
-        $rootScope.appName = 'Maark';
+        // $rootScope.appName = 'Maark';
+
+        var url = $window.location.protocol + "//" + $window.location.host + "/";
+
         var params = {
-            AppName: $rootScope.appName,
+            AdminUrl: url,
         }
         $rootScope.App_name = $rootScope.appName + '-Admin';
-        $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByName', { params: params }).success(function(data) {
+        $http.get($rootScope.RoutePath + 'appinfo/GetAppInfoByAdmin', { params: params }).success(function(data) {
             if (data != null) {
                 $rootScope.appId = data.Id;
                 $rootScope.AppName = data.AppName;
                 $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
-
+                $rootScope.App_name = data.AppName + '-Admin';
                 localStorage.setItem('appId', data.Id)
                 localStorage.setItem('appName', data.AppName);
                 localStorage.setItem('Logo', $rootScope.Logo)

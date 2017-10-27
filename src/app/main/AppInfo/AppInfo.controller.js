@@ -18,226 +18,84 @@
                 AndroidId: '',
                 AndroidSenderId: '',
                 AppLogo: '',
-
+                WebAppLoginLogo: '',
+                WebAppHeaderLogo: '',
+                AdminUrl: '',
+                WebAppUrl: '',
             }
+
             $scope.FlgImage = '';
+            $scope.FlgLoginImage = '';
+            $scope.FlgHeaderImage = '';
+
             $scope.ImageLogo = '';
             $scope.IOSC = '';
             $scope.IOSK = '';
             $scope.myCroppedImage = '';
+            $scope.myCroppedLoginImage = '';
+            $scope.myCroppedHeaderImage = '';
+
             $scope.Search = '';
             $scope.FlgAddedEditlocal = true;
             $scope.flag = false;
 
         }
 
-        //Save App info Detail
-        $scope.SaveAppInfo = function(o) {
-            o.IOSCertificate = $scope.IOSC;
-            o.IOSKey = $scope.IOSK;
-            var ICName = '';
-            var IKName = '';
-            if ($scope.IOSCertificate.length == 0 && $scope.IOSC == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('IOS Certificate file is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else if ($scope.IOSKey.length == 0 && $scope.IOSK == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('IOS Key file is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else if ($scope.AppLogo.length == 0 && $scope.myCroppedImage == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Image is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else {
-                if ($scope.IOSCertificate.length > 0) {
-                    angular.forEach($scope.IOSCertificate, function(obj) {
-                        ICName = (obj.lfFile.name).split('.')[1];
-                    });
-                }
-                if ($scope.IOSKey.length > 0) {
-                    angular.forEach($scope.IOSKey, function(obj) {
-                        IKName = (obj.lfFile.name).split('.')[1];
-                    });
-                }
-                if ((ICName != 'pem' && $scope.IOSC == '') || (IKName != 'pem' && $scope.IOSK == '')) {
-                    if (ICName != 'pem') {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('Only .pem file is Supported for IOS Certificate')
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    }
-                    if (IKName != 'pem') {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('Only .pem file is Supported for IOS Key')
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    }
-
-
-                } else {
-                    $http.post($rootScope.RoutePath + "appinfo/SaveAppInfo", o).then(function(data) {
-                        var Id;
-                        var newAppName = data.config.data.AppName;
-                        if (o.Id != 0) {
-                            Id = o.Id;
-                        } else {
-                            Id = data.data.data[0].Id;
-                        }
-                        if ($scope.IOSCertificate.length > 0 || $scope.IOSKey.length > 0 || $scope.AppLogo.length > 0) {
-                            var formData = new FormData();
-                            // angular.forEach($scope.IOSCertificate, function(obj) {
-                            //     formData.append(Id, obj.lfFile);
-                            // });
-                            if ($scope.AppLogo.length > 0) {
-                                angular.forEach($scope.AppLogo, function(obj) {
-                                    var Logo = Id + ',' + 'logo';
-                                    formData.append(Logo, obj.lfFile);
-                                });
-                            }
-                            if ($scope.IOSCertificate.length > 0) {
-
-                                angular.forEach($scope.IOSCertificate, function(obj) {
-                                    var IC = Id + ',' + 'IC';
-                                    formData.append(IC, obj.lfFile);
-
-                                });
-                            }
-                            if ($scope.IOSKey.length > 0) {
-                                angular.forEach($scope.IOSKey, function(obj) {
-                                    var IK = Id + ',' + 'IK';
-                                    formData.append(IK, obj.lfFile);
-                                });
-                            }
-
-                            $http.post($rootScope.RoutePath + "appinfo/uploadFile", formData, {
-                                transformRequest: angular.identity,
-                                headers: {
-                                    'Content-Type': undefined
-                                }
-                            }).then(function(data) {
-                                console.log(data)
-                                    // $scope.IOSCertificate = '';
-                                    // $scope.IOSKey = '';
-                                if (localStorage.getItem('appName') == newAppName) {
-                                    $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.data.data.ImageLogo;
-                                    // localStorage.setItem('appName', data.AppName);
-
-                                    localStorage.setItem('Logo', $rootScope.Logo)
-                                    $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-                                    $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
-                                }
-                                $scope.apiMedia.removeAll();
-                                $scope.apiResetIC.removeAll();
-                                $scope.apiResetIK.removeAll();
-                                $rootScope.FlgAddedEditlocal = false;
-                                if ($rootScope.FlgAddedAccess == true) {
-                                    $rootScope.FlgAddedEditlocal = true;
-                                }
-                                GetAllDynamicAppInfo(true);
-                                $scope.init();
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                    .textContent(data.data.message)
-                                    .position('top right')
-                                    .hideDelay(3000)
-                                );
-                            }, function(err) {
-
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                    .textContent(err)
-                                    .position('top right')
-                                    .hideDelay(3000)
-                                );
-                                // do sometingh
-                            });
-                        }
-
-                        if ($scope.IOSCertificate.length == 0 && $scope.IOSKey.length == 0 && $scope.AppLogo.length == 0) {
-                            $mdToast.show(
-                                $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                            );
-                        }
-                        GetAllDynamicAppInfo(true);
-                        $scope.ResetModel();
-                    });
-                }
-            }
-        }
-
         $scope.setFiles = function(element) {
             $scope.FlgImage = 0;
-            $scope.myCroppedProfileImage = $rootScope.RoutePath + 'MediaUploads/EmployeeProfile/' + $scope.model.Document;
+            $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.ImageLogo;
+        };
+        $scope.setLoginFiles = function(element) {
+            $scope.FlgHeaderImage = 0;
+            $scope.myCroppedLoginImage = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.WebAppLoginLogo;
+        };
+        $scope.setHeaderFiles = function(element) {
+            $scope.FlgHeaderImage = 0;
+            $scope.myCroppedHeaderImage = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.WebAppHeaderLogo;
         };
 
         $scope.removeAllFiles = function() {
 
-                function callMethod(i) {
-                    if (i < 2) {
-                        $timeout(function() {
-                            if ($scope.Mediafiles.length > 0) {
-                                $scope.FlgImage = 1;
-                                $scope.FlgCropImage = 1;
+            function callMethod(i) {
+                if (i < 2) {
+                    $timeout(function() {
+                        if ($scope.Mediafiles.length > 0) {
+                            $scope.FlgImage = 1;
+                            $scope.FlgCropImage = 1;
 
-                                $scope.myImage = $scope.Mediafiles[0].lfDataUrl;
+                            $scope.myImage = $scope.Mediafiles[0].lfDataUrl;
 
+                        } else {
+                            $scope.myImage = '';
+
+                            if ($scope.model.image != '' && $scope.model.image != null && $scope.model.image != undefined) {
+                                $scope.$apply(function() {
+                                    $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
+                                    $scope.FlgImage = 1;
+                                })
+
+                                // $('#UploadedImage').attr('src','');
+                                //$('#UploadedImage').remove();
+                                // $('#UploadedImage')[0].removeAttribute("src");
+                                // $('#UploadedImage')[0].src = $scope.myCroppedImage;
+                                // document.getElementById("UploadedImage").src = $scope.myCroppedImage;
+                                //document.getElementById("UploadedImage").innerHTML = "<img src\= " + $scope.myCroppedImage + " width='150px' />";
                             } else {
-                                $scope.myImage = '';
+                                $scope.$apply(function() {
+                                    $scope.myCroppedImage = '';
+                                })
 
-                                if ($scope.model.image != '' && $scope.model.image != null && $scope.model.image != undefined) {
-                                    $scope.$apply(function() {
-                                        $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
-                                        $scope.FlgImage = 1;
-                                    })
+                                $scope.FlgImage = 0;
+                            };
+                            $scope.FlgCropImage = 0;
+                            callMethod(i + 1);
 
-                                    // $('#UploadedImage').attr('src','');
-                                    //$('#UploadedImage').remove();
-                                    // $('#UploadedImage')[0].removeAttribute("src");
-                                    // $('#UploadedImage')[0].src = $scope.myCroppedImage;
-                                    // document.getElementById("UploadedImage").src = $scope.myCroppedImage;
-                                    //document.getElementById("UploadedImage").innerHTML = "<img src\= " + $scope.myCroppedImage + " width='150px' />";
-                                } else {
-                                    $scope.$apply(function() {
-                                        $scope.myCroppedImage = '';
-                                    })
-
-                                    $scope.FlgImage = 0;
-                                };
-                                $scope.FlgCropImage = 0;
-                                callMethod(i + 1);
-
-                            }
-                        });
-                    };
-                }
-                callMethod(0);
+                        }
+                    });
+                };
             }
-            // $scope.$watch('myCroppedImage', function(newval) {
-            //     if ($scope.myCroppedImage != '' && $scope.myCroppedImage != $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image && $scope.Mediafiles.length > 0) {
-            //         var image = $scope.myCroppedImage;
-            //         var blob = b64toBlob(image.split(",")[1], $scope.Mediafiles[0].lfFile.type, 512);
-            //         file = new File([blob], $scope.Mediafiles[0].lfFileName, {
-            //             type: $scope.Mediafiles[0].lfFile.type
-            //         });
-            //     }
-            // })
+            callMethod(0);
+        }
 
 
 
@@ -364,7 +222,6 @@
             $scope.flag = true;
             var o = _.findWhere($scope.lstAppInfo, { Id: Id });
 
-
             $scope.model.Id = o.Id;
             $scope.model.AppName = o.AppName;
             $scope.model.BundleId = o.BundleId;
@@ -373,22 +230,230 @@
             $scope.model.AndroidId = o.AndroidId;
             $scope.model.AndroidSenderId = o.AndroidSenderId;
             $scope.model.AppLogo = o.AppLogo;
+            $scope.model.WebAppLoginLogo = o.WebAppLoginLogo;
+            $scope.model.WebAppHeaderLogo = o.WebAppHeaderLogo;
+            $scope.model.AdminUrl = o.AdminUrl;
+            $scope.model.WebAppUrl = o.WebAppUrl;
             $scope.IOSC = o.IOSCertificate;
             $scope.IOSK = o.IOSKey;
-            // $scope.AppLogo = o.ImageLogo;
             $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.ImageLogo; //$scope.AppLogo;
             if (o.ImageLogo != null && o.ImageLogo != '' && o.ImageLogo != undefined) {
                 $scope.FlgImage = 1;
             } else {
                 $scope.FlgImage = 0;
             }
-        }
-        $scope.RemoveImage = function() {
-            $scope.myImage = '';
-            $scope.FlgImage = 0;
-            $scope.model.image = '';
+
+            $scope.myCroppedLoginImage = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.WebAppLoginLogo; //$scope.AppLogo;
+            if (o.WebAppLoginLogo != null && o.WebAppLoginLogo != '' && o.WebAppLoginLogo != undefined) {
+                $scope.FlgLoginImage = 1;
+            } else {
+                $scope.FlgLoginImage = 0;
+            }
+
+            $scope.myCroppedHeaderImage = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.WebAppHeaderLogo; //$scope.AppLogo;
+            if (o.WebAppHeaderLogo != null && o.WebAppHeaderLogo != '' && o.WebAppHeaderLogo != undefined) {
+                $scope.FlgHeaderImage = 1;
+            } else {
+                $scope.FlgHeaderImage = 0;
+            }
         }
 
+        $scope.RemoveImage = function(o) {
+            console.log(o);
+            console.log($scope.model.image);
+            if (o == 'applogo') {
+                $scope.myImage = '';
+                $scope.FlgImage = 0;
+                // $scope.model.image = '';
+            } else if (o == 'login') {
+                $scope.myLoginImage = '';
+                $scope.FlgLoginImage = 0;
+            } else if (o == 'header') {
+                $scope.myHeaderImage = '';
+                $scope.FlgHeaderImage = 0;
+            }
+        }
+
+        //Save App info Detail
+        $scope.SaveAppInfo = function(o) {
+            console.log(o);
+            o.IOSCertificate = $scope.IOSC;
+            o.IOSKey = $scope.IOSK;
+            var ICName = '';
+            var IKName = '';
+            if ($scope.IOSCertificate.length == 0 && $scope.IOSC == '') {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('IOS Certificate file is Required')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else if ($scope.IOSKey.length == 0 && $scope.IOSK == '') {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('IOS Key file is Required')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else if ($scope.AppLogo.length == 0 && $scope.myCroppedImage == '') {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Image is Required')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else if ($scope.WebAppLoginLogo.length == 0 && $scope.myCroppedLoginImage == '') {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('login Image is Required')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else if ($scope.WebAppHeaderLogo.length == 0 && $scope.myCroppedHeaderImage == '') {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Header Image is Required')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else {
+                if ($scope.IOSCertificate.length > 0) {
+                    angular.forEach($scope.IOSCertificate, function(obj) {
+                        ICName = (obj.lfFile.name).split('.')[1];
+                    });
+                }
+                if ($scope.IOSKey.length > 0) {
+                    angular.forEach($scope.IOSKey, function(obj) {
+                        IKName = (obj.lfFile.name).split('.')[1];
+                    });
+                }
+                if ((ICName != 'pem' && $scope.IOSC == '') || (IKName != 'pem' && $scope.IOSK == '')) {
+                    if (ICName != 'pem') {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('Only .pem file is Supported for IOS Certificate')
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                    if (IKName != 'pem') {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('Only .pem file is Supported for IOS Key')
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+
+
+                } else {
+                    $http.post($rootScope.RoutePath + "appinfo/SaveAppInfo", o).then(function(data) {
+                        var Id;
+                        var newAppName = data.config.data.AppName;
+                        if (o.Id != 0) {
+                            Id = o.Id;
+                        } else {
+                            Id = data.data.data[0].Id;
+                        }
+                        if ($scope.IOSCertificate.length > 0 || $scope.IOSKey.length > 0 || $scope.AppLogo.length > 0 || $scope.WebAppLoginLogo.length > 0 || $scope.WebAppHeaderLogo.length > 0) {
+                            var formData = new FormData();
+                            // angular.forEach($scope.IOSCertificate, function(obj) {
+                            //     formData.append(Id, obj.lfFile);
+                            // });
+                            if ($scope.AppLogo.length > 0) {
+                                angular.forEach($scope.AppLogo, function(obj) {
+                                    var Logo = Id + ',' + 'logo';
+                                    formData.append(Logo, obj.lfFile);
+                                });
+                            }
+                            if ($scope.WebAppLoginLogo.length > 0) {
+                                angular.forEach($scope.WebAppLoginLogo, function(obj) {
+                                    var Loginlogo = Id + ',' + 'Loginlogo';
+                                    formData.append(Loginlogo, obj.lfFile);
+                                });
+                            }
+                            if ($scope.WebAppHeaderLogo.length > 0) {
+                                angular.forEach($scope.WebAppHeaderLogo, function(obj) {
+                                    var Headerlogo = Id + ',' + 'Headerlogo';
+                                    formData.append(Headerlogo, obj.lfFile);
+                                });
+                            }
+                            if ($scope.IOSCertificate.length > 0) {
+
+                                angular.forEach($scope.IOSCertificate, function(obj) {
+                                    var IC = Id + ',' + 'IC';
+                                    formData.append(IC, obj.lfFile);
+
+                                });
+                            }
+                            if ($scope.IOSKey.length > 0) {
+                                angular.forEach($scope.IOSKey, function(obj) {
+                                    var IK = Id + ',' + 'IK';
+                                    formData.append(IK, obj.lfFile);
+                                });
+                            }
+                            console.log(formData);
+
+                            $http.post($rootScope.RoutePath + "appinfo/uploadFile", formData, {
+                                transformRequest: angular.identity,
+                                headers: {
+                                    'Content-Type': undefined
+                                }
+                            }).then(function(data) {
+                                console.log(data)
+                                    // $scope.IOSCertificate = '';
+                                    // $scope.IOSKey = '';
+                                if (localStorage.getItem('appName') == newAppName) {
+                                    $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.data.data.ImageLogo;
+                                    // localStorage.setItem('appName', data.AppName);
+
+                                    localStorage.setItem('Logo', $rootScope.Logo)
+                                    $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
+                                    $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
+                                }
+                                $scope.apiMedia.removeAll();
+                                $scope.apiResetIC.removeAll();
+                                $scope.apiResetIK.removeAll();
+                                $scope.apiLoginMedia.removeAll();
+                                $scope.apiHeaderMedia.removeAll();
+                                $rootScope.FlgAddedEditlocal = false;
+                                if ($rootScope.FlgAddedAccess == true) {
+                                    $rootScope.FlgAddedEditlocal = true;
+                                }
+                                GetAllDynamicAppInfo(true);
+                                $scope.init();
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                                );
+                            }, function(err) {
+
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                    .textContent(err)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                                );
+                                // do sometingh
+                            });
+                        }
+
+                        if ($scope.IOSCertificate.length == 0 && $scope.IOSKey.length == 0 && $scope.AppLogo.length == 0 && $scope.WebAppLoginLogo.length == 0 && $scope.WebAppHeaderLogo.length == 0) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        }
+                        GetAllDynamicAppInfo(true);
+                        $scope.ResetModel();
+                    });
+                }
+            }
+        }
 
         //Delete app info....................
         $scope.DeleteAppInfo = function(Id) {
@@ -449,12 +514,18 @@
                 AndroidId: '',
                 AndroidSenderId: '',
                 AppLogo: '',
+                WebAppLoginLogo: '',
+                WebAppHeaderLogo: '',
+                AdminUrl: '',
+                WebAppUrl: '',
             }
             $scope.flag = false;
 
             $scope.apiResetIC.removeAll();
             $scope.apiResetIK.removeAll();
             $scope.apiMedia.removeAll();
+            $scope.apiLoginMedia.removeAll();
+            $scope.apiHeaderMedia.removeAll();
             $scope.resetForm();
         }
         $scope.Reset = function() {
@@ -467,12 +538,18 @@
                 AndroidId: '',
                 AndroidSenderId: '',
                 AppLogo: '',
+                WebAppLoginLogo: '',
+                WebAppHeaderLogo: '',
+                AdminUrl: '',
+                WebAppUrl: '',
             }
             $scope.FlgImage = '';
             $scope.IOS_C = '';
             $scope.apiMedia.removeAll();
             $scope.apiResetIC.removeAll();
             $scope.apiResetIK.removeAll();
+            $scope.apiLoginMedia.removeAll();
+            $scope.apiHeaderMedia.removeAll();
             $scope.IOSC = '';
             $scope.IOSK = '';
             $scope.myCroppedImage = '';
