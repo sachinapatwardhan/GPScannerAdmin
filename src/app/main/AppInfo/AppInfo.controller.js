@@ -95,10 +95,7 @@
                 };
             }
             callMethod(0);
-        }
-
-
-
+        };
         //Dynamic Pagging
         function GetAllDynamicAppInfo(IsUpdate) {
             var resetPaging = false;
@@ -259,24 +256,24 @@
         }
 
         $scope.RemoveImage = function(o) {
-            console.log(o);
-            console.log($scope.model.image);
             if (o == 'applogo') {
-                $scope.myImage = '';
+                $scope.myCroppedImage = '';
                 $scope.FlgImage = 0;
+                $scope.AppLogo = [];
                 // $scope.model.image = '';
             } else if (o == 'login') {
-                $scope.myLoginImage = '';
+                $scope.myCroppedLoginImage = '';
                 $scope.FlgLoginImage = 0;
+                $scope.WebAppLoginLogo = [];
             } else if (o == 'header') {
-                $scope.myHeaderImage = '';
+                $scope.myCroppedHeaderImage = '';
                 $scope.FlgHeaderImage = 0;
+                $scope.WebAppHeaderLogo = [];
             }
         }
 
         //Save App info Detail
         $scope.SaveAppInfo = function(o) {
-            console.log(o);
             o.IOSCertificate = $scope.IOSC;
             o.IOSKey = $scope.IOSK;
             var ICName = '';
@@ -392,7 +389,6 @@
                                     formData.append(IK, obj.lfFile);
                                 });
                             }
-                            console.log(formData);
 
                             $http.post($rootScope.RoutePath + "appinfo/uploadFile", formData, {
                                 transformRequest: angular.identity,
@@ -400,9 +396,8 @@
                                     'Content-Type': undefined
                                 }
                             }).then(function(data) {
-                                console.log(data)
-                                    // $scope.IOSCertificate = '';
-                                    // $scope.IOSKey = '';
+                                // $scope.IOSCertificate = '';
+                                // $scope.IOSKey = '';
                                 if (localStorage.getItem('appName') == newAppName) {
                                     $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.data.data.ImageLogo;
                                     // localStorage.setItem('appName', data.AppName);
@@ -544,6 +539,8 @@
                 WebAppUrl: '',
             }
             $scope.FlgImage = '';
+            $scope.FlgLoginImage = '';
+            $scope.FlgHeaderImage = '';
             $scope.IOS_C = '';
             $scope.apiMedia.removeAll();
             $scope.apiResetIC.removeAll();
@@ -553,6 +550,8 @@
             $scope.IOSC = '';
             $scope.IOSK = '';
             $scope.myCroppedImage = '';
+            $scope.myCroppedLoginImage = '';
+            $scope.myCroppedHeaderImage = '';
             $scope.Search = '';
             $rootScope.FlgAddedEditlocal = false;
             if ($rootScope.FlgAddedAccess == true) {
@@ -560,13 +559,7 @@
             }
             $scope.flag = true;
             $scope.resetForm();
-
         }
-
-
         $scope.init();
-
-
     }
-
 })();
