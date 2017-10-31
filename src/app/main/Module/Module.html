@@ -127,7 +127,12 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="o in lstModules | filter: Search">
-                            <td>{{ o.Module }}</td>
+                            <td ng-if="!o.IsUpdate">{{ o.Module }}</td>
+                            <td ng-if="o.IsUpdate">
+                                <md-input-container class="md-block margin-0" flex>
+                                    <input type="text" ng-model="o.Module">
+                                </md-input-container>
+                            </td>
                             <td class="dt-center">
                                 <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.IsActive" ng-change="SaveModuleData(o)" class="md-primary"></md-checkbox>
                             </td>

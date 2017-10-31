@@ -125,14 +125,14 @@
         }
         $scope.DeleteModule = function(Id) {
             var confirm = $mdDialog.confirm()
-                .title('Are you sure to Delete this Module and user permission?')
+                .title('Are you sure to Delete this Module?')
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function() {
                 var params = {
                     idModule: Id
                 };
-                $http.get($rootScope.RoutePath + "module/DeleteModuleAndpermission/" + Id).success(function(data) {
+                $http.get($rootScope.RoutePath + "module/DeleteModule/" + Id).success(function(data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
@@ -143,12 +143,34 @@
                         $scope.ResetModel();
                         $scope.GetAllModule();
                     } else {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
+                        var confirm = $mdDialog.confirm()
+                            .title('Are you force to Delete this Module?')
+                            .ok('Ok')
+                            .cancel('Cancel')
+                        $mdDialog.show(confirm).then(function() {
+                            var params = {
+                                idModule: Id
+                            };
+                            $http.get($rootScope.RoutePath + "module/DeleteModuleAndpermission/" + Id).success(function(data) {
+                                if (data.success == true) {
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                        .textContent(data.message)
+                                        .position('top right')
+                                        .hideDelay(3000)
+                                    );
+                                    $scope.ResetModel();
+                                    $scope.GetAllModule();
+                                } else {
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                        .textContent(data.message)
+                                        .position('top right')
+                                        .hideDelay(3000)
+                                    );
+                                }
+                            })
+                        })
                     }
                 });
             });
