@@ -8,7 +8,7 @@
     /** @ngInject */
     function SIMController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         var vm = this;
-        // vm.getAllSIMInfo = getAllSIMInfo;
+        vm.getAllSIMInfo = getAllSIMInfo;
         $scope.init = function() {
             $scope.model = {
                 Id: 0,
@@ -94,7 +94,9 @@
             $scope.model.idTelCo = o.idTelCo;
             $scope.flag = true;
         }
-
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
         $scope.DeleteSIM = function(Id) {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure to Delete this SIM ?')
