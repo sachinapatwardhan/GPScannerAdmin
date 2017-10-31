@@ -1,0 +1,55 @@
+<md-dialog class="flex-50">
+    <!--<md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Devices</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>-->
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Devices</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <ms-form-wizard flex>
+            <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                <thead>
+                    <tr>
+                        <th class="all">
+                            <div class="table-header">
+                                <span class="column-title">No</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Device No</span>
+                            </div>
+                        </th>
+                        <th class="all">
+                            <div class="table-header">
+                                <span class="column-title">IsOnline</span>
+
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="o in lstDevice">
+                        <td>{{ $index+1 }}</td>
+                        <td>{{ o.deviceid }}</td>
+                        <td>
+                            <i ng-if="o.IsOnline==true" class="icon-checkbox-marked-circle green-500-fg"></i>
+                            <i ng-if="o.IsOnline==false" class="icon-cancel red-500-fg"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ms-form-wizard>
+    </md-dialog-content>
+</md-dialog>
