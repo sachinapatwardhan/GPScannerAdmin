@@ -240,85 +240,6 @@
                                 });
                             }
 
-                            //Menu
-                            var lstMenu = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Menu';
-                            });
-
-                            if (lstMenu.length > 0) {
-                                msNavigationService.saveItem('CMS.Menu', {
-                                    title: 'Menu',
-                                    state: 'app.menu',
-                                    order: lstMenu[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }
-
-                            //Media
-                            var lstMedia = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Media';
-                            });
-                            if (lstMedia.length > 0) {
-                                msNavigationService.saveItem('CMS.Media', {
-                                    title: 'Media',
-                                    state: 'app.media',
-                                    order: lstMedia[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }
-
-                            //Banner
-                            var lstBanner = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Banner';
-                            });
-                            if (lstBanner.length > 0) {
-                                msNavigationService.saveItem('CMS.Banner', {
-                                    title: 'Banner',
-                                    state: 'app.Banner',
-                                    order: lstBanner[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }
-
-                            //Language
-                            var lstLanguage = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Language';
-                            });
-                            if (lstLanguage.length > 0) {
-                                msNavigationService.saveItem('CMS.Language', {
-                                    title: 'Language',
-                                    state: 'app.Language',
-                                    order: lstLanguage[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }
-
-                            //Mobile Widget
-                            var lstMobileWidget = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Mobile Widget';
-                            });
-                            if (lstMobileWidget.length > 0) {
-                                msNavigationService.saveItem('CMS.MobileWidget', {
-                                    title: 'Mobile Widget',
-                                    state: 'app.MobileWidget',
-                                    order: lstMobileWidget[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }
-
-                            //Mobile Language Resources
-                            var lstMobileLanguageResource = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Mobile Language Resource';
-                            });
-                            if (lstMobileLanguageResource.length > 0) {
-                                msNavigationService.saveItem('CMS.MobileLanguageResource', {
-                                    title: 'Mobile Language Resource',
-                                    state: 'app.MobileLanguageResource',
-                                    order: lstMobileLanguageResource[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }
-
                             //Country-State-City
                             var lstCountryStateCity = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Country-State-City';
@@ -345,18 +266,7 @@
                                 });
                             }
 
-                            // //Module
-                            // var lstModule = _.filter(lstAllPages, function(obj) {
-                            //     return obj.tblmodulemgmt.Module == 'Manage Module';
-                            // });
-                            // if (lstModule.length > 0) {
-                            //     msNavigationService.saveItem('Settings.Manage Module', {
-                            //         title: 'Manage Module',
-                            //         state: 'app.Module',
-                            //         order: lstModule[0].tblmodulemgmt.DisplayOrder,
-                            //         weight: 1
-                            //     });
-                            // }
+
 
                             //Roles
                             var lstRoles = _.filter(lstAllPages, function(obj) {
@@ -371,18 +281,6 @@
                                 });
                             }
 
-                            /*//Shopper User
-                            var lstuser = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Shopper Users';
-                            });
-                            if (lstuser.length > 0) {
-                                msNavigationService.saveItem('Users.user', {
-                                    title: 'Shopper Users',
-                                    state: 'app.user1',
-                                    order: lstuser[0].tblmodulemgmt.DisplayOrder,
-                                    weight: 1
-                                });
-                            }*/
 
                             // User Permission
                             var lstUserPermission = _.filter(lstAllPages, function(obj) {
@@ -397,19 +295,6 @@
                                 });
                             }
 
-                            // Change Password
-                            // var lstChangePassword = _.filter(lstAllPages, function(obj) {
-                            //     return obj.tblmodulemgmt.Module == 'Change Password';
-                            // });
-                            // if (lstChangePassword.length > 0) {
-                            //     msNavigationService.saveItem('Users.ChangePassword', {
-                            //         title: 'Change Password',
-                            //         state: 'app.ChangePassword',
-                            //         order: lstChangePassword[0].tblmodulemgmt.DisplayOrder,
-                            //         weight: 1
-                            //     });
-                            // }
-
                             //  User
                             var lstuser = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Users';
@@ -423,31 +308,6 @@
                                 });
                             }
 
-                            /* // Shopper Customer
-                             var lstShopperCustomer = _.filter(lstAllPages, function(obj) {
-                                 return obj.tblmodulemgmt.Module == 'Shopper Customer';
-                             });
-                             if (lstShopperCustomer.length > 0) {
-                                 msNavigationService.saveItem('PBRShop.Shopper Customer', {
-                                     title: 'Shopper Customer',
-                                     state: 'app.ShopperCustomer',
-                                     order: lstShopperCustomer[0].tblmodulemgmt.DisplayOrder,
-                                     weight: 1
-                                 });
-                             }
-
-                             // Shopper Vehicle
-                             var lstbike = _.filter(lstAllPages, function(obj) {
-                                 return obj.tblmodulemgmt.Module == 'Shopper Vehicle';
-                             });
-                             if (lstbike.length > 0) {
-                                 msNavigationService.saveItem('PBRShop.bike', {
-                                     title: 'Shopper Vehicle',
-                                     state: 'app.bike',
-                                     order: lstbike[0].tblmodulemgmt.DisplayOrder,
-                                     weight: 1
-                                 });
-                             }*/
 
                             // Tracker
                             var lstTrackers = _.filter(lstAllPages, function(obj) {
@@ -461,19 +321,6 @@
                                     weight: 1
                                 });
                             }
-
-                            // var lstTrackers = _.filter(lstAllPages, function(obj) {
-                            //     return obj.tblmodulemgmt.Module == 'Trackers';
-                            // });
-                            // if (lstTrackers.length > 0) {
-                            //     msNavigationService.saveItem('Trackers 2', {
-                            //         title: 'Trackers 2',
-                            //         state: 'app.PetDevice',
-                            //         order: lstTrackers[0].tblmodulemgmt.DisplayOrder,
-                            //         weight: 1
-                            //     });
-                            // }
-
 
                             //  Customer
                             var lstCustomer = _.filter(lstAllPages, function(obj) {
@@ -618,18 +465,6 @@
                                 });
                             }
 
-                            // var lstEmailTemplate = _.filter(lstAllPages, function(obj) {
-                            //     return obj.tblmodulemgmt.Module == 'Email Template';
-                            // });
-                            // if (lstEmailTemplate.length > 0) {
-                            //     msNavigationService.saveItem('CMS.Email Template', {
-                            //         title: 'Email Template',
-                            //         state: 'app.EmailTemplate',
-                            //         order: lstEmailTemplate[0].tblmodulemgmt.DisplayOrder,
-                            //         weight: 1
-                            //     });
-                            // }
-
                             var lstUtility = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Utility';
                             });
@@ -667,20 +502,7 @@
                                     weight: 1
                                 });
                             }
-                            // if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
-                            //     //Module Managemet
-                            //     // var lstVehicleType = _.filter(lstAllPages, function(obj) {
-                            //     //     return obj.tblmodulemgmt.Module == 'Module Management';
-                            //     // });
-                            //     // if (lstVehicleType.length > 0) {
-                            //     msNavigationService.saveItem('Users.Manage Module', {
-                            //         title: 'Manage Module',
-                            //         state: 'app.Module',
-                            //         // order: lstVehicleType[0].tblmodulemgmt.DisplayOrder,
-                            //         weight: 1
-                            //     });
-                            //     // }
-                            // }
+
                             if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
                                 msNavigationService.saveItem('Users.Manage Module', {
                                     title: 'Manage Module',

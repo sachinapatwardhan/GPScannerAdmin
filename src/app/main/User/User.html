@@ -1,12 +1,9 @@
 <div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
-
     <!-- TOP BACKGROUND -->
     <div class="top-bg md-accent-bg"></div>
     <!-- / TOP BACKGROUND -->
-
     <!-- CENTER -->
     <div class="center" layout="column" flex>
-
         <!-- CONTENT HEADER -->
         <div class="header" layout="row" layout-wrap layout-align="space-between center">
             <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
@@ -15,17 +12,11 @@
                     <span translate="User Management">User Management</span>
                 </div>
             </div>
-
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="modelsearch" ng-model="modelSearch.Search" ng-change="GetSerch(modelSearch.Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
-
-            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
-          <md-icon md-font-icon="icon-filter-variant"></md-icon>
-          <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
-        </md-button> -->
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
                 <div ng-if="FlgAddedEditlocal">
                     <md-button class="md-raised md-background" ng-click="ResetEdit()">
                         <span translate="Add User">Add User</span>
@@ -34,17 +25,11 @@
             </div>
         </div>
         <!-- / CONTENT HEADER -->
-
         <!-- CONTENT CARD -->
         <div class="content-card" layout="column" flex>
-            <!-- CONTENT TOOLBAR -->
-
-
-            <!-- / CONTENT TOOLBAR -->
-
             <!-- CONTENT -->
             <div class="content fullpage-datatable" layout="column" flex>
-                <table id="Usertable" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                <table id="Usertable" class="dataTable cell-border row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
                             <th class="all">
@@ -77,6 +62,11 @@
                                     <span class="column-title">User Role</span>
                                 </div>
                             </th>
+                            <!--<th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">App Name</span>
+                                </div>
+                            </th>-->
                             <th class="all">
                                 <div class="table-header">
                                     <span class="column-title">Action</span>
@@ -87,19 +77,15 @@
                 </table>
             </div>
             <!-- / CONTENT -->
-
         </div>
         <!-- / CONTENT CARD -->
-
     </div>
     <!-- / CENTER -->
-
 </div>
-
 <div class="page-layout simple tabbed" layout="column" ng-show="flag">
     <div class="header md-accent-bg" layout="row" layout-align="start center">
         <div class="white-fg" layout="row" layout-align="start center" flex>
-            <md-button class="goto-products-button md-icon-button" aria-label="Go to products" ng-click="ResetModel()">
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to products" ng-click="init()">
                 <md-icon md-font-icon="icon-arrow-left"></md-icon>
             </md-button>
             <div layout="row" layout-align="start center">
@@ -111,26 +97,25 @@
             </div>
         </div>
     </div>
-
     <div class="content layout-margin">
         <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
             <form name="AddUserForm" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
                 <div layout="row" layout-wrap>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="33">
+                    <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33">
                         <label>User name</label>
-                        <input type="text" ng-disabled="model.id!=''" name="username" md-maxlength="100" ng-model="model.username" required>
+                        <input type="text" ng-disabled="model.id!=''" name="username" md-maxlength="250" ng-model="model.username" required>
                         <div ng-messages="AddUserForm.username.$error" ng-if="AddUserForm.username.$touched">
                             <div ng-message="required">
                                 <span>User name is required</span>
                             </div>
                             <div ng-message="md-maxlength">
-                                <span>User name can't be greater than 100 character</span>
+                                <span>User name can't be greater than 250 character</span>
                             </div>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="33">
+                    <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33">
                         <label>Email address</label>
-                        <input type="Email" ng-disabled="model.id!=''" name="email" ng-model="model.email" md-maxlength="100" ng-pattern="/^.+@.+\..+$/" required>
+                        <input type="Email" ng-disabled="model.id!=''" name="email" ng-model="model.email" md-maxlength="250" ng-pattern="/^.+@.+\..+$/" required>
                         <div ng-messages="AddUserForm.email.$error" ng-if="AddUserForm.email.$touched">
                             <div ng-message="required">
                                 <span>Email is required</span>
@@ -139,113 +124,39 @@
                                 <span>Email must be a valid E-mail address</span>
                             </div>
                             <div ng-message="md-maxlength">
-                                <span>Email must be in between 100 characters long</span>
+                                <span>Email must be in between 250 characters long</span>
                             </div>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="33">
+                    <md-input-container flex="100" flex-gt-sm="100" flex-gt-md="33">
                         <label>Phone number</label>
-                        <input type="text" required name="Phone" ng-model="model.phone" placeholder="1234567890" ng-pattern='/^[+]*\d{2,4}[-]*\d{3,}[\s{1}]*\d{3,}$/' ng-maxlength="15">
-                        <div ng-messages="AddUserForm.Phone.$error" ng-if="AddUserForm.Phone.$touched">
-                            <div ng-message="required">
-                                <span>Phone number is required</span>
-                            </div>
+                        <input type="text" name="Phone" ng-model="model.phone" placeholder="1234567890" ng-pattern='/^[+]*\d{2,4}[-]*\d{3,}[\s{1}]*\d{3,}$/' ng-maxlength="15">
+                        <div ng-messages="AddUserForm.Phone.$error">
                             <div ng-message="maxlength" class="my-message">Phone number can't be longer than 15 number</div>
                             <div ng-message="pattern" class="my-message">Please Enter Vaild number</div>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25">
-                        <label>Country</label>
-                        <md-select Name="country" ng-model="model.country" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true" ng-change="GetAllStateByCountry(model.country)">
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="searchCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                            </md-select-header>
-                            <!--<md-option ng-value="0">Select Country</md-option>-->
-                            <md-option ng-value="o.Country" ng-repeat="o in lstCountry |filter:searchCountry">{{o.Country}}</md-option>
-                        </md-select>
-                        <div ng-messages="AddUserForm.country.$error" ng-if="AddUserForm.country.$touched">
-                            <div ng-message="required">
-                                <span>Country name is required</span>
-                            </div>
-                        </div>
+                    <md-input-container flex="100" flex-gt-xs="100" flex-gt-sm="50">
+                        <md-subheader class="no-padding" flex="100">Select role</md-subheader>
+                        <md-checkbox class="md-secondary" ng-model="o.checked" ng-repeat="o in lstRoles" value="{{o.id}}">{{o.RoleName}}</md-checkbox>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25">
-                        <label>State</label>
-                        <md-select Name="StateName" ng-model="model.state" md-on-close="clearSearchTerm()" ng-change="GetAllCityByStateId(model.state)" data-md-container-class="selectdemoSelectHeader" ng-disabled="model.country==''">
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="searchState" type="search" placeholder="Search for a state.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                            </md-select-header>
-                            <!--<md-option value="0">Select State</md-option>-->
-                            <md-option ng-value="o.Name" ng-repeat="o in lstState |filter:searchState">{{o.Name}}</md-option>
-                        </md-select>
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25">
-                        <label>City</label>
-                        <md-select Name="NameCity" ng-model="model.city" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-disabled="model.state==''">
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="searchCity" type="search" placeholder="Search for a city.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                            </md-select-header>
-                            <!--<md-option value="0">Select City</md-option>-->
-                            <md-option ng-value="o.Name" ng-repeat="o in lstCity |filter:searchCity">{{o.Name}}</md-option>
-                        </md-select>
-                    </md-input-container>
-                    <md-input-container flex="100" flex-gt-sm="25" style="margin: 0;">
-                        <div layout-align="center">Gender:</div>
-                        <md-radio-group ng-model="model.gender" layout="row" layout-align="center">
+                    <md-input-container flex="100" flex-gt-xs="100" flex-gt-sm="50">
+                        <md-subheader class="md-no-sticky" align="left">Gender</md-subheader>
+                        <md-radio-group ng-model="model.gender" layout="row" layout-wrap>
                             <md-radio-button value="Male" class="md-primary">Male</md-radio-button>
                             <md-radio-button value="Female" class="md-primary"> Female </md-radio-button>
                         </md-radio-group>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="33" ng-if="!flgEdit">
-                        <label>Password</label>
-                        <input type="password" name="password" md-minlength="4" md-maxlength="15" ng-model="model.password" required>
-                        <div ng-messages="AddUserForm.password.$error" ng-if="AddUserForm.password.$touched">
-                            <div ng-message="required">
-                                <span>Password is required</span>
-                            </div>
-                            <div ng-message="md-maxlength">
-                                <span>Password can't be greater than 15 character</span>
-                            </div>
-                            <div ng-message="md-minlength">
-                                <span>Password can't be less than 3 character</span>
-                            </div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="33" ng-if="!flgEdit">
-                        <label>Confirm Password</label>
-                        <input type="password" name="conPass" md-minlength="4" md-maxlength="15" ng-model="model.conPass" required>
-                        <div ng-messages="AddUserForm.conPass.$error" ng-if="AddUserForm.conPass.$touched">
-                            <div ng-message="required">
-                                <span>Confirm Password is required</span>
-                            </div>
-                            <div ng-message="md-maxlength">
-                                <span>Password can't be greater than 15 character</span>
-                            </div>
-                            <div ng-message="md-minlength">
-                                <span>Password can't be less than 3 character</span>
-                            </div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container flex="100">
-                        <label for="">Select role</label><br>
-                        <div layout="row" layout-wrap layout-align="start center">
-                            <md-list-item ng-repeat="o in lstRoles" md-block>
-                                <span>{{o.RoleName}} &nbsp;</span>
-                                <md-checkbox class="md-secondary" ng-model="o.checked" value="{{o.id}}" flex></md-checkbox>
-                            </md-list-item>
-                        </div>
-                    </md-input-container>
-
                 </div>
                 <div ng-show="FlgImage" class="row" flex="100" flex-gt-xs="100">
-                    <img ng-src="{{myCroppedImage}}" id="UploadedImage" err-src="assets/images/noimage.png" width="150px" />
-                    <!-- <img ng-src="{{RoutePath}}MediaUploads/PetUpload/{{model.petimageURl}}" err-src="assets/images/noimage.png" style="width:150px!important;height:150px!important;" /> -->
+                    <img ng-src="{{myCroppedImage}}" id="UploadedImage" err-src="assets/images/no-image.png" width="150px" />
+                    <!-- <img ng-src="{{RoutePath}}MediaUploads/PetUpload/{{model.petimageURl}}" err-src="assets/images/no-image.png" style="width:150px!important;height:150px!important;" /> -->
                     <!--   <md-button class="md-raised md-dafault" ng-click="setFiles()" ng-show="FlgImage">Remove Image</md-button>
                                                <br> -->
                     <br />
                     <md-button class="md-raised md-primary" ng-click="RemoveImage()">Remove</md-button>
                 </div>
-                <div layout="row" flex="100" flex-gt-xs="50">
+                <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="50">
                     <label>Image</label>
                     <md-input-container class="md-block" flex>
                         <lf-ng-md-file-input id="fileInput" name="files00" lf-files="Mediafiles" lf-api="apiMedia" ng-click="removeAllFiles()" onchange="angular.element(this).scope().setFiles(this)" lf-mimetype="image/*" base-sixty-four-input></lf-ng-md-file-input>
@@ -261,7 +172,8 @@
                 </div>
                 <div align="center">
                     <md-button class="md-raised md-primary" ng-disabled="!AddUserForm.$valid" ng-click="CreateUser(model)">Save</md-button>
-                    <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+                    <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>
+                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
                 </div>
         </div>
         </form>

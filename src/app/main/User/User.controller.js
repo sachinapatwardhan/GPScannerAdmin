@@ -2,16 +2,17 @@
     'use strict';
 
     angular
-        .module('app.user1')
+        .module('app.user')
         .controller('UserController', UserController);
 
     /** @ngInject */
     function UserController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
-
+        console.log("@@@@");
         var vm = this;
+        $rootScope.appId = localStorage.getItem('appId');
+        $rootScope.UserRoles = localStorage.getItem('UserRoles');
 
         $scope.init = function() {
-            console.log("called")
             $scope.model = {
                 id: '',
                 email: '',
@@ -26,15 +27,13 @@
                 country: '',
                 state: '',
                 city: '',
-                password: '',
-                conPass: '',
                 gender: '',
                 image: '',
                 IsMobileVerify: false,
+                idApp: $rootScope.appId,
             };
             //$scope.GetAllUser();
             $scope.GetAllRoles();
-            $scope.GetAllCountry();
             $scope.tab = {
                 selectedIndex: 0
             };
@@ -42,33 +41,9 @@
             $scope.FlgImage = 0;
             $scope.FlgCropImage = 0;
 
-            $scope.searchTermCountry = '';
-            $scope.searchTermState = '';
-            $scope.searchTermCity = '';
-            $scope.searchTermLocation = '';
-            $scope.searchTermSubLocation = '';
-
-            $scope.searchCountry = '';
-            $scope.searchState = '';
-            $scope.searchCity = '';
-            $scope.searchLocation = '';
-            $scope.searchSubLocation = '';
-
-            $scope.idCountry = '';
-            $scope.flgEdit = false;
             $scope.Search = '';
             $scope.flag = false;
-            $scope.modelSearch = {
-                Search: '',
-            }
         }
-
-        // $scope.GetAllUser = function () {
-        //     // Data
-        //     $http.get($rootScope.RoutePath + "user/GetAllUser").then(function (data) {
-        //         $scope.lstUsers = data.data;
-        //     });
-        // }
 
         $scope.clearSearchTerm = function() {
             $scope.searchTermCountry = '';
@@ -97,12 +72,9 @@
 
         $scope.FetchRoleById = function(id) {
             $rootScope.FlgAddedEditlocal = true;
-
             var o = _.findWhere($scope.lstdata, {
                 id: id
             });
-            console.log(o);
-            $scope.flgEdit = true;
             $scope.tab.selectedIndex = 1;
             $scope.model.phone = o.phone;
             $scope.model.email = o.email;
@@ -116,32 +88,25 @@
             $scope.model.userId = o.id;
             //$scope.model.password = o.password;
             $scope.model.country = o.country;
-            $scope.GetAllStateByCountry($scope.model.country);
-            $scope.model.state = o.state;
-            $timeout(function() {
-                $scope.GetAllCityByStateId($scope.model.state);
-                $scope.model.city = o.city;
-            }, 1000);
+            // $scope.GetAllStateByCountry($scope.model.country);
+            // $scope.model.state = o.state;
+            // $timeout(function() {
+            //     $scope.GetAllCityByStateId($scope.model.state);
+            //     $scope.model.city = o.city;
+            // }, 1000);
 
             $scope.model.gender = o.gender;
             $scope.model.IsMobileVerify = o.IsMobileVerify;
-            // if (o.tbluserinroles.length > 0) {
-            //     for (var i = 0; i < o.tbluserinroles.length; i++) {
-            //         var obj = _.findWhere($scope.lstRoles, {
-            //             id: o.tbluserinroles[i].roleId
-            //         })
-            //         obj.checked = true;
-            //     }
-            // }
-            var RoleId = o.roleId.split(',');
-            if (RoleId.length > 0) {
-                for (var i = 0; i < RoleId.length; i++) {
+
+            if (o.tbluserinroles.length > 0) {
+                for (var i = 0; i < o.tbluserinroles.length; i++) {
                     var obj = _.findWhere($scope.lstRoles, {
-                        id: parseInt(RoleId[i])
+                        id: o.tbluserinroles[i].roleId
                     })
                     obj.checked = true;
                 }
             }
+
             $scope.model.image = o.image;
             $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
             if ($scope.model.image != null && $scope.model.image != '' && $scope.model.image != undefined) {
@@ -160,9 +125,10 @@
             $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
                 $scope.lstCountry = data.data;
                 var obj = _.filter($scope.lstCountry, {
-                    Country: 'India'
+                    Country: 'Malaysia'
                 });
                 $scope.idCountry = obj[0].Country;
+                // console.log($scope.idCountry);
             });
         }
 
@@ -173,21 +139,22 @@
             $scope.model.state = "";
             $scope.model.city = "";
 
-            if (Country != null && Country != '' && Country != undefined) {
-                var Countryid = _.filter($scope.lstCountry, {
-                    Country: Country
-                });
-                $scope.lstState = '';
-                $scope.lstCity = '';
-                var params = {
-                    CountryId: Countryid[0].id
-                };
-                $http.get($rootScope.RoutePath + "state/GetAllStateByCountryId", {
-                    params: params
-                }).success(function(data) {
-                    $scope.lstState = data.data;
-                });
-            }
+            // console.log(Country);
+            // if (Country != null && Country != '' && Country != undefined) {
+            //     var Countryid = _.filter($scope.lstCountry, {
+            //         Country: Country
+            //     });
+            //     $scope.lstState = '';
+            //     $scope.lstCity = '';
+            //     var params = {
+            //         CountryId: Countryid[0].id
+            //     };
+            //     $http.get($rootScope.RoutePath + "state/GetAllStateByCountryId", {
+            //         params: params
+            //     }).success(function(data) {
+            //         $scope.lstState = data.data;
+            //     });
+            // }
 
         }
 
@@ -211,169 +178,133 @@
 
         //Create New User With It's Role
         $scope.CreateUser = function(o) {
-
             o.roleId = _.where($scope.lstRoles, {
                 checked: true
             });
-            if (o.password != o.conPass) {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Password And Confirm Password Should Be Same')
-                    .position('top right')
-                    .hideDelay(3000)
-                )
-            } else {
-                if (o.roleId.length > 0) {
-                    if ($scope.Mediafiles.length == 0 && (o.id == 0 || o.id == '')) {
-                        o.image = null;
-                        $cookieStore.put('UserImage', null);
-                        $rootScope.UserImage = $cookieStore.get('UserImage');
-                    }
-                    o.idApp = localStorage.getItem('appId');
-                    $http.post($rootScope.RoutePath + "user/SaveUserNew", o).then(function(data) {
-                        //$scope.SaveUserInRole(o);
-                        if (data.data.success == true) {
-                            var id;
-                            if (o.id != 0) {
-                                id = o.id;
-                            } else {
-                                id = data.data.data.userId;
-                            }
-                            if ($scope.Mediafiles.length > 0) {
-                                var formData = new FormData();
-                                // angular.forEach($scope.Mediafiles, function(d) {
-                                formData.append(id, file);
-                                // });
-                                $http.post($rootScope.RoutePath + "user/uploadImage", formData, {
-                                    transformRequest: angular.identity,
-                                    headers: {
-                                        'Content-Type': undefined
+            if (o.roleId.length > 0) {
+                if ($scope.Mediafiles.length == 0 && (o.id == 0 || o.id == '')) {
+                    o.image = null;
+                    $cookieStore.put('UserImage', null);
+                    $rootScope.UserImage = $cookieStore.get('UserImage');
+                }
+                o.idApp = localStorage.getItem('appId');
+                $http.post($rootScope.RoutePath + "user/SaveUserNew", o).then(function(data) {
+                    //$scope.SaveUserInRole(o);
+                    if (data.data.success == true) {
+                        var id;
+                        if (o.id != 0) {
+                            id = o.id;
+                        } else {
+                            id = data.data.data.userId;
+                        }
+                        if ($scope.Mediafiles.length > 0) {
+                            var formData = new FormData();
+                            // angular.forEach($scope.Mediafiles, function(d) {
+                            formData.append(id, file);
+                            // });
+                            $http.post($rootScope.RoutePath + "user/uploadImage", formData, {
+                                transformRequest: angular.identity,
+                                headers: {
+                                    'Content-Type': undefined
+                                }
+                            }).then(function(data) {
+                                if ($rootScope.UserName == o.username) {
+                                    if (data.data.data != null) {
+                                        $cookieStore.put('UserImage', data.data.data);
+                                        $rootScope.UserImage = $cookieStore.get('UserImage');
                                     }
-                                }).then(function(data) {
-                                    if ($rootScope.UserName == o.username) {
-                                        if (data.data.data != null) {
-                                            $cookieStore.put('UserImage', data.data.data);
-                                            $rootScope.UserImage = $cookieStore.get('UserImage');
-                                        }
-                                    }
+                                }
 
-                                    $scope.myImage = '';
-                                    $scope.myCroppedImage = '';
-                                    $scope.apiMedia.removeAll();
-                                    $scope.GetAllUser(true);
-                                    $rootScope.FlgAddedEditlocal = false;
-                                    if ($rootScope.FlgAddedAccess == true) {
-                                        $rootScope.FlgAddedEditlocal = true;
-                                    }
-
-                                    $scope.init();
-                                }, function(err) {
-                                    $scope.myImage = '';
-                                    $scope.myCroppedImage = '';
-                                    $scope.apiMedia.removeAll();
-                                    $mdToast.show(
-                                        $mdToast.simple()
-                                        .textContent(err)
-                                        .position('top right')
-                                        .hideDelay(3000)
-                                    );
-                                    // do sometingh
-                                });
-
-                            } else {
+                                $scope.myImage = '';
+                                $scope.myCroppedImage = '';
+                                $scope.apiMedia.removeAll();
+                                $scope.GetAllUser(true);
                                 $rootScope.FlgAddedEditlocal = false;
                                 if ($rootScope.FlgAddedAccess == true) {
                                     $rootScope.FlgAddedEditlocal = true;
                                 }
-                                $scope.GetAllUser(true);
+
                                 $scope.init();
+                            }, function(err) {
+                                $scope.myImage = '';
+                                $scope.myCroppedImage = '';
+                                $scope.apiMedia.removeAll();
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                    .textContent(err)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                                );
+                                // do sometingh
+                            });
+
+                        } else {
+                            $rootScope.FlgAddedEditlocal = false;
+                            if ($rootScope.FlgAddedAccess == true) {
+                                $rootScope.FlgAddedEditlocal = true;
                             }
+                            $scope.GetAllUser(true);
+                            $scope.init();
+                        }
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    } else {
+                        if (data.data.data == 'TOKEN') {
+                            //$cookieStore.remove('UserName');
+                            //$cookieStore.remove('token');
+                            //window.location.href = '/app/login';
+                        } else {
                             $mdToast.show(
                                 $mdToast.simple()
                                 .textContent(data.data.message)
                                 .position('top right')
                                 .hideDelay(3000)
                             );
-                        } else {
-                            if (data.data.data == 'TOKEN') {
-                                //$cookieStore.remove('UserName');
-                                //$cookieStore.remove('token');
-                                //window.location.href = '/app/login';
-                            } else {
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                    .textContent(data.data.message)
-                                    .position('top right')
-                                    .hideDelay(3000)
-                                );
-                            }
                         }
-                    });
-                } else {
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent('Please Select atleast One Role...')
-                        .position('top right')
-                        .hideDelay(3000)
-                    );
-                }
+                    }
+                });
+            } else {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Please Select atleast One Role...')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
             }
-
 
         }
 
-        //$scope.SaveUserInRole = function (o) {
-        //    o.roleId = parseInt(o.roleId);
-        //    $http.post($rootScope.RoutePath + "user/SaveUserInRole", o).then(function (data) {
-        //        if (data.data.success == true) {
-        //            $mdToast.show(
-        //                $mdToast.simple()
-        //                .textContent(data.data.message)
-        //                .position('top right')
-        //                .hideDelay(3000)
-        //            );
-        //            $scope.GetAllUser(true);
-        //            $scope.init();
-        //        } else {
-        //            if (data.data.data == 'TOKEN') {
-        //                $cookieStore.remove('UserName');
-        //                $cookieStore.remove('token');
-        //                window.location.href = '/app/login';
-        //            } else {
-        //                $mdToast.show(
-        //                    $mdToast.simple()
-        //                    .textContent(data.data.message)
-        //                    .position('top right')
-        //                    .hideDelay(3000)
-        //                );
-        //            }
-        //        }
-        //    });
-        //};
-
 
         //Dynamic Pagging
-
+        // console.log($rootScope.UserCountry);
+        // console.log($rootScope.UserRoles);
+        // console.log($rootScope.CountryList);
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
-                DTColumnBuilder.newColumn('username'),
-                DTColumnBuilder.newColumn('email'),
-                DTColumnBuilder.newColumn('phone'),
-                DTColumnBuilder.newColumn('RoleName'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%'),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
+                DTColumnBuilder.newColumn('username').withOption('width', '12%'),
+                DTColumnBuilder.newColumn('email').withOption('width', '13%'),
+                DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
+                DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
+                // DTColumnBuilder.newColumn('AppName').renderWith(AppHtml),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "user/GetAllDynamicUserNew",
+                    url: $rootScope.RoutePath + "user/GetAllDynamicUser",
                     data: function(d) {
-                        if ($scope.modelSearch.Search == '') {
+                        if ($scope.Search == '') {
                             d.search = '';
                         } else {
-                            d.search = $scope.modelSearch.Search;
+                            d.search = $scope.Search;
                         }
+                        d.appId = $rootScope.appId;
                         d.UserCountry = $rootScope.UserCountry;
                         d.UserRoles = $rootScope.UserRoles;
                         d.CountryList = $rootScope.CountryList;
@@ -381,6 +312,7 @@
                     },
                     type: "get",
                     dataSrc: function(json) {
+                        // console.log(json);
                         if (json.success != false) {
                             $scope.lstdata = json.data;
                             return json.data;
@@ -391,11 +323,10 @@
                 })
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
-                .withPaginationType('simple') // for get full pagination options // first / last / prev / next and page numbers
+                .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
                 .withOption('aaSorting', [2, 'asc'])
                 .withOption('responsive', true)
-                .withOption('autoWidth', true)
                 .withOption('createdRow', createdRow)
                 // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
@@ -431,6 +362,17 @@
             return (meta.row + 1);
         }
 
+        function AppHtml(data, type, full, meta) {
+            // console.log(full)
+            var appname = '';
+
+            if (full.AppName != null && full.AppName != undefined && full.AppName != '') {
+                appname = full.AppName;
+            }
+
+            return appname;
+        }
+
         function roleHtml(data, type, full, meta) {
             var varspan = '';
             if (full.tbluserinroles.length > 0) {
@@ -444,27 +386,21 @@
             } else {
                 varspan = 'N/A';
             }
-            // if (full.tbluserinrole != null) {
-            //     varspan = full.tbluserinrole.tblrole.RoleName;
+            // if (full.RoleName != null) {
+            //     varspan = full.RoleName;
             // } else {
             //     varspan = 'N/A';
             // }
             return varspan;
         };
 
-        function IsVerifyHtml(data, type, full, meta) {
-            var varspan = '';
-            if (data != null && data != '') {
-                if (data) {
-                    varspan = '<i class="icon-checkbox-marked-circle green-500-fg"></i>'
-                } else {
-                    varspan = '<i class="icon-cancel red-500-fg"></i>'
-                }
+        function DateFormateHtml(data, type, full, meta) {
+            if (data != null && data != undefined && data != '') {
+                return $rootScope.convertdate(data);
             } else {
-                varspan = '<i class="icon-cancel red-500-fg"></i>'
+                return 'N/A';
             }
-            return varspan;
-        };
+        }
 
         function ImageHtml(data, type, full, meta) {
             var img = '';
@@ -491,22 +427,6 @@
                     '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
                     '</md-button>';
             }
-
-            if (data.IsSuspend) {
-                btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',0)" aria-label="">' +
-                    '<md-icon md-font-icon="icon-lock-outline" class="s18 red-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Resume User </md-tooltip>' +
-                    '</md-button>';
-            } else {
-                btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',1)" aria-label="">' +
-                    '<md-icon md-font-icon="icon-lock-unlocked-outline" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Suspend User </md-tooltip>' +
-                    '</md-button>';
-            }
-            // if ($rootScope.FlgModifiedAccess) {
-            //     // btns += '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')"><md-icon md-svg-icon="assets/icons/icon-pass-reset.svg"></md-icon> <md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip></md-button></div>';
-            //     btns += '<md-button class="md-raised md-primary"  ng-click="ResetPassword(' + data.id + ')">Reset Password</md-button>';
-            //     // btns += '<md-button class="md-raised md-primary"  ng-click="ChangePassword(' + data + ')">Change Password</md-button>';
-
-            // }
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword(' + data.id + ')" aria-label="">' +
                     '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
@@ -514,57 +434,29 @@
                     '</md-button>';
             }
 
-            // if ($rootScope.FlgModifiedAccess && !data.IsMobileVerify) {
-            //     btns += '<md-button class="edit-button md-icon-button"  ng-click="Verify(' + data.id + ')" aria-label="">' +
-            //         '<md-icon md-font-icon="icon-verified"  class="s18 green-500-fg"></md-icon>' +
-            //         '<md-tooltip md-visible="" md-direction="">Verify</md-tooltip>' +
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
+                    '</md-button>';
+            }
+            // if (data.IsSuspend) {
+            //     btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',0)" aria-label="">' +
+            //         '<md-icon md-font-icon="icon-lock-outline" class="s18 red-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Resume User </md-tooltip>' +
+            //         '</md-button>';
+            // } else {
+            //     btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',1)" aria-label="">' +
+            //         '<md-icon md-font-icon="icon-lock-unlocked-outline" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Suspend User </md-tooltip>' +
             //         '</md-button>';
             // }
 
-            // if ($rootScope.FlgModifiedAccess) {
-            //     btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
-            //         '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
-            //         '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
-            //         '</md-button>';
-            // }
-            btns += '</div>'
+            // btns += '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')"><md-icon md-svg-icon="assets/icons/icon-pass-reset.svg"></md-icon> <md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip></md-button></div>';
+            // btns += '<md-button class="md-raised md-primary"  ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')">Reset Password</md-button>'
+
             return btns;
         };
 
         //Dynamic Pagging End
-
-        $scope.Verify = function(id) {
-            var confirm = $mdDialog.confirm()
-                .title('Are you sure you want to verify this user?')
-                .ok('Ok')
-                .cancel('Cancel')
-            $mdDialog.show(confirm).then(function() {
-                var params = {
-                    idUser: id,
-                };
-                $http.get($rootScope.RoutePath + "user/MobileVerify", {
-                    params: params
-                }).success(function(data) {
-                    if (data.success == true) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                        $scope.init();
-                        $scope.GetAllUser(true);
-                    } else {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    }
-                });
-            });
-        }
 
         $scope.SetSuspendStatus = function(id, flg) {
             var title = "";
@@ -616,7 +508,13 @@
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function() {
-                $http.get($rootScope.RoutePath + "account/forgotpassword?email=" + $scope.obj.email).then(function(data) {
+                var params = {
+                    // email: $scope.obj.email,
+                    // idApp: $rootScope.appId,
+                    id: id,
+                    AppName: localStorage.getItem('appName') + ' Admin'
+                }
+                $http.get($rootScope.RoutePath + "account/forgotpassword", { params: params }).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
@@ -646,7 +544,23 @@
 
         }
 
-
+        $scope.ChangePassword = function(ev, id) {
+            var obj = _.findWhere($scope.lstdata, { id: id })
+            $mdDialog.show({
+                controller: 'UserChangePasswordController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/User/dialogs/ChangePassword/ChangePassword.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    obj: obj,
+                    Tasks: [],
+                    event: ev,
+                    VM: vm
+                }
+            });
+        }
         $scope.myImage = '';
         $scope.myCroppedImage = '';
 
@@ -686,7 +600,8 @@
         };
 
         // $scope.$watch('Mediafiles', function(newVal) {
-
+        //     console.log(newVal);
+        //     console.log($scope.Mediafiles);
         // })
 
         $scope.removeAllFiles = function() {
@@ -792,26 +707,8 @@
         }
 
         $scope.GetSerch = function(Search) {
-            $scope.modelSearch.Search = Search;
+            $scope.Search = Search;
             $scope.GetAllUser(true);
-        }
-
-        $scope.ChangePassword = function(ev, id) {
-            var obj = _.findWhere($scope.lstdata, { id: id })
-            $mdDialog.show({
-                controller: 'ChangePassword1Controller',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/User/dialogs/ChangePassword/ChangePassword.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    obj: obj,
-                    Tasks: [],
-                    event: ev,
-                    VM: vm
-                }
-            });
         }
 
         $scope.ResetEdit = function() {
@@ -827,14 +724,13 @@
                     modifieddate: null,
                     roleId: '',
                     userId: '',
-                    country: $scope.idCountry,
+                    country: '',
                     state: '',
                     city: '',
                     gender: '',
-                    password: '',
-                    conPass: '',
                     image: '',
                     IsMobileVerify: false,
+                    idApp: $rootScope.appId,
                 };
                 $scope.tab = {
                     selectedIndex: 1
@@ -842,17 +738,16 @@
                 $scope.FlgImage = 0;
                 $scope.FlgCropImage = 0;
                 $scope.flag = true;
-                $scope.flgEdit = false;
+
                 $scope.GetAllRoles();
                 $scope.restForm();
                 $scope.myImage = '';
                 $scope.myCroppedImage = '';
                 $scope.apiMedia.removeAll();
-                $scope.GetAllStateByCountry($scope.idCountry);
             }
         }
+        $scope.ResetData = function() {
 
-        $scope.ResetModel = function() {
             $scope.model = {
                 id: '',
                 email: '',
@@ -864,35 +759,27 @@
                 modifieddate: null,
                 roleId: '',
                 userId: '',
-                country: $scope.idCountry,
+                country: '',
                 state: '',
                 city: '',
                 gender: '',
-                password: '',
-                conPass: '',
                 image: '',
                 IsMobileVerify: false,
-            };
-            $scope.tab = {
-                selectedIndex: 1
+                idApp: $rootScope.appId,
             };
             $scope.FlgImage = 0;
             $scope.FlgCropImage = 0;
-            $scope.flag = false;
-            $scope.flgEdit = false;
-            $scope.GetAllRoles();
             $scope.restForm();
             $scope.myImage = '';
             $scope.myCroppedImage = '';
             $scope.apiMedia.removeAll();
-            $scope.GetAllStateByCountry($scope.idCountry);
+
         }
         $scope.ResetTab = function() {
             if ($rootScope.FlgAddedAccess != true) {
                 $scope.FlgAddedEditlocal = false;
             }
         }
-
 
         $scope.Reset = function() {
             $rootScope.FlgAddedEditlocal = false;

@@ -2,14 +2,14 @@
     'use strict';
 
     angular
-        .module('app.user1', [])
+        .module('app.user', [])
         .config(config);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider) {
         // State
         $stateProvider
-            .state('app.user1', {
+            .state('app.user', {
                 url: '/user',
                 views: {
                     'content@app': {
@@ -17,8 +17,8 @@
                         controller: 'UserController as vm'
                     }
                 },
-                bodyClass: 'Shopper Users',
-                ModuleName: 'Shopper Users'
+                bodyClass: 'Users',
+                ModuleName: 'Users'
             });
 
         // Translation
@@ -31,9 +31,9 @@
         //     weight: 1
         // });
 
-        // msNavigationServiceProvider.saveItem('Users.user', {
-        //     title: 'Shopper Users',
-        //     state: 'app.user',
+        // msNavigationServiceProvider.saveItem('Users.owneruser', {
+        //     title: 'Owner Users',
+        //     state: 'app.owneruser',
         //     icon: 'icon-lock',
         //     weight: 1
         // });
