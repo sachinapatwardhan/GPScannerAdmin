@@ -202,7 +202,7 @@
                     DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedBy'),
-                    DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable(),
+                    DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
                 ]
             } else {
@@ -219,7 +219,7 @@
                     DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedBy'),
-                    DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable(),
+                    DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
                 ]
             }
@@ -308,14 +308,26 @@
             if (data.ExpiryDate == 'Invalid date') {
                 dateFlag = true;
             }
-            if (data.IsActive == 1) {
-                // result = '<span style="font-size: 20px;color: green" ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;</span>';
-                result = '<md-button  style="font-size: 20px;color: green"  ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;<md-tooltip md-visible="" md-direction="">DeActive</md-tooltip></md-button>';
+            if ($rootScope.UserRoles == 'Super Admin') {
+                if (data.IsActive == 1) {
+                    // result = '<span style="font-size: 20px;color: green" ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;</span>';
+                    result = '<md-button  style="font-size: 20px;color: green"  ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;<md-tooltip md-visible="" md-direction="">DeActive</md-tooltip></md-button>';
+                }
+                if (data.IsActive == 0) {
+                    // result = '<span style="font-size: 20px;color: red" ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;</span>';
+                    result = '<md-button style="font-size: 20px;color: red"  ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;<md-tooltip md-visible="" md-direction="">Active</md-tooltip></md-button>';
+                }
+            } else {
+                if (data.IsActive == 1) {
+                    // result = '<span style="font-size: 20px;color: green" ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;</span>';
+                    result = '<span style="font-size: 20px;color: green"> &#x2714;<md-tooltip md-visible="" md-direction="">DeActive</md-tooltip></span>';
+                }
+                if (data.IsActive == 0) {
+                    // result = '<span style="font-size: 20px;color: red" ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;</span>';
+                    result = '<span style="font-size: 20px;color: red">&#x2716;<md-tooltip md-visible="" md-direction="">Active</md-tooltip></span>';
+                }
             }
-            if (data.IsActive == 0) {
-                // result = '<span style="font-size: 20px;color: red" ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;</span>';
-                result = '<md-button style="font-size: 20px;color: red"  ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;<md-tooltip md-visible="" md-direction="">Active</md-tooltip></md-button>';
-            }
+
             return result;
         }
 
