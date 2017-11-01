@@ -417,12 +417,22 @@
                                 }
                                 GetAllDynamicAppInfo(true);
                                 $scope.init();
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                    .textContent(data.data.message)
-                                    .position('top right')
-                                    .hideDelay(3000)
-                                );
+                                if (o.Id != 0) {
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                        .textContent("App Info updated Successfully..")
+                                        .position('top right')
+                                        .hideDelay(3000)
+                                    );
+                                } else {
+                                    $mdToast.show(
+                                        $mdToast.simple()
+                                        .textContent("App Info Created Successfully..")
+                                        .position('top right')
+                                        .hideDelay(3000)
+                                    );
+                                }
+
                             }, function(err) {
 
                                 $mdToast.show(
