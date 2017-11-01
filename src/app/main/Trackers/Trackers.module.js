@@ -13,7 +13,7 @@
                 url: '/Trackers',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/main/GpsDevice/GpsDevice.html',
+                        templateUrl: 'app/main/Trackers/Trackers.html',
                         controller: 'GpsDeviceController as vm'
                     }
                 },

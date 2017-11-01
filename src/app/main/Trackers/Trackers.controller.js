@@ -128,7 +128,7 @@
             $mdDialog.show({
                 controller: 'ImportGpsDeviceController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/GpsDevice/dialogs/ImportGpsDevice/ImportGpsDevice.html',
+                templateUrl: 'app/main/Trackers/dialogs/ImportGpsDevice/ImportGpsDevice.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -518,7 +518,7 @@
                     $mdDialog.show({
                         controller: 'AppTypeCtrl',
                         controllerAs: 'vm',
-                        templateUrl: 'app/main/GpsDevice/dialogs/AppType/AppType.html',
+                        templateUrl: 'app/main/Trackers/dialogs/AppType/AppType.html',
                         parent: angular.element($document.body),
                         clickOutsideToClose: true,
                         locals: {
