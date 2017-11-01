@@ -23,7 +23,7 @@
         ]);
 
     /** @ngInject */
-    function LoginController($scope, $state, $rootScope, $timeout, $http, $cookieStore, $mdDialog, $document, $mdToast, $stateParams, $window) {
+    function LoginController($scope, $state, $rootScope, $timeout, $http, $cookieStore, $mdDialog, $document, $mdToast, $stateParams, $window, msNavigationService) {
         var vm = this;
         $('.logo').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
         //  $('#forgot-password-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
@@ -113,6 +113,7 @@
                         $cookieStore.put('token', data.data.token);
                         $cookieStore.put('CountryList', _.uniq($scope.splitCountryList));
                         // $cookieStore.put('appId', data.data.appId);
+                        msNavigationService.clearNavigation();
                         $http.defaults.headers.common['Authorization'] = data.data.token; // jshint ignore:line
                         $rootScope.MenuSet();
                         $window.location.href = '/#/Dashboard';
