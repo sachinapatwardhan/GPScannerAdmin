@@ -320,11 +320,11 @@
             } else {
                 if (data.IsActive == 1) {
                     // result = '<span style="font-size: 20px;color: green" ng-click="UpdateStatus(' + data.id + ',false,' + dateFlag + ')"> &#x2714;</span>';
-                    result = '<span style="font-size: 20px;color: green"> &#x2714;<md-tooltip md-visible="" md-direction="">DeActive</md-tooltip></span>';
+                    result = '<span style="font-size: 20px;color: green"> &#x2714;</span>';
                 }
                 if (data.IsActive == 0) {
                     // result = '<span style="font-size: 20px;color: red" ng-click="UpdateStatus(' + data.id + ',true,' + dateFlag + ')">&#x2716;</span>';
-                    result = '<span style="font-size: 20px;color: red">&#x2716;<md-tooltip md-visible="" md-direction="">Active</md-tooltip></span>';
+                    result = '<span style="font-size: 20px;color: red">&#x2716;</span>';
                 }
             }
 
