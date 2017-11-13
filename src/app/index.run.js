@@ -55,7 +55,7 @@
                 $('#login-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
                 $('.logo-image').css('background-image', 'url(' + $rootScope.Logo + ')');
             } else {
-                $rootScope.appName = 'MAARK'
+                $rootScope.appName = 'Maark'
                 var params = {
                     AppName: $rootScope.appName,
                 }
@@ -505,7 +505,47 @@
                                     weight: 1
                                 });
                             }
+                            //Language
+                            var lstLanguage = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Language';
+                            });
+                            if (lstLanguage.length > 0) {
+                                // var MenuName = $rootScope.AppName + ;
+                                msNavigationService.saveItem('CMS.Language', {
+                                    title: 'Language',
+                                    state: 'app.Language',
+                                    order: lstLanguage[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
 
+                            // //LanguageResource
+                            // var lstLanguageResource = _.filter(lstAllPages, function(obj) {
+                            //     return obj.tblmodulemgmt.Module == 'Language Resource';
+                            // });
+                            // if (lstLanguageResource.length > 0) {
+                            //     // var MenuName = $rootScope.AppName + ;
+                            //     msNavigationService.saveItem('Users.Language Resource', {
+                            //         title: 'Language Resource',
+                            //         state: 'app.LanguageResource',
+                            //         order: lstLanguageResource[0].tblmodulemgmt.DisplayOrder,
+                            //         weight: 1
+                            //     });
+                            // }
+
+                            //MobileLanguageResource
+                            var lstMobileLanguageResource = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Mobile Language Resource';
+                            });
+                            if (lstMobileLanguageResource.length > 0) {
+                                // var MenuName = $rootScope.AppName + ;
+                                msNavigationService.saveItem('CMS.Mobile Language Resource', {
+                                    title: 'Mobile Language Resource',
+                                    state: 'app.MobileLanguageResource',
+                                    order: lstMobileLanguageResource[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
                             if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
                                 msNavigationService.saveItem('Users.Manage Module', {
                                     title: 'Manage Module',

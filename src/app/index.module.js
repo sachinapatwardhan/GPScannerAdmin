@@ -52,5 +52,8 @@
             'app.ModuleMgmt',
             'app.MainSetting',
             'app.EmailTemplate',
+            'app.Language',
+            // 'app.LanguageResource',
+            'app.MobileLanguageResource',
         ]);
 })();
