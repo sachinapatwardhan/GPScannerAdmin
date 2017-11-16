@@ -238,8 +238,6 @@
             if ($rootScope.FlgAddedAccess == true) {
                 $rootScope.FlgAddedEditlocal = true;
             }
-            // $scope.resetForm();
-            $scope.init();
             $scope.flag = true;
         }
 
@@ -329,6 +327,18 @@
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.init();
         })
+        $scope.openModel = function(Id) {
+            $mdDialog.show({
+                controller: 'CountryModelCtrl',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/Language/dialogs/CountryModel/CountryModel.html',
+                parent: angular.element($document.body),
+                clickOutsideToClose: true,
+                locals: {
+                    Id: Id,
+                }
+            });
+        }
 
     }
 
