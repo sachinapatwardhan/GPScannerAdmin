@@ -16,6 +16,7 @@
             $scope.flag = false;
         }
         $scope.obj = [];
+        $scope.column = []
 
         $scope.gotoList = function() {
             $scope.Search = '';
@@ -23,42 +24,6 @@
             GetAllLanguageResources(true);
         }
 
-        vm.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-            DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4),
-            DTColumnDefBuilder.newColumnDef(5),
-            DTColumnDefBuilder.newColumnDef(6),
-        ];
-        vm.dtInstance = {};
-        vm.dtOptions = {
-            dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            columnDefs: [],
-            initComplete: function() {
-                var api = this.api(),
-                    searchBox = angular.element('body').find('#modelsearch');
-
-                // Bind an external input as a table wide search box
-                if (searchBox.length > 0) {
-                    searchBox.on('keyup', function(event) {
-                        api.search(event.target.value).draw();
-                    });
-                }
-            },
-            pagingType: 'full_numbers',
-            lengthMenu: [25, 30, 50, 100],
-            pageLength: 25,
-            scrollY: 'auto',
-            responsive: true
-        };
-
-        // $scope.GetSerch = function(Search) {
-        //     $scope.Search = Search;
-        //     vm.dtInstance.DataTable.search(Search);
-        //     vm.dtInstance.DataTable.search(Search).draw();
-        // }
         $scope.GetSerch = function(Search) {
             vm.dtInstance.DataTable.search(Search);
             vm.dtInstance.DataTable.search(Search).draw();
@@ -99,19 +64,40 @@
                 }
             });
         }
-
+        vm.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+        ];
         GetAllLanguageResources(true);
 
-        $scope.FetchLanguageResourceById = function(obj) {
-            $rootScope.FlgAddedEditlocal = true;
-            $scope.flag = true;
-            $scope.flgShow = 1;
-            $scope.model = $scope.obj;
-            for (var i = 1; i < $scope.model.length - 1; i++) {
-                var value = $scope.model[i].Name;
-                $scope.model[i].Value = obj[value];
+        vm.dtInstance = {};
+
+        vm.dtOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withDisplayLength(25)
+            .withOption('responsive', true)
+            // .withOption('autoWidth', true)
+            .withOption('aaSorting', [0, 'asc'])
+            .withOption('deferRender', true)
+            .withOption('paging', true)
+            .withOption('language', {
+                'zeroRecords': "No Record Found",
+                'emptyTable': "No Record Found"
+            })
+            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"info"i><"pagination"p>>>')
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+            .withOption('scrollY', 'auto'),
+
+
+            $scope.FetchLanguageResourceById = function(obj) {
+                $rootScope.FlgAddedEditlocal = true;
+                $scope.flag = true;
+                $scope.flgShow = 1;
+                $scope.model = $scope.obj;
+                for (var i = 1; i < $scope.model.length - 1; i++) {
+                    var value = $scope.model[i].Name;
+                    $scope.model[i].Value = obj[value];
+                }
             }
-        }
 
         $scope.CreateMobileLanguageResource = function(form, obj) {
             for (var i = 2; i < obj.length; i++) {

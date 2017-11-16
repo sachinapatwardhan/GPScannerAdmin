@@ -29,7 +29,8 @@
         </div>
         <div class="content-card" layout="column" flex>
             <div class="content fullpage-datatable" layout="column" flex>
-                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance" dt-options="vm.dtOptions" dt-column-defs="vm.dtColumnDefs">
+                <!-- <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance" dt-options="vm.dtOptions"> -->
+                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions" dt-column-defs="vm.dtColumnDefs" dt-instance="vm.dtInstance">
                     <thead>
                         <tr>
                             <th class="all" ng-repeat="o in obj" ng-if="o.Name=='No'">
