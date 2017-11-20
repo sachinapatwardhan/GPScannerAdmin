@@ -187,12 +187,11 @@
                             <br />
                             <md-button class="md-raised md-primary" ng-click="RemoveImage('OnIcon')">Remove</md-button>
                         </div>
-
                         <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
-                                <label>On Icon</label>
+                                <label>Home On Icon</label>
                                 <md-input-container class="md-block" flex>
-                                    <lf-ng-md-file-input name="files01" lf-placeholder="Vehicle Status On Icon" lf-files="OnIcon" lf-api="apiOnIcon" onchange="angular.element(this).scope().setOnIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
+                                    <lf-ng-md-file-input name="files01" lf-placeholder="Vehicle Status Home On Icon" lf-files="OnIcon" lf-api="apiOnIcon" onchange="angular.element(this).scope().setOnIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
                                     <div ng-messages="formVehicleType.files01.$error" style="color:red;">
                                         <div ng-message="mimetype">Only .png image file supported</div>
                                     </div>
@@ -208,9 +207,9 @@
                         </div>
                         <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
-                                <label>Active Icon</label>
+                                <label>Home Active Icon</label>
                                 <md-input-container class="md-block" flex>
-                                    <lf-ng-md-file-input name="files02 " lf-placeholder="Vehicle Status Active Icon" lf-files="ActiveIcon" lf-api="apiActiveIcon" onchange="angular.element(this).scope().setActiveIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
+                                    <lf-ng-md-file-input name="files02 " lf-placeholder="Vehicle Status Home Active Icon" lf-files="ActiveIcon" lf-api="apiActiveIcon" onchange="angular.element(this).scope().setActiveIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
                                     <div ng-messages="formVehicleType.files02.$error" style="color:red;">
                                         <div ng-message="mimetype">Only .png image file supported</div>
                                     </div>
@@ -223,13 +222,65 @@
                             <br />
                             <md-button class="md-raised md-primary" ng-click="RemoveImage('OffIcon')">Remove</md-button>
                         </div>
-
                         <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
-                                <label>Off Icon</label>
+                                <label>Home Off Icon</label>
                                 <md-input-container class="md-block" flex>
-                                    <lf-ng-md-file-input name="files03" lf-placeholder="Vehicle Status Off Icon" lf-files="OffIcon" lf-api="apiOffIcon" onchange="angular.element(this).scope().setOffIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
+                                    <lf-ng-md-file-input name="files03" lf-placeholder="Vehicle Status Home Off Icon" lf-files="OffIcon" lf-api="apiOffIcon" onchange="angular.element(this).scope().setOffIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
                                     <div ng-messages="formVehicleType.files03.$error" style="color:red;">
+                                        <div ng-message="mimetype">Only .png image file supported</div>
+                                    </div>
+                                </md-input-container>
+                            </md-input-container>
+                        </div>
+
+                        <div ng-show="FlgLocateOnIcon" class="row" flex="100" flex-gt-xs="50">
+                            <img ng-src="{{myCroppedLocateOnIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
+
+                            <br />
+                            <md-button class="md-raised md-primary" ng-click="RemoveImage('LocateOnIcon')">Remove</md-button>
+                        </div>
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
+                                <label>Locate On Icon</label>
+                                <md-input-container class="md-block" flex>
+                                    <lf-ng-md-file-input name="files04" lf-placeholder="Vehicle Status Locate On Icon" lf-files="LocateOnIcon" lf-api="apiLocateOnIcon" onchange="angular.element(this).scope().setLocateOnIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
+                                    <div ng-messages="formVehicleType.files04.$error" style="color:red;">
+                                        <div ng-message="mimetype">Only .png image file supported</div>
+                                    </div>
+                                </md-input-container>
+                            </md-input-container>
+                        </div>
+
+                        <div ng-show="FlgLocateActiveIcon" class="row" flex="100" flex-gt-xs="50">
+                            <img ng-src="{{myCroppedLocateActiveIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
+
+                            <br />
+                            <md-button class="md-raised md-primary" ng-click="RemoveImage('LocateActiveIcon')">Remove</md-button>
+                        </div>
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
+                                <label>Locate Active Icon</label>
+                                <md-input-container class="md-block" flex>
+                                    <lf-ng-md-file-input name="files05 " lf-placeholder="Vehicle Status Locate Active Icon" lf-files="LocateActiveIcon" lf-api="apiLocateActiveIcon" onchange="angular.element(this).scope().setLocateActiveIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
+                                    <div ng-messages="formVehicleType.files05.$error" style="color:red;">
+                                        <div ng-message="mimetype">Only .png image file supported</div>
+                                    </div>
+                                </md-input-container>
+                            </md-input-container>
+                        </div>
+
+                        <div ng-show="FlgLocateOffIcon" class="row" flex="100" flex-gt-xs="50">
+                            <img ng-src="{{myCroppedLocateOffIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
+                            <br />
+                            <md-button class="md-raised md-primary" ng-click="RemoveImage('LocateOffIcon')">Remove</md-button>
+                        </div>
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
+                                <label>Locate Off Icon</label>
+                                <md-input-container class="md-block" flex>
+                                    <lf-ng-md-file-input name="files06" lf-placeholder="Vehicle Status Locate Off Icon" lf-files="LocateOffIcon" lf-api="apiLocateOffIcon" onchange="angular.element(this).scope().setLocateOffIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
+                                    <div ng-messages="formVehicleType.files06.$error" style="color:red;">
                                         <div ng-message="mimetype">Only .png image file supported</div>
                                     </div>
                                 </md-input-container>

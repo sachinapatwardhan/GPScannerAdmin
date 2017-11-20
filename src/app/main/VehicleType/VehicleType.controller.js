@@ -15,7 +15,10 @@
                 IsActive: true,
                 OnIcon: '',
                 OffIcon: '',
-                ActiveIcon: ''
+                ActiveIcon: '',
+                LocateOnIcon: '',
+                LocateOffIcon: '',
+                LocateActiveIcon: '',
             }
             $scope.modelSearch = {
                 Search: '',
@@ -24,10 +27,16 @@
             $scope.FlgOnIcon = '';
             $scope.FlgActiveIcon = '';
             $scope.FlgOffIcon = '';
+            $scope.FlgLocateOnIcon = '';
+            $scope.FlgLocateActiveIcon = '';
+            $scope.FlgLocateOffIcon = '';
 
             $scope.myCroppedOnIcon = '';
             $scope.myCroppedActiveIcon = '';
             $scope.myCroppedOffIcon = '';
+            $scope.myCroppedLocateOnIcon = '';
+            $scope.myCroppedLocateActiveIcon = '';
+            $scope.myCroppedLocateOffIcon = '';
 
             $scope.FlgAddedEditlocal = true;
             $scope.flag = false;
@@ -56,21 +65,42 @@
             if ($scope.OnIcon.length == 0 && $scope.myCroppedOnIcon == '') {
                 $mdToast.show(
                     $mdToast.simple()
-                    .textContent('On Icon is Required')
+                    .textContent('Home On Icon is Required')
                     .position('top right')
                     .hideDelay(3000)
                 );
             } else if ($scope.ActiveIcon.length == 0 && $scope.myCroppedActiveIcon == '') {
                 $mdToast.show(
                     $mdToast.simple()
-                    .textContent('Activate Icon is Required')
+                    .textContent('Home Activate Icon is Required')
                     .position('top right')
                     .hideDelay(3000)
                 );
             } else if ($scope.OffIcon.length == 0 && $scope.myCroppedOffIcon == '') {
                 $mdToast.show(
                     $mdToast.simple()
-                    .textContent('Off Icon is Required')
+                    .textContent('Home Off Icon is Required')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else if ($scope.LocateOnIcon.length == 0 && $scope.myCroppedLocateOnIcon == '') {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Locate On Icon is Required')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else if ($scope.LocateOffIcon.length == 0 && $scope.myCroppedLocateOffIcon == '') {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Locate Off Icon is Required')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else if ($scope.LocateActiveIcon.length == 0 && $scope.myCroppedLocateActiveIcon == '') {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Locate Active Icon is Required')
                     .position('top right')
                     .hideDelay(3000)
                 );
@@ -85,6 +115,9 @@
                 var on_flg = true;
                 var active_flg = true;
                 var off_flg = true;
+                var locate_on_flg = true;
+                var locate_active_flg = true;
+                var locate_off_flg = true;
                 if ($scope.OnIcon.length > 0) {
                     var image = new Image();
                     image.src = $scope.OnIcon[0].lfDataUrl;
@@ -126,21 +159,42 @@
                     if (on_flg == false) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent('please upload vehicle status On Icon 31x50 px Size image')
+                            .textContent('please upload vehicle status Home On Icon 31x50 px Size image')
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else if (active_flg == false) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent('please upload vehicle status active Icon 31x50 px Size image')
+                            .textContent('please upload vehicle status Home active Icon 31x50 px Size image')
                             .position('top right')
                             .hideDelay(3000)
                         );
                     } else if (off_flg == false) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent('please upload vehicle status Off Icon 31x50 px Size image')
+                            .textContent('please upload vehicle status Home Off Icon 31x50 px Size image')
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    } else if (locate_on_flg == false) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('please upload vehicle status Locate On Icon 31x50 px Size image')
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    } else if (locate_active_flg == false) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('please upload vehicle status Locate active Icon 31x50 px Size image')
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    } else if (locate_off_flg == false) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent('please upload vehicle status Locate Off Icon 31x50 px Size image')
                             .position('top right')
                             .hideDelay(3000)
                         );
@@ -153,7 +207,7 @@
                                 id = data.data.data[0].id;
                             }
 
-                            if ($scope.OnIcon.length > 0 || $scope.ActiveIcon.length > 0 || $scope.OffIcon.length > 0) {
+                            if ($scope.OnIcon.length > 0 || $scope.ActiveIcon.length > 0 || $scope.OffIcon.length > 0 || $scope.LocateOnIcon.length > 0 || $scope.LocateActiveIcon.length > 0 || $scope.LocateOffIcon.length > 0) {
                                 var formData = new FormData();
                                 if ($scope.OnIcon.length > 0) {
 
@@ -171,6 +225,25 @@
                                 if ($scope.OffIcon.length > 0) {
                                     angular.forEach($scope.OffIcon, function(obj) {
                                         var logo3 = id + ',' + 'OffIcon';
+                                        formData.append(logo3, obj.lfFile);
+                                    });
+                                }
+                                if ($scope.LocateOnIcon.length > 0) {
+
+                                    angular.forEach($scope.LocateOnIcon, function(obj) {
+                                        var Logo = id + ',' + 'LocateOnIcon';
+                                        formData.append(Logo, obj.lfFile);
+                                    });
+                                }
+                                if ($scope.LocateActiveIcon.length > 0) {
+                                    angular.forEach($scope.LocateActiveIcon, function(obj) {
+                                        var logo2 = id + ',' + 'LocateActiveIcon';
+                                        formData.append(logo2, obj.lfFile);
+                                    });
+                                }
+                                if ($scope.LocateOffIcon.length > 0) {
+                                    angular.forEach($scope.LocateOffIcon, function(obj) {
+                                        var logo3 = id + ',' + 'LocateOffIcon';
                                         formData.append(logo3, obj.lfFile);
                                     });
                                 }
@@ -233,6 +306,9 @@
             $scope.model.OnIcon = o.OnIcon;
             $scope.model.ActiveIcon = o.ActiveIcon;
             $scope.model.OffIcon = o.OffIcon;
+            $scope.model.LocateOnIcon = o.LocateOnIcon;
+            $scope.model.LocateActiveIcon = o.LocateActiveIcon;
+            $scope.model.LocateOffIcon = o.LocateOffIcon;
 
             if (o.OnIcon != null && o.OnIcon != '' && o.OnIcon != undefined) {
                 $scope.FlgOnIcon = 1;
@@ -256,6 +332,30 @@
 
             } else {
                 $scope.FlgOffIcon = 0;
+            }
+
+            if (o.LocateOnIcon != null && o.LocateOnIcon != '' && o.LocateOnIcon != undefined) {
+                $scope.FlgLocateOnIcon = 1;
+                $scope.myCroppedLocateOnIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.LocateOnIcon; //$scope.AppLogo;
+
+            } else {
+                $scope.FlgLocateOnIcon = 0;
+            }
+
+            if (o.LocateActiveIcon != null && o.LocateActiveIcon != '' && o.LocateActiveIcon != undefined) {
+                $scope.FlgLocateActiveIcon = 1;
+                $scope.myCroppedLocateActiveIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.LocateActiveIcon; //$scope.AppLogo;
+
+            } else {
+                $scope.FlgLocateActiveIcon = 0;
+            }
+
+            if (o.LocateOffIcon != null && o.LocateOffIcon != '' && o.LocateOffIcon != undefined) {
+                $scope.FlgLocateOffIcon = 1;
+                $scope.myCroppedLocateOffIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.LocateOffIcon; //$scope.AppLogo;
+
+            } else {
+                $scope.FlgLocateOffIcon = 0;
             }
             $scope.flag = true;
         }
@@ -356,7 +456,10 @@
                 IsActive: true,
                 OnIcon: '',
                 OffIcon: '',
-                ActiveIcon: ''
+                ActiveIcon: '',
+                LocateOnIcon: '',
+                LocateOffIcon: '',
+                LocateActiveIcon: '',
             }
             $scope.modelSearch = {
                 Search: '',
@@ -393,14 +496,23 @@
             $scope.FlgOnIcon = '';
             $scope.FlgActiveIcon = '';
             $scope.FlgOffIcon = '';
+            $scope.FlgLocateOnIcon = '';
+            $scope.FlgLocateActiveIcon = '';
+            $scope.FlgLocateOffIcon = '';
 
             $scope.myCroppedOnIcon = '';
             $scope.myCroppedActiveIcon = '';
             $scope.myCroppedOffIcon = '';
+            $scope.myCroppedLocateOnIcon = '';
+            $scope.myCroppedLocateActiveIcon = '';
+            $scope.myCroppedLocateOffIcon = '';
 
             $scope.apiOnIcon.removeAll();
             $scope.apiActiveIcon.removeAll();
             $scope.apiOffIcon.removeAll();
+            $scope.apiLocateOnIcon.removeAll();
+            $scope.apiLocateActiveIcon.removeAll();
+            $scope.apiLocateOffIcon.removeAll();
 
             $scope.flag = false;
             $scope.resetForm();
@@ -575,6 +687,19 @@
                 $scope.myCroppedOffIcon = '';
                 $scope.FlgOffIcon = 0;
                 $scope.OffIcon = [];
+            } else if (o == 'LocateOnIcon') {
+                $scope.myCroppedLocateOnIcon = '';
+                $scope.FlgLocateOnIcon = 0;
+                $scope.LocateOnIcon = [];
+                // $scope.model.image = '';
+            } else if (o == 'LocateActiveIcon') {
+                $scope.myCroppedLocateActiveIcon = '';
+                $scope.FlgLocateActiveIcon = 0;
+                $scope.LocateActiveIcon = [];
+            } else if (o == 'LocateOffIcon') {
+                $scope.myCroppedLocateOffIcon = '';
+                $scope.FlgLocateOffIcon = 0;
+                $scope.LocateOffIcon = [];
             }
         }
 
@@ -590,11 +715,20 @@
             $scope.FlgOffIcon = 0;
             // $scope.myCroppedOffIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.OffIcon;
         };
-
+        $scope.setLocateOnIcon = function(element) {
+            $scope.FlgLocateOnIcon = 0;
+            // $scope.myCroppedOnIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.OnIcon;
+        };
+        $scope.setLocateActiveIcon = function(element) {
+            $scope.FlgLocateActiveIcon = 0;
+            // $scope.myCroppedActiveIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.ActiveIcon;
+        };
+        $scope.setLocateOffIcon = function(element) {
+            $scope.FlgLocateOffIcon = 0;
+            // $scope.myCroppedOffIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.OffIcon;
+        };
 
         $scope.init();
-
-
     }
 
 })();
