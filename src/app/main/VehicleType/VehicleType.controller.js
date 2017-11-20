@@ -301,7 +301,6 @@
             var o = _.findWhere($scope.lstVehicleType, {
                 id: id
             });
-            console.log(o)
             $scope.model.id = o.id;
             $scope.model.Type = o.Type;
             $scope.model.OnIcon = o.OnIcon;
