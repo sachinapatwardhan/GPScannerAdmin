@@ -301,6 +301,7 @@
             var o = _.findWhere($scope.lstVehicleType, {
                 id: id
             });
+            console.log(o)
             $scope.model.id = o.id;
             $scope.model.Type = o.Type;
             $scope.model.OnIcon = o.OnIcon;
@@ -479,6 +480,9 @@
             $scope.apiOnIcon.removeAll();
             $scope.apiActiveIcon.removeAll();
             $scope.apiOffIcon.removeAll();
+            $scope.apiLocateOnIcon.removeAll();
+            $scope.apiLocateActiveIcon.removeAll();
+            $scope.apiLocateOffIcon.removeAll();
 
             $scope.flag = true;
             $scope.resetForm();
