@@ -19,6 +19,7 @@
                 LocateOnIcon: '',
                 LocateOffIcon: '',
                 LocateActiveIcon: '',
+                LocateIsRotate: true,
             }
             $scope.modelSearch = {
                 Search: '',
@@ -309,6 +310,11 @@
             $scope.model.LocateOnIcon = o.LocateOnIcon;
             $scope.model.LocateActiveIcon = o.LocateActiveIcon;
             $scope.model.LocateOffIcon = o.LocateOffIcon;
+            if (o.LocateIsRotate == 1) {
+                $scope.model.LocateIsRotate = true;
+            } else {
+                $scope.model.LocateIsRotate = false;
+            }
 
             if (o.OnIcon != null && o.OnIcon != '' && o.OnIcon != undefined) {
                 $scope.FlgOnIcon = 1;
@@ -460,6 +466,7 @@
                 LocateOnIcon: '',
                 LocateOffIcon: '',
                 LocateActiveIcon: '',
+                LocateIsRotate: true,
             }
             $scope.modelSearch = {
                 Search: '',
@@ -494,7 +501,8 @@
                 IsActive: true,
                 OnIcon: '',
                 OffIcon: '',
-                ActiveIcon: ''
+                ActiveIcon: '',
+                LocateIsRotate: true,
             }
             $scope.FlgOnIcon = '';
             $scope.FlgActiveIcon = '';
