@@ -13,7 +13,10 @@
             $scope.IdLanguage = Id;
             $scope.model = { Country: false }
             $scope.getAllLangauageInCountry();
-            $scope.getAllCountry();
+            setTimeout(function() {
+                $scope.getAllCountry();
+            }, 200);
+
         };
         $scope.getAllLangauageInCountry = function() {
             var params = {
@@ -27,8 +30,35 @@
         $scope.getAllCountry = function() {
             $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
                 $scope.lstCountry = [];
-                var lan = _.filter($scope.seleCountry, { IdLanguage: $scope.IdLanguage })
+                // var lan = _.filter($scope.seleCountry, { IdLanguage: $scope.IdLanguage })
+                // var obj = _.filter($scope.seleCountry, { Country: "All" });
+                // var newobj = new Object();
+                // newobj.Country = "All";
+                // if (obj.length != 0) {
+                //     data.data[0].IsDisplay = true;
+                // } else {
+                //     data.data[0].IsDisplay = false;
+                // }
+                // newobj.IsDisplay = data.data[0].IsDisplay;
+                // $scope.lstCountry.push(newobj);
 
+                // _.filter(data.data, function(item) {
+                //     var COobj = _.filter($scope.seleCountry, { Country: item.Country })
+                //     if (COobj.length > 0) {
+                //         var newobj = { Country: COobj[0].Country, IsDisplay: true }
+                //         $scope.lstCountry.push(newobj);
+                //     }
+                // })
+                // $scope.lstCountry1 = [];
+                // _.filter(data.data, function(item) {
+
+                //     $scope.lstCountry1 = _.without(data.data, _.filter($scope.seleCountry, { Country: item.Country }));
+                // })
+                // _.filter($scope.lstCountry1, function(item) {
+
+                //         var newobj = { Country: item.Country, IsDisplay: false }
+                //         $scope.lstCountry.push(newobj);
+                //     })
                 for (var i = 0; i < data.data.length; i++) {
 
 
@@ -44,6 +74,7 @@
                         newobj.IsDisplay = data.data[i].IsDisplay;
                         $scope.lstCountry.push(newobj);
                     }
+
 
                     var obj = _.filter($scope.seleCountry, { Country: data.data[i].Country });
                     var newobj = new Object();
