@@ -55,5 +55,6 @@
             'app.Language',
             // 'app.LanguageResource',
             'app.MobileLanguageResource',
+            'app.VehicleLastUse'
         ]);
 })();

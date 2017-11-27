@@ -546,6 +546,21 @@
                                     weight: 1
                                 });
                             }
+
+                            // //VehicleLastUse
+                            // var lstVehicleLastUse = _.filter(lstAllPages, function(obj) {
+                            //     return obj.tblmodulemgmt.Module == 'Vehicle Last Use';
+                            // });
+                            // if (lstVehicleLastUse.length > 0) {
+                            //     var MenuName = $rootScope.AppName + '.Vehicle Last Use';
+                            //     msNavigationService.saveItem(MenuName, {
+                            //         title: 'Vehicle Last Use',
+                            //         state: 'app.VehicleLastUse',
+                            //         order: lstVehicleLastUse[0].tblmodulemgmt.DisplayOrder,
+                            //         weight: 1
+                            //     });
+                            // }
+
                             if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
                                 msNavigationService.saveItem('Users.Manage Module', {
                                     title: 'Manage Module',
