@@ -1,0 +1,156 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Sevice Type">Sevice Type</span>
+                </div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Sevice Type :</span>
+                    <b>{{lstServiceType.length}}</b>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-raised md-background" ng-click="vm.Reset()">
+                        <span translate="Add New Sevice Type">Add New Sevice Type</span>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <div class="content-card" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance" dt-options="vm.dtOptions" dt-column-defs="vm.dtColumnDefs">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Month or Km</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Craeted By</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Craeted Date</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="o in lstServiceType">
+                            <td>{{ $index+1 }}</td>
+                            <td>{{ o.Type }}</td>
+                            <td>{{o.Month}}</td>
+                            <td>{{ o.CreatedBy}}</td>
+                            <td>
+                                {{o.CreatedDate | date:'dd-MM-yyyy'}}
+                            </td>
+                            <td>
+                                <md-button class="edit-button md-icon-button" ng-click="FetchLanguageById(o)">
+                                    <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-click="DeleteSevice(o.id)">
+                                    <md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-click="openModel(o.id)">
+                                    <md-icon md-font-icon="icon-checkbox-multiple-marked" class="s18 blue-500-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Country</md-tooltip>
+                                </md-button>
+                                <!--<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="FlgModifiedAccess" ng-click="FetchLanguageById(o)">
+                                    <md-icon md-font-icon="icon-pencil-box-outline"></md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button md-raised md-warn md-raised md-hue-2" ng-if="FlgDeletedAccess" ng-click="DeleteLanguage(o.Id)">
+                                    <md-icon md-font-icon="icon-trash"></md-icon>
+                                </md-button>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed" layout="column" ng-show="flag">
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to List" ng-click="gotoList()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="Sevice Type Detail">Sevice Type Detail</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content" layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-content class="md-padding">
+                <form name="formServiceType" novalidate class="md-inline-form" aria-invalid="false">
+                    <div class="content">
+                        <div layout="row" layout-wrap>
+
+                            <md-input-container class="md-block" flex="100" flex-gt-xs="33">
+                                <label>Service Type</label>
+                                <input name="Type" ng-model="model.Type" ng-required="true">
+                                <div ng-messages="formServiceType.Type.$error" ng-if="formServiceType.Type.$touched">
+                                    <div ng-message="required">
+                                        <span>Service Type is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-xs="33">
+                                <label>Month or Km</label>
+                                <input type="number" name="Month" ng-model="model.Month" ng-required="true">
+                                <div ng-messages="formServiceType.Month.$error" ng-if="formServiceType.Month.$touched">
+                                    <div ng-message="required">
+                                        <span>Month or Km is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+
+
+                            <div align="left">
+                                <md-button class="md-raised md-primary" ng-disabled="!formServiceType.$valid" ng-click="CreateService(model)">Save</md-button>
+                                <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>
+                                <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+                            </div>
+                        </div>
+                </form>
+            </md-content>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="https://code.angularjs.org/1.3.14/i18n/angular-locale_da-dk.js"></script> -->
