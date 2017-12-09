@@ -55,6 +55,7 @@
             'app.Language',
             // 'app.LanguageResource',
             'app.MobileLanguageResource',
-            'app.VehicleLastUse'
+            'app.VehicleLastUse',
+            'app.ServiceType'
         ]);
 })();

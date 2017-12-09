@@ -561,6 +561,19 @@
                                 });
                             }
 
+                            //ServiceType
+                            var lstServiceType = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Service Type';
+                            });
+                            if (lstServiceType.length > 0) {
+                                msNavigationService.saveItem('CMS.Service Type', {
+                                    title: 'Service Type',
+                                    state: 'app.ServiceType',
+                                    order: lstServiceType[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
                             if ($rootScope.AdminUserId == $cookieStore.get('UserId')) {
                                 msNavigationService.saveItem('Users.Manage Module', {
                                     title: 'Manage Module',
