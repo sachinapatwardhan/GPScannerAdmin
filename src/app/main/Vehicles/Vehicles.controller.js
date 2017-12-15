@@ -120,6 +120,7 @@
             $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function(data) {
                 if (data.data.success == true) {
                     $scope.objUser = data.data.data;
+                    $scope.selectedItem = $scope.objUser;
                 }
             })
         }
@@ -378,11 +379,11 @@
             $scope.GetUserById(o.iduser);
             $scope.model.IMEI = o.IMEI;
             $scope.model.idType = o.idType;
-            setTimeout(function() {
-                $scope.$apply(function() {
-                    $scope.selectedItem = $scope.objUser;
-                });
-            }, 350);
+            // setTimeout(function() {
+            //     $scope.$apply(function() {
+            $scope.selectedItem = null;
+            //     });
+            // }, 400);
 
             $scope.flag = true;
         }
