@@ -1,0 +1,68 @@
+<md-dialog class="task-dialog" aria-label="Assign Device Dialog">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Assign Device From Excel</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModal()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ms-scroll>
+        <form name="importAssignDeviceForm" class="md-inline-form">
+            <md-content class="md-padding">
+                <div layout-gt-sm="row">
+                    <md-input-container flex ng-if="canShow">
+                        <label>App Name</label>
+                        <md-select
+                            name="appName"
+                            ng-model="model.appName"
+                            md-on-close="clearSearchAppName()"
+                            data-md-container-class="selectdemoSelectHeader"
+                            required>
+                            <md-select-header class="demo-select-header">
+                                <input
+                                    ng-model="searchAppName"
+                                    type="search"
+                                    placeholder="Search for an App"
+                                    class="demo-header-searchbox md-text"
+                                    ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option
+                                ng-value="item.AppName"
+                                ng-repeat="item in appNames | filter: searchAppName | orderBy: 'AppName'">
+                                {{ item.AppName }}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="importAssignDeviceForm.appName.$error">
+                            <div ng-message="required">Please select an App</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <p>Make sure to upload excel file that follows the downloadable Assign Device Template format.</p>
+                <lf-ng-md-file-input
+                    name="excelFile"
+                    lf-files="excelFiles"
+                    lf-mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    lf-maxcount="1"
+                    lf-api="materialFileApi"
+                    lf-filesize="10MB"
+                    lf-required
+                    ng-click="reset()">
+                </lf-ng-md-file-input>
+                <div ng-messages="importAssignDeviceForm.excelFile.$error" style="color:red;">
+                    <div ng-message="required">Please select a file.</div>
+                    <div ng-message="maxcount">You can only upload ONE(1) file.</div>
+                    <div ng-message="filesize">File size exceeded 10 MB.</div>
+                    <div ng-message="mimetype">Only excel file types are accepted.</div>
+                </div>
+            </md-content>
+            <div align="left">
+                <md-button class="md-raised md-primary" ng-disabled="!importAssignDeviceForm.$valid" ng-click="assign()">Assign</md-button>
+                <md-button class="md-raised md-warn" ng-click="closeModal()">Close</md-button>
+            </div>
+        </form>
+        </md-content>
+    </md-dialog-content>
+</md-dialog>

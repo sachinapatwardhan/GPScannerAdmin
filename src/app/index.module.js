@@ -56,6 +56,7 @@
             // 'app.LanguageResource',
             'app.MobileLanguageResource',
             'app.VehicleLastUse',
-            'app.ServiceType'
+            'app.ServiceType',
+            'app.AssignDevice'
         ]);
 })();

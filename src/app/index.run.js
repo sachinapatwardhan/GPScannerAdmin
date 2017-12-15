@@ -492,6 +492,19 @@
                                 });
                             }
 
+                            // Assign Device to Agent
+                            var lstAssignDevice = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Assign Device';
+                            });
+                            if (lstAssignDevice.length > 0) {
+                                msNavigationService.saveItem('Settings.Assign Device', {
+                                    title: 'Assign Device',
+                                    state: 'app.AssignDevice',
+                                    order: lstAssignDevice[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
                             //VehicleType
                             var lstVehicleType = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Vehicle Type';
