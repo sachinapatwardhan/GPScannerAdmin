@@ -373,6 +373,30 @@
                 })
             } else if (name == 'TimeZone') {
                 // console.log(objModel);
+            } else if (name == 'ACC') {
+                var params = {
+                    DeviceId: objVehicle.deviceid,
+                    ACC: objModel
+                }
+                $http.get($rootScope.RoutePath + "socketapi/SetACCSetting", { params: params }).then(function(data) {
+                    if (data.data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.reload();
+                    }
+                    HideLoader();
+                })
             }
         }
 
