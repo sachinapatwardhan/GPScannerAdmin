@@ -61,6 +61,10 @@
 			})
 			.withOption('createdRow', function(row, data, index) {
 				$compile(angular.element(row).contents())($scope);
+				if (index === $scope.devices.length - 1) {
+					// Quick hack
+					$scope.dtInstance.DataTable.columns.adjust();
+				}
 			});
 
 		// For super admin
@@ -235,6 +239,7 @@
 			$http.post($rootScope.RoutePath + 'admin/assignDevice', {
 				deviceId: $scope.devices[i].DeviceId,
 				userId: $scope.selectedAgent.id,
+				appName: $rootScope.appName,
 				assign: $scope.devices[i].isChecked
 			})
 			.then(function(res) {

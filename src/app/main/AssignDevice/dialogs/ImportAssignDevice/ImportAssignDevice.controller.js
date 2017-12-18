@@ -45,7 +45,12 @@
             var formData = new FormData();
             formData.append('file', $scope.excelFiles[0].lfFile);
             formData.append('createdBy', $scope.model.createdBy);
-            formData.append('appName', $scope.model.appName);
+            
+            if ($scope.canShow) {
+                formData.append('appName', $scope.model.appName);
+            } else {
+                formData.append('appName', $rootScope.appName);
+            }
 
             $http.post($rootScope.RoutePath + "admin/assignDeviceByExcel", formData, {
                 transformRequest: angular.identity,
