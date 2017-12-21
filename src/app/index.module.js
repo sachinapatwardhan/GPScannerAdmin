@@ -57,6 +57,9 @@
             'app.MobileLanguageResource',
             'app.VehicleLastUse',
             'app.ServiceType',
-            'app.AssignDevice'
+            'app.AssignDevice',
+            'app.attribute',
+            'app.product',
+            'app.orderservice'
         ]);
 })();

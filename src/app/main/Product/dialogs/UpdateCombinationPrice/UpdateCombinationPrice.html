@@ -1,0 +1,63 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="formProductPrice" class="md-inline-form">
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Update Product Combination Price</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout-gt-sm="row">
+                <label>Select</label>
+                <md-input-container class="md-block">
+                    <md-radio-group ng-model="modelCombinationPrice.AmountFlag">
+                        <md-radio-button value="1" class="md-primary" ng-click="ClearData()" ng-model="modelCombinationPrice.AmountFlag">Amount</md-radio-button>
+                        <md-radio-button value="2" class="md-primary" ng-click="ClearData()" ng-model="modelCombinationPrice.AmountFlag">Percentage</md-radio-button>
+                    </md-radio-group>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="100" ng-show="modelCombinationPrice.AmountFlag=='1'">
+                    <label>Amount *
+                    </label>
+                    <input type="number" name="Amount" min="-9999999999" ng-model="modelCombinationPrice.Amount" max="9999999999" required>
+                    <div ng-messages="formProductPrice.Amount.$error" ng-if="formProductPrice.Amount.$touched">
+                        <div ng-message="required">
+                            <span>Amount is required</span>
+                        </div>
+                        <div ng-message="max">
+                            <span>Amount is 10 digit long</span>
+                        </div>
+                        <div ng-message="min">
+                            <span>Amount is 10 digit long</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="100" ng-show="modelCombinationPrice.AmountFlag=='2'">
+                    <label>Percentage (%)*
+                    </label>
+                    <input type="number" name="Percentage" min="-100" ng-model="modelCombinationPrice.Percentage" max="100" required>
+                    <div ng-messages="formProductPrice.Percentage.$error" ng-if="formProductPrice.Percentage.$touched">
+                        <div ng-message="required">
+                            <span>Percentage is required</span>
+                        </div>
+                        <div ng-message="max">
+                            <span>Percentage is maximum 100</span>
+                        </div>
+                         <div ng-message="min">
+                            <span>Percentage is min 100</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button class="md-raised md-primary" ng-disabled="formProductPrice.$invalid" ng-click="UpdateCombinationPrice(modelCombinationPrice)">Update</md-button>
+                <md-button class="md-raised md-default" ng-click="closeModel()">cancel</md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

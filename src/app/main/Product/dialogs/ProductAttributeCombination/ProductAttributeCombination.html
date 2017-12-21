@@ -1,0 +1,101 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="formProductAttributeCombination" class="md-inline-form">
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Product Attribute Combination</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout-gt-sm="row">
+                <label>Select type</label>
+                <md-input-container class="md-block" flex>
+                    <md-radio-group ng-model="modelProductAttributeCombinations.Type">
+                        <md-radio-button value="Role" class="md-primary" id="ProductAttributeCombinationType1" ng-click="ClearProductAttributeCombinationUserRoleId()" ng-model="modelProductAttributeCombinations.Type">Role</md-radio-button>
+                        <md-radio-button value="User" class="md-primary" id="ProductAttributeCombinationType2" ng-click="ClearProductAttributeCombinationUserRoleId()" ng-model="modelProductAttributeCombinations.Type">User</md-radio-button>
+                    </md-radio-group>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="100" ng-if="modelProductAttributeCombinations.Type=='Role'">
+                    <label>Roles
+                        <md-icon>*</md-icon>
+                    </label>
+                    <md-select name="ProductAttributeCombinationRole" ng-model="modelProductAttributeCombinations.UserRoleId" required>
+                        <md-option ng-repeat="o in lstRoles" value="{{o.id}}">{{o.RoleName}}</md-option>
+                    </md-select>
+                    <div ng-messages="formProductAttributeCombination.ProductAttributeCombinationRole.$error" ng-if="formProductAttributeCombination.ProductAttributeCombinationRole.$touched">
+                        <div ng-message="required">
+                            <span>Role is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="100" ng-show="modelProductAttributeCombinations.Type=='User'">
+                    <label>Select user</label>
+                    <md-autocomplete ng-required="modelProductAttributeCombinations.Type=='User'" md-input-name="ProductAttributeCombinationUser" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.username" placeholder="Select User">
+                        <md-item-template>
+                            <span md-highlight-text="query" md-highlight-flags="^i">{{item.username}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No user matching "{{query}}" were found
+                        </md-not-found>
+                    </md-autocomplete>
+                    <div ng-messages="formProductAttributeCombination.ProductAttributeCombinationUser.$error" ng-if="formProductAttributeCombination.ProductAttributeCombinationUser.$touched">
+                        <md-not-found ng-if="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
+                            No User matching {{query}} were found.
+                        </md-not-found>
+                        <div ng-message="required">Please Select Valid User.</div>
+                    </div>
+                </md-input-container>
+                <input type="hidden" name="ProductAttributeCombinationUser" ng-model="modelProductAttributeCombinations.UserRoleId" required>
+            </div>
+            <div layout-gt-sm="row" ng-repeat="item in listProductAttribute">
+                <md-input-container class="md-block" flex>
+                    <label>{{item.productattribute.Name}} <span ng-if="item.IsRequired">*</span></label>
+                    <md-select id="{{item.productattribute.Name}}" name="{{item.productattribute.Name}}" ng-model="modelProductAttributeWithValue[item.ProductAttributeId]" ng-required="item.IsRequired">
+                        <md-option ng-repeat="o1 in item.productattributevalues" value="{{o1.Id}}">{{o1.Name}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <label>Stock quantity
+                        <md-icon >*</md-icon>
+                    </label>
+                    <input type="number" name="StockQuantity" min="0" max="9999999999" ng-model="modelProductAttributeCombinations.StockQuantity" required>
+                    <div ng-messages="formProductAttributeCombination.StockQuantity.$error" ng-if="formProductAttributeCombination.StockQuantity.$touched">
+                        <div ng-message="required">
+                            <span>Stock quantity is required</span>
+                        </div>
+                        <div ng-message="max">
+                            <span>Stock quantity is 10 digit length</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="100">
+                    <label>Overridden price
+                        <md-icon >*</md-icon>
+                    </label>
+                    <input type="number" name="OverriddenPrice" min="0" ng-model="modelProductAttributeCombinations.OverriddenPrice" max="9999999999" required>
+                    <div ng-messages="formProductAttributeCombination.OverriddenPrice.$error" ng-if="formProductAttributeCombination.OverriddenPrice.$touched">
+                        <div ng-message="required">
+                            <span>OverriddenPrice is required</span>
+                        </div>
+                        <div ng-message="max">
+                            <span>OverriddenPrice is 10 digit length</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button class="md-raised md-primary" ng-click="CreateProductAttributeCombinations(modelProductAttributeCombinations,modelProductAttributeWithValue)" ng-disabled="!formProductAttributeCombination.$valid">save</md-button>
+                <md-button class="md-raised md-default" ng-click="closeModel()">cancel</md-button>
+            </div>
+    </form>
+</md-dialog>

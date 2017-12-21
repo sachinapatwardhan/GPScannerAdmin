@@ -1,0 +1,151 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="formCopyProductPrice" class="md-inline-form">
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Copy Product Combination Price</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <!-- From Div -->
+            <label><strong> From </strong></label>
+            <div layout-gt-sm="row">
+                <label>Select type</label>
+                <md-input-container class="md-block">
+                    <md-radio-group ng-model="modelCopyCombinationPrice.FromType">
+                        <md-radio-button value="Role" class="md-primary" id="FromProductAttributeCombinationType1" ng-click="ClearProductAttributeCombinationUserRoleId('From')" ng-model="modelCopyCombinationPrice.FromType">Role</md-radio-button>
+                        <md-radio-button value="User" class="md-primary" id="FromProductAttributeCombinationType2" ng-click="ClearProductAttributeCombinationUserRoleId('From')" ng-model="modelCopyCombinationPrice.FromType">User</md-radio-button>
+                    </md-radio-group>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex ng-if="modelCopyCombinationPrice.FromType=='Role'">
+                    <label>Roles *
+                    </label>
+                    <md-select name="FromUserRoleIdRole" ng-model="modelCopyCombinationPrice.FromUserRoleId" required>
+                        <md-option ng-repeat="o in lstRoles" value="{{o.id}}">{{o.RoleName}}</md-option>
+                    </md-select>
+                    <div ng-messages="formCopyProductPrice.FromUserRoleIdRole.$error" ng-if="formCopyProductPrice.FromUserRoleIdRole.$touched">
+                        <div ng-message="required">
+                            <span>Role is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="100" ng-show="modelCopyCombinationPrice.FromType=='User'">
+                    <label>Select user</label>
+                    <md-autocomplete ng-required="modelCopyCombinationPrice.FromType=='User'" md-input-name="FromUserRoleIdUser" md-no-cache="true" md-selected-item="selectedItemFrom" md-search-text="queryFrom" md-select-on-match="true" md-selected-item-change="selectedItemChangeFrom(item)" md-items="item in GetUserByNameFrom(queryFrom)" md-item-text="item.username" placeholder="Select User">
+                        <md-item-template>
+                            <span md-highlight-text="queryFrom" md-highlight-flags="^i">{{item.username}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No user matching "{{query}}" were found
+                        </md-not-found>
+                    </md-autocomplete>
+                    <div ng-messages="formCopyProductPrice.FromUserRoleIdUser.$error" ng-if="formCopyProductPrice.FromUserRoleIdUser.$touched">
+                        <md-not-found ng-if="flgErrorNotFoundFrom && queryFrom!=null && queryFrom!=''" style="font-size: 12px;">
+                            No User matching {{query}} were found.
+                        </md-not-found>
+                        <div ng-message="required">Please Select Valid User.</div>
+                    </div>
+                </md-input-container>
+                <input type="hidden" name="FromUserRoleIdUser" ng-model="modelCopyCombinationPrice.FromUserRoleId" required>
+            </div>
+            <!-- To Div -->
+            <br/>
+            <label><strong> To </strong></label>
+            <div layout-gt-sm="row">
+                <label>Select type</label>
+                <md-input-container class="md-block">
+                    <md-radio-group ng-model="modelCopyCombinationPrice.ToType">
+                        <md-radio-button value="Role" class="md-primary" id="ToProductAttributeCombinationType1" ng-click="ClearProductAttributeCombinationUserRoleId('To')" ng-model="modelCopyCombinationPrice.ToType">Role</md-radio-button>
+                        <md-radio-button value="User" class="md-primary" id="ToProductAttributeCombinationType2" ng-click="ClearProductAttributeCombinationUserRoleId('To')" ng-model="modelCopyCombinationPrice.ToType">User</md-radio-button>
+                    </md-radio-group>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex ng-if="modelCopyCombinationPrice.ToType=='Role'">
+                    <label>Roles *
+                    </label>
+                    <md-select name="ToUserRoleIdRole" ng-model="modelCopyCombinationPrice.ToUserRoleId" required>
+                        <md-option ng-repeat="o in lstRoles" value="{{o.id}}">{{o.RoleName}}</md-option>
+                    </md-select>
+                    <div ng-messages="formCopyProductPrice.ToUserRoleIdRole.$error" ng-if="formCopyProductPrice.ToUserRoleIdRole.$touched">
+                        <div ng-message="required">
+                            <span>Role is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="100" ng-show="modelCopyCombinationPrice.ToType=='User'">
+                    <label>Select user</label>
+                    <md-autocomplete ng-required="modelCopyCombinationPrice.ToType=='User'" md-input-name="ToUserRoleIdUser" md-no-cache="true" md-selected-item="selectedItemTo" md-search-text="queryTo" md-select-on-match="true" md-selected-item-change="selectedItemChangeTo(item)" md-items="item in GetUserByNameTo(queryTo)" md-item-text="item.username" placeholder="Select User">
+                        <md-item-template>
+                            <span md-highlight-text="queryTo" md-highlight-flags="^i">{{item.username}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No user matching "{{query}}" were found
+                        </md-not-found>
+                    </md-autocomplete>
+                    <div ng-messages="formCopyProductPrice.ToUserRoleIdUser.$error" ng-if="formCopyProductPrice.ToUserRoleIdUser.$touched">
+                        <md-not-found ng-if="flgErrorNotFoundTo && queryTo!=null && queryTo!=''" style="font-size: 12px;">
+                            No User matching {{query}} were found.
+                        </md-not-found>
+                        <div ng-message="required">Please Select Valid User.</div>
+                    </div>
+                </md-input-container>
+                <input type="hidden" name="ToUserRoleIdUser" ng-model="modelCopyCombinationPrice.ToUserRoleId" required>
+            </div>
+            <!-- Amount/Perc -->
+            <div layout-gt-sm="row">
+                <label>Select</label>
+                <md-input-container class="md-block">
+                    <md-radio-group ng-model="modelCopyCombinationPrice.AmountFlag">
+                        <md-radio-button value="1" class="md-primary" ng-click="ClearData()" ng-model="modelCopyCombinationPrice.AmountFlag">Amount</md-radio-button>
+                        <md-radio-button value="2" class="md-primary" ng-click="ClearData()" ng-model="modelCopyCombinationPrice.AmountFlag">Percentage</md-radio-button>
+                    </md-radio-group>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex-gt-sm="100" ng-if="modelCopyCombinationPrice.AmountFlag=='1'">
+                    <label>Amount *
+                    </label>
+                    <input type="number" name="Amount" min="-9999999999" ng-model="modelCopyCombinationPrice.Amount" max="9999999999" required>
+                    <div ng-messages="formCopyProductPrice.Amount.$error" ng-if="formCopyProductPrice.Amount.$touched">
+                        <div ng-message="required">
+                            <span>Amount is required</span>
+                        </div>
+                        <div ng-message="max">
+                            <span>Amount is 10 digit long</span>
+                        </div>
+                        <div ng-message="min">
+                            <span>Amount is 10 digit long</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm="100" ng-show="modelCopyCombinationPrice.AmountFlag=='2'">
+                    <label>Percentage (%)*
+                    </label>
+                    <input type="number" name="Percentage" min="-100" ng-model="modelCopyCombinationPrice.Percentage" max="100" required>
+                    <div ng-messages="formCopyProductPrice.Percentage.$error" ng-if="formCopyProductPrice.Percentage.$touched">
+                        <div ng-message="required">
+                            <span>Percentage is required</span>
+                        </div>
+                        <div ng-message="max">
+                            <span>Percentage is maximum 100</span>
+                        </div>
+                        <div ng-message="min">
+                            <span>Percentage is min 100</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button class="md-raised md-primary" ng-disabled="formCopyProductPrice.$invalid" ng-click="CopyCombinationPrice(modelCopyCombinationPrice)"> save </md-button>
+                <md-button class="md-raised md-default" ng-click="closeModel()">cancel</md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

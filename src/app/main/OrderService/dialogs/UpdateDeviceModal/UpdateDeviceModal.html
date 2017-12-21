@@ -1,0 +1,36 @@
+<md-dialog class="flex-50">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Update Device</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <ms-form-wizard flex>
+            <form name="formUpdateDevice" novalidate class="ms-stepper" aria-invalid="false">
+                <md-content class="md-padding">
+                    <md-input-container class="md-block" flex-gt-sm="50" ng-hide="true">
+                        <label>Id</label>
+                        <input ng-model="model.id">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label> Device </label>
+                        <input name="DeviceId" type="text" ng-required="true" ng-model="model.DeviceId" maxlength="250" md-maxlength="250"/>
+                        <div ng-messages="formUpdateDevice.DeviceId.$error" ng-if="formUpdateDevice.DeviceId.$touched" role="alert">
+                            <div ng-message="required">
+                              <span>Device field is required</span>
+                            </div>
+                          </div>
+                    </md-input-container>
+                </md-content>
+                <div align="left">
+                    <md-button class="md-raised md-primary" ng-disabled="!formUpdateDevice.$valid" ng-click="SaveDevice(model)">Save</md-button>
+                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                </div>
+            </form>
+        </ms-form-wizard>
+    </md-dialog-content>
+</md-dialog>

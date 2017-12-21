@@ -1,0 +1,85 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="taskForm" class="md-inline-form" novalidate>
+        <!--<md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Select Product</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>-->
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools">
+                <h2>Select Product</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <table class="dataTable tableD1" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                <thead>
+                    <tr>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">No</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <div class="column-title">
+                                    <md-checkbox ng-click="toggleSeleted()" aria-label="Checkbox 1" class="md-primary">
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Image</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Product Name</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Published</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="o in lstProductPanelSearch">
+                        <td>{{$index+1}}</td>
+                        <td>
+                            <md-checkbox ng-model="o.checked" value="{{o.Id}}" aria-label="Checkbox {{$index+1}}" class="md-primary">
+                            </md-checkbox>
+                        </td>
+                        <td>
+                            <img ng-src="{{RoutePath}}MediaUploads/{{o.product_picture_mappings[0].tblmediamgmt.FileName}}" err-src="assets/images/no-image.png" height="50px" width="50px">
+                        </td>
+                        <td>
+                            {{o.Name}}
+                        </td>
+                        <td>
+                            <span ng-if="o.Published" style="font-size: 20px;color: green"> &#x2714;</span>
+                            <span ng-if="!o.Published" style="font-size: 20px;color: red">&#x2716;</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <md-input-container class="md-block" flex>
+                <md-button class="md-button md-primary md-raised md-hue-2" ng-click="SelectProductList()">Select</md-button>
+            </md-input-container>
+        </md-dialog-content>
+        <!-- <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button class="md-raised md-primary">save</md-button>
+                <md-button class="md-raised md-default" ng-click="closeModel()">cancel</md-button>
+            </div>
+        </md-dialog-actions> -->
+    </form>
+</md-dialog>

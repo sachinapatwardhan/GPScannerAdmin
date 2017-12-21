@@ -1,0 +1,506 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="productFlg==0 && FlgAddedEditlocal">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Product">Product</span>
+                </div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Products :</span>
+                    <b>{{TotalProducts}}</b>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center" ng-if="productFlg==0 && FlgAddedEditlocal">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
+                    <md-icon md-font-icon="icon-filter-variant"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
+                </md-button>
+                <!-- <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-raised md-background" ng-click="AddProduct()">
+                        <span translate="Add New Products">Add New Product</span>
+                    </md-button>
+                </div> -->
+            </div>
+        </div>
+        <div class="content-card" layout="column" flex>
+            <div class="ShowContentBox">
+                <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="30">
+                        <label>Product name</label>
+                        <input ng-model="modelSearch.Name" ng-change="GetAllProductPanel(true)">
+                    </md-input-container>
+                    <!-- <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                        <label>
+                            Product Type
+                        </label>
+                        <md-select ng-model="modelSearch.ProductTypeId" ng-change="GetAllProductPanel(true)">
+                            <md-option value="">All</md-option>
+                            <md-option value="0">Main Product</md-option>
+                            <md-option value="1">Massage Chair</md-option>
+                            <md-option value="2">Topup Credit Wallet</md-option>
+                            <md-option value="3">OneTime Credit Wallet</md-option>
+                        </md-select>
+                    </md-input-container> -->
+                    <!-- <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                        <label>Vendor</label>
+                        <md-select ng-model="modelSearch.VendorId">
+                            <md-option value="">All</md-option>
+                            <md-option ng-repeat="o in lstMerchant | orderBy: 'UserName'" value="{{o.id}}">{{o.UserName}}</md-option>
+                        </md-select>
+                    </md-input-container> -->
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+                        <label>Publish</label>
+                        <md-select ng-model="modelSearch.Publish" ng-change="GetAllProductPanel(true)">
+                            <md-option value="ALL">ALL</md-option>
+                            <md-option value="1">Published</md-option>
+                            <md-option value="0">Unpublished</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                        <label>Go directly to product SKU</label>
+                        <input type="text" ng-model="modelSearch.Sku" ng-change="GetAllProductPanel(true)">
+                    </md-input-container>
+                    <div flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetAllProductPanel(true)" aria-label="Search">
+                            <md-icon md-font-icon="icon-magnify"></md-icon>
+                            <md-tooltip md-visible="" md-direction="">Search</md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="ResetSearch()" aria-label="Reset Search">
+                            <md-icon md-font-icon="icon-refresh"></md-icon>
+                            <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table id="Producttable" class="dataTable row-border cell-border hover" dt-instance="dtInstance" datatable="" dt-columns="vm.dtColumnDefs" dt-options="vm.dtOptions1" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Image</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">SKU</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Price</span>
+                                </div>
+                            </th>
+                            <!-- <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Old Price</span>
+                                </div>
+                            </th> -->
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Published</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed" layout="column" ng-show="productFlg==1">
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to products" ng-click="AllProduct()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="Product List">Product List</span>
+                    </div>
+                </div>
+            </div>
+            <div flex="80" flex-gt-xs="80" flex-gt-sm="99" layout="row" layout-align="end center" ng-show="FlgAddedEditlocal">
+                <md-button class="md-raised md-background" ng-show="productFlg==1" ng-click="CreateProductPanel(formproduct,model,false)">Save</md-button>
+                <md-button class="md-raised md-background" ng-show="productFlg==1" ng-click="CreateProductPanel(formproduct,model,true)">Save and Continue Edit</md-button>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content">
+        <md-tabs md-selected="AddProducttab.selectedIndex" md-dynamic-height>
+            <md-tab>
+                <md-tab-label>
+                    <span translate="Product Info">Product Info</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-2dp">
+                        <form name="formproduct" novalidate class="ms-stepper" aria-invalid="false">
+                            <md-content class="md-padding">
+                                <div layout="row" layout-wrap>
+                                    <md-input-container class="md-block" flex="100" flex-gt-xs="50">
+                                        <label>Product name</label>
+                                        <input ng-model="model.Name" name="ProductName" ng-required="true" md-maxlength="255">
+                                        <div ng-messages="formproduct.ProductName.$error" ng-show="formproduct.ProductName.$touched" multiple md-auto-hide="false">
+                                            <div ng-message="required">
+                                                Product name is required
+                                            </div>
+                                            <div ng-message="md-maxlength">
+                                                Product name has to be less than 255 characters long
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container class="md-block " flex="100" flex-gt-xs="50">
+                                        <label>SKU</label>
+                                        <input ng-model="model.Sku " md-maxlength="255 ">
+                                    </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex>
+                                        <label>Short description</label>
+                                        <textarea ng-model="model.ShortDescription" md-maxlength="300" rows="5" md-select-on-focus></textarea>
+                                    </md-input-container>
+                                </div>
+
+                                <md-input-container class="md-block" flex>
+                                    <label>Full description</label>
+                                    <textarea ckeditor="editorOptions" name="PageContent" ng-model="model.FullDescription" placeholder="Page Content"></textarea>
+                                </md-input-container>
+                                <div layout="row" layout-wrap>
+
+                                </div>
+
+                            </md-content>
+                        </form>
+                    </div>
+
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    <span translate="Product Pricing">Product Pricing</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-2dp">
+                        <md-content class="md-padding">
+                            <div layout-gt-sm="row ">
+                                <md-input-container class="md-block " flex>
+                                    <label>Price</label>
+                                    <input ng-model="model.Price " type="number " step="1.00 ">
+                                </md-input-container>
+                                <md-input-container class="md-block " flex>
+                                    <label>Old price</label>
+                                    <input ng-model="model.OldPrice " type="number " step="1.00 ">
+                                </md-input-container>
+                                <md-input-container class="md-block " flex>
+                                    <label>Product cost</label>
+                                    <input ng-model="model.ProductCost " type="number " step="1.00 ">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row ">
+                                <md-input-container class="md-block" flex>
+                                    <label>Price Detail</label>
+                                    <input ng-model="model.UserAgreementText" md-maxlength="100">
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    <span translate="Published Detail">Published Detail</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-2dp">
+                        <md-content class="md-padding">
+                            <md-input-container class="md-block " flex>
+                                <md-checkbox ng-model="model.Published " aria-label="Checkbox 1 " class="md-primary "  ng-disabled="true">
+                                    Published
+                                </md-checkbox>
+                            </md-input-container>
+                            <div layout-gt-sm="row " ng-if="model.Id !=0 ">
+                                <md-input-container class="md-block " flex>
+                                    <label>Created on</label>
+                                    <input mdc-datetime-picker date="true " time="false " type="text " id="time " format="MM-DD-YYYY " ng-model="model.CreatedOnUtc " disabled>
+                                </md-input-container>
+                                <md-input-container class="md-block " flex>
+                                    <label>Updated on</label>
+                                    <input mdc-datetime-picker date="true " time="false " type="text " id="time " format="MM-DD-YYYY " ng-model="model.UpdatedOnUtc " disabled>
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-disabled="model.Id=='' || model.Id==null || model.Id==0 ">
+                <md-tab-label>
+                    <span translate="Pictures">Pictures</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-2dp">
+                        <md-content class="md-padding ">
+                            <form role="form " id="form1 " name="form1 ">
+                                <label>Note: Please upload 750x500 px size image.</label>
+                                <br>
+                                <br>
+                                <div layout="row ">
+                                    <label>Image</label>
+                                    <md-input-container class="md-block " flex>
+                                        <lf-ng-md-file-input name="files00 " lf-files="Mediafiles " lf-api="apiMedia " onchange="angular.element(this).scope().setFiles(this) " lf-mimetype="image/* " preview></lf-ng-md-file-input>
+                                        <div ng-messages="form1.files00.$error " style="color:red; ">
+                                            <div ng-message="mimetype ">Only image file supported</div>
+                                        </div>
+                                    </md-input-container>
+                                    <!-- <md-input-container class="md-block " flex="10 " align="center ">
+                                        OR
+                                    </md-input-container> -->
+                                    <!-- <md-input-container class="md-block " flex>
+                                        <img src="{{RoutePath}}MediaUploads/{{modelPicture.FileName}} " err-src="assets/images/no-image.png " style="width:150px; " ng-if="modelPicture.FileName !='' " />
+                                        <br ng-hide="modelPicture.FileName=='' " />
+                                        <br ng-hide="modelPicture.FileName=='' " />
+                                        <md-button class="md-raised md-primary " ng-click="FetchMedia($event) ">Select Image</md-button>
+                                        <md-button class="md-raised md-dafault " ng-click="modelPicture.FileName='' " ng-hide="modelPicture.FileName=='' || flg !=0 ">Remove Image</md-button>
+                                    </md-input-container> -->
+                                </div>
+                                <md-input-container class="md-block " flex>
+                                    <label>Display order</label>
+                                    <input ng-model="modelPicture.DisplayOrder " type="number " step="1.00 ">
+                                </md-input-container>
+                                <div layout="row " align="left">
+                                    <md-button class="md-raised md-primary " ng-click="CreateProductPicture(modelPicture) ">save</md-button>
+                                    <md-button class="md-raised md-background " ng-if="modelPicture.Id!=0 " ng-click="ResetPictureModel() ">cancel</md-button>
+                                </div>
+                            </form>
+                            <table class="dataTable row-border cell-border hover" datatable="ng" dt-instance="dtInstance" dt-options="dtOptionsPic">
+                                <thead>
+                                    <tr>
+                                        <th class="all ">
+                                            <div class="table-header ">
+                                                <span class="column-title ">No</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text ">
+                                            <div class="table-header ">
+                                                <span class="column-title ">Image</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text ">
+                                            <div class="table-header ">
+                                                <span class="column-title ">Display Order</span>
+                                            </div>
+                                        </th>
+                                        <th class="all ">
+                                            <div class="table-header ">
+                                                <span class="column-title ">Action</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="o in ListProductPicture ">
+                                        <td> {{$index +1}}</td>
+                                        <td>
+                                            <img ng-src="{{RoutePath}}MediaUploads/{{o.tblmediamgmt.FileName}} " err-src="assets/images/prod-no-img-new.png" height="50px " width="50px ">
+                                        </td>
+                                        <td>
+                                            {{o.DisplayOrder}}
+                                        </td>
+                                        <td>
+                                            <md-button class="edit-button md-icon-button" ng-click="FetchProductPictureById(o)">
+                                                <md-icon md-font-icon="icon-pencil" class="s18  green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                            </md-button>
+                                            <md-button class="edit-button md-icon-button" ng-click="DeleteProductPicture(o.Id)">
+                                                <md-icon md-font-icon="icon-trash" class="s18  red-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                                            </md-button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </md-content>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-if="model.Id!='' && model.Id!=null && model.Id!=0">
+                <md-tab-label>
+                    <span translate="Product Attributes">Product Attributes</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <md-input-container class="md-block" flex>
+                        <md-button class="md-button md-primary md-raised md-hue-2" ng-click="AddProductAttribute()">Add New Record</md-button>
+                    </md-input-container>
+                    <table class="dataTable row-border cell-border hover" datatable="ng" dt-instance="dtInstance" dt-options="dtOptionsProdAtt">
+                        <thead>
+                            <tr>
+                                <th class="all">
+                                    <div class="table-header">
+                                        <span class="column-title">No</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Attribute</span>
+                                    </div>
+                                </th>
+                                <!-- <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Text prompt</span>
+                                    </div>
+                                </th> -->
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title text-center">Is Required</span>
+                                    </div>
+                                </th>
+                                <!-- <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Control type</span>
+                                    </div>
+                                </th> -->
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title text-center">Display order</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Values</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Validation rules</span>
+                                    </div>
+                                </th>
+                                <th class="all">
+                                    <div class="table-header">
+                                        <span class="column-title text-center">Action</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-if="ProductAttributeFlg==1">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    <md-input-container class="md-block" flex>
+                                        <md-select ng-model="modelProductAttribute.ProductAttributeId">
+                                            <md-option ng-repeat="o in lstProductAttribute | orderBy:'Name'" value="{{o.Id}}" ng-selected="o.Id == modelProductAttribute.ProductAttributeId">{{o.Name}}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </td>
+                                <!-- <td align="center">
+                                    <md-input-container class="md-block" flex>
+                                        <input ng-model="modelProductAttribute.TextPrompt">
+                                    </md-input-container>
+                                </td> -->
+                                <td align="center">
+                                    <md-checkbox ng-model="modelProductAttribute.IsRequired" aria-label="Checkbox 1" class="md-primary">
+                                    </md-checkbox>
+                                </td>
+                                <!-- <td align="center">
+                                    <md-input-container class="md-block" flex>
+                                        <md-select ng-model="modelProductAttribute.AttributeControlType">
+                                            <md-option value="Drop-down list">Drop-down list</md-option>
+                                            <md-option value="Radio button list">Radio button list</md-option>
+                                            <md-option value="Checkboxes">Checkboxes</md-option>
+                                            <md-option value="Textbox">Textbox</md-option>
+                                            <md-option value="Multiline textbox">Multiline textbox</md-option>
+                                            <md-option value="Date picker">Date picker</md-option>
+                                            <md-option value="File upload">File upload</md-option>
+                                            <md-option value="Color Squares">Color Squares</md-option>
+                                            <md-option value="Read-only checkboxes">Read-only checkboxes</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </td> -->
+                                <td align="center">
+                                    <md-input-container class="md-block" flex>
+                                        <input ng-model="modelProductAttribute.DisplayOrder" type="number" step="1.00" value="0">
+                                    </md-input-container>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td align="center">
+                                    <md-button class="edit-button md-icon-button" ng-click="CreateProductAttribute(modelProductAttribute)">
+                                        <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                        <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                    </md-button>
+                                    <md-button class="edit-button md-icon-button" ng-click="CancelProductAttribute()">
+                                        <md-icon md-font-icon="icon-close" class="s18 red-500-fg"></md-icon>
+                                        <md-tooltip md-visible="" md-direction="">Cancel</md-tooltip>
+                                    </md-button>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="o in listProductAttribute">
+                                <td>{{$index+1}}</td>
+                                <td>{{o.productattribute.Name}}</td>
+                                <!-- <td>{{o.TextPrompt}}</td> -->
+                                <td align="center">
+                                    <span ng-if="o.IsRequired" style="font-size: 20px;color: green"> &#x2714;</span>
+                                    <span ng-if="!o.IsRequired" style="font-size: 20px;color: red">&#x2716;</span>
+                                </td>
+                                <!-- <td>
+                                    {{o.AttributeControlType}}
+                                </td> -->
+                                <td align="center">
+                                    {{o.DisplayOrder}}
+                                </td>
+                                <td>
+                                    <md-button class="md-primary" ng-click="ViewEditValue($event,o)">View/Edit values (Count : {{o.productattributevalues.length}})</md-button>
+                                </td>
+                                <td></td>
+                                <td align="center">
+                                    <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="FetchProductAttributeById(o)">
+                                        <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
+                                        <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                    </md-button>
+                                    <md-button class="edit-button md-icon-button" ng-if="FlgDeletedAccess" ng-click="DeleteProductAttribute($event,o.Id)">
+                                        <md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>
+                                        <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                                    </md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </div>
+</div>
+<style>
+    .product-detail-form-container {
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+
+    .dataTables_wrapper .dataTables_scroll .dataTables_scrollHead {
+        min-height: 55px!important;
+    }
+</style>

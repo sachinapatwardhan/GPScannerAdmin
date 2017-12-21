@@ -1,0 +1,84 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Export Excel File</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ms-scroll>
+        <md-content class="widget-page">
+            <md-content>
+                <form Name="formImport" class="md-inline-form">
+                    <md-content class="md-padding">
+                        <div layout-gt-sm="row">
+                            <label>Select Type</label>
+                            <md-input-container class="md-block" flex>
+                                <md-radio-group ng-model="model.Type">
+                                    <md-radio-button value="Role" class="md-primary" id="ProductAttributeCombinationType1" ng-click="ClearProductAttributeCombinationUserRoleId()" ng-model="model.Type">Role</md-radio-button>
+                                    <md-radio-button value="User" class="md-primary" id="ProductAttributeCombinationType2" ng-click="ClearProductAttributeCombinationUserRoleId()" ng-model="model.Type">User</md-radio-button>
+                                </md-radio-group>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm="100" ng-if="model.Type=='Role'">
+                                <label>Roles
+                                    <md-icon class="md-warn">*</md-icon>
+                                </label>
+                                <md-select name="Role" ng-model="model.UserRoleId" required>
+                                    <md-option ng-repeat="o in lstRoles" value="{{o.id}}">{{o.RoleName}}</md-option>
+                                </md-select>
+                                <div ng-messages="formImport.Role.$error" ng-if="formImport.Role.$touched">
+                                    <div ng-message="required">
+                                        <span>Role is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm="100" ng-show="model.Type=='User'">
+                                <label>Select User</label>
+                                <md-autocomplete ng-required="true" md-input-name="User" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.username" placeholder="Select User">
+                                    <md-item-template>
+                                        <span md-highlight-text="query" md-highlight-flags="^i">{{item.username}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No User matching "{{query}}" were found.
+                                    </md-not-found>
+                                </md-autocomplete>
+                                <div ng-messages="formImport.User.$error" ng-if="formImport.User.$touched">
+                                    <div ng-message="required">Please select user.</div>
+                                    <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
+                                        No User matching {{query}} were found.
+                                    </md-not-found>
+                                </div>
+                            </md-input-container>
+                            <input type="hidden" name="User" ng-model="model.UserRoleId" required>     
+                        </div>
+                        <!-- <md-input-container class="md-block" flex-gt-sm="50">
+                            <label>Language
+                                <md-icon class="md-warn">*</md-icon>
+                            </label>
+                            <md-select name="Language" ng-model="model.LanguageId" ng-required="true">
+                                <md-option ng-repeat="o in lstlanguage" value="{{o.Id}}">{{o.Name}}</md-option>
+                            </md-select>
+                            <div ng-messages="formImport.Language.$error" ng-if="formImport.Language.$touched">
+                                <div ng-message="required">
+                                    <span>Language is required.</span>
+                                </div>
+                            </div>
+                        </md-input-container> -->
+                        <lf-ng-md-file-input name="files" lf-mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" lf-files="Mediafiles1" lf-required lf-maxcount="1" id="ccdd" lf-api="apiReset" lf-filesize="10MB" ng-click="Reset()" ng-disabled="isDisabled1"></lf-ng-md-file-input>
+                        <div ng-messages="formImport.files.$error" style="color:red;">
+                            <div ng-message="required">This is required.</div>
+                            <div ng-message="maxcount">Too much files.</div>
+                            <div ng-message="filesize">File size too large.</div>
+                            <div ng-message="mimetype">Only Excel File Supported.</div>
+                        </div>
+                    </md-content>
+                    <div align="left">
+                        <md-button class="md-raised md-primary" ng-disabled="!formImport.$valid" ng-click="Import(model)">Import</md-button>
+                    </div>
+                </form>
+            </md-content>
+    </md-dialog-content>
+</md-dialog>

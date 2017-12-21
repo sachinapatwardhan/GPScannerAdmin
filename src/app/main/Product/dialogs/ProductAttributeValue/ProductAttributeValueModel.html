@@ -1,0 +1,266 @@
+<md-dialog class="flex-60" aria-label="New Task">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Product Attribute Value</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <!--<md-toolbar class="md-accent">
+            <h2 class="md-toolbar-tools"><span class="flex">Add/Edit Product Attribute</span></h2>
+        </md-toolbar>-->
+        <md-content class="widget-page">
+            <!--<div class="md-whiteframe-4dp">-->
+            <!--<div class="md-padding">-->
+            <form name="formPoductAttribute" class="md-inline-form">
+                <md-content>
+                    <div layout="row" layout-wrap>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-hide="true">
+                            <label>Id</label>
+                            <input ng-model="model.Id">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-hide="true">
+                            <label>ProductAttributeMappingId</label>
+                            <input ng-model="model.ProductAttributeMappingId">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-hide="true">
+                            <label>AttributeValueTypeId</label>
+                            <input ng-model="model.AttributeValueTypeId">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <label>Attribute name </label>
+                            <input name="Name" ng-model="model.AttributeName" ng-disabled="true">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName != 'Location'">
+                            <label>Name</label>
+                            <input name="Name" ng-model="model.Name" ng-required="true">
+                            <div ng-messages="formPoductAttribute.Name.$error" ng-if="formPoductAttribute.Name.$touched">
+                                <div ng-message="required">
+                                    <span>Name is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName != 'Location'">
+                            <label>Product quantity</label>
+                            <input name="Quantity" ng-model="model.Quantity" placeholder="12345" type="number" max="99999" min='0' required>
+                            <div ng-messages="formPoductAttribute.Quantity.$error" ng-if="formPoductAttribute.Quantity.$touched">
+                                <div ng-message="max" class="my-message">Product quantity can't be longer than 5 number</div>
+                                <div ng-message="required">
+                                    <span>Product quantity is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName != 'Location'">
+                            <label>Price adjustment</label>
+                            <input name="PriceAdjustment" ng-model="model.PriceAdjustment" placeholder="12345" type="number" required>
+                            <div ng-messages="formPoductAttribute.PriceAdjustment.$error" ng-if="formPoductAttribute.PriceAdjustment.$touched">
+                                <div ng-message="required">
+                                    <span>Price adjustment is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName != 'Location'">
+                            <label>Weight adjustment</label>
+                            <input name="WeightAdjustment" ng-model="model.WeightAdjustment" placeholder="12345" type="number" required>
+                            <div ng-messages="formPoductAttribute.WeightAdjustment.$error" ng-if="formPoductAttribute.WeightAdjustment.$touched">
+                                <div ng-message="required">
+                                    <span>Weight adjustment is required</span>
+                                </div>
+                            </div>
+                        </md-input-container> -->
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName != 'Location'">
+                            <label>Display order</label>
+                            <input name="DisplayOrder" ng-model="model.DisplayOrder" placeholder="12345" type="number" max="99999" min='0' required>
+                            <div ng-messages="formPoductAttribute.DisplayOrder.$error" ng-if="formPoductAttribute.DisplayOrder.$touched">
+                                <div ng-message="max" class="my-message">Display order can't be longer than 5 number</div>
+                                <div ng-message="required">
+                                    <span>Display order is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName != 'Location'">
+                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="model.IsPreSelected" class="md-primary">Is pre-selected</md-checkbox>
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName == 'Location'">
+                            <label>Country Name</label>
+                            <md-select Name="Name" ng-model="model.Name" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                                <md-select-header class="demo-select-header">
+                                    <input ng-model="vm.searchCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                </md-select-header>
+                                <!--<md-option value="">All</md-option>-->
+                                <md-option value="{{o.Country}}" ng-repeat="o in lstCountry |filter:vm.searchCountry| orderBy: 'Country'">{{o.Country}}</md-option>
+                            </md-select>
+                            <div ng-messages="formPoductAttribute.Name.$error" ng-if="formPoductAttribute.Name.$touched">
+                                <div ng-message="required">
+                                    <span>Name is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block " flex="100" flex-gt-sm="25" ng-if="model.AttributeName == 'Location'">
+                            <label>Price</label>
+                            <input ng-model="model.Price" type="float" step="1.00">
+                        </md-input-container>
+                        <md-input-container class="md-block " flex="100" flex-gt-sm="25" ng-if="model.AttributeName == 'Location'">
+                            <label>Old price</label>
+                            <input ng-model="model.OldPrice " type="float" step="1.00">
+                        </md-input-container>
+                        <md-input-container class="md-block " flex="100" flex-gt-sm="25" ng-if="model.AttributeName == 'Location'">
+                            <label>Product cost</label>
+                            <input ng-model="model.ProductCost " type="float" step="1.00">
+                        </md-input-container>
+                        <md-input-container class="md-block " flex="100" flex-gt-sm="25" ng-if="model.AttributeName == 'Location'">
+                            <label>Special price</label>
+                            <input ng-model="model.SpecialPrice " type="float" step="1.00">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.SpecialPrice != null && model.AttributeName == 'Location'">
+                            <strong>Special price start date</strong>
+                            <!--<input mdc-datetime-picker date="true " time="false " type="text " id="time " min-date="minDate " format="MM-DD-YYYY " ng-model="model.SpecialPriceStartDateTimeUtc ">-->
+                            <md-datepicker ng-model="model.SpecialPriceStartDateTimeUtc"></md-datepicker>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.SpecialPrice != null && model.AttributeName == 'Location'">
+                            <strong>Special price end date</strong>
+                            <!--<input mdc-datetime-picker date="true " time="false " type="text " id="time " min-date="model.SpecialPriceEndDateTimeUtc " format="MM-DD-YYYY " ng-model="model.SpecialPriceEndDateTimeUtc ">-->
+                            <md-datepicker ng-model="model.SpecialPriceEndDateTimeUtc"></md-datepicker>
+                        </md-input-container>
+                    </div>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName != 'Location'">
+                        <md-radio-group ng-model="model.PictureId">
+                            <md-radio-button value="0"> No Picture </md-radio-button>
+                        </md-radio-group>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.AttributeName != 'Location'">
+                        <md-radio-group ng-model="model.PictureId">
+                            <md-radio-button ng-repeat="pic in ListProductPicture" ng-value="pic.PictureId">
+                                <img ng-src="{{RoutePath}}MediaUploads/{{pic.tblmediamgmt.FileName}}" ng-model="model.PictureId" err-src="assets/images/no-image.png" height="50px" width="50px">
+                            </md-radio-button>
+                        </md-radio-group>
+                    </md-input-container>
+                </md-content>
+                <div align="left">
+                    <md-button class="md-raised md-primary" ng-disabled="!formPoductAttribute.$valid" ng-click="CreateProductAttributeValue(model)">Save</md-button>
+                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                    <md-button class="md-raised md-accent" ng-click="closeModel()">Close Modal</md-button>
+                </div>
+            </form>
+            <!--</div>-->
+            <!--</div>-->
+            <!--</md-content>-->
+            <!--<md-toolbar class="md-accent">
+            <h2 class="md-toolbar-tools"><span class="flex">Product Attribute Management</span></h2>
+        </md-toolbar>-->
+            <!--<md-content class="widget-page">-->
+            <!--<md-content class="md-padding" md-selected="selectedIndex">-->
+            <table class="dataTable tableD1" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs">
+                <thead>
+                    <tr>
+                        <th class="All">
+                            <div class="table-header">
+                                <span class="column-title">Name</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName != 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Quantity</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName != 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Price adjustment</span>
+                            </div>
+                        </th>
+                        <!-- <th class="secondary-text" ng-if="model.AttributeName != 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Weight adjustment</span>
+                            </div>
+                        </th> -->
+                        <th class="secondary-text" ng-if="model.AttributeName != 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Is pre-selected</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName != 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Picture</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName != 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Display order</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName == 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Price</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName == 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Old Price</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName == 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Product Cost</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName == 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Special Price</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName == 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Special Price Start Date</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" ng-if="model.AttributeName == 'Location'">
+                            <div class="table-header">
+                                <span class="column-title">Special Price End Date</span>
+                            </div>
+                        </th>
+                        <th class="All">
+                            <div class="table-header">
+                                <span class="column-title">Action</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="o in lstProductAttributeValue">
+                        <td>{{ o.Name }}</td>
+                        <td>{{ o.Quantity }}</td>
+                        <td>{{ o.PriceAdjustment|number:2 }}</td>
+                        <td>
+                            <span ng-show="o.IsPreSelected" style="font-size: 20px;color: green"> &#x2714;</span>
+                            <span ng-show="!o.IsPreSelected" style="font-size: 20px;color: red">&#x2716;</span>
+                        </td>
+                        <td>
+                            <span ng-if="o.PictureId != 0">
+                                    <img ng-src="{{RoutePath}}MediaUploads/{{o.tblmediamgmt.FileName}}" err-src="assets/images/no-image.png" ng-model="model.PictureId" style="height:70px;width:70px;" />
+                                </span>
+                            <span ng-if="o.PictureId == 0">
+                                    <img ng-src="assets/images/no-image.png" err-src="assets/images/no-image.png" ng-model="model.PictureId" style="height:70px;width:70px;" />
+                                </span>
+                        </td>
+                        <td align="center">{{ o.DisplayOrder }}</td>
+                        <td>
+                            <md-button class="edit-button md-icon-button" ng-click="FetchAttributeValue(o)">
+                                <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
+                                <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                            </md-button>
+                            <md-button class="edit-button md-icon-button" ng-click="DeleteProductAttributeValue(o.Id)">
+                                <md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>
+                                <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                            </md-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--</md-content>-->
+        </md-content>
+    </md-dialog-content>
+</md-dialog>

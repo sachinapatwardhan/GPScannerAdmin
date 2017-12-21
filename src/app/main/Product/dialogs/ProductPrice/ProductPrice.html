@@ -1,0 +1,134 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="formProductPrice" class="md-inline-form">
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Update Product Price</span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>Product Name</label>
+                    <input ng-model="modelSearch.Name" disabled>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>SKU</label>
+                    <input ng-model="modelSearch.Sku" disabled>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>
+                        Product Type
+                    </label>
+                    <md-select ng-model="modelSearch.ProductTypeId" disabled>
+                        <md-option value="">All</md-option>
+                        <md-option value="0">Main Product</md-option>
+                        <md-option value="2">Pet Product</md-option>
+                        <md-option value="1">Pet Veterinary</md-option>
+                </md-input-container>
+            </div>
+            <!--    <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>Category</label>
+                    <md-select ng-model="modelSearch.CategoryId" disabled>
+                        <md-option value="">All</md-option>
+                        <md-option ng-repeat="o in lstCategory | orderBy:'Name'" value="{{o.id}}">{{o.Name}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex>
+                    <label>Manufacturer
+                    </label>
+                    <md-select ng-model="modelSearch.ManufacturerId" disabled>
+                        <md-option value="">All</md-option>
+                        <md-option ng-repeat="o in lstManufacturer | orderBy:'Name'" value="{{o.Id}}">{{o.Name}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div> -->
+            <div layout-gt-sm="row">
+                <md-input-container class="md-block" flex>
+                    <label>Vendor</label>
+                    <md-select ng-model="modelSearch.VendorId" disabled>
+                        <md-option value="">All</md-option>
+                        <md-option ng-repeat="o in lstMerchant | orderBy:'ShopName'" value="{{o.id}}">{{o.ShopName}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <!--   <md-input-container class="md-block" flex>
+                    <label>Store
+                    </label>
+                    <md-select ng-model="modelSearch.StoreId" disabled>
+                        <md-option value="">All</md-option>
+                        <md-option ng-repeat="o in lstStores | orderBy:'Name'" value="{{o.Id}}">{{o.Name}}</md-option>
+                    </md-select>
+                </md-input-container> -->
+            </div>
+            <div layout-gt-sm="row">
+                <!-- <md-input-container class="md-block" flex>
+                    <label>Warehouse</label>
+                    <md-select ng-model="modelSearch.WarehouseId" disabled>
+                        <md-option value="">All</md-option>
+                        <md-option ng-repeat="o in lstWarehouse | orderBy:'Name'" value="{{o.Id}}">{{o.Name}}</md-option>
+                    </md-select>
+                </md-input-container> -->
+                <md-input-container class="md-block" flex>
+                    <label>Publish</label>
+                    <md-select ng-model="modelSearch.Publish" disabled>
+                        <md-option value="ALL">ALL</md-option>
+                        <md-option value="1">Published</md-option>
+                        <md-option value="0">Unpublished</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row">
+                <label>Select</label>
+                <md-input-container class="md-block" flex>
+                    <md-radio-group ng-model="modelUpdate.AmountFlag">
+                        <md-radio-button value="1" class="md-primary">Amount</md-radio-button>
+                        <md-radio-button value="2" class="md-primary">Percentage</md-radio-button>
+                    </md-radio-group>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row" ng-if="modelUpdate.AmountFlag==1">
+                <md-input-container class="md-block" flex>
+                    <label>Amount</label>
+                    <input ng-model="modelUpdate.ProductPrice" max="99999" min="-99999" required name="Amount" type="number" step="1.00">
+                    <div ng-messages="formProductPrice.Amount.$error" role="alert" multiple>
+                        <div ng-message="required" class="my-message">Amount required</div>
+                        <div ng-message="max" class="my-message">
+                            Only -99999 to 99999 supported
+                        </div>
+                        <div ng-message="min" class="my-message">
+                            Only -99999 to 99999 supported
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row" ng-if="modelUpdate.AmountFlag==2">
+                <md-input-container class="md-block" flex>
+                    <label>Percentage (%)</label>
+                    <input ng-model="modelUpdate.ProductPrice" max="100" min="-100" required name="Percentage" type="number" step="1.00">
+                    <div ng-messages="formProductPrice.Percentage.$error" role="alert" multiple>
+                        <div ng-message="required" class="my-message">Percentage required</div>
+                        <div ng-message="max" class="my-message">
+                            Only -100 to 100 supported
+                        </div>
+                        <div ng-message="min" class="my-message">
+                            Only -100 to 100 supported
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-button class="md-raised md-primary" ng-click="UpdateProductPrice(modelUpdate)">save</md-button>
+                <md-button class="md-raised md-default" ng-click="closeModel()">cancel</md-button>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
