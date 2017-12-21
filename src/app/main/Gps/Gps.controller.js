@@ -20,6 +20,7 @@
             $scope.searchDevice = "";
             $scope.GetAllGpsDevice();
             $rootScope.appId = localStorage.getItem('appId');
+            $rootScope.AppName = localStorage.getItem('appName');
         }
 
         $scope.GetSerch = function(Search) {
@@ -89,7 +90,7 @@
         ]
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "gpsdata/GetAllGpsData",
+                url: $rootScope.RoutePath + "gpsdata/GetAllGpsDataNew",
                 data: function(d) {
                     if ($scope.Search != "") {
                         d.search = $scope.Search;
@@ -108,6 +109,8 @@
                         d.EndDate = ''
                     }
                     d.idApp = $rootScope.appId;
+                    d.AppName = $rootScope.AppName;
+                    console.log(d)
                     return d;
                 },
                 type: "get",
