@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -13,7 +13,7 @@
     vm.UpdateProductPrice = UpdateProductPrice;
     vm.GetAllProductAttributeCombinationsFromModal = GetAllProductAttributeCombinationsFromModal;
     vm.isFormValid = isFormValid;
-    $scope.init = function() {
+    $scope.init = function () {
       $scope.PageNo = 1;
       $scope.productFlg = 0;
       $scope.showvendor = 0;
@@ -31,7 +31,7 @@
       $scope.initCrossSellProductModel();
     };
 
-    $scope.initSearchModel = function() {
+    $scope.initSearchModel = function () {
       //Product Model Search
       $scope.modelSearch = {
         Name: '',
@@ -46,13 +46,13 @@
       };
     };
 
-    $scope.initModel = function() {
+    $scope.initModel = function () {
       //initialize product display
 
       //Product Model
       $scope.model = {
         Id: 0,
-        ProductTypeId: 0,
+        ProductTypeId: '',
         ParentGroupedProductId: 0,
         VisibleIndividually: true,
         ProductTemplateId: 0,
@@ -166,6 +166,7 @@
       };
 
       $scope.GetAllRoles();
+      $scope.GetAllProductType();
       $scope.GetAllUsers();
 
       //flags
@@ -180,7 +181,7 @@
       $scope.AddProducttab = {
         selectedIndex: 0
       };
-      
+
       $scope.SetDataEntryFlg = '';
 
     };
@@ -189,7 +190,7 @@
     $scope.SearchText = '';
 
     //initialize Product Picture Model
-    $scope.initPictureModel = function() {
+    $scope.initPictureModel = function () {
       $scope.modelPicture = {
         Id: '',
         ProductId: 0,
@@ -200,7 +201,7 @@
     };
 
     //initialize Product Category Model
-    $scope.initCategoryModel = function() {
+    $scope.initCategoryModel = function () {
       $scope.modelCategory = {
         Id: '',
         ProductId: 0,
@@ -211,7 +212,7 @@
     };
 
     //initialize Product Manufacturer Model
-    $scope.initManufacturerModel = function() {
+    $scope.initManufacturerModel = function () {
       $scope.modelManufacturer = {
         Id: '',
         ProductId: 0,
@@ -224,7 +225,7 @@
 
 
     //initialize Product Specification Attributes Model
-    $scope.initProductSpecificationAttributesModel = function() {
+    $scope.initProductSpecificationAttributesModel = function () {
       $scope.modelProductSpecificationAttributes = {
         Id: 0,
         ProductId: 0,
@@ -235,11 +236,11 @@
         ShowOnProductPage: true,
         DisplayOrder: 0,
       };
-      
+
     };
 
     //initialize Product Attributes Model
-    $scope.initProductAttributeModel = function() {
+    $scope.initProductAttributeModel = function () {
       $scope.modelProductAttribute = {
         Id: 0,
         ProductId: 0,
@@ -257,7 +258,7 @@
 
 
     //initialize Product Attribute Combinations Model
-    $scope.initProductAttributeCombinationsModel = function() {
+    $scope.initProductAttributeCombinationsModel = function () {
       $scope.modelProductAttributeCombinations = {
         Id: '',
         ProductId: 0,
@@ -283,7 +284,7 @@
 
 
     //initialize Tier Price Model
-    $scope.inittirepriceModel = function() {
+    $scope.inittirepriceModel = function () {
       $scope.modeltier = {
         Id: 0,
         ProductId: 0,
@@ -297,7 +298,7 @@
     };
 
     //initialize Related Product Model
-    $scope.initRelatedProductModel = function() {
+    $scope.initRelatedProductModel = function () {
       $scope.modelRelatedProduct = {
         Id: '',
         ProductId1: 0,
@@ -307,7 +308,7 @@
     };
 
     //initialize CrossSell Product Model
-    $scope.initCrossSellProductModel = function() {
+    $scope.initCrossSellProductModel = function () {
       $scope.modelCrossSellProduct = {
         Id: '',
         ProductId1: 0,
@@ -317,13 +318,13 @@
     };
 
 
-    $scope.ClearSearchProduct = function() {
+    $scope.ClearSearchProduct = function () {
       $scope.SearchText = '';
       $scope.SearchProductPanel(1, '');
     }
 
     //Select Product for required products
-    $scope.SelectProduct = function(ProductId, ProductName) {
+    $scope.SelectProduct = function (ProductId, ProductName) {
       if ($scope.model.RequiredProductIds == '') {
         $scope.model.RequiredProductIds = ProductId;
         $scope.model.RequireProductNames = ProductName;
@@ -333,16 +334,27 @@
       }
     }
 
+
+    $scope.GetAllProductType = function () {
+      $scope.lstProductTypes = [];
+      $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
+        $scope.lstProductTypes = data.data;
+        if ($scope.lstProductTypes.length > 0) {
+          // $scope.model.ProductTypeId = parseInt($scope.lstProductTypes[0].id);
+        }
+      });
+    }
+
     //Retrive User
-    $scope.GetAllUsers = function() {
-      $http.get($rootScope.RoutePath + "user/GetAllUser").then(function(data) {
+    $scope.GetAllUsers = function () {
+      $http.get($rootScope.RoutePath + "user/GetAllUser").then(function (data) {
         $scope.lstUsers = data.data;
       });
     }
 
     //Retrive User role
-    $scope.GetAllRoles = function() {
-      $http.get($rootScope.RoutePath + "role/GetAllRole").then(function(data) {
+    $scope.GetAllRoles = function () {
+      $http.get($rootScope.RoutePath + "role/GetAllRole").then(function (data) {
         $scope.lstRoles = data.data;
 
       });
@@ -350,8 +362,8 @@
     }
 
     //Retrive Product Attribute
-    $scope.GetAllProductAttribute = function() {
-      $http.get($rootScope.RoutePath + "productAttributeMapping/GetAllProductAttribute").then(function(data) {
+    $scope.GetAllProductAttribute = function () {
+      $http.get($rootScope.RoutePath + "productAttributeMapping/GetAllProductAttribute").then(function (data) {
         $scope.lstProductAttribute = data.data;
         if (data.data.length > 0) {
           $scope.modelProductAttribute.ProductAttributeId = data.data[0].Id;
@@ -360,7 +372,7 @@
     }
 
     //Go directly to product SKU
-    $scope.GoSKU = function() {
+    $scope.GoSKU = function () {
       $scope.modelSearch.Name = '';
       $scope.modelSearch.CategoryId = '';
       $scope.modelSearch.ManufacturerId = '';
@@ -374,7 +386,7 @@
 
 
     //Retrive Product
-    $scope.FetchProductById = function(id) {
+    $scope.FetchProductById = function (id) {
       $scope.AddProducttab = {
         selectedIndex: 0
       };
@@ -529,15 +541,19 @@
       }
     }
 
-    $scope.GoToPreview = function(id) {
+    $scope.GoToPreview = function (id) {
       window.open($rootScope.FrontPath + "#/PreviewProduct/" + id);
     }
-    $scope.resetMainForm = function() {
+    $scope.resetMainForm = function () {
       $scope.formproduct.ProductName.$touched = false;
+      $scope.formproduct.ProductTypeId.$touched = false;
+
+      $scope.formproduct.$setPristine();
       // $scope.form.VendorName.$touched = false;
     }
-    $scope.ErrorMainForm = function() {
+    $scope.ErrorMainForm = function () {
       $scope.formproduct.ProductName.$touched = true;
+      $scope.formproduct.ProductTypeId.$touched = true;
       //$scope.formproduct.VendorName.$touched = true;
     }
 
@@ -549,7 +565,8 @@
     }
     //create product panel
 
-    $scope.CreateProductPanel = function(form, o, saveandcontinue) {
+    $scope.CreateProductPanel = function (form, o, saveandcontinue) {
+
       if (form.$valid) {
 
         $scope.ACL = _.where($scope.lstRoles, {
@@ -578,142 +595,40 @@
         } else {
           o.VendorId = 0;
         }
+        $http.post($rootScope.RoutePath + "product/CreateProductPanel", o).success(function (data) {
+          if (data.success == true) {
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
+            );
+            if (saveandcontinue) {
+              $scope.model.Id = data.data;
+              $scope.GetAllProductPicture();
+              $scope.GetAllProductProductAttribute();
+              $scope.GetAllProductAttributeCombinations();
+            } else {
+              $scope.init();
+              $scope.GetAllProductPanel(true);
+            }
 
-
-
-        var params = {
-          VendorId: o.VendorId,
-          ProductTypeId: o.ProductTypeId
-        }
-        var ProductType = "";
-        if (o.ProductTypeId == "1") {
-          ProductType = "veterinary";
-        }
-        if (o.ProductTypeId == "2") {
-          ProductType = "product";
-        }
-        $http.get($rootScope.RoutePath + "product/CheckProductIsAddable", {
-          params: params
-        }).success(function(data) {
-          if (data.success == false && (o.Id == 0 || (o.Id != 0 && $scope.objVendor != o.VendorId))) {
-
-            var confirm = $mdDialog.confirm()
-              .title('Would you like to add this ' + ProductType + '?')
-              .textContent('Max slot is ' + data.data.Value + ' for this Merchant. are you sure you want to add greater then ' + data.data.Value + " " + ProductType + '?')
-              .ariaLabel('Lucky day')
-              .targetEvent()
-              .clickOutsideToClose(true)
-              .parent(angular.element(document.body))
-              .ok('Yes')
-              .cancel('Cancel');
-            $mdDialog.show(confirm).then(function() {
-              $http.post($rootScope.RoutePath + "product/CreateProductPanel", o).success(function(data) {
-
-                if (data.success == true) {
-                  // $scope.FinallstLocalize = [];
-                  // for (var i = 0; i < $scope.lstLanguages.length; i++) {
-                  //     for (var j = 0; j < $scope.lstLanguages[i].lstLocalizedProperty.length; j++) {
-                  //         $scope.FinallstLocalize.push($scope.lstLanguages[i].lstLocalizedProperty[j]);
-                  //     }
-
-                  // }
-
-                  // var params = {
-                  //     EntityId: data.idProduct,
-                  // }
-                  // $http.post(route.Lookup.CreateLocalizedProperty, $scope.FinallstLocalize, { params: params }).success(function(data1) {
-
-                  $mdToast.show(
-                    $mdToast.simple()
-                    .textContent(data.message)
-                    .position('top right')
-                    .hideDelay(3000)
-                  );
-                  if (saveandcontinue) {
-                    $scope.model.Id = data.data;
-                    $scope.GetAllProductPicture();
-                    $scope.GetAllProductProductAttribute();
-                    $scope.GetAllProductAttributeCombinations();
-                  } else {
-                    //$scope.Reset();
-                    // $scope.tempURL = window.location.href;
-                    // var res = $scope.tempURL.substr(0, $scope.tempURL.indexOf('?'));
-                    // window.location.href = res;
-                    $scope.init();
-                    $scope.GetAllProductPanel(true);
-                  }
-                  // });
-
-                } else {
-                  $mdToast.show(
-                    $mdToast.simple()
-                    .textContent(data.message)
-                    .position('top right')
-                    .hideDelay(3000)
-                  );
-                }
-              });
-            }, function() {
-              // $scope.AllProduct();
-            });
           } else {
-            $http.post($rootScope.RoutePath + "product/CreateProductPanel", o).success(function(data) {
-              if (data.success == true) {
-
-                // $scope.FinallstLocalize = [];
-                // for (var i = 0; i < $scope.lstLanguages.length; i++) {
-                //     for (var j = 0; j < $scope.lstLanguages[i].lstLocalizedProperty.length; j++) {
-                //         $scope.FinallstLocalize.push($scope.lstLanguages[i].lstLocalizedProperty[j]);
-                //     }
-
-                // }
-
-                // var params = {
-                //     EntityId: data.idProduct,
-                // }
-                // $http.post(route.Lookup.CreateLocalizedProperty, $scope.FinallstLocalize, { params: params }).success(function(data1) {
-
-                $mdToast.show(
-                  $mdToast.simple()
-                  .textContent(data.message)
-                  .position('top right')
-                  .hideDelay(3000)
-                );
-                if (saveandcontinue) {
-                  $scope.model.Id = data.data;
-                  $scope.GetAllProductPicture();
-                  $scope.GetAllProductProductAttribute();
-                  $scope.GetAllProductAttributeCombinations();
-                } else {
-                  //$scope.Reset();
-                  // $scope.tempURL = window.location.href;
-                  // var res = $scope.tempURL.substr(0, $scope.tempURL.indexOf('?'));
-                  // window.location.href = res;
-                  $scope.init();
-                  $scope.GetAllProductPanel(true);
-                }
-                // });
-
-              } else {
-                $mdToast.show(
-                  $mdToast.simple()
-                  .textContent(data.message)
-                  .position('top right')
-                  .hideDelay(3000)
-                );
-              }
-            });
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
+            );
           }
         });
-
       } else {
-
         $scope.ErrorMainForm();
       }
     }
 
     //Delete Product
-    $scope.DeleteProductPanel = function(id, ev) {
+    $scope.DeleteProductPanel = function (id, ev) {
 
       var o = _.findWhere($scope.lstdata, {
         Id: id
@@ -728,14 +643,14 @@
           .ok('Yes')
           .cancel('No');
 
-        $mdDialog.show(confirm).then(function() {
+        $mdDialog.show(confirm).then(function () {
 
-          $http.post($rootScope.RoutePath + "product/DeleteProduct", o).success(function(data) {
+          $http.post($rootScope.RoutePath + "product/DeleteProduct", o).success(function (data) {
             $mdToast.show(
               $mdToast.simple()
-              .textContent(data.message)
-              .position('top right')
-              .hideDelay(3000)
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
             );
             //$scope.initModel();
             // $scope.tempURL = window.location.href;
@@ -746,38 +661,40 @@
             $scope.init();
             $scope.GetAllProductPanel(true);
           });
-        }, function() {});
+        }, function () { });
       };
     }
 
-    $scope.AddProduct = function() {
-      $scope.resetMainForm();
+    $scope.AddProduct = function () {
       $scope.productFlg = 1;
       $scope.productCopyFlg = 0;
       // $('#tokenfield').tokenfield('setTokens', "")
+      $scope.resetMainForm();
+      setTimeout(function () {
+        $scope.initModel();
+      }, 500);
 
-      $scope.initModel();
     }
     //Fetch Images from media
 
 
     //Get Product Picture
-    $scope.GetAllProductPicture = function() {
+    $scope.GetAllProductPicture = function () {
 
-      $http.get($rootScope.RoutePath + "productPictureMapping/GetAllProductPictureByProductId?idProductPicture=" + $scope.model.Id).success(function(data) {
+      $http.get($rootScope.RoutePath + "productPictureMapping/GetAllProductPictureByProductId?idProductPicture=" + $scope.model.Id).success(function (data) {
         $scope.ListProductPicture = data;
       });
     }
 
     //Reset Picture Model
-    $scope.ResetPictureModel = function() {
+    $scope.ResetPictureModel = function () {
       $scope.flg = 2;
       $scope.apiMedia.removeAll();
       $scope.initPictureModel();
     }
 
     //Retrive Product Picture
-    $scope.FetchProductPictureById = function(o) {
+    $scope.FetchProductPictureById = function (o) {
       $scope.flg = 0;
       $scope.modelPicture.Id = o.Id;
       $scope.modelPicture.ProductId = o.ProductId;
@@ -788,7 +705,7 @@
     }
 
     //Delete Product Picture
-    $scope.DeleteProductPicture = function(o, ev) {
+    $scope.DeleteProductPicture = function (o, ev) {
 
       var confirm = $mdDialog.confirm()
         .title('Are you sure to delete this record?')
@@ -798,15 +715,15 @@
         .ok('Yes')
         .cancel('No');
 
-      $mdDialog.show(confirm).then(function() {
+      $mdDialog.show(confirm).then(function () {
 
-        $http.get($rootScope.RoutePath + "productPictureMapping/DeleteProductPicture?idProductPicture=" + o).success(function(data) {
+        $http.get($rootScope.RoutePath + "productPictureMapping/DeleteProductPicture?idProductPicture=" + o).success(function (data) {
           if (data.success) {
             $mdToast.show(
               $mdToast.simple()
-              .textContent(data.message)
-              .position('top right')
-              .hideDelay(3000)
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
 
             );
             $scope.flg = 2;
@@ -816,26 +733,26 @@
           } else {
             $mdToast.show(
               $mdToast.simple()
-              .textContent(data.message)
-              .position('top right')
-              .hideDelay(3000)
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
             );
           }
 
 
 
         });
-      }, function() {});
+      }, function () { });
     }
 
     //create product Picture Mapping
-    $scope.CreateProductPicture = function(o) {
+    $scope.CreateProductPicture = function (o) {
 
 
       if ($scope.Mediafiles.length > 0) {
 
         var formData = new FormData();
-        angular.forEach($scope.Mediafiles, function(obj) {
+        angular.forEach($scope.Mediafiles, function (obj) {
           formData.append('files[]', obj.lfFile);
         });
 
@@ -846,7 +763,7 @@
           headers: {
             'Content-Type': undefined
           }
-        }).then(function(data) {
+        }).then(function (data) {
 
 
           if (data.data.success == true) {
@@ -857,13 +774,13 @@
             o.PictureId = data.data.data[0].id;
             o.ProductId = $scope.model.Id;
 
-            $http.post($rootScope.RoutePath + "productPictureMapping/CreateProductPicture", o).then(function(data) {
+            $http.post($rootScope.RoutePath + "productPictureMapping/CreateProductPicture", o).then(function (data) {
 
               $mdToast.show(
                 $mdToast.simple()
-                .textContent(data.data.message)
-                .position('top right')
-                .hideDelay(3000)
+                  .textContent(data.data.message)
+                  .position('top right')
+                  .hideDelay(3000)
               );
 
               $scope.apiMedia.removeAll();
@@ -874,19 +791,19 @@
           } else {
             $mdToast.show(
               $mdToast.simple()
-              .textContent(data.data.message)
-              .position('top right')
-              .hideDelay(3000)
+                .textContent(data.data.message)
+                .position('top right')
+                .hideDelay(3000)
             );
           };
 
-        }, function(err) {
+        }, function (err) {
 
           $mdToast.show(
             $mdToast.simple()
-            .textContent(err)
-            .position('top right')
-            .hideDelay(3000)
+              .textContent(err)
+              .position('top right')
+              .hideDelay(3000)
           );
           // do sometingh
         });
@@ -895,13 +812,13 @@
         o.Id = $scope.modelPicture.Id;
         o.ProductId = $scope.model.Id;
 
-        $http.post($rootScope.RoutePath + "productPictureMapping/CreateProductPicture", o).then(function(data) {
+        $http.post($rootScope.RoutePath + "productPictureMapping/CreateProductPicture", o).then(function (data) {
 
           $mdToast.show(
             $mdToast.simple()
-            .textContent(data.data.message)
-            .position('top right')
-            .hideDelay(3000)
+              .textContent(data.data.message)
+              .position('top right')
+              .hideDelay(3000)
           );
 
           $scope.apiMedia.removeAll();
@@ -913,9 +830,9 @@
       } else {
         $mdToast.show(
           $mdToast.simple()
-          .textContent("Please select Picture For Product.")
-          .position('top right')
-          .hideDelay(3000)
+            .textContent("Please select Picture For Product.")
+            .position('top right')
+            .hideDelay(3000)
         );
       }
     }
@@ -923,29 +840,29 @@
     //Product Category Mapping
 
     //Category
-    $scope.AddProductCategory = function() {
+    $scope.AddProductCategory = function () {
       $scope.CategoryFlg = 1;
       //$scope.modelCategory.CategoryId = 0;
     }
 
-    $scope.CancelProductCategory = function() {
+    $scope.CancelProductCategory = function () {
       $scope.CategoryFlg = 0;
       $scope.initCategoryModel();
     }
 
     //Product Attribute
-    $scope.AddProductAttribute = function() {
+    $scope.AddProductAttribute = function () {
       $scope.ProductAttributeFlg = 1;
     }
 
-    $scope.CancelProductAttribute = function() {
+    $scope.CancelProductAttribute = function () {
       $scope.ProductAttributeFlg = 0;
       $scope.initProductAttributeModel();
     }
 
     //Get Product Attribute
-    $scope.GetAllProductProductAttribute = function() {
-      $http.get($rootScope.RoutePath + "productAttributeMapping/GetAllProductAttributeMappingByProductId?idProduct=" + $scope.model.Id).success(function(data) {
+    $scope.GetAllProductProductAttribute = function () {
+      $http.get($rootScope.RoutePath + "productAttributeMapping/GetAllProductAttributeMappingByProductId?idProduct=" + $scope.model.Id).success(function (data) {
         if (data.length > 0) {
           $scope.listProductAttribute = data;
         } else {
@@ -956,7 +873,7 @@
     }
 
     //Retrive Product Attribute
-    $scope.FetchProductAttributeById = function(o) {
+    $scope.FetchProductAttributeById = function (o) {
       $scope.modelProductAttribute.Id = o.Id;
       $scope.modelProductAttribute.ProductId = o.ProductId;
       $scope.modelProductAttribute.ProductAttributeId = o.ProductAttributeId;
@@ -968,21 +885,21 @@
     }
 
     //Delete Product Attribute
-    $scope.DeleteProductAttribute = function(ev, o) {
+    $scope.DeleteProductAttribute = function (ev, o) {
       var confirm = $mdDialog.confirm()
         .title('Are you sure to Delete this Attribute?')
         .textContent('Attribute related to this Attribute Value will also delete.')
         .targetEvent(ev)
         .ok('Ok')
         .cancel('Cancel');
-      $mdDialog.show(confirm).then(function() {
-        $http.get($rootScope.RoutePath + "productAttributeMapping/DeleteProductAttributeMapping?idProductAttributeMapping=" + o).success(function(data) {
+      $mdDialog.show(confirm).then(function () {
+        $http.get($rootScope.RoutePath + "productAttributeMapping/DeleteProductAttributeMapping?idProductAttributeMapping=" + o).success(function (data) {
           if (data.success) {
             $mdToast.show(
               $mdToast.simple()
-              .textContent(data.message)
-              .position('top right')
-              .hideDelay(3000)
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
             );
             $scope.initProductAttributeModel();
             $scope.GetAllProductProductAttribute();
@@ -990,9 +907,9 @@
           } else {
             $mdToast.show(
               $mdToast.simple()
-              .textContent(data.message)
-              .position('top right')
-              .hideDelay(3000)
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
             );
           }
 
@@ -1001,17 +918,17 @@
     }
 
     //create product Attribute Mapping
-    $scope.CreateProductAttribute = function(o) {
+    $scope.CreateProductAttribute = function (o) {
       o.Id = $scope.modelProductAttribute.Id;
       o.ProductId = $scope.model.Id;
       o.ValidationMaxLength = null;
       o.ValidationMinLength = null
-      $http.post($rootScope.RoutePath + "productAttributeMapping/CreateProductAttributeMapping", o).success(function(data) {
+      $http.post($rootScope.RoutePath + "productAttributeMapping/CreateProductAttributeMapping", o).success(function (data) {
         $mdToast.show(
           $mdToast.simple()
-          .textContent(data.message)
-          .position('top right')
-          .hideDelay(3000)
+            .textContent(data.message)
+            .position('top right')
+            .hideDelay(3000)
         );
         $scope.ProductAttributeFlg = 0;
         $scope.initProductAttributeModel();
@@ -1022,14 +939,14 @@
     //Product Attribute Combination Mapping
 
     //Get Product Attribute Combination
-    $scope.GetAllProductAttributeCombinations = function() {
-      $http.get($rootScope.RoutePath + "productAttributeCombination/GetAllProductAttributeCombinations?idProduct=" + $scope.model.Id).success(function(data) {
+    $scope.GetAllProductAttributeCombinations = function () {
+      $http.get($rootScope.RoutePath + "productAttributeCombination/GetAllProductAttributeCombinations?idProduct=" + $scope.model.Id).success(function (data) {
         $scope.listProductAttributeCombinations = data;
         $scope.AttributeWithValue = data.AttributeWithValue;
       });
     }
 
-    $scope.FetchProductAttributeCombinationsById = function(o, AttributeWithValue) {
+    $scope.FetchProductAttributeCombinationsById = function (o, AttributeWithValue) {
       $scope.modelProductAttributeCombinations.Id = o.productattributecombination.Id;
       $scope.modelProductAttributeCombinations.ProductId = o.productattributecombination.ProductId;
       $scope.modelProductAttributeCombinations.AttributesXml = o.productattributecombination.AttributesXml;
@@ -1056,7 +973,7 @@
       $scope.ProductAttributeCombinationsFlg = 1;
     }
 
-    $scope.DeleteProductAttributeCombinations = function(o, ev) {
+    $scope.DeleteProductAttributeCombinations = function (o, ev) {
       var confirm = $mdDialog.confirm()
         .title('Are you sure to delete this record?')
         .textContent('')
@@ -1065,27 +982,27 @@
         .ok('Yes')
         .cancel('No');
 
-      $mdDialog.show(confirm).then(function() {
+      $mdDialog.show(confirm).then(function () {
         // var params = {
         //     id: o.ProductCombinationTierId,
         //     ProductAttributeCombinationId: o.Id,
         // };
         o.id = o.id;
         o.ProductAttributeCombinationId = o.ProductAttributeCombinationId;
-        $http.get($rootScope.RoutePath + "productAttributeCombination/DeleteProductAttributeCombination?ProductAttributeCombinationId=" + o.ProductAttributeCombinationId + "&id=" + o.id).success(function(data) {
+        $http.get($rootScope.RoutePath + "productAttributeCombination/DeleteProductAttributeCombination?ProductAttributeCombinationId=" + o.ProductAttributeCombinationId + "&id=" + o.id).success(function (data) {
           $mdToast.show(
             $mdToast.simple()
-            .textContent(data.message)
-            .position('top right')
-            .hideDelay(3000)
+              .textContent(data.message)
+              .position('top right')
+              .hideDelay(3000)
           );
           $scope.initProductAttributeCombinationsModel();
           $scope.GetAllProductAttributeCombinations();
         });
-      }, function() {});
+      }, function () { });
     }
 
-    $scope.CancelProductAttributeCombinations = function() {
+    $scope.CancelProductAttributeCombinations = function () {
       $scope.ProductAttributeCombinationsFlg = 0;
       $scope.initProductAttributeCombinationsModel();
       // $scope.GetAllProductAttributeCombinations();
@@ -1097,7 +1014,7 @@
     }
 
     //Product attribute combination
-    $scope.OpenProductAttributeCombination = function(ev, o) {
+    $scope.OpenProductAttributeCombination = function (ev, o) {
 
       $scope.modelProductAttributeWithValue = {};
       $scope.ProductAttributeCombinationsFlg = 0;
@@ -1128,7 +1045,7 @@
     }
 
     //Export Product Attribute
-    $scope.OpenExportProductAttributeCombination = function(ev) {
+    $scope.OpenExportProductAttributeCombination = function (ev) {
 
       $scope.modelProductAttributeWithValue = {};
       $scope.ProductAttributeCombinationsFlg = 0;
@@ -1156,12 +1073,12 @@
     }
 
 
-    $scope.closeModal = function() {
+    $scope.closeModal = function () {
       $mdDialog.hide();
     };
 
 
-    $scope.CreateProductAttributeCombinations = function(o, modelProductAttributeWithValue) {
+    $scope.CreateProductAttributeCombinations = function (o, modelProductAttributeWithValue) {
       if (o.Id == null || o.Id == "") {
         var lst = $scope.listProductAttributeCombinationsName;
         if (lst != undefined && lst != null) {
@@ -1216,13 +1133,13 @@
       obj.objProductAttributeCombination = o;
       obj.objTierPrice = objTierPrice;
 
-      $http.post($rootScope.RoutePath + "productAttributeCombination/CreateProductAttributeCombination", obj).success(function(data) {
+      $http.post($rootScope.RoutePath + "productAttributeCombination/CreateProductAttributeCombination", obj).success(function (data) {
 
         $mdToast.show(
           $mdToast.simple()
-          .textContent(data.message)
-          .position('top right')
-          .hideDelay(3000)
+            .textContent(data.message)
+            .position('top right')
+            .hideDelay(3000)
         );
         if (data.success) {
           $scope.ProductAttributeCombinationsFlg = 0;
@@ -1248,7 +1165,7 @@
     }
 
     //Product attribute update combination  price
-    $scope.OpenProductAttributeCombinationPrice = function(ev) {
+    $scope.OpenProductAttributeCombinationPrice = function (ev) {
       $scope.CancelProductAttributeCombinations();
       $mdDialog.show({
         controller: 'UpdateCombinationPriceController',
@@ -1266,7 +1183,7 @@
     }
 
     //Product attribute copy combination  price
-    $scope.OpenCopyProductCombinationPrice = function(ev) {
+    $scope.OpenCopyProductCombinationPrice = function (ev) {
       $scope.CancelProductAttributeCombinations();
 
       var obj = {
@@ -1293,11 +1210,11 @@
     //Product Tier Prices Mapping
 
     //Tier
-    $scope.Addtier = function() {
+    $scope.Addtier = function () {
       $scope.TierFlg = 1;
     }
 
-    $scope.Canceltier = function() {
+    $scope.Canceltier = function () {
       $scope.TierFlg = 0;
       $scope.inittirepriceModel();
     }
@@ -1307,7 +1224,7 @@
     $scope.init();
 
     //Update ProductPrice
-    $scope.OpenProductPrice = function(ev) {
+    $scope.OpenProductPrice = function (ev) {
       var obj = {
         lstCategory: $scope.lstCategory,
         lstManufacturer: $scope.lstManufacturer,
@@ -1359,15 +1276,15 @@
       }
       $http.get($rootScope.RoutePath + "product/UpdateProductPrice", {
         params: params
-      }).success(function(data) {
+      }).success(function (data) {
 
         if (data.success == true) {
 
           $mdToast.show(
             $mdToast.simple()
-            .textContent(data.message)
-            .position('top right')
-            .hideDelay(3000)
+              .textContent(data.message)
+              .position('top right')
+              .hideDelay(3000)
           );
           $scope.modelUpdate.CategoryId = '';
           $scope.modelUpdate.Percentage = '0';
@@ -1376,9 +1293,9 @@
         } else {
           $mdToast.show(
             $mdToast.simple()
-            .textContent(data.message)
-            .position('top right')
-            .hideDelay(3000)
+              .textContent(data.message)
+              .position('top right')
+              .hideDelay(3000)
           );
         }
         $mdDialog.hide();
@@ -1386,12 +1303,12 @@
       });
     }
 
-    $scope.closeModel = function() {
+    $scope.closeModel = function () {
       $mdDialog.hide();
     }
 
     //Publish/Unpublish
-    $scope.PublishAllProduct = function(o, ev) {
+    $scope.PublishAllProduct = function (o, ev) {
       var confirm = $mdDialog.confirm()
         .title('Are you sure to ' + o + ' all Product?')
         .textContent('All Search Product Will be ' + o + '.')
@@ -1399,7 +1316,7 @@
         .targetEvent(ev)
         .ok('Yes')
         .cancel('No');
-      $mdDialog.show(confirm).then(function() {
+      $mdDialog.show(confirm).then(function () {
         var UpdatePublish = false;
         if (o == 'Publish') {
           UpdatePublish = true;
@@ -1419,47 +1336,47 @@
         }
         $http.get($rootScope.RoutePath + "product/UpdateProductPublish", {
           params: params
-        }).success(function(data) {
+        }).success(function (data) {
           if (data.success == true) {
             $mdToast.show(
               $mdToast.simple()
-              .textContent(data.message)
-              .position('top right')
-              .hideDelay(3000)
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
             );
 
           } else {
             $mdToast.show(
               $mdToast.simple()
-              .textContent(data.message)
-              .position('top right')
-              .hideDelay(3000)
+                .textContent(data.message)
+                .position('top right')
+                .hideDelay(3000)
             );
           }
           $scope.GetAllProductPanel(true);
         });
-      }, function() {
+      }, function () {
 
       });
     }
 
     //Import/Export
-    $scope.DownloadExcelTemplate = function() {
+    $scope.DownloadExcelTemplate = function () {
       window.location = $rootScope.RoutePath + "product/DownloadExcelTemplate";
     }
 
     //Export Product
-    $scope.ExportProducts = function() {
+    $scope.ExportProducts = function () {
       window.location = $rootScope.RoutePath + "product/ExportProducts?SearchExport=All";
     }
 
     //Export Unpublish Product
-    $scope.ExportUnPublishProducts = function() {
+    $scope.ExportUnPublishProducts = function () {
       window.location = $rootScope.RoutePath + "product/ExportProducts?SearchExport=UnPublish";
     }
 
     //Import
-    $scope.ShowImportProductModal = function(ev) {
+    $scope.ShowImportProductModal = function (ev) {
       $mdDialog.show({
         controller: 'ImportProductsController',
         controllerAs: 'vm',
@@ -1476,7 +1393,7 @@
 
     }
 
-    $scope.toggle = function() {
+    $scope.toggle = function () {
       //$scope.Reset()
       if (!$scope.flgforIcon) {
         $scope.flgforIcon = true;
@@ -1484,20 +1401,20 @@
         $scope.flgforIcon = false;
       }
 
-      $(function() {
+      $(function () {
         $(".showBtn").toggleClass("active");
         $(".ShowContentBox").slideToggle();
       });
     };
 
-    $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+    $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
       //$scope.lstdata = [];
       vm.dtColumnDefs = [
-        DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml).withOption('width', '4%'),
-        DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('class', 'text-center'),
-        DTColumnBuilder.newColumn('Name').withOption('width', '40%'),
-        DTColumnBuilder.newColumn('Sku').withOption('responsivePriority', 1),
-        DTColumnBuilder.newColumn('Price').renderWith(DecimalHtml).withOption('class', 'text-right'),
+        DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml).withOption('width', '4%').withOption('class', 'text-center'),
+        DTColumnBuilder.newColumn('ProductTypeId').notSortable().renderWith(TypeHtml).withOption('class', 'text-center'),
+        DTColumnBuilder.newColumn('Name').withOption('class', 'text-center'),
+        DTColumnBuilder.newColumn('Sku').withOption('responsivePriority', 1).withOption('class', 'text-center'),
+        DTColumnBuilder.newColumn('Price').renderWith(DecimalHtml).withOption('class', 'text-center'),
         // DTColumnBuilder.newColumn('OldPrice').renderWith(DecimalHtml).withOption('class', 'text-right'),
 
         DTColumnBuilder.newColumn(null).notSortable().renderWith(publishHtml).withOption('class', 'text-center'),
@@ -1506,29 +1423,30 @@
 
       // ShowTrackNumberModal
       vm.dtOptions1 = DTOptionsBuilder.newOptions().withOption('ajax', {
-          url: $rootScope.RoutePath + "product/GetAllProduct",
+        url: $rootScope.RoutePath + "product/GetAllProduct",
 
-          data: function(d) {
-            d.search.value = $scope.Search;
-            d.Name = $scope.modelSearch.Name;
-            d.CategoryId = $scope.modelSearch.CategoryId;
-            d.ManufacturerId = $scope.modelSearch.ManufacturerId;
-            d.StoreId = $scope.modelSearch.StoreId;
-            d.VendorId = $scope.modelSearch.VendorId;
-            d.WarehouseId = $scope.modelSearch.WarehouseId;
-            d.ProductTypeId = $scope.modelSearch.ProductTypeId;
-            d.Sku = $scope.modelSearch.Sku;
-            d.Published = $scope.modelSearch.Publish;
+        data: function (d) {
+          d.search.value = $scope.Search;
+          d.Name = $scope.modelSearch.Name;
+          d.CategoryId = $scope.modelSearch.CategoryId;
+          d.ManufacturerId = $scope.modelSearch.ManufacturerId;
+          d.StoreId = $scope.modelSearch.StoreId;
+          d.VendorId = $scope.modelSearch.VendorId;
+          d.WarehouseId = $scope.modelSearch.WarehouseId;
+          d.ProductTypeId = $scope.modelSearch.ProductTypeId;
+          d.Sku = $scope.modelSearch.Sku;
+          d.Published = $scope.modelSearch.Publish;
 
-            return d;
-          },
-          type: "get",
-          dataSrc: function(json) {
-            $scope.lstdata = json.data;
-            $scope.TotalProducts = json.recordsTotal;
-            return json.data;
-          },
-        })
+          return d;
+        },
+        type: "get",
+        dataSrc: function (json) {
+
+          $scope.lstdata = json.data;
+          $scope.TotalProducts = json.recordsTotal;
+          return json.data;
+        },
+      })
         .withOption('processing', true) //for show progress bar
         .withOption('serverSide', true) // for server side processing
         .withPaginationType('simple') // for get full pagination options // first / last / prev / next and page numbers
@@ -1543,16 +1461,16 @@
 
     $scope.dtInstance = {};
 
-    $scope.reloadData = function() {}
+    $scope.reloadData = function () { }
 
-    function callback(json) {}
+    function callback(json) { }
 
-    $scope.GetSerch = function(Search) {
+    $scope.GetSerch = function (Search) {
       $scope.Search = Search;
       GetAllProductPanelmodal(true);
       $scope.GetAllProductPanel(true);
     }
-    $scope.GetAllProductPanel = function(IsUpdate) {
+    $scope.GetAllProductPanel = function (IsUpdate) {
       var resetPaging = false;
       if (IsUpdate == true) {
         resetPaging = true;
@@ -1605,16 +1523,11 @@
     }
 
 
-    function ProductTypeHtml(data, type, full, meta) {
+    function TypeHtml(data, type, full, meta) {
       var Type = '';
-      if (full.ProductTypeId == 0) {
-        Type = '<span > Main Product</span>';
-      } else if (full.ProductTypeId == 1) {
-        Type = '<span >Massage Chair</span>';
+      if (data > 0) {
+        Type = '<span> ' + full.tblappinfo.AppName + '</span>';
       }
-      // } else {
-      //     Type = '<span >Pet Product</span>'
-      // }
       return Type;
     }
 
@@ -1642,10 +1555,10 @@
           '</md-button>';
       }
       if ($rootScope.FlgModifiedAccess) {
-        // btn += '<md-button class="edit-button md-icon-button" ng-click="DeleteProductPanel(' + full.Id + ')">' +
-        //   '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
-        //   '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
-        //   '</md-button>';
+        btn += '<md-button class="edit-button md-icon-button" ng-click="DeleteProductPanel(' + full.Id + ')">' +
+          '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
+          '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+          '</md-button>';
 
       }
       btn += '</div>';
@@ -1859,7 +1772,7 @@
 
     //Get ProductAttributeValue for CountLength
     function GetAllProductProductAttributeValue() {
-      $http.get($rootScope.RoutePath + "productAttributeMapping/GetAllProductAttributeMappingByProductId?idProduct=" + $scope.model.Id).success(function(data) {
+      $http.get($rootScope.RoutePath + "productAttributeMapping/GetAllProductAttributeMappingByProductId?idProduct=" + $scope.model.Id).success(function (data) {
         if (data.length > 0) {
           $scope.listProductAttribute = data;
         } else {
@@ -1870,7 +1783,7 @@
       });
     }
 
-    $scope.ViewEditValue = function(ev, o) {
+    $scope.ViewEditValue = function (ev, o) {
       var params = {
         ProductAttributeMappingId: o.Id,
         ProductId: o.ProductId,
@@ -1894,7 +1807,7 @@
       })
     }
 
-    $scope.OpenModel = function(ev) {
+    $scope.OpenModel = function (ev) {
 
       // var obj = {
       //     lstRoles: $scope.lstRoles,
@@ -1951,7 +1864,7 @@
     //     $scope.dtInstance.reloadData(callback, resetPaging);
     //     $('#Producttable').dataTable()._fnAjaxUpdate();
     // }
-    $scope.ResetSearch = function() {
+    $scope.ResetSearch = function () {
       $scope.modelSearch = {
         Name: '',
         CategoryId: '',
@@ -1966,7 +1879,7 @@
       GetAllProductPanelmodal(true);
       $scope.GetAllProductPanel(true);
     }
-    $scope.Vendor = function() {
+    $scope.Vendor = function () {
 
       if ($scope.model.ProductTypeId == 1 || $scope.model.ProductTypeId == 2) {
         $scope.showvendor = 1;
@@ -1976,7 +1889,7 @@
       }
 
     }
-    $scope.AllProduct = function() {
+    $scope.AllProduct = function () {
       $scope.PageNo = 1;
       $scope.productFlg = 0;
       $scope.showvendor = 0;
@@ -1996,7 +1909,7 @@
       $scope.initCrossSellProductModel();
     }
 
-    $scope.AllProduct = function() {
+    $scope.AllProduct = function () {
       $scope.PageNo = 1;
       $scope.productFlg = 0;
       $scope.showvendor = 0;
