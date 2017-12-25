@@ -56,6 +56,7 @@
       DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateFormateHtml).withOption('class', 'text-center'),
       DTColumnBuilder.newColumn('OrderTotal').withOption('class', 'text-center'),
       DTColumnBuilder.newColumn('OrderNotes').withOption('class', 'text-center'),
+      DTColumnBuilder.newColumn('ShippAddress1').withOption('class', 'text-center'),
       DTColumnBuilder.newColumn(null).notSortable().renderWith(StatusHtml).withOption('class', 'text-center'),
       DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
     ]
@@ -199,9 +200,11 @@
       if (full.tblorderservicestatus != null && full.tblorderservicestatus != undefined && full.tblorderservicestatus != '') {
         var statusname = full.tblorderservicestatus.OrderStatus;
         if (statusname == "Approved") {
-          status = '<b><span style="color:green;">Approved</span></b>';
+          status = '<b><span style="color:green;">'+ statusname +'</span></b>';
         } else if (statusname == "Pending") {
           status = '<span>Pending</span>';
+        } else if (statusname == "Completed") {
+          status = '<span style="color:orange;">Completed</span>';
         }
       }
       return status;
@@ -212,30 +215,36 @@
 
       var btns = '<div layout="row">'
 
-      if ($rootScope.FlgModifiedAccess) {
-        btns += '<md-button class="edit-button md-icon-button"  ng-click="OpenUpdateDeviceModal($event,' + data.id + ')" aria-label="">' +
-          '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
-          '<md-tooltip md-visible="" md-direction="">Edit Device</md-tooltip>' +
-          '</md-button>';
-      }
+      if (full.tblorderservicestatus != null && full.tblorderservicestatus != undefined && full.tblorderservicestatus != '') {
+        var statusname = full.tblorderservicestatus.OrderStatus;
+        if (statusname != "Completed") {
 
-      if ($rootScope.FlgModifiedAccess) {
-        if (full.tblorderservicestatus != null && full.tblorderservicestatus != undefined && full.tblorderservicestatus != '') {
-          var statusname = full.tblorderservicestatus.OrderStatus;
-          if (statusname == "Approved") {
-            btns += '<md-button class="edit-button md-icon-button"  ng-click="RenewOrderService(' + data.id + ')" aria-label="">' +
-              '<md-icon md-font-icon="icon-account-network"  class="s18 blue-500-fg"></md-icon>' +
-              '<md-tooltip md-visible="" md-direction="">Renew Order Service</md-tooltip>' +
+          if ($rootScope.FlgModifiedAccess) {
+            btns += '<md-button class="edit-button md-icon-button"  ng-click="OpenUpdateDeviceModal($event,' + data.id + ')" aria-label="">' +
+              '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+              '<md-tooltip md-visible="" md-direction="">Edit Device</md-tooltip>' +
+              '</md-button>';
+          }
+
+          if ($rootScope.FlgModifiedAccess) {
+            if (full.tblorderservicestatus != null && full.tblorderservicestatus != undefined && full.tblorderservicestatus != '') {
+              var statusname = full.tblorderservicestatus.OrderStatus;
+              if (statusname == "Approved") {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="RenewOrderService(' + data.id + ')" aria-label="">' +
+                  '<md-icon md-font-icon="icon-account-network"  class="s18 blue-500-fg"></md-icon>' +
+                  '<md-tooltip md-visible="" md-direction="">Renew Order Service</md-tooltip>' +
+                  '</md-button>';
+              }
+            }
+          }
+
+          if ($rootScope.FlgModifiedAccess && full.tblorderservicestatus.OrderStatus == "Pending") {
+            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
+              '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="s18 green-500-fg"></md-icon>' +
+              '<md-tooltip md-visible="" md-direction="">Approve Order</md-tooltip>' +
               '</md-button>';
           }
         }
-      }
-
-      if ($rootScope.FlgModifiedAccess && full.tblorderservicestatus.OrderStatus == "Pending") {
-        btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
-          '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="s18 green-500-fg"></md-icon>' +
-          '<md-tooltip md-visible="" md-direction="">Approve Order</md-tooltip>' +
-          '</md-button>';
       }
       btns += '</div>'
       return btns;
