@@ -167,6 +167,20 @@
                                     </div>
                                 </div>
                             </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
+                                <label>App Name</label>
+                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                                </md-select>
+                                <div ng-messages="formTrackingdetails.AppName.$error" ng-if="formTrackingdetails.AppName.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>App Name is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
                         </div>
                         <div align="left ">
                             <md-button class="md-raised md-primary " ng-disabled="!formSIMInfo.$valid " ng-click="SaveSIMInfo(model) ">Save</md-button>

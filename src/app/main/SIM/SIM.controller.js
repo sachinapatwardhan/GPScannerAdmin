@@ -7,6 +7,8 @@
 
     /** @ngInject */
     function SIMController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
+        $rootScope.appId = localStorage.getItem('appId');
         var vm = this;
         vm.getAllSIMInfo = getAllSIMInfo;
         $scope.init = function() {
@@ -15,6 +17,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
+                idApp: $rootScope.appId,
             }
             $scope.modelSearch = {
                     Search: '',
@@ -24,8 +27,16 @@
             $scope.flag = false;
             getAllSIMInfo();
             $scope.GetAlltelco();
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.GetAllInfoList();
+            }
         }
-
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                console.log(data)
+                $scope.lstAppInfo = data.data;
+            })
+        }
         $scope.GetAlltelco = function() {
             $http.get($rootScope.RoutePath + "telco/GetAllCompany").then(function(data) {
                 $scope.lstCompany = data.data;
@@ -92,6 +103,7 @@
             $scope.model.SerialNum = o.SerialNum;
             $scope.model.PhoneNum = parseInt(o.PhoneNum);
             $scope.model.idTelCo = o.idTelCo;
+            $scope.model.idApp = o.idApp;
             $scope.flag = true;
         }
         $scope.onSearchChange = function($event) {
@@ -142,6 +154,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
+                idApp: $rootScope.appId,
             }
 
             $rootScope.FlgAddedEditlocal = false;
@@ -158,6 +171,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
+                idApp: $rootScope.appId,
 
             }
             $scope.modelSearch = {

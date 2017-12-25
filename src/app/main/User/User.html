@@ -147,6 +147,20 @@
                             <md-radio-button value="Female" class="md-primary"> Female </md-radio-button>
                         </md-radio-group>
                     </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
+                        <label>App Name</label>
+                        <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                        </md-select>
+                        <div ng-messages="AddUserForm.AppName.$error" ng-if="AddUserForm.AppName.$touched" role="alert">
+                            <div ng-message="required">
+                                <span>App Name is required.</span>
+                            </div>
+                        </div>
+                    </md-input-container>
                 </div>
                 <div ng-show="FlgImage" class="row" flex="100" flex-gt-xs="100">
                     <img ng-src="{{myCroppedImage}}" id="UploadedImage" err-src="assets/images/no-image.png" width="150px" />

@@ -7,11 +7,9 @@
 
     /** @ngInject */
     function UserController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
-        console.log("@@@@");
         var vm = this;
         $rootScope.appId = localStorage.getItem('appId');
         $rootScope.UserRoles = localStorage.getItem('UserRoles');
-
         $scope.init = function() {
             $scope.model = {
                 id: '',
@@ -43,8 +41,15 @@
 
             $scope.Search = '';
             $scope.flag = false;
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.GetAllInfoList();
+            }
         }
-
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstAppInfo = data.data;
+            })
+        }
         $scope.clearSearchTerm = function() {
             $scope.searchTermCountry = '';
             $scope.searchTermState = '';
@@ -86,6 +91,7 @@
             $scope.model.modifiedby = "Admin";
             $scope.model.id = o.id;
             $scope.model.userId = o.id;
+            $scope.model.idApp = o.idApp;
             //$scope.model.password = o.password;
             $scope.model.country = o.country;
             // $scope.GetAllStateByCountry($scope.model.country);
@@ -187,7 +193,7 @@
                     $cookieStore.put('UserImage', null);
                     $rootScope.UserImage = $cookieStore.get('UserImage');
                 }
-                o.idApp = localStorage.getItem('appId');
+                // o.idApp = localStorage.getItem('appId');
                 $http.post($rootScope.RoutePath + "user/SaveUserNew", o).then(function(data) {
                     //$scope.SaveUserInRole(o);
                     if (data.data.success == true) {
@@ -304,7 +310,13 @@
                         } else {
                             d.search = $scope.Search;
                         }
-                        d.appId = $rootScope.appId;
+                        if ($rootScope.UserRoles != 'Super Admin') {
+
+                            d.appId = $rootScope.appId;
+                        } else {
+                            d.appId = '';
+                        }
+
                         d.UserCountry = $rootScope.UserCountry;
                         d.UserRoles = $rootScope.UserRoles;
                         d.CountryList = $rootScope.CountryList;
