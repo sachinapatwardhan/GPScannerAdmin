@@ -72,6 +72,11 @@
                                     <span class="column-title ">Created Date</span>
                                 </div>
                             </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">App Name</span>
+                                </div>
+                            </th>
                             <th class="all ">
                                 <div class="table-header ">
                                     <span class="column-title ">Action</span>
@@ -86,6 +91,7 @@
                             <td>{{o.PhoneNum}} </td>
                             <td>{{o.TelName}} </td>
                             <td>{{o.CreatedDate | date: 'dd/MM/yyyy hh:mm a'}} </td>
+                            <td>{{o.AppName}}</td>
                             <td>
                                 <md-button class="edit-button md-icon-button " ng-click="editSIMById(o) ">
                                     <md-icon md-font-icon="icon-pencil " class="s18 green-500-fg "></md-icon>
