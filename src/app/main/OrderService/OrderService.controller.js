@@ -54,8 +54,8 @@
 
     $scope.dtColumns = [
       DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
-      DTColumnBuilder.newColumn('').notSortable().renderWith(TypeHtml).withOption('class', 'text-center'),
       DTColumnBuilder.newColumn('PurchaseOrderNumber').withOption('class', 'text-center'),
+      DTColumnBuilder.newColumn('AppName').renderWith(TypeHtml).withOption('class', 'text-center'),
       DTColumnBuilder.newColumn('Email').renderWith(EmailHtml).withOption('class', 'text-center'),
       // DTColumnBuilder.newColumn('UserName').renderWith(UserNameHtml).withOption('class', 'text-center'),
       DTColumnBuilder.newColumn('CreatedOnUtc').renderWith(DateFormateHtml).withOption('class', 'text-center'),
@@ -95,16 +95,7 @@
           type: "get",
           dataSrc: function(json) {
             if (json.success != false) {
-              for (var i = 0; i < json.data.length; i++) {
-                var objTypes = _.findWhere($scope.lstProductTypes, {
-                  id: parseInt(json.data[i].SubscriptionTransactionId)
-                });
-                if (objTypes != undefined) {
-                  json.data[i]["OType"] = objTypes.AppName;
-                }
-              }
               $scope.lstdata = json.data;
-
               return json.data;
             } else {
               $scope.lstdata = [];
@@ -116,7 +107,7 @@
         .withOption('serverSide', true)
         .withPaginationType('full_numbers')
         .withDisplayLength(25)
-        .withOption('aaSorting', [4, 'desc'])
+        .withOption('aaSorting', [4, 'asc'])
         .withOption('responsive', true)
         .withOption('createdRow', createdRow)
         .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
@@ -178,8 +169,8 @@
 
     function TypeHtml(data, type, full, meta) {
       var OType = '';
-      if (full.OType != null && full.OType != undefined && full.OType != '') {
-        OType = full.OType;
+      if (full.tblappinfo != null && full.tblappinfo != undefined && full.tblappinfo != '') {
+        OType = full.tblappinfo.AppName;
       }
       return OType;
     }
@@ -235,7 +226,7 @@
           if ($rootScope.FlgModifiedAccess && full.tblorderservicestatus.OrderStatus == "Pending") {
             btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
               '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="green-500-fg"></md-icon>' +
-              '<md-tooltip md-visible="" md-direction="">Approve Order</md-tooltip>' +
+              '<md-tooltip md-visible="" md-direction="">Approve Order Service</md-tooltip>' +
               '</md-button>';
           }
 
@@ -302,60 +293,74 @@
     }
 
     $scope.RenewOrderService = function(id) {
-      var objData = _.findWhere($scope.lstdata, {
-        id: id
-      });
-      var params = {
-        id: objData.id,
-      }
-      $http.get($rootScope.RoutePath + "orderservice/RenewOrderService", {
-        params: params
-      }).then(function(resRenew) {
-        if (resRenew.data.success == true) {
-          $mdToast.show(
-            $mdToast.simple()
-            .textContent(resRenew.data.message)
-            .position('top right')
-            .hideDelay(3000)
-          );
-          $scope.GetAllOrderService(true);
-          $mdDialog.hide();
-        } else {
-          $mdToast.show(
-            $mdToast.simple()
-            .textContent(resRenew.data.message)
-            .position('top right')
-            .hideDelay(3000)
-          );
+      var confirm = $mdDialog.confirm()
+        .title('Are you sure you want to renew this order service?')
+        .ok('Ok')
+        .cancel('Cancel')
+      $mdDialog.show(confirm).then(function(ISConfirm) {
+        var objData = _.findWhere($scope.lstdata, {
+          id: id
+        });
+        var params = {
+          id: objData.id,
         }
+        $http.get($rootScope.RoutePath + "orderservice/RenewOrderService", {
+          params: params
+        }).then(function(resRenew) {
+          if (resRenew.data.success == true) {
+            $mdToast.show(
+              $mdToast.simple()
+              .textContent(resRenew.data.message)
+              .position('top right')
+              .hideDelay(3000)
+            );
+            $scope.GetAllOrderService(true);
+            $mdDialog.hide();
+          } else {
+            $mdToast.show(
+              $mdToast.simple()
+              .textContent(resRenew.data.message)
+              .position('top right')
+              .hideDelay(3000)
+            );
+          }
+        });
       });
     }
 
 
     $scope.ChangeStatus = function(id) {
-      var params = {
-        id: id,
-      }
-      $http.get($rootScope.RoutePath + "orderservice/ChangeStatus", {
-        params: params
-      }).then(function(data) {
-        if (data.data.success == true) {
-          $mdToast.show(
-            $mdToast.simple()
-            .textContent(data.data.message)
-            .position('top right')
-            .hideDelay(3000)
-          );
-          $scope.GetAllOrderService(true);
-        } else {
-          $mdToast.show(
-            $mdToast.simple()
-            .textContent(data.data.message)
-            .position('top right')
-            .hideDelay(3000)
-          );
+      var confirm = $mdDialog.confirm()
+        .title('Are you sure you want to approve this order service?')
+        .ok('Ok')
+        .cancel('Cancel')
+      $mdDialog.show(confirm).then(function(ISConfirm) {
+
+        var params = {
+          id: id,
         }
+        $http.get($rootScope.RoutePath + "orderservice/ChangeStatus", {
+          params: params
+        }).then(function(data) {
+          if (data.data.success == true) {
+            $mdToast.show(
+              $mdToast.simple()
+              .textContent(data.data.message)
+              .position('top right')
+              .hideDelay(3000)
+            );
+            $scope.GetAllOrderService(true);
+          } else {
+            $mdToast.show(
+              $mdToast.simple()
+              .textContent(data.data.message)
+              .position('top right')
+              .hideDelay(3000)
+            );
+          }
+        });
       });
+
     }
 
     $scope.SearchReset = function() {
@@ -379,7 +384,7 @@
 
       $scope.modelUpdateDate = {
         id: $scope.objOrderData.id,
-        CreatedOnUtc: $scope.objOrderData.CreatedOnUtc
+        CreatedOnUtc: new Date($scope.objOrderData.CreatedOnUtc)
       }
     }
     $scope.UpdateOrderServiceDates = function(o) {
@@ -434,6 +439,30 @@
       });
     }
     // $scope.CreateOrder();
+
+    $scope.ExportOrderService = function() {
+      var search = '';
+      if ($scope.Search == '' || $scope.Search == '') {
+        search = '';
+      } else {
+        search = $scope.Search;
+      }
+      var StartDate = '';
+      if ($scope.modelSearch.StartDate != '') {
+        StartDate = $scope.modelSearch.StartDate.toUTCString();
+      } else {
+        StartDate = '';
+      }
+      var EndDate = '';
+      if ($scope.modelSearch.EndDate != '') {
+        EndDate = $scope.modelSearch.EndDate.toUTCString();
+      } else {
+        EndDate = '';
+      }
+      var Status = $scope.modelSearch.Status;
+      var Type = $scope.modelSearch.Type;
+      window.location = $rootScope.RoutePath + "orderservice/ExportOrderService?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "";
+    }
 
     $scope.init();
   }
