@@ -472,7 +472,11 @@
             }
             var Status = $scope.modelSearch.Status;
             var Type = $scope.modelSearch.Type;
-            window.location = $rootScope.RoutePath + "orderservice/ExportOrderService?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "";
+            var idApp=0;
+            if ($rootScope.UserRoles != 'Super Admin') {
+                idApp = $rootScope.idApp;
+            }
+            window.location = $rootScope.RoutePath + "orderservice/ExportOrderService?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp;
         }
 
         $scope.init();
