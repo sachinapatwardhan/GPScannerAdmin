@@ -8,17 +8,18 @@
     /** @ngInject */
     function UpdateDeviceModalController($http, $mdDialog, $mdToast, $scope, $cookieStore, $rootScope, obj, Tasks, event, MainVM) {
         var vm = this;
-        console.log(obj)
-
+        // console.log(obj)
         $scope.model = {
             id: obj.id,
             DeviceId: obj.OrderNotes,
+            OrderTotal: parseFloat(obj.OrderTotal)
         }
 
         $scope.SaveDevice = function (o) {
             var params = {
                 id: o.id,
                 DeviceId: o.DeviceId,
+                OrderTotal: o.OrderTotal,
             }
             $http.get($rootScope.RoutePath + "orderservice/UpdateDevice", { params: params }).then(function (data) {
                 if (data.data.success == true) {
@@ -46,6 +47,7 @@
             });
         }
 
+
         $scope.Reset = function () {
             $mdDialog.hide();
         }
@@ -53,5 +55,6 @@
         $scope.closeModel = function () {
             $mdDialog.hide();
         }
+
     }
 })();

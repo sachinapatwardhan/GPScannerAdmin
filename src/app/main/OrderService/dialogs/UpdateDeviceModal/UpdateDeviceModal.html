@@ -18,12 +18,21 @@
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm="50">
                         <label> Device </label>
-                        <input name="DeviceId" type="text" ng-required="true" ng-model="model.DeviceId" maxlength="250" md-maxlength="250"/>
+                        <input name="DeviceId" type="text" ng-required="true" ng-model="model.DeviceId" maxlength="250" md-maxlength="250" />
                         <div ng-messages="formUpdateDevice.DeviceId.$error" ng-if="formUpdateDevice.DeviceId.$touched" role="alert">
                             <div ng-message="required">
-                              <span>Device field is required</span>
+                                <span>Device field is required</span>
                             </div>
-                          </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label> Charges </label>
+                        <input name="OrderTotal" type="number" step="1.00" ng-required="true" ng-model="model.OrderTotal" />
+                        <div ng-messages="formUpdateDevice.OrderTotal.$error" ng-if="formUpdateDevice.OrderTotal.$touched" role="alert">
+                            <div ng-message="required">
+                                <span>Charges field is required</span>
+                            </div>
+                        </div>
                     </md-input-container>
                 </md-content>
                 <div align="left">

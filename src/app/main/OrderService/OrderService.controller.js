@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -10,15 +10,15 @@
     var vm = this;
 
     vm.GetAllOrderServiceFromModal = GetAllOrderServiceFromModal;
-    $scope.GetAllProductType = function () {
+    $scope.GetAllProductType = function() {
       $scope.lstProductTypes = [];
-      $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
+      $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
         $scope.lstProductTypes = data.data;
       });
     }
     $scope.GetAllProductType();
 
-    $scope.init = function () {
+    $scope.init = function() {
       $scope.modelSearch = {
         StartDate: '',
         EndDate: '',
@@ -26,21 +26,27 @@
         Type: 0,
       }
 
+      $scope.modelUpdateDate = {
+        id: 0,
+        CreatedOnUtc: null
+      }
+
+      $scope.ShowDtl = false;
       $scope.GetOrderServiceStatus();
     }
 
-    $scope.onSearchChange = function ($event) {
+    $scope.onSearchChange = function($event) {
       $event.stopPropagation();
     }
 
-    $scope.toggle = function () {
+    $scope.toggle = function() {
       if (!$scope.flgforIcon) {
         $scope.flgforIcon = true;
       } else {
         $scope.flgforIcon = false;
       }
 
-      $(function () {
+      $(function() {
         $(".showBtn").toggleClass("active");
         $(".ShowContentBox").slideToggle();
       });
@@ -61,51 +67,51 @@
       DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
     ]
 
-    $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
+    $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
 
 
       $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-        url: $rootScope.RoutePath + "orderservice/GetAllOrderService",
-        data: function (d) {
-          if ($scope.Search == '') {
-            d.search = '';
-          } else {
-            d.search = $scope.Search;
-          }
-          if ($scope.modelSearch.StartDate != '') {
-            d.StartDate = $scope.modelSearch.StartDate.toUTCString();
-          } else {
-            d.StartDate = '';
-          }
-          if ($scope.modelSearch.EndDate != '') {
-            d.EndDate = $scope.modelSearch.EndDate.toUTCString();
-          } else {
-            d.EndDate = '';
-          }
-          d.Status = $scope.modelSearch.Status;
-          d.Type = $scope.modelSearch.Type;
-          return d;
-        },
-        type: "get",
-        dataSrc: function (json) {
-          if (json.success != false) {
-            for (var i = 0; i < json.data.length; i++) {
-              var objTypes = _.findWhere($scope.lstProductTypes, {
-                id: parseInt(json.data[i].SubscriptionTransactionId)
-              });
-              if (objTypes != undefined) {
-                json.data[i]["OType"] = objTypes.AppName;
-              }
+          url: $rootScope.RoutePath + "orderservice/GetAllOrderService",
+          data: function(d) {
+            if ($scope.Search == '') {
+              d.search = '';
+            } else {
+              d.search = $scope.Search;
             }
-            $scope.lstdata = json.data;
+            if ($scope.modelSearch.StartDate != '') {
+              d.StartDate = $scope.modelSearch.StartDate.toUTCString();
+            } else {
+              d.StartDate = '';
+            }
+            if ($scope.modelSearch.EndDate != '') {
+              d.EndDate = $scope.modelSearch.EndDate.toUTCString();
+            } else {
+              d.EndDate = '';
+            }
+            d.Status = $scope.modelSearch.Status;
+            d.Type = $scope.modelSearch.Type;
+            return d;
+          },
+          type: "get",
+          dataSrc: function(json) {
+            if (json.success != false) {
+              for (var i = 0; i < json.data.length; i++) {
+                var objTypes = _.findWhere($scope.lstProductTypes, {
+                  id: parseInt(json.data[i].SubscriptionTransactionId)
+                });
+                if (objTypes != undefined) {
+                  json.data[i]["OType"] = objTypes.AppName;
+                }
+              }
+              $scope.lstdata = json.data;
 
-            return json.data;
-          } else {
-            $scope.lstdata = [];
-            return [];
-          }
-        },
-      })
+              return json.data;
+            } else {
+              $scope.lstdata = [];
+              return [];
+            }
+          },
+        })
         .withOption('processing', true)
         .withOption('serverSide', true)
         .withPaginationType('full_numbers')
@@ -122,7 +128,7 @@
 
 
     //Reload Datatable
-    $scope.GetAllOrderService = function (IsUpdate) {
+    $scope.GetAllOrderService = function(IsUpdate) {
       var resetPaging = false;
       if (IsUpdate == true) {
         resetPaging = true;
@@ -137,9 +143,9 @@
       $scope.GetAllOrderService(true);
     }
 
-    $scope.reloadData = function () { }
+    $scope.reloadData = function() {}
 
-    function callback(json) { }
+    function callback(json) {}
 
     //compile Datatable And Apply Class
     function createdRow(row, data, dataIndex) {
@@ -200,7 +206,7 @@
       if (full.tblorderservicestatus != null && full.tblorderservicestatus != undefined && full.tblorderservicestatus != '') {
         var statusname = full.tblorderservicestatus.OrderStatus;
         if (statusname == "Approved") {
-          status = '<b><span style="color:green;">'+ statusname +'</span></b>';
+          status = '<b><span style="color:green;">' + statusname + '</span></b>';
         } else if (statusname == "Pending") {
           status = '<span>Pending</span>';
         } else if (statusname == "Completed") {
@@ -226,45 +232,55 @@
               '</md-button>';
           }
 
+          if ($rootScope.FlgModifiedAccess && full.tblorderservicestatus.OrderStatus == "Pending") {
+            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
+              '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="green-500-fg"></md-icon>' +
+              '<md-tooltip md-visible="" md-direction="">Approve Order</md-tooltip>' +
+              '</md-button>';
+          }
+
           if ($rootScope.FlgModifiedAccess) {
             if (full.tblorderservicestatus != null && full.tblorderservicestatus != undefined && full.tblorderservicestatus != '') {
               var statusname = full.tblorderservicestatus.OrderStatus;
               if (statusname == "Approved") {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="RenewOrderService(' + data.id + ')" aria-label="">' +
-                  '<md-icon md-font-icon="icon-account-network"  class="s18 blue-500-fg"></md-icon>' +
+                  '<md-icon md-font-icon="icon-account-network"  class="blue-500-fg"></md-icon>' +
                   '<md-tooltip md-visible="" md-direction="">Renew Order Service</md-tooltip>' +
+                  '</md-button>';
+
+              }
+
+              if (statusname != "Completed") {
+
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="EditDates(' + data.id + ')" aria-label="">' +
+                  '<md-icon md-font-icon="icon-calendar-check-multiple" ></md-icon>' +
+                  '<md-tooltip md-visible="" md-direction="">Update Date</md-tooltip>' +
                   '</md-button>';
               }
             }
           }
 
-          if ($rootScope.FlgModifiedAccess && full.tblorderservicestatus.OrderStatus == "Pending") {
-            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
-              '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="s18 green-500-fg"></md-icon>' +
-              '<md-tooltip md-visible="" md-direction="">Approve Order</md-tooltip>' +
-              '</md-button>';
-          }
         }
       }
       btns += '</div>'
       return btns;
     };
 
-    $scope.GetSerch = function (Search) {
+    $scope.GetSerch = function(Search) {
       $scope.Search = Search;
       $scope.GetAllOrderService(true);
     }
 
 
-    $scope.GetOrderServiceStatus = function () {
+    $scope.GetOrderServiceStatus = function() {
       $scope.LstAllStatus = [];
-      $http.get($rootScope.RoutePath + "orderservice/GetOrderServiceStatus").then(function (resStatus) {
+      $http.get($rootScope.RoutePath + "orderservice/GetOrderServiceStatus").then(function(resStatus) {
         $scope.LstAllStatus = resStatus.data;
       });
     }
 
 
-    $scope.OpenUpdateDeviceModal = function (ev, id) {
+    $scope.OpenUpdateDeviceModal = function(ev, id) {
       var objData = _.findWhere($scope.lstdata, {
         id: id
       });
@@ -279,13 +295,13 @@
           obj: objData,
           Tasks: [],
           event: ev,
-          MainVM: vm
+          MainVM: vm,
+
         }
       })
     }
 
-
-    $scope.RenewOrderService = function (id) {
+    $scope.RenewOrderService = function(id) {
       var objData = _.findWhere($scope.lstdata, {
         id: id
       });
@@ -294,55 +310,55 @@
       }
       $http.get($rootScope.RoutePath + "orderservice/RenewOrderService", {
         params: params
-      }).then(function (resRenew) {
+      }).then(function(resRenew) {
         if (resRenew.data.success == true) {
           $mdToast.show(
             $mdToast.simple()
-              .textContent(resRenew.data.message)
-              .position('top right')
-              .hideDelay(3000)
+            .textContent(resRenew.data.message)
+            .position('top right')
+            .hideDelay(3000)
           );
           $scope.GetAllOrderService(true);
           $mdDialog.hide();
         } else {
           $mdToast.show(
             $mdToast.simple()
-              .textContent(resRenew.data.message)
-              .position('top right')
-              .hideDelay(3000)
+            .textContent(resRenew.data.message)
+            .position('top right')
+            .hideDelay(3000)
           );
         }
       });
     }
 
 
-    $scope.ChangeStatus = function (id) {
+    $scope.ChangeStatus = function(id) {
       var params = {
         id: id,
       }
       $http.get($rootScope.RoutePath + "orderservice/ChangeStatus", {
         params: params
-      }).then(function (data) {
+      }).then(function(data) {
         if (data.data.success == true) {
           $mdToast.show(
             $mdToast.simple()
-              .textContent(data.data.message)
-              .position('top right')
-              .hideDelay(3000)
+            .textContent(data.data.message)
+            .position('top right')
+            .hideDelay(3000)
           );
           $scope.GetAllOrderService(true);
         } else {
           $mdToast.show(
             $mdToast.simple()
-              .textContent(data.data.message)
-              .position('top right')
-              .hideDelay(3000)
+            .textContent(data.data.message)
+            .position('top right')
+            .hideDelay(3000)
           );
         }
       });
     }
 
-    $scope.SearchReset = function () {
+    $scope.SearchReset = function() {
       $scope.modelSearch = {
         StartDate: '',
         EndDate: '',
@@ -354,7 +370,58 @@
       $scope.GetAllOrderService(true);
     }
 
-    $scope.CreateOrder = function () {
+
+    $scope.EditDates = function(id) {
+      $scope.objOrderData = _.findWhere($scope.lstdata, {
+        id: id
+      });
+      $scope.ShowDtl = true;
+
+      $scope.modelUpdateDate = {
+        id: $scope.objOrderData.id,
+        CreatedOnUtc: $scope.objOrderData.CreatedOnUtc
+      }
+    }
+    $scope.UpdateOrderServiceDates = function(o) {
+      var params = {
+        id: o.id,
+        CreatedOnUtc: o.CreatedOnUtc,
+      }
+      $http.get($rootScope.RoutePath + "orderservice/UpdateOrderServiceDates", {
+        params: params
+      }).then(function(data) {
+        if (data.data.success == true) {
+          $mdToast.show(
+            $mdToast.simple()
+            .textContent(data.data.message)
+            .position('top right')
+            .hideDelay(3000)
+          );
+          $scope.ResetUpdateDates();
+          $scope.GetAllOrderService(true);
+          $mdDialog.hide();
+        } else {
+          $mdToast.show(
+            $mdToast.simple()
+            .textContent(data.data.message)
+            .position('top right')
+            .hideDelay(3000)
+          );
+        }
+      });
+    }
+
+    $scope.ResetUpdateDates = function() {
+      $scope.ShowDtl = false;
+
+      $scope.modelUpdateDate = {
+        id: 0,
+        CreatedOnUtc: null
+      }
+
+    }
+
+    $scope.CreateOrder = function() {
       var obj = {
         UserId: 1,
         DeviceId: "5418549849648",
@@ -362,7 +429,7 @@
         Country: "Malaysia",
         ProductTypeId: 1,
       }
-      $http.post($rootScope.RoutePath + "orderservice/CreateOrderService", obj).then(function (resRenew) {
+      $http.post($rootScope.RoutePath + "orderservice/CreateOrderService", obj).then(function(resRenew) {
         console.log(resRenew)
       });
     }
