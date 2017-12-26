@@ -118,7 +118,7 @@
                 .withOption('serverSide', true)
                 .withPaginationType('full_numbers')
                 .withDisplayLength(25)
-                .withOption('aaSorting', [4, 'asc'])
+                .withOption('aaSorting', [4, 'desc'])
                 .withOption('responsive', true)
                 .withOption('createdRow', createdRow)
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
