@@ -94,7 +94,11 @@
           },
           type: "get",
           dataSrc: function(json) {
+            $scope.TotalOrderTotal = 0;
             if (json.success != false) {
+              for (var i = 0; i < json.data.length; i++) {
+                $scope.TotalOrderTotal += json.data[i].OrderTotal;
+              }
               $scope.lstdata = json.data;
               return json.data;
             } else {
