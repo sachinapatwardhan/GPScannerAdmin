@@ -1,4 +1,4 @@
-<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row">
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
     <div class="top-bg md-accent-bg"></div>
     <div class="center" layout="column" flex>
         <div class="header" layout="row" layout-wrap layout-align="space-between center">
@@ -25,12 +25,18 @@
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button>
-              
-				 <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportOrderService()" aria-label="Search">
-                    					<md-icon md-font-icon="icon-file-excel"></md-icon>
-			
+
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportOrderService()" aria-label="Search">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+
                     <md-tooltip md-visible="" md-direction="">Export Order Service</md-tooltip>
                 </md-button>
+
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="AddOrderService()">
+                    <md-icon md-font-icon="icon-plus"></md-icon>
+                    <md-tooltip md-visible=" " md-direction=" ">Add New Order Service</md-tooltip>
+                </md-button>
+
             </div>
         </div>
         <div class="content-card" layout="column" flex>
@@ -154,6 +160,74 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-layout simple tabbed " layout="column " ng-show="flag">
+    <div class="header md-accent-bg " layout="row " layout-align="start center ">
+        <div class="white-fg " layout="row " layout-align="start center " flex>
+            <md-button class="goto-products-button md-icon-button " aria-label="Go to Vehicle " ng-click="ResetModel() ">
+                <md-icon md-font-icon="icon-arrow-left "></md-icon>
+            </md-button>
+            <div layout="row " layout-align="start center ">
+                <div layout="column " layout-align="start start ">
+                    <div class="subtitle secondary-text ">
+                        <span translate="Order Service">Order Service</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content " layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp ">
+            <md-content class="md-padding ">
+                <form name="formOrderService " novalidate class="md-inline-form " aria-invalid="false ">
+                    <div class="content ">
+                        <div layout="row " layout-wrap>
+                            <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
+                                <label>User Name</label>
+                                <input type="text " name="UserName " ng-model="model.UserName " required>
+                                <div ng-messages="formOrderService.UserName.$error " ng-if="formOrderService.UserName.$touched " role="alert ">
+                                    <div ng-message="required ">
+                                        <span>User Name field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
+                                <label>Device Id</label>
+                                <input type="number" name="DeviceId " ng-model="model.DeviceId " required>
+                                <div ng-messages="formOrderService.DeviceId.$error " ng-if="formOrderService.DeviceId.$touched " role="alert ">
+                                    <div ng-message="required ">
+                                        <span>Device Id field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
+                                <label>App Name</label>
+                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                                </md-select>
+                                <div ng-messages="formOrderService.AppName.$error" ng-if="formOrderService.AppName.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>App Name is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div align="left ">
+                            <md-button class="md-raised md-primary " ng-disabled="!formOrderService.$valid " ng-click="SaveOrderService(model) ">Save</md-button>
+                            <md-button class="md-accent md-raised " ng-click="AddOrderService() ">Reset</md-button>
+                            <md-button class="md-raised md-warn " ng-click="ResetModel() ">Cancel</md-button>
+                        </div>
+                    </div>
+                </form>
+            </md-content>
         </div>
     </div>
 </div>

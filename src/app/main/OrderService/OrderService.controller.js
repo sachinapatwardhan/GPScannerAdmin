@@ -8,7 +8,6 @@
     /** @ngInject */
     function OrderServiceController($http, $scope, $cookieStore, $rootScope, $state, $mdToast, $document, $mdDialog, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         var vm = this;
-
         vm.GetAllOrderServiceFromModal = GetAllOrderServiceFromModal;
 
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
@@ -23,6 +22,13 @@
         $scope.GetAllProductType();
 
         $scope.init = function() {
+
+            $scope.model = {
+                DeviceId: '',
+                UserName: '',
+                idApp: '',
+            }
+
             $scope.modelSearch = {
                 StartDate: '',
                 EndDate: '',
@@ -34,9 +40,10 @@
                 id: 0,
                 CreatedOnUtc: null
             }
-
+            $scope.flag = false;
             $scope.ShowDtl = false;
             $scope.GetOrderServiceStatus();
+            $scope.GetAllInfoList();
         }
 
         $scope.onSearchChange = function($event) {
@@ -472,12 +479,75 @@
             }
             var Status = $scope.modelSearch.Status;
             var Type = $scope.modelSearch.Type;
-            var idApp=0;
+            var idApp = 0;
             if ($rootScope.UserRoles != 'Super Admin') {
                 idApp = $rootScope.idApp;
             }
             window.location = $rootScope.RoutePath + "orderservice/ExportOrderService?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp;
         }
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                console.log(data)
+                $scope.lstAppInfo = data.data;
+            })
+        }
+
+
+        $scope.resetForm = function() {
+            $scope.formOrderService.$setUntouched();
+            $scope.formOrderService.$setPristine();
+        }
+        $scope.AddOrderService = function() {
+            $scope.model = {
+                DeviceId: '',
+                UserName: '',
+                idApp: '',
+            }
+            $scope.flag = true;
+            $scope.resetForm();
+        }
+
+        $scope.ResetModel = function() {
+            $scope.model = {
+                DeviceId: '',
+                UserName: '',
+                idApp: '',
+            }
+            $scope.resetForm();
+            $scope.flag = false;
+        }
+
+        $scope.SaveOrderService = function(o) {
+
+            if (o.idApp == '') {
+                o.idApp = $rootScope.idApp;
+            }
+            _.filter($scope.lstAppInfo, function(item) {
+                if (item.id == o.idApp) {
+                    o.AppName = item.AppName;
+                }
+            })
+            $http.post($rootScope.RoutePath + "orderservice/SaveOrderService", o).then(function(data) {
+                if (data.data.success == true) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                    $scope.ResetModel();
+                    $scope.GetAllOrderService(true);
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                }
+            })
+        }
+
 
         $scope.init();
     }
