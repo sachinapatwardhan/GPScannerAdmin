@@ -60,6 +60,7 @@
             'app.AssignDevice',
             'app.attribute',
             'app.product',
-            'app.orderservice'
+            'app.orderservice',
+            'app.WalletTransaction'
         ]);
 })();
