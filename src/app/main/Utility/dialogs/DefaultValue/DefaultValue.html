@@ -159,6 +159,22 @@
                                                 <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
                                             </md-button>
                                         </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40">
+                                            <label>ACC </label>
+                                            <input type="number" name="ACC" ng-model="model.ACC" max="65535">
+                                            <!-- <md-checkbox class="md-secondary" ng-model="model.ACC" ng-true-value="1" ng-false-value="0" flex></md-checkbox>&nbsp;&nbsp;Is ACC -->
+                                            <div ng-messages="formVehicledetails1.ACC.$error" ng-if="formVehicledetails1.ACC.$touched" role="alert">
+                                                <div ng-message="required">
+                                                    <span>ACC field is required</span>
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10">
+                                            <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.ACC, 'ACC')">
+                                                <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
+                                                <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
+                                            </md-button>
+                                        </md-input-container>
                                     </div>
 
                                 </div>

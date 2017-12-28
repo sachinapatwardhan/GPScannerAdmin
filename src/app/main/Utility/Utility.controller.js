@@ -220,6 +220,9 @@
                     if (data.data[i].Type == 'HeartbeatInterval') {
                         $scope.HeartbeatInterval = data.data[i].Value
                     }
+                    if (data.data[i].Type == 'ACC') {
+                        $scope.ACC = data.data[i].Value
+                    }
 
                 }
                 // $scope.selected.push()
@@ -232,6 +235,7 @@
                     Arm: $scope.Arm,
                     odometer: $scope.OdoMeter,
                     HeartbeatInterval: $scope.HeartbeatInterval,
+                    ACC: $scope.ACC,
                 }
                 $http.get($rootScope.RoutePath + "socketapi/SendCommandToDevice", { params: params }).then(function(data) {
                     $mdToast.show(

@@ -20,6 +20,7 @@
                 Arm: null,
                 OdoMeter: null,
                 HeartbeatInterval: null,
+                ACC: null,
             }
         };
 
@@ -46,6 +47,9 @@
                     }
                     if (data.data[i].Type == 'HeartbeatInterval') {
                         $scope.model.HeartbeatInterval = data.data[i].Value
+                    }
+                    if (data.data[i].Type == 'ACC') {
+                        $scope.model.ACC = data.data[i].Value
                     }
 
                 }
