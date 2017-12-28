@@ -61,6 +61,7 @@
             'app.attribute',
             'app.product',
             'app.orderservice',
-            'app.WalletTransaction'
+            'app.WalletTransaction',
+            'app.wallet'
         ]);
 })();
