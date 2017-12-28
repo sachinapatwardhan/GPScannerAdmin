@@ -62,6 +62,7 @@
             'app.product',
             'app.orderservice',
             'app.WalletTransaction',
-            'app.wallet'
+            'app.wallet',
+            'app.VehicleMonitor',
         ]);
 })();
