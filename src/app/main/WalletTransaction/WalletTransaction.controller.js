@@ -6,10 +6,20 @@
         .controller('WalletTransactionController', WalletTransactionController);
 
     /** @ngInject */
-    function WalletTransactionController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
+    function WalletTransactionController($http, $scope, $cookieStore, $rootScope, $state, $mdToast, $document, $mdDialog, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
         vm.isFormValid = isFormValid;
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
+        $rootScope.AppName = localStorage.getItem('appName');
+        $rootScope.idApp = localStorage.getItem('appId');
+        $scope.GetAllProductType = function() {
+            $scope.lstProductTypes = [];
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstProductTypes = data.data;
+            });
+        }
+        $scope.GetAllProductType();
 
         $scope.init = function() {
             $scope.model = {
@@ -25,6 +35,10 @@
             };
 
             $scope.modelSearch = {
+                StartDate: '',
+                EndDate: '',
+                Status: -1,
+                Type: 0,
                 Search: ''
             }
 
@@ -35,6 +49,19 @@
             $scope.GetAllAppInfo();
 
         }
+
+        $scope.toggle = function() {
+            if (!$scope.flgforIcon) {
+                $scope.flgforIcon = true;
+            } else {
+                $scope.flgforIcon = false;
+            }
+
+            $(function() {
+                $(".showBtn").toggleClass("active");
+                $(".ShowContentBox").slideToggle();
+            });
+        };
 
         $scope.GetAllAppInfo = function() {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
@@ -80,30 +107,37 @@
                     } else {
                         id = data.data.data.id;
                     }
-                    var formData = new FormData();
-                    angular.forEach($scope.Mediafiles, function(obj) {
-                        formData.append(id, obj.lfFile);
-                    });
-                    $http.post($rootScope.RoutePath + "WalletTransaction/uploadImage", formData, {
-                        transformRequest: angular.identity,
-                        headers: {
-                            'Content-Type': undefined
-                        }
-                    }).then(function(data) {
-                        if (data.data.success == true) {
-                            $mdToast.show(
-                                $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                            );
-                            $scope.init();
-                            $scope.restForm();
-                            $scope.apiMedia.removeAll();
-                            $scope.WalletTransactionReload(true);
+                    if ($scope.Mediafiles.lenght > 0) {
+                        var formData = new FormData();
+                        angular.forEach($scope.Mediafiles, function(obj) {
+                            formData.append(id, obj.lfFile);
+                        });
+                        $http.post($rootScope.RoutePath + "WalletTransaction/uploadImage", formData, {
+                            transformRequest: angular.identity,
+                            headers: {
+                                'Content-Type': undefined
+                            }
+                        }).then(function(data) {
+                            if (data.data.success == true) {
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                                );
+                                $scope.init();
+                                $scope.restForm();
+                                $scope.apiMedia.removeAll();
+                                $scope.WalletTransactionReload(true);
 
-                        }
-                    })
+                            }
+                        })
+                    } else {
+                        $scope.init();
+                        $scope.restForm();
+                        $scope.apiMedia.removeAll();
+                        $scope.WalletTransactionReload(true);
+                    }
                 } else {
                     if (data.data.data == 'TOKEN') {
                         //$cookieStore.remove('UserName');
@@ -127,12 +161,12 @@
         //Dynamic Pagging
 
 
-        $scope.dtWalletColumns = [
+        $scope.dtColumns = [
             DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
             DTColumnBuilder.newColumn('OrderNumber'),
             DTColumnBuilder.newColumn('AppName'),
-            DTColumnBuilder.newColumn('Amount'),
-            DTColumnBuilder.newColumn('Type'),
+            DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center'),
+            DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('Remark').renderWith(RemarkHtml),
             DTColumnBuilder.newColumn('IsPaymentSuccess').renderWith(StatusHtml).withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('CreatedBy'),
@@ -143,36 +177,27 @@
         ]
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
-            $scope.dtWalletcustomOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
+            $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "WalletTransaction/GetAllWallettransaction",
                     data: function(d) {
-                        d.search = $scope.modelSearch.Search;
-                        // if ($scope.modelSearch.idCountry == 'All') {
-                        //     d.idCountry = '';
-                        // } else {
-                        //     d.idCountry = $scope.modelSearch.idCountry;
-                        // }
-                        // if ($scope.modelSearch.idState == 'All') {
-                        //     d.idState = '';
-                        // } else {
-                        //     d.idState = $scope.modelSearch.idState;
-                        // }
-                        // if ($scope.modelSearch.idCity == 'All') {
-                        //     d.idCity = '';
-                        // } else {
-                        //     d.idCity = $scope.modelSearch.idCity;
-                        // }
-
-                        // if ($scope.modelSearch.IsActive == 'All') {
-                        //     d.IsActive = '';
-                        // } else {
-                        //     d.IsActive = $scope.modelSearch.IsActive;
-                        // }                      
+                        if ($scope.modelSearch.StartDate != '') {
+                            d.StartDate = $scope.modelSearch.StartDate.toUTCString();
+                        } else {
+                            d.StartDate = '';
+                        }
+                        if ($scope.modelSearch.EndDate != '') {
+                            d.EndDate = $scope.modelSearch.EndDate.toUTCString();
+                        } else {
+                            d.EndDate = '';
+                        }
                         if ($scope.IsShow == true) {
                             d.idApp = '';
                         } else {
                             d.idApp = parseInt(localStorage.getItem('appId'));
                         }
+                        d.search = $scope.modelSearch.Search;
+                        d.Status = $scope.modelSearch.Status;
+                        d.Type = $scope.modelSearch.Type;
                         return d;
                     },
                     type: "get",
@@ -209,8 +234,8 @@
             };
 
             $scope.dtInstance.reloadData(callback, resetPaging);
-            $('#WalletTransactiontable').dataTable()._fnPageChange(0);
-            $('#WalletTransactiontable').dataTable()._fnAjaxUpdate();
+            $('#Transactiontable').dataTable()._fnPageChange(0);
+            $('#Transactiontable').dataTable()._fnAjaxUpdate();
         }
 
         $scope.reloadData = function() {}
@@ -236,6 +261,16 @@
             }
             return status;
 
+        }
+
+        function TypeHtml(data, type, full, meta) {
+            var ttyp = 'N/A';
+            if (data == "Credit") {
+                ttyp = ' <span style="color:green;">Credit</span>'
+            } else if (data == "Debit") {
+                ttyp = ' <span style="color:red;">Debit</span>'
+            }
+            return ttyp;
         }
 
         function DateHtml(data, type, full, meta) {
@@ -405,6 +440,10 @@
             };
 
             $scope.modelSearch = {
+                StartDate: '',
+                EndDate: '',
+                Status: -1,
+                Type: 0,
                 Search: ''
             }
 
@@ -415,6 +454,30 @@
             $scope.apiMedia.removeAll();
         }
 
+        $scope.Cancel = function() {
+            $scope.model = {
+                id: 0,
+                idApp: '',
+                Amount: '',
+                Type: 'Credit',
+                Remark: '',
+                OrderNumber: '',
+                IsPaymentSuccess: 0,
+                PaymentType: 'Offline',
+                Country: $cookieStore.get('UserCountry')
+            };
+
+            $scope.modelSearch = {
+                StartDate: '',
+                EndDate: '',
+                Status: -1,
+                Type: 0,
+                Search: ''
+            }
+            $scope.flag = false;
+            $scope.restForm();
+
+        }
         $scope.init();
     }
 })();
