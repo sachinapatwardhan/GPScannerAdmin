@@ -38,7 +38,7 @@
                 StartDate: '',
                 EndDate: '',
                 Status: -1,
-                Type: 0,
+                idApp: 0,
                 Search: ''
             }
 
@@ -97,7 +97,6 @@
             }
         }
 
-        //Create Wallet
         $scope.CreateWallet = function(o) {
             $http.post($rootScope.RoutePath + "WalletTransaction/Savewallettransaction", o).then(function(data) {
                 if (data.data.success == true) {
@@ -161,22 +160,25 @@
         //Dynamic Pagging
 
 
-        $scope.dtColumns = [
-            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
-            DTColumnBuilder.newColumn('OrderNumber'),
-            DTColumnBuilder.newColumn('AppName'),
-            DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('Remark').renderWith(RemarkHtml),
-            DTColumnBuilder.newColumn('IsPaymentSuccess').renderWith(StatusHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('CreatedBy'),
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(DateHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn(null).renderWith(actionsHtml).notSortable(),
 
-        ]
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+
+            $scope.dtColumns = [
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center').withOption('width', '2%'),
+                DTColumnBuilder.newColumn('OrderNumber').withOption('width', '15%'),
+                DTColumnBuilder.newColumn('AppName').withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('Remark').renderWith(RemarkHtml),
+                DTColumnBuilder.newColumn('IsPaymentSuccess').renderWith(StatusHtml).withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('CreatedBy'),
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(DateHtml).withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateHtml).withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn(null).renderWith(actionsHtml).notSortable(),
+
+            ]
+
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "WalletTransaction/GetAllWallettransaction",
                     data: function(d) {
@@ -190,15 +192,17 @@
                         } else {
                             d.EndDate = '';
                         }
-
                         d.search = $scope.modelSearch.Search;
                         d.Status = $scope.modelSearch.Status;
-                        d.Type = $scope.modelSearch.Type;
-                        console.log($rootScope.UserRoles)
                         if ($rootScope.UserRoles != 'Super Admin') {
-                            d.idApp = '';
+                            d.idApp = $rootScope.idApp;
                         } else {
-                            d.idApp = $scope.modelSearch.idApp;
+                            console.log($scope.modelSearch.idApp)
+                            if ($scope.modelSearch.idApp == 0) {
+                                d.idApp = $rootScope.idApp;
+                            } else {
+                                d.idApp = $scope.modelSearch.idApp;
+                            }
                         }
                         return d;
                     },
@@ -229,12 +233,10 @@
 
         //Reload Datatable
         $scope.WalletTransactionReload = function(IsUpdate) {
-
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-
             $scope.dtInstance.reloadData(callback, resetPaging);
             $('#Transactiontable').dataTable()._fnPageChange(0);
             $('#Transactiontable').dataTable()._fnAjaxUpdate();
@@ -446,7 +448,7 @@
                 StartDate: '',
                 EndDate: '',
                 Status: -1,
-                Type: 0,
+                idApp: 0,
                 Search: ''
             }
 
@@ -469,18 +471,65 @@
                 PaymentType: 'Offline',
                 Country: $cookieStore.get('UserCountry')
             };
-
             $scope.modelSearch = {
                 StartDate: '',
                 EndDate: '',
                 Status: -1,
-                Type: 0,
+                idApp: 0,
                 Search: ''
             }
             $scope.flag = false;
             $scope.restForm();
 
         }
+
+        $scope.SearchReset = function() {
+            $scope.modelSearch = {
+                StartDate: '',
+                EndDate: '',
+                Status: -1,
+                idApp: 0,
+                Search: ''
+            }
+            $scope.WalletTransactionReload(true);
+        }
+
+        $scope.ExportWalletTransaction = function() {
+            var search = '';
+            if ($scope.modelSearch.Search == '' || $scope.modelSearch.Search == '') {
+                search = '';
+            } else {
+                search = $scope.modelSearch.Search;
+            }
+            var StartDate = '';
+            if ($scope.modelSearch.StartDate != '') {
+                StartDate = $scope.modelSearch.StartDate.toUTCString();
+            } else {
+                StartDate = '';
+            }
+            var EndDate = '';
+            if ($scope.modelSearch.EndDate != '') {
+                EndDate = $scope.modelSearch.EndDate.toUTCString();
+            } else {
+                EndDate = '';
+            }
+            var Status = $scope.modelSearch.Status;
+
+            var idApp = 0;
+            if ($rootScope.UserRoles != 'Super Admin') {
+                idApp = $rootScope.idApp;
+            } else {
+                if ($scope.modelSearch.idApp == 0) {
+                    idApp = $rootScope.idApp;
+                } else {
+                    idApp = $scope.modelSearch.idApp;
+                }
+
+            }
+
+            window.location = $rootScope.RoutePath + "WalletTransaction/ExportWalletTransaction?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&search=" + search + "&idApp=" + idApp;
+        }
+
         $scope.init();
     }
 })();
