@@ -273,9 +273,10 @@
             return ttyp;
         }
 
+
         function DateHtml(data, type, full, meta) {
-            if (full != null && full != undefined && full != '') {
-                return $rootScope.convertdateformat(full.CreatedDate, 1);
+            if (data != null && data != undefined && data != '') {
+                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
             } else {
                 return 'N/A';
             }
