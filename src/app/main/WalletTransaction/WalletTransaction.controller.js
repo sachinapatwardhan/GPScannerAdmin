@@ -190,14 +190,16 @@
                         } else {
                             d.EndDate = '';
                         }
-                        if ($scope.IsShow == true) {
-                            d.idApp = '';
-                        } else {
-                            d.idApp = parseInt(localStorage.getItem('appId'));
-                        }
+
                         d.search = $scope.modelSearch.Search;
                         d.Status = $scope.modelSearch.Status;
                         d.Type = $scope.modelSearch.Type;
+                        console.log($rootScope.UserRoles)
+                        if ($rootScope.UserRoles != 'Super Admin') {
+                            d.idApp = '';
+                        } else {
+                            d.idApp = $scope.modelSearch.idApp;
+                        }
                         return d;
                     },
                     type: "get",
