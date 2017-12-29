@@ -204,6 +204,7 @@
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(DateHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('Remark').renderWith(RemarkHtml).withOption('width', '10%'),
+                    DTColumnBuilder.newColumn('Country').renderWith(CountryHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('IsPaymentSuccess').renderWith(StatusHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn(null).renderWith(ImageHtml).withOption('class', 'text-center').notSortable(),
                     DTColumnBuilder.newColumn(null).renderWith(actionsHtml).notSortable(),
@@ -327,6 +328,14 @@
         }
 
         function RemarkHtml(data, type, full, meta) {
+            if (data != null && data != undefined && data != '') {
+                return data;
+            } else {
+                return 'N/A';
+            }
+        }
+
+        function CountryHtml(data, type, full, meta) {
             if (data != null && data != undefined && data != '') {
                 return data;
             } else {
