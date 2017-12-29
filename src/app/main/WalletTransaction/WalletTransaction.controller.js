@@ -205,7 +205,7 @@
                     DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('Remark').renderWith(RemarkHtml).withOption('width', '10%'),
                     DTColumnBuilder.newColumn('IsPaymentSuccess').renderWith(StatusHtml).withOption('class', 'text-center'),
-                    DTColumnBuilder.newColumn(null).renderWith(ImageHtml).withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).renderWith(ImageHtml).withOption('class', 'text-center').notSortable(),
                     DTColumnBuilder.newColumn(null).renderWith(actionsHtml).notSortable(),
 
                 ]
@@ -237,10 +237,14 @@
                             if (json.success != false) {
                                 $scope.lstWalletList = json.data;
                                 $scope.recordsTotal = json.recordsTotal;
+                                $scope.TotalCredit = 0;
+                                $scope.TotalDebit = 0;
                                 $scope.Amount = _.reduce($scope.lstWalletList, function(m, x) {
                                     if (x.Type == 'Credit') {
+                                        $scope.TotalCredit = $scope.TotalCredit + x.Amount;
                                         return m + x.Amount;
                                     } else {
+                                        $scope.TotalDebit = $scope.TotalDebit + x.Amount;
                                         return m - x.Amount;
                                     }
                                 }, 0)
@@ -341,10 +345,10 @@
         function ImageHtml(data, type, full, meta) {
             var img = '';
             if (full.PaymentReceipt != "") {
-                img = '<img ng-src="' + $rootScope.RoutePath + 'MediaUploads/WalletReceipt/' + full.PaymentReceipt + '" err-src="assets/images/default-user.png" height="50px" width="50px">';
+                img = '<img ng-src="' + $rootScope.RoutePath + 'MediaUploads/WalletReceipt/' + full.PaymentReceipt + '" err-src="assets/images/no-image.png" height="50px" width="50px">';
 
             } else if (full.PaymentReceipt == "") {
-                img = '<img ng-src="assets/images/default-user.png" height="50px" width="50px">';
+                img = '<img ng-src="assets/images/no-image.png" height="50px" width="50px">';
             }
             return img;
         }
