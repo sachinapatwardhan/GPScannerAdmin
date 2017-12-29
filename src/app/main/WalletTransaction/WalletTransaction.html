@@ -40,7 +40,7 @@
                 <div layout="row" layout-wrap>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-if="UserRoles == 'Super Admin'">
                         <label>Type</label>
-                        <md-select ng-model="modelSearch.idApp" ng-change="WalletTransactionReload(true)">
+                        <md-select ng-model="modelSearch.idAppsearch" ng-change="WalletTransactionReload(true)">
                             <md-option value="0">ALL</md-option>
                             <md-option value="{{o.id}}" ng-if="o.AppName!='Maark'" ng-repeat="o in lstProductTypes | orderBy:'AppName'">{{o.AppName}}</md-option>
                         </md-select>
