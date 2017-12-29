@@ -101,6 +101,7 @@
 
         $scope.CreateWallet = function(o) {
             $http.post($rootScope.RoutePath + "WalletTransaction/Savewallettransaction", o).then(function(data) {
+
                 if (data.data.success == true) {
                     var id;
                     if (o.id != 0) {
@@ -108,7 +109,7 @@
                     } else {
                         id = data.data.data.id;
                     }
-                    if ($scope.Mediafiles != undefined) {
+                    if ($scope.Mediafiles != undefined && $scope.Mediafiles != '' && $scope.Mediafiles != null) {
                         var formData = new FormData();
                         angular.forEach($scope.Mediafiles, function(obj) {
                             formData.append(id, obj.lfFile);
@@ -228,7 +229,6 @@
                             if ($rootScope.UserRoles != 'Super Admin') {
                                 d.idApp = $rootScope.idApp;
                             }
-                            console.log($scope.modelSearch.idAppsearch)
                             d.idAppsearch = $scope.modelSearch.idAppsearch;
                             return d;
                         },
@@ -474,11 +474,6 @@
 
         }
 
-        $scope.RemoveImage = function() {
-            $scope.apiMedia.removeAll();
-            $scope.model.PaymentReceipt = '';
-            $scope.FlgImage = false;
-        }
 
         $scope.ResetModel = function() {
             $scope.model = {
@@ -503,9 +498,10 @@
 
             $scope.flag = true;
             $scope.FlgImage = false;
+
             $scope.GetAllAppInfo(function() {
                 $scope.restForm();
-                //$scope.apiMedia.removeAll();
+                $scope.apiMedia.removeAll();
             });
 
         }
@@ -549,7 +545,7 @@
                 idAppsearch: 0
             }
             $scope.flag = false;
-
+            //$scope.apiMedia.removeAll();
             $scope.GetAllAppInfo(function() {
                 $scope.WalletTransactionReload(true);
             });
