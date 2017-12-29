@@ -31,7 +31,8 @@
                 OrderNumber: '',
                 IsPaymentSuccess: 0,
                 PaymentType: 'Offline',
-                Country: $cookieStore.get('UserCountry')
+                Country: $cookieStore.get('UserCountry'),
+                DeviceId: ''
             };
 
             $scope.modelSearch = {
@@ -41,15 +42,16 @@
                 idApp: 0,
                 Search: '',
                 idAppsearch: 0,
+                Type: 'All'
             }
 
 
             $scope.flag = false;
             $scope.IsShow = false;
             $scope.FlgImage = false;
-            $scope.GetAllAppInfo(function() {
+            // $scope.GetAllAppInfo(function() {
 
-            });
+            // });
 
         }
 
@@ -65,7 +67,6 @@
                 $(".ShowContentBox").slideToggle();
             });
         };
-
         $scope.GetAllAppInfo = function(callback) {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
                 var AppInfo = _.findWhere(data.data, { id: parseInt(localStorage.getItem('appId')) });
@@ -79,13 +80,31 @@
                     $scope.model.idApp = parseInt(localStorage.getItem('appId'));
                     $scope.modelSearch.idAppsearch = parseInt(localStorage.getItem('appId'));
                 }
+                $scope.GetDeviceID(AppInfo.AppName)
                 return callback();
+            });
+        }
+
+        $scope.GetDeviceID = function(AppName) {
+
+            var params = {
+                AppName: AppName
+            }
+            $http.get($rootScope.RoutePath + "WalletTransaction/GetAllDeviceID", {
+                params: params
+            }).then(function(DeviceID) {
+                if (DeviceID.data.length > 0) {
+                    $scope.lstDeviceId = DeviceID.data;
+                } else {
+                    $scope.lstDeviceId = [];
+                }
             });
         }
 
         $scope.clearSearchTerm = function() {
             $scope.searchdropdown = {
                 searchAppInfo: '',
+                searchDeviceId: ''
             }
         };
 
@@ -197,6 +216,7 @@
                 $scope.dtColumns = [
                     DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center').withOption('width', '2%'),
                     DTColumnBuilder.newColumn('OrderNumber').withOption('width', '15%').withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn('DeviceId').renderWith(DeviceIdHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('AppName').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center').withOption('width', '2%'),
                     DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center'),
@@ -223,6 +243,11 @@
                                 d.EndDate = $scope.modelSearch.EndDate.toUTCString();
                             } else {
                                 d.EndDate = '';
+                            }
+                            if ($scope.modelSearch.Type != 'All') {
+                                d.Type = $scope.modelSearch.Type;
+                            } else {
+                                d.Type = '';
                             }
                             d.search = $scope.modelSearch.Search;
                             d.Status = $scope.modelSearch.Status;
@@ -328,6 +353,14 @@
         }
 
         function RemarkHtml(data, type, full, meta) {
+            if (data != null && data != undefined && data != '') {
+                return data;
+            } else {
+                return 'N/A';
+            }
+        }
+
+        function DeviceIdHtml(data, type, full, meta) {
             if (data != null && data != undefined && data != '') {
                 return data;
             } else {
@@ -498,7 +531,8 @@
                 OrderNumber: '',
                 IsPaymentSuccess: 0,
                 PaymentType: 'Offline',
-                Country: $cookieStore.get('UserCountry')
+                Country: $cookieStore.get('UserCountry'),
+                DeviceId: ''
             };
 
             $scope.modelSearch = {
@@ -506,7 +540,8 @@
                 EndDate: '',
                 Status: -1,
                 idApp: 0,
-                Search: ''
+                Search: '',
+                Type: 'All'
             }
 
             $scope.flag = true;
@@ -529,7 +564,8 @@
                 OrderNumber: '',
                 IsPaymentSuccess: 0,
                 PaymentType: 'Offline',
-                Country: $cookieStore.get('UserCountry')
+                Country: $cookieStore.get('UserCountry'),
+                DeviceId: ''
             };
             $scope.modelSearch = {
                 StartDate: '',
@@ -537,7 +573,8 @@
                 Status: -1,
                 idApp: 0,
                 Search: '',
-                idAppsearch: 0
+                idAppsearch: 0,
+                Type: 'All'
             }
             $scope.GetAllAppInfo(function() {
 
@@ -555,7 +592,8 @@
                 Status: -1,
                 idApp: 0,
                 Search: '',
-                idAppsearch: 0
+                idAppsearch: 0,
+                Type: 'All'
             }
             $scope.flag = false;
             //$scope.apiMedia.removeAll();

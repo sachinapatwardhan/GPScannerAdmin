@@ -76,6 +76,14 @@
                             <md-option value="2">Completed</md-option>
                         </md-select>
                     </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+                        <label>Status</label>
+                        <md-select ng-model="modelSearch.Type" ng-change="WalletTransactionReload(true)">
+                            <md-option value="All">All</md-option>
+                            <md-option value="Credit">Credit</md-option>
+                            <md-option value="Debit">Debit</md-option>
+                        </md-select>
+                    </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>Start Date</label>
                         <input name="Start" mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="modelSearch.EndDate" format="DD-MM-YYYY" ng-model="modelSearch.StartDate">
@@ -110,6 +118,11 @@
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Order Number</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">DeviceId</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -221,6 +234,20 @@
                         <div ng-messages="formWalletTransaction.Amount.$error" ng-if="formWalletTransaction.Amount.$touched">
                             <div ng-message="required">
                                 <span>Amount is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="50">
+                        <label>DeviceId</label>
+                        <md-select Name="DeviceId" ng-model="model.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="searchdropdown.searchDeviceId" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstDeviceId |filter:searchdropdown.searchDeviceId| orderBy: 'DeviceId'">{{o.DeviceId}}</md-option>
+                        </md-select>
+                        <div ng-messages="formWalletTransaction.DeviceId.$error" ng-if="formWalletTransaction.DeviceId.$touched">
+                            <div ng-message="required">
+                                <span>DeviceId is required</span>
                             </div>
                         </div>
                     </md-input-container>
