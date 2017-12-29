@@ -12,21 +12,40 @@
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.AppName = localStorage.getItem('appName');
         $rootScope.idApp = localStorage.getItem('appId');
-        $scope.GetAllProductType = function () {
+
+        $scope.IsMark = false;
+        var GidApp = 0;
+        $scope.GetAllProductType = function (callback) {
             $scope.lstProductTypes = [];
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
                 $scope.lstProductTypes = data.data;
+                var AppInfo = _.findWhere(data.data, { id: parseInt(localStorage.getItem('appId')) });
+                if (AppInfo != undefined && AppInfo.AppName == "Maark") {
+                    $scope.lstProductTypes = _.filter(data.data, function (item) {
+                        if (parseInt(item.id) != parseInt(localStorage.getItem('appId'))) {
+                            return item;
+                        }
+                    });
+                } else {
+                    console.log("CAL")
+                    GidApp = parseInt(localStorage.getItem('appId'));
+                }
+                return callback();
             });
         }
-        $scope.GetAllProductType();
+
 
         $scope.init = function () {
-            $scope.modelSearch = {
-                StartDate: '',
-                EndDate: '',
-                Type: 'All',
-                idApp: 0,
-            }
+            $scope.GetAllProductType(function () {
+                $scope.modelSearch = {
+                    StartDate: '',
+                    EndDate: '',
+                    Type: 'All',
+                    idApp: GidApp,
+                }
+
+                console.log($scope.modelSearch)
+            });
         }
 
         $scope.onSearchChange = function ($event) {
@@ -49,70 +68,92 @@
 
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center').withOption('width', '2%'),
-                DTColumnBuilder.newColumn('OrderNo').renderWith(OrderNoHtml).withOption('class', 'text-center').withOption('width', '15%'),
-                DTColumnBuilder.newColumn('AppName').renderWith(AppNameHtml).withOption('class', 'text-center'),
-                DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center'),
-                DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center'),
-                DTColumnBuilder.newColumn('Country').renderWith(CountryHtml).withOption('class', 'text-center'),
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(DateFormateHtml).withOption('class', 'text-center'),
-                DTColumnBuilder.newColumn('Remark').withOption('class', 'text-center'),
-            ]
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
+                var AppInfo = _.findWhere(data.data, { id: parseInt(localStorage.getItem('appId')) });
+                if (AppInfo != undefined && AppInfo.AppName == "Maark") {
+                    $scope.IsMark = true;
+                    ForwardProced();
+                } else {
+                    $scope.IsMark = false;
+                    $scope.modelSearch.idApp = parseInt(localStorage.getItem('appId'));
+                    ForwardProced();
+                }
 
-            $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "WalletTransaction/GetAllWalletes",
-                data: function (d) {
-                    if ($scope.Search == '') {
-                        d.search = '';
-                    } else {
-                        d.search = $scope.Search;
-                    }
-                    if ($scope.modelSearch.StartDate != '') {
-                        d.StartDate = $scope.modelSearch.StartDate.toUTCString();
-                    } else {
-                        d.StartDate = '';
-                    }
-                    if ($scope.modelSearch.EndDate != '') {
-                        d.EndDate = $scope.modelSearch.EndDate.toUTCString();
-                    } else {
-                        d.EndDate = '';
-                    }
-                    if ($rootScope.UserRoles != 'Super Admin') {
-                        d.idApp = $rootScope.idApp;
-                    } else {
-                        d.idApp = $scope.modelSearch.idApp;
-                    }
-                    d.Type = $scope.modelSearch.Type;
-                    return d;
-                },
-                type: "get",
-                dataSrc: function (json) {
-                    $scope.TotalOrderTotal = 0;
-                    if (json.success != false) {
-                        for (var i = 0; i < json.data.length; i++) {
-                            $scope.TotalOrderTotal += json.data[i].Amount;
-                        }
-                        $scope.lstdata = json.data;
-                        return json.data;
-                    } else {
-                        $scope.TotalOrderTotal = 0;
-                        $scope.lstdata = [];
-                        return [];
-                    }
-                },
-            })
-                .withOption('processing', true)
-                .withOption('serverSide', true)
-                .withPaginationType('full_numbers')
-                .withDisplayLength(25)
-                .withOption('aaSorting', [6, 'desc'])
-                .withOption('responsive', true)
-                .withOption('createdRow', createdRow)
-                .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
-                .withOption('scrollY', 'auto');
+                function ForwardProced() {
 
+                    $scope.dtColumns = [
+                        DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center').withOption('width', '2%'),
+                        DTColumnBuilder.newColumn('OrderNo').renderWith(OrderNoHtml).withOption('class', 'text-center').withOption('width', '15%'),
+                        DTColumnBuilder.newColumn('AppName').renderWith(AppNameHtml).withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn('Country').renderWith(CountryHtml).withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn('CreatedDate').renderWith(DateFormateHtml).withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn('Remark').withOption('class', 'text-center'),
+                    ]
+
+                    $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
+                        url: $rootScope.RoutePath + "WalletTransaction/GetAllWalletes",
+                        data: function (d) {
+                            if ($scope.Search == '') {
+                                d.search = '';
+                            } else {
+                                d.search = $scope.Search;
+                            }
+                            if ($scope.modelSearch.StartDate != '') {
+                                d.StartDate = $scope.modelSearch.StartDate.toUTCString();
+                            } else {
+                                d.StartDate = '';
+                            }
+                            if ($scope.modelSearch.EndDate != '') {
+                                d.EndDate = $scope.modelSearch.EndDate.toUTCString();
+                            } else {
+                                d.EndDate = '';
+                            }
+                            if ($rootScope.UserRoles != 'Super Admin') {
+                                d.idApp = $rootScope.idApp;
+                            } else {
+                                d.idApp = $scope.modelSearch.idApp;
+                            }
+                            d.Type = $scope.modelSearch.Type;
+                            return d;
+                        },
+                        type: "get",
+                        dataSrc: function (json) {
+                            $scope.TotalOrderTotal = 0;
+                            $scope.TotalCredit = 0;
+                            $scope.TotalDebit = 0;
+                            if (json.success != false) {
+                                for (var i = 0; i < json.data.length; i++) {
+                                    if (json.data[i].Type == "Credit") {
+                                        $scope.TotalCredit += json.data[i].Amount;
+                                    } else {
+                                        $scope.TotalDebit += json.data[i].Amount;
+                                    }
+                                }
+                                $scope.TotalOrderTotal = $scope.TotalCredit - $scope.TotalDebit;
+                                $scope.lstdata = json.data;
+                                return json.data;
+                            } else {
+                                $scope.lstdata = [];
+                                return [];
+                            }
+                        },
+                    })
+                        .withOption('processing', true)
+                        .withOption('serverSide', true)
+                        .withPaginationType('full_numbers')
+                        .withDisplayLength(25)
+                        .withOption('aaSorting', [6, 'desc'])
+                        .withOption('responsive', true)
+                        .withOption('createdRow', createdRow)
+                        .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+                        .withOption('scrollY', 'auto');
+                }
+            });
         });
+
+
         $scope.dtInstance = {};
 
         //Reload Datatable
@@ -226,7 +267,7 @@
                 StartDate: '',
                 EndDate: '',
                 Type: 'All',
-                idApp: 0
+                idApp: GidApp
             }
             $scope.Search = "";
             $('#modelsearch').val("");

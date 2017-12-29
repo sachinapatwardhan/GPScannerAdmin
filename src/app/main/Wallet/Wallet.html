@@ -12,8 +12,26 @@
                     <b>{{lstdata.length}}</b>
                 </div>
                 <div class="product-count secondary-text" hide-xs>
-                    <span>Total Wallet Amount:</span>
+                    <span>Total Wallet Amount : </span>
                     <b>{{TotalOrderTotal}}</b>
+                </div>
+                <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row">
+                    <div class="product-count secondary-text" hide-xs>
+                        <span>
+                            Total Credit : 
+                        </span>
+                        <b>
+                            {{TotalCredit}}
+                        </b>
+                    </div>
+                    <div class="product-count secondary-text" hide-xs>
+                        <span>
+                            Total Debit : 
+                        </span>
+                        <b>
+                            {{TotalDebit}}
+                        </b>
+                    </div>
                 </div>
             </div>
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
@@ -40,9 +58,9 @@
                 <div layout="row" layout-wrap>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-if="UserRoles == 'Super Admin'">
                         <label>AppName</label>
-                        <md-select ng-model="modelSearch.idApp" ng-change="GetAllWalletes(true)">
+                        <md-select ng-model="modelSearch.idApp" ng-change="GetAllWalletes(true)" ng-disabled="!IsMark">
                             <md-option value="0">ALL</md-option>
-                            <md-option value="{{o.id}}" ng-if="o.AppName!='Maark'" ng-repeat="o in lstProductTypes | orderBy:'AppName'">{{o.AppName}}</md-option>
+                            <md-option value="{{o.id}}" ng-repeat="o in lstProductTypes | orderBy:'AppName'">{{o.AppName}}</md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
