@@ -143,7 +143,7 @@
                         .withOption('processing', true)
                         .withOption('serverSide', true)
                         .withPaginationType('full_numbers')
-                        .withDisplayLength(25)
+                        .withDisplayLength(50)
                         .withOption('aaSorting', [6, 'desc'])
                         .withOption('responsive', true)
                         .withOption('createdRow', createdRow)
