@@ -1540,6 +1540,10 @@
     }
 
     function actionsHtml(data, type, full, meta) {
+      console.log($rootScope.FlgAddedAccess);
+      console.log($rootScope.FlgAddedEditlocal);
+      console.log($rootScope.FlgModifiedAccess);
+      console.log($rootScope.FlgDeletedAccess);
       var btn = '<div layout="row" layout-align="center center">';
       // if ($rootScope.FlgModifiedAccess) {
 
@@ -1554,7 +1558,7 @@
           '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
           '</md-button>';
       }
-      if ($rootScope.FlgModifiedAccess) {
+      if ($rootScope.FlgDeletedAccess) {
         btn += '<md-button class="edit-button md-icon-button" ng-click="DeleteProductPanel(' + full.Id + ')">' +
           '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
           '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +

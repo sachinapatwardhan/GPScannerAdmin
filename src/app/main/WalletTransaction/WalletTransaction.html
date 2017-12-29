@@ -40,7 +40,7 @@
                 <div layout="row" layout-wrap>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-if="UserRoles == 'Super Admin'">
                         <label>Type</label>
-                        <md-select ng-model="modelSearch.idAppsearch" ng-change="WalletTransactionReload(true)">
+                        <md-select ng-model="modelSearch.idAppsearch" ng-change="WalletTransactionReload(true)" ng-disabled="!IsShow">
                             <md-option value="0">ALL</md-option>
                             <md-option value="{{o.id}}" ng-if="o.AppName!='Maark'" ng-repeat="o in lstProductTypes | orderBy:'AppName'">{{o.AppName}}</md-option>
                         </md-select>
@@ -87,7 +87,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">OrderNumber</span>
+                                    <span class="column-title">Order Number</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -108,17 +108,17 @@
 
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Createdby</span>
+                                    <span class="column-title">Created by</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">CreatedDate</span>
+                                    <span class="column-title">Created Date</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">ExpiryDate</span>
+                                    <span class="column-title">Expiry Date</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -133,7 +133,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">PaymentReceipt</span>
+                                    <span class="column-title">Payment Receipt</span>
                                 </div>
                             </th>
                             <th class="all">

@@ -34,7 +34,8 @@
         // $rootScope.appName = 'Maark';
 
         var url = $window.location.protocol + "//" + $window.location.host + "/";
-
+        // var url = "http://192.168.1.50:3000/"
+        
         var params = {
             AdminUrl: url,
         }
@@ -131,6 +132,7 @@
                     $rootScope.FlgModifiedAccess = false;
                     $rootScope.FlgDeletedAccess = false;
                 }
+                
                 return callback(1);
             })
 
