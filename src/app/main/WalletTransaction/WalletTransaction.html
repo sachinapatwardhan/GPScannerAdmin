@@ -7,10 +7,14 @@
                     <md-icon md-font-icon="icon-cube-outline"></md-icon>
                     <span translate="Wallet Transaction">Wallet Transaction</span>
                 </div>
-                <!-- <div class="product-count secondary-text" hide-xs>
-                    <span>Total Wallet :</span>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Wallet Transaction:</span>
                     <b>{{recordsTotal}}</b>
-                </div> -->
+                </div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Amount:</span>
+                    <b>{{Amount}}</b>
+                </div>
             </div>
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
@@ -29,7 +33,7 @@
                 </md-button>
                 <div ng-if="FlgAddedEditlocal">
                     <md-button class="md-raised md-background" ng-click="ResetModel()">
-                        <span translate="Wallet Transaction">Wallet Transaction</span>
+                        <span translate="Add">Add</span>
                     </md-button>
                 </div>
             </div>
@@ -180,6 +184,13 @@
                                 <span>App Name is required</span>
                             </div>
                         </div>
+                    </md-input-container>
+                    <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="50" ng-if="IsShow">
+                        <label>Transaction</label>
+                        <md-select Name="idChair" ng-model="model.Type" data-md-container-class="selectdemoSelectHeader">
+                            <md-option value="Credit">Credit</md-option>
+                            <md-option value="Debit">Debit</md-option>
+                        </md-select>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="50">
                         <label>Amount </label>
