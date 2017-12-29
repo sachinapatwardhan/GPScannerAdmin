@@ -80,21 +80,24 @@
                     $scope.model.idApp = parseInt(localStorage.getItem('appId'));
                     $scope.modelSearch.idAppsearch = parseInt(localStorage.getItem('appId'));
                 }
-                $scope.GetDeviceID(AppInfo.AppName)
+                $scope.GetDeviceID(AppInfo.AppName, false)
                 return callback();
             });
         }
 
-        $scope.GetDeviceID = function (AppName) {
-
+        $scope.GetDeviceID = function(AppName, Isflag) {
+            if (Isflag == true) {
+                var AppName = _.findWhere($scope.lstAppInfo, { id: parseInt(AppName) }).AppName;
+            }
             var params = {
                 AppName: AppName
             }
             $http.get($rootScope.RoutePath + "WalletTransaction/GetAllDeviceID", {
                 params: params
             }).then(function (DeviceID) {
+                console.log(DeviceID)
                 if (DeviceID.data.length > 0) {
-                    $scope.lstDeviceId = DeviceID.data;
+                    $scope.lstDeviceId = _.uniq(DeviceID.data, 'DeviceId');
                 } else {
                     $scope.lstDeviceId = [];
                 }
@@ -286,7 +289,7 @@
                     .withOption('serverSide', true) // for server side processing
                     .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                     .withDisplayLength(25) // Page size
-                    .withOption('aaSorting', [6, 'desc'])
+                    .withOption('aaSorting', [7, 'desc'])
                     .withOption('responsive', true)
                     .withOption('createdRow', createdRow)
                     // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')

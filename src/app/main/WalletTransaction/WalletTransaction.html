@@ -209,7 +209,7 @@
                 <div layout="row" layout-wrap>
                     <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="50" ng-if="IsShow">
                         <label>App Info</label>
-                        <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true">
+                        <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true" ng-change="GetDeviceID(model.idApp,true)">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="searchdropdown.searchAppInfo" type="search" placeholder="Search for a User.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
@@ -243,7 +243,7 @@
                             <md-select-header class="demo-select-header">
                                 <input ng-model="searchdropdown.searchDeviceId" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
-                            <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstDeviceId |filter:searchdropdown.searchDeviceId| orderBy: 'DeviceId'">{{o.DeviceId}}</md-option>
+                            <md-option value="{{o.DeviceId}}" ng-repeat="o in lstDeviceId |filter:searchdropdown.searchDeviceId| orderBy: 'DeviceId'">{{o.DeviceId}}</md-option>
                         </md-select>
                         <div ng-messages="formWalletTransaction.DeviceId.$error" ng-if="formWalletTransaction.DeviceId.$touched">
                             <div ng-message="required">
