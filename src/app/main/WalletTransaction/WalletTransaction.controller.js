@@ -194,12 +194,18 @@
                         }
                         d.search = $scope.modelSearch.Search;
                         d.Status = $scope.modelSearch.Status;
+                        console.log($rootScope.UserRoles)
+                        console.log($rootScope.idApp)
                         if ($rootScope.UserRoles != 'Super Admin') {
                             d.idApp = $rootScope.idApp;
                         } else {
                             console.log($scope.modelSearch.idApp)
                             if ($scope.modelSearch.idApp == 0) {
-                                d.idApp = $rootScope.idApp;
+                                if ($rootScope.idApp == 1) {
+                                    d.idApp = '';
+                                } else {
+                                    d.idApp = $rootScope.idApp;
+                                }
                             } else {
                                 d.idApp = $scope.modelSearch.idApp;
                             }
