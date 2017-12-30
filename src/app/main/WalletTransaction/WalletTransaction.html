@@ -77,7 +77,7 @@
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
-                        <label>Status</label>
+                        <label>Type</label>
                         <md-select ng-model="modelSearch.Type" ng-change="WalletTransactionReload(true)">
                             <md-option value="All">All</md-option>
                             <md-option value="Credit">Credit</md-option>
@@ -211,7 +211,7 @@
                         <label>App Info</label>
                         <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true" ng-change="GetDeviceID(model.idApp,true)">
                             <md-select-header class="demo-select-header">
-                                <input ng-model="searchdropdown.searchAppInfo" type="search" placeholder="Search for a User.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                <input ng-model="searchdropdown.searchAppInfo" type="search" placeholder="Search for a App .." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
                             <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo |filter:searchdropdown.searchAppInfo| orderBy: 'AppName'">{{o.AppName}}</md-option>
                         </md-select>

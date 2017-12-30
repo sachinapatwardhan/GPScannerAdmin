@@ -217,19 +217,19 @@
             function ResCall() {
 
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center').withOption('width', '2%'),
-                    DTColumnBuilder.newColumn('OrderNumber').withOption('width', '15%').withOption('class', 'text-center'),
-                    DTColumnBuilder.newColumn('DeviceId').renderWith(DeviceIdHtml).withOption('class', 'text-center'),
-                    DTColumnBuilder.newColumn('AppName').withOption('class', 'text-center'),
-                    DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center').withOption('width', '2%'),
-                    DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center'),
-                    DTColumnBuilder.newColumn('CreatedBy').withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center').withOption('width', '2%').withOption('responsivePriority', 0),
+                    DTColumnBuilder.newColumn('OrderNumber').withOption('width', '15%').withOption('class', 'text-center').withOption('responsivePriority', 1),
+                    DTColumnBuilder.newColumn('DeviceId').renderWith(DeviceIdHtml).withOption('class', 'text-center').withOption('responsivePriority', 2),
+                    DTColumnBuilder.newColumn('AppName').withOption('class', 'text-center').withOption('responsivePriority', 3),
+                    DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center').withOption('width', '2%').withOption('responsivePriority', 4),
+                    DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center').withOption('responsivePriority', 6),
+                    DTColumnBuilder.newColumn('CreatedBy').withOption('class', 'text-center').withOption('responsivePriority', 7),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(DateHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('Remark').renderWith(RemarkHtml).withOption('width', '10%'),
                     DTColumnBuilder.newColumn('Country').renderWith(CountryHtml).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('IsPaymentSuccess').renderWith(StatusHtml).withOption('class', 'text-center'),
-                    DTColumnBuilder.newColumn(null).renderWith(ImageHtml).withOption('class', 'text-center').notSortable(),
+                    DTColumnBuilder.newColumn(null).renderWith(ImageHtml).withOption('class', 'text-center').notSortable().withOption('responsivePriority', 5),
                     DTColumnBuilder.newColumn(null).renderWith(actionsHtml).notSortable(),
 
                 ]
@@ -483,7 +483,7 @@
 
         $scope.RenewOrderService = function (id) {
             var confirm = $mdDialog.confirm()
-                .title('Are you sure you want to renew this renew Transaction?')
+                .title('Are you sure you want to renew this Transaction?')
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function (ISConfirm) {
