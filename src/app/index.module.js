@@ -64,5 +64,8 @@
             'app.WalletTransaction',
             'app.wallet',
             'app.VehicleMonitor',
+            'app.AuditLog',
+            'app.ManageCustomer',
+            'app.GPSDeleteData',
         ]);
 })();

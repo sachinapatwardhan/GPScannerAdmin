@@ -53,7 +53,6 @@
                 $rootScope.AppName = data.AppName;
                 $rootScope.Logo = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + data.ImageLogo;
                 $rootScope.App_name = data.AppName + '-Admin';
-                console.log(data.Id)
                 localStorage.setItem('appId', data.Id)
                 localStorage.setItem('appName', data.AppName);
                 localStorage.setItem('Logo', $rootScope.Logo)
@@ -136,7 +135,7 @@
                     $rootScope.FlgModifiedAccess = false;
                     $rootScope.FlgDeletedAccess = false;
                 }
-                
+
                 return callback(1);
             })
 
@@ -688,22 +687,75 @@
                                         weight: 1
                                     });
                                 }
-
-
-                                //Vehicle Monitor
-                                var lstVehicleMonitor = _.filter(lstAllPages, function(obj) {
-                                    return obj.tblmodulemgmt.Module == 'Vehicle Monitor';
-                                });
-                                if (lstVehicleMonitor.length > 0) {
-                                    msNavigationService.saveItem('Settings.Vehicle Monitor', {
-                                        title: 'Vehicle Monitor',
-                                        state: 'app.VehicleMonitor',
-                                        order: lstVehicleMonitor[0].tblmodulemgmt.DisplayOrder,
-                                        weight: 1
-                                    });
-                                }
                             }
 
+                            //Vehicle Monitor
+                            var lstVehicleMonitor = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Vehicle Monitor';
+                            });
+                            if (lstVehicleMonitor.length > 0) {
+                                msNavigationService.saveItem('Settings.Vehicle Monitor', {
+                                    title: 'Vehicle Monitor',
+                                    state: 'app.VehicleMonitor',
+                                    order: lstVehicleMonitor[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            // AuditLog
+                            var lstAuditLog = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Audit Log';
+                            });
+                            if (lstAuditLog.length > 0) {
+                                msNavigationService.saveItem('Settings.Audit Log', {
+                                    title: 'Audit Log',
+                                    state: 'app.AuditLog',
+                                    order: lstAuditLog[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            //Manage Customer 
+                            var lstManageCustomer = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Manage Customer';
+                            });
+                            if (lstManageCustomer.length > 0) {
+                                var MenuName = $rootScope.AppName + '.Manage Customer';
+                                msNavigationService.saveItem(MenuName, {
+                                    title: 'Manage Customer',
+                                    state: 'app.ManageCustomer',
+                                    order: lstManageCustomer[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            //Manage Customer 
+                            var lstManageCustomer = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Manage Customer';
+                            });
+                            if (lstManageCustomer.length > 0) {
+                                var MenuName = $rootScope.AppName + '.Manage Customer';
+                                msNavigationService.saveItem(MenuName, {
+                                    title: 'Manage Customer',
+                                    state: 'app.ManageCustomer',
+                                    order: lstManageCustomer[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            //GPS Delete Data
+                            var lstGPSDelete = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'GPS Delete Data';
+                            });
+                            if (lstGPSDelete.length > 0) {
+                                var MenuName = $rootScope.AppName + '.GPS Delete Data';
+                                msNavigationService.saveItem('Settings.GPS Delete Data', {
+                                    title: 'GPS Delete Data',
+                                    state: 'app.GPSDeleteData',
+                                    order: lstGPSDelete[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
                         }
                     });
                 }
