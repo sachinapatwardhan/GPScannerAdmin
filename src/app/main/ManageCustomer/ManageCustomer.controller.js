@@ -2,31 +2,68 @@
     'use strict';
 
     angular
-        .module('app.Customer')
-        .controller('CustomerController', CustomerController);
+        .module('app.ManageCustomer')
+        .controller('ManageCustomerController', ManageCustomerController);
 
     /** @ngInject */
-    function CustomerController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
+    function ManageCustomerController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         // console.log("Hell..");
         var vm = this;
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
-                $rootScope.appId = localStorage.getItem('appId');
-                $rootScope.AppName = localStorage.getItem('appName');
-                // console.log($rootScope.appId);
+            $scope.model = {
+                id: '',
+                username: '',
+                email: '',
+                phone: '',
+                country: '',
+                idApp: '',
             }
-            //Dynamic Pagging
+            $scope.modelSearch = {
+                AppName: '',
+                country: '',
+            }
+            $rootScope.appId = localStorage.getItem('appId');
+            $rootScope.AppName = localStorage.getItem('appName');
+            // console.log($rootScope.appId);
+            $scope.flag = false;
+            GetAllCountry();
+            $scope.GetAllInfoList();
+        }
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstAppInfo = data.data;
+            })
+        }
+
+        function GetAllCountry() {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
+                $scope.lstCountry = data.data;
+            });
+        }
+
+        $scope.clearSearchTerm = function() {
+            vm.searchTermCountry = '';
+            vm.searchTermidAppName = '';
+            // $scope.searchTermCity = '';
+        };
+
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
+
+
+        //Dynamic Pagging
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
-                // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
-                DTColumnBuilder.newColumn('email'), ,
+                DTColumnBuilder.newColumn('username'),
+                DTColumnBuilder.newColumn('email'),
                 // DTColumnBuilder.newColumn('OwnerName'),
                 DTColumnBuilder.newColumn('phone'),
                 DTColumnBuilder.newColumn('country'),
-                DTColumnBuilder.newColumn('OTP'),
                 DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
                 DTColumnBuilder.newColumn('TotalDevice'),
                 DTColumnBuilder.newColumn('AppName'),
@@ -36,15 +73,17 @@
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "user/GetAllDynamicOwnerCustomer",
                     data: function(d) {
-
                         if ($rootScope.UserRoles != 'Super Admin') {
                             d.appId = $rootScope.appId;
+                        } else {
+                            d.appId = $scope.modelSearch.idApp;
                         }
                         if ($scope.Search != "") {
                             d.search = $scope.Search;
                         } else {
                             d.search = "";
                         }
+                        d.country = $scope.modelSearch.country;
                         d.UserCountry = $rootScope.UserCountry;
                         d.UserRoles = $rootScope.UserRoles;
                         d.UserId = $rootScope.UserId;
@@ -145,115 +184,147 @@
         }
 
         function actionsHtml(data, type, full, meta) {
-            var btns = '<md-button class="edit-button md-icon-button"  ng-click="ShowDeviceModal($event,' + data.id + ')" aria-label="">' +
-                '<md-icon md-font-icon="icon-timer"  class="s18 purple-500-fg"></md-icon>' +
-                '<md-tooltip md-visible="" md-direction="">Show Devices</md-tooltip>' +
-                '</md-button>';
+            var btns = '<div layout="row">';
             if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword(' + data.id + ')" aria-label="">' +
-                    '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
-                    '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
-                    '</md-button>';
-
-            }
-            if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
-                    '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
-                    '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="EditCustomer(' + data.id + ')" aria-label="Edit Location">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip  md-visible="" md-direction="">Edit</md-tooltip>' +
                     '</md-button>';
             }
+            if ($rootScope.FlgDeletedAccess) {
+                btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteCustomer(' + data.id + ')" aria-label="Add SubLocation">' +
+                    '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible=""  md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
+            }
+            btns += '</div>';
             return btns;
         };
 
-        $scope.ChangePassword = function(ev, id) {
-            console.log(id)
-            var obj = _.findWhere($scope.lstdata, { id: id })
-            $mdDialog.show({
-                controller: 'ChangePasswordCustomerController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/Customer/dialogs/ChangePassword/ChangePassword.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    obj: obj,
-                    Tasks: [],
-                    event: ev,
-                    VM: vm
-                }
-            });
-        }
+
         $scope.GetSerch = function(Search) {
             $scope.Search = Search;
             $scope.GetAllUser(true);
         }
 
-        //Reset Password User By Id
-        $scope.ResetPassword = function(id) {
-            $scope.obj = _.findWhere($scope.lstdata, { id: id });
+        //Dynamic Pagging End
 
-            var confirm = $mdDialog.confirm()
-                .title('Are you sure to Reset Password of this Customer ?')
-                .ok('Ok')
-                .cancel('Cancel')
-            $mdDialog.show(confirm).then(function() {
-                var params = {
-                    // email: $scope.obj.email,
-                    // idApp: $rootScope.appId,
-                    id: id,
-                    AppName: localStorage.getItem('appName') + ' Admin',
-                }
-                $http.get($rootScope.RoutePath + "account/forgotpasswordfromOwnerCustomer", { params: params }).then(function(data) {
-                    if (data.data.success == true) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    } else {
-                        if (data.data.data == 'TOKEN') {
-                            $cookieStore.remove('UserName');
-                            $cookieStore.remove('token');
-                            $state.go('app.login', {
-                                cache: false
-                            });
-                        } else {
-                            $mdToast.show(
-                                $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                            );
-                        }
-                    }
-                });
+        $scope.toggle = function() {
+            if (!$scope.flgforIcon) {
+                $scope.flgforIcon = true;
+            } else {
+                $scope.flgforIcon = false;
+            }
 
+            $(function() {
+                $(".showBtn").toggleClass("active");
+                $(".ShowContentBox").slideToggle();
             });
-
-        }
-
-
-        //show User Devices
-        $scope.ShowDeviceModal = function(ev, id) {
-            $mdDialog.show({
-                controller: 'DeviceModelController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/Customer/dialogs/DeviceModel/DeviceModel.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    idUser: id,
-                    Tasks: [],
-                    event: ev,
+        };
+        $scope.updateCustomer = function() {
+            console.log($scope.model)
+            $http.post($rootScope.RoutePath + "user/updateCustomer", $scope.model).success(function(data) {
+                if (data.success == true) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                    $scope.GetAllUser(true);
+                    $scope.flag = false;
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
                 }
             })
         }
 
+        $scope.EditCustomer = function(id) {
+            var o = _.filter($scope.lstdata, { id: id })
+            $scope.flag = true;
+            $scope.model.id = o[0].id;
+            $scope.model.username = o[0].username;
+            $scope.model.email = o[0].email;
+            $scope.model.phone = o[0].phone;
+            $scope.model.country = o[0].country;
+            $scope.model.idApp = o[0].idApp;
+        }
 
-        //Dynamic Pagging End
+        $scope.DeleteCustomer = function(id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure to Delete this Customer ?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function() {
+                var params = {
+                    id: id
+                };
+                $http.get($rootScope.RoutePath + "user/DeleteCustomer", {
+                    params: params
+                }).success(function(data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.GetAllUser(true);
 
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                });
+            })
+        }
+
+        $scope.resetForm = function() {
+            $scope.AddCustomerForm.$setUntouched();
+            $scope.AddCustomerForm.$setPristine();
+        }
+
+        $scope.ResetData = function() {
+            $scope.model = {
+                id: '',
+                username: '',
+                email: '',
+                phone: '',
+                country: '',
+                idApp: '',
+            }
+            $scope.resetForm();
+        }
+
+        $scope.Reset = function() {
+            $scope.flag = false;
+            $scope.model = {
+                id: '',
+                username: '',
+                email: '',
+                phone: '',
+                country: '',
+                idApp: '',
+            }
+            $scope.resetForm();
+
+        }
+        $scope.SearchReset = function() {
+            $scope.modelSearch = {
+                AppName: '',
+                country: '',
+            }
+            $scope.GetAllUser(true);
+        }
         $scope.init();
     }
 
