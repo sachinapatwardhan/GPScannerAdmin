@@ -146,15 +146,17 @@
                                 $scope.TotalCredit = 0;
                                 $scope.TotalDebit = 0;
                                 if (json.success != false) {
-                                    for (var i = 0; i < json.data.length; i++) {
-                                        if (json.data[i].Type == "Credit") {
-                                            $scope.TotalCredit += json.data[i].Amount;
-                                        } else {
-                                            $scope.TotalDebit += json.data[i].Amount;
+                                    $scope.$apply(function() {
+                                        for (var i = 0; i < json.data.length; i++) {
+                                            if (json.data[i].Type == "Credit") {
+                                                $scope.TotalCredit += json.data[i].Amount;
+                                            } else {
+                                                $scope.TotalDebit += json.data[i].Amount;
+                                            }
                                         }
-                                    }
-                                    $scope.TotalOrderTotal = $scope.TotalCredit - $scope.TotalDebit;
-                                    $scope.lstdata = json.data;
+                                        $scope.TotalOrderTotal = $scope.TotalCredit - $scope.TotalDebit;
+                                        $scope.lstdata = json.data;
+                                    })
                                     return json.data;
                                 } else {
                                     $scope.lstdata = [];

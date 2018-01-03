@@ -114,7 +114,6 @@
             $http.get($rootScope.RoutePath + "WalletTransaction/GetAllDeviceID", {
                 params: params
             }).then(function(DeviceID) {
-                console.log(DeviceID)
                 if (DeviceID.data.length > 0) {
                     $scope.lstDeviceId = _.uniq(DeviceID.data, 'DeviceId');
                 } else {
@@ -283,7 +282,6 @@
                                 d.idApp = $rootScope.idApp;
                             }
                             d.idAppsearch = $scope.modelSearch.idAppsearch;
-                            console.log(d)
                             return d;
                         },
                         type: "get",
@@ -296,11 +294,22 @@
                                 $scope.TotalDebit = 0;
                                 $scope.Amount = _.reduce($scope.lstWalletList, function(m, x) {
                                     if (x.Type == 'Credit') {
-                                        $scope.TotalCredit = $scope.TotalCredit + x.Amount;
-                                        return m + x.Amount;
+                                        if (x.IsPaymentSuccess == 3) {
+                                            $scope.TotalCredit = $scope.TotalCredit + 0;
+                                            return m + 0;
+                                        } else {
+                                            $scope.TotalCredit = $scope.TotalCredit + x.Amount;
+                                            return m + x.Amount;
+                                        }
                                     } else {
-                                        $scope.TotalDebit = $scope.TotalDebit + x.Amount;
-                                        return m - x.Amount;
+                                        if (x.IsPaymentSuccess == 3) {
+                                            $scope.TotalDebit = $scope.TotalDebit + 0;
+                                            return m + 0;
+                                        } else {
+                                            $scope.TotalDebit = $scope.TotalDebit + x.Amount;
+                                            return m - x.Amount;
+                                        }
+
                                     }
                                 }, 0)
                                 $scope.recordsTotal = json.recordsTotal;
@@ -356,9 +365,9 @@
             } else if (data == 1) {
                 status = '<span style="color:green;">Approve</span>';
             } else if (data == 2) {
-                status = '<span style="color:orange;">Completed</span>';
+                status = '<span style="color:blue;">Completed</span>';
             } else if (data == 3) {
-                status = '<span style="color:Brown;">Void</span>';
+                status = '<span style="color:orange;">Void</span>';
             } else if (data == 4) {
                 status = '<span style="color:red;">Expired</span>';
             }
@@ -477,7 +486,7 @@
                                 '</md-button>';
 
                             btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatusVoid(' + data.id + ')" aria-label="">' +
-                                '<md-icon md-font-icon="icon-no"  class="Brown-500-fg"></md-icon>' +
+                                '<md-icon md-font-icon="icon-no"  class="orange-500-fg"></md-icon>' +
                                 '<md-tooltip md-visible="" md-direction="">Void Wallet Transaction</md-tooltip>' +
                                 '</md-button>';
                         }
@@ -497,7 +506,7 @@
 
 
                             btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatusVoid(' + data.id + ')" aria-label="">' +
-                                '<md-icon md-font-icon="icon-no"  class="Brown-500-fg"></md-icon>' +
+                                '<md-icon md-font-icon="icon-no"  class="orange-500-fg"></md-icon>' +
                                 '<md-tooltip md-visible="" md-direction="">Void Wallet Transaction</md-tooltip>' +
                                 '</md-button>';
                         }
