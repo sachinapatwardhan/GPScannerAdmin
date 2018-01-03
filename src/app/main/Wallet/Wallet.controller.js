@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -15,13 +15,13 @@
 
         $scope.IsMark = false;
         var GidApp = 0;
-        $scope.GetAllProductType = function (callback) {
+        $scope.GetAllProductType = function(callback) {
             $scope.lstProductTypes = [];
-            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
                 $scope.lstProductTypes = data.data;
                 var AppInfo = _.findWhere(data.data, { id: parseInt(localStorage.getItem('appId')) });
                 if (AppInfo != undefined && AppInfo.AppName == "Maark") {
-                    $scope.lstProductTypes = _.filter(data.data, function (item) {
+                    $scope.lstProductTypes = _.filter(data.data, function(item) {
                         if (parseInt(item.id) != parseInt(localStorage.getItem('appId'))) {
                             return item;
                         }
@@ -35,40 +35,57 @@
         }
 
 
-        $scope.init = function () {
-            $scope.GetAllProductType(function () {
+        $scope.init = function() {
+            $scope.GetAllProductType(function() {
                 $scope.modelSearch = {
-                    StartDate: '',
-                    EndDate: '',
+                    StartDate: new Date(),
+                    EndDate: new Date(),
                     Type: 'All',
                     idApp: GidApp,
+                    idCountry: 'All'
                 }
 
                 console.log($scope.modelSearch)
             });
+            $scope.GetAllCountry();
         }
 
-        $scope.onSearchChange = function ($event) {
+        $scope.onSearchChange = function($event) {
             $event.stopPropagation();
         }
 
-        $scope.toggle = function () {
+        $scope.toggle = function() {
             if (!$scope.flgforIcon) {
                 $scope.flgforIcon = true;
             } else {
                 $scope.flgforIcon = false;
             }
 
-            $(function () {
+            $(function() {
                 $(".showBtn").toggleClass("active");
                 $(".ShowContentBox").slideToggle();
             });
         };
 
+        $scope.toggle();
+        $scope.GetAllCountry = function() {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
+                $scope.lstCountry = data.data;
+            });
+        }
 
+        $scope.clearSearchTerm = function() {
+            $scope.searchdropdown = {
+                searchCountry: '',
+            }
+        };
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
-            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
+
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
                 var AppInfo = _.findWhere(data.data, { id: parseInt(localStorage.getItem('appId')) });
                 if (AppInfo != undefined && AppInfo.AppName == "Maark") {
                     $scope.IsMark = true;
@@ -93,53 +110,58 @@
                     ]
 
                     $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                        url: $rootScope.RoutePath + "WalletTransaction/GetAllWalletes",
-                        data: function (d) {
-                            if ($scope.Search == '') {
-                                d.search = '';
-                            } else {
-                                d.search = $scope.Search;
-                            }
-                            if ($scope.modelSearch.StartDate != '') {
-                                d.StartDate = $scope.modelSearch.StartDate.toUTCString();
-                            } else {
-                                d.StartDate = '';
-                            }
-                            if ($scope.modelSearch.EndDate != '') {
-                                d.EndDate = $scope.modelSearch.EndDate.toUTCString();
-                            } else {
-                                d.EndDate = '';
-                            }
-                            if ($rootScope.UserRoles != 'Super Admin') {
-                                d.idApp = $rootScope.idApp;
-                            } else {
-                                d.idApp = $scope.modelSearch.idApp;
-                            }
-                            d.Type = $scope.modelSearch.Type;
-                            return d;
-                        },
-                        type: "get",
-                        dataSrc: function (json) {
-                            $scope.TotalOrderTotal = 0;
-                            $scope.TotalCredit = 0;
-                            $scope.TotalDebit = 0;
-                            if (json.success != false) {
-                                for (var i = 0; i < json.data.length; i++) {
-                                    if (json.data[i].Type == "Credit") {
-                                        $scope.TotalCredit += json.data[i].Amount;
-                                    } else {
-                                        $scope.TotalDebit += json.data[i].Amount;
-                                    }
+                            url: $rootScope.RoutePath + "WalletTransaction/GetAllWalletes",
+                            data: function(d) {
+                                if ($scope.Search == '') {
+                                    d.search = '';
+                                } else {
+                                    d.search = $scope.Search;
                                 }
-                                $scope.TotalOrderTotal = $scope.TotalCredit - $scope.TotalDebit;
-                                $scope.lstdata = json.data;
-                                return json.data;
-                            } else {
-                                $scope.lstdata = [];
-                                return [];
-                            }
-                        },
-                    })
+                                if ($scope.modelSearch.StartDate != '') {
+                                    d.StartDate = $scope.modelSearch.StartDate.toUTCString();
+                                } else {
+                                    d.StartDate = '';
+                                }
+                                if ($scope.modelSearch.EndDate != '') {
+                                    d.EndDate = $scope.modelSearch.EndDate.toUTCString();
+                                } else {
+                                    d.EndDate = '';
+                                }
+                                if ($rootScope.UserRoles != 'Super Admin') {
+                                    d.idApp = $rootScope.idApp;
+                                } else {
+                                    d.idApp = $scope.modelSearch.idApp;
+                                }
+                                if ($scope.modelSearch.idCountry != 'All') {
+                                    d.Country = _.findWhere($scope.lstCountry, { id: parseInt($scope.modelSearch.idCountry) }).Country;
+                                } else {
+                                    d.Country = '';
+                                }
+                                d.Type = $scope.modelSearch.Type;
+                                return d;
+                            },
+                            type: "get",
+                            dataSrc: function(json) {
+                                $scope.TotalOrderTotal = 0;
+                                $scope.TotalCredit = 0;
+                                $scope.TotalDebit = 0;
+                                if (json.success != false) {
+                                    for (var i = 0; i < json.data.length; i++) {
+                                        if (json.data[i].Type == "Credit") {
+                                            $scope.TotalCredit += json.data[i].Amount;
+                                        } else {
+                                            $scope.TotalDebit += json.data[i].Amount;
+                                        }
+                                    }
+                                    $scope.TotalOrderTotal = $scope.TotalCredit - $scope.TotalDebit;
+                                    $scope.lstdata = json.data;
+                                    return json.data;
+                                } else {
+                                    $scope.lstdata = [];
+                                    return [];
+                                }
+                            },
+                        })
                         .withOption('processing', true)
                         .withOption('serverSide', true)
                         .withPaginationType('full_numbers')
@@ -157,7 +179,7 @@
         $scope.dtInstance = {};
 
         //Reload Datatable
-        $scope.GetAllWalletes = function (IsUpdate) {
+        $scope.GetAllWalletes = function(IsUpdate) {
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
@@ -167,9 +189,9 @@
             $('#WalletDttable').dataTable()._fnAjaxUpdate();
 
         }
-        $scope.reloadData = function () { }
+        $scope.reloadData = function() {}
 
-        function callback(json) { }
+        function callback(json) {}
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -226,12 +248,12 @@
             }
         }
 
-        $scope.GetSerch = function (Search) {
+        $scope.GetSerch = function(Search) {
             $scope.Search = Search;
             $scope.GetAllWalletes(true);
         }
 
-        $scope.ExportWallet = function () {
+        $scope.ExportWallet = function() {
             var search = '';
             if ($scope.Search == '' || $scope.Search == '') {
                 search = '';
@@ -262,12 +284,13 @@
             window.location = $rootScope.RoutePath + "WalletTransaction/ExportWallet?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp;
         }
 
-        $scope.SearchReset = function () {
+        $scope.SearchReset = function() {
             $scope.modelSearch = {
-                StartDate: '',
-                EndDate: '',
+                StartDate: new Date(),
+                EndDate: new Date(),
                 Type: 'All',
-                idApp: GidApp
+                idApp: GidApp,
+                idCountry: 'All'
             }
             $scope.Search = "";
             $('#modelsearch').val("");

@@ -36,13 +36,14 @@
             };
 
             $scope.modelSearch = {
-                StartDate: '',
-                EndDate: '',
+                StartDate: new Date(),
+                EndDate: new Date(),
                 Status: -1,
                 idApp: 0,
                 Search: '',
                 idAppsearch: 0,
-                Type: 'All'
+                Type: 'All',
+                idCountry: 'All'
             }
 
 
@@ -53,8 +54,9 @@
 
             // });
 
-        }
+            $scope.GetAllCountry();
 
+        }
         $scope.toggle = function() {
             if (!$scope.flgforIcon) {
                 $scope.flgforIcon = true;
@@ -67,6 +69,23 @@
                 $(".ShowContentBox").slideToggle();
             });
         };
+        $scope.toggle();
+        $scope.GetAllCountry = function() {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
+                $scope.lstCountry = data.data;
+            });
+        }
+
+        $scope.clearSearchTerm = function() {
+            $scope.searchdropdown = {
+                searchCountry: '',
+            }
+        };
+
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
+
         $scope.GetAllAppInfo = function(callback) {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
                 var AppInfo = _.findWhere(data.data, { id: parseInt(localStorage.getItem('appId')) });
@@ -252,6 +271,11 @@
                             } else {
                                 d.Type = '';
                             }
+                            if ($scope.modelSearch.idCountry != 'All') {
+                                d.Country = _.findWhere($scope.lstCountry, { id: parseInt($scope.modelSearch.idCountry) }).Country;
+                            } else {
+                                d.Country = '';
+                            }
                             d.search = $scope.modelSearch.Search;
                             d.Status = $scope.modelSearch.Status;
 
@@ -259,6 +283,7 @@
                                 d.idApp = $rootScope.idApp;
                             }
                             d.idAppsearch = $scope.modelSearch.idAppsearch;
+                            console.log(d)
                             return d;
                         },
                         type: "get",
@@ -332,6 +357,10 @@
                 status = '<span style="color:green;">Approve</span>';
             } else if (data == 2) {
                 status = '<span style="color:orange;">Completed</span>';
+            } else if (data == 3) {
+                status = '<span style="color:yellow;">Void</span>';
+            } else if (data == 4) {
+                status = '<span style="color:red;">Expiry</span>';
             }
             return status;
 
@@ -417,6 +446,18 @@
                             '<md-tooltip md-visible="" md-direction="">Renew</md-tooltip>' +
                             '</md-button>';
                     }
+                } else if (status == 4) {
+                    if ($rootScope.FlgModifiedAccess) {
+                        btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
+                            '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="green-500-fg"></md-icon>' +
+                            '<md-tooltip md-visible="" md-direction="">Approve</md-tooltip>' +
+                            '</md-button>';
+
+                        btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ',4)" aria-label="">' +
+                            '<md-icon md-font-icon="icon-no"  class="orange-500-fg"></md-icon>' +
+                            '<md-tooltip md-visible="" md-direction="">Void Wallet Transaction</md-tooltip>' +
+                            '</md-button>';
+                    }
                 }
                 btns += '</div>'
                 return btns;
@@ -435,6 +476,19 @@
                             btns += '<md-button class="edit-button md-icon-button"  ng-click="RenewOrderService(' + data.id + ')" aria-label="">' +
                                 '<md-icon md-font-icon="icon-account-network"  class="blue-500-fg"></md-icon>' +
                                 '<md-tooltip md-visible="" md-direction="">Renew</md-tooltip>' +
+                                '</md-button>';
+                        }
+                    } else if (status == 4) {
+                        if ($rootScope.FlgModifiedAccess) {
+                            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
+                                '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="green-500-fg"></md-icon>' +
+                                '<md-tooltip md-visible="" md-direction="">Approve</md-tooltip>' +
+                                '</md-button>';
+
+
+                            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ',4)" aria-label="">' +
+                                '<md-icon md-font-icon="icon-no"  class="orange-500-fg"></md-icon>' +
+                                '<md-tooltip md-visible="" md-direction="">Void Wallet Transaction</md-tooltip>' +
                                 '</md-button>';
                         }
                     }
@@ -540,12 +594,13 @@
             };
 
             $scope.modelSearch = {
-                StartDate: '',
-                EndDate: '',
+                StartDate: new Date(),
+                EndDate: new Date(),
                 Status: -1,
                 idApp: 0,
                 Search: '',
-                Type: 'All'
+                Type: 'All',
+                idCountry: 'All'
             }
 
             $scope.flag = true;
@@ -572,13 +627,14 @@
                 DeviceId: ''
             };
             $scope.modelSearch = {
-                StartDate: '',
-                EndDate: '',
+                StartDate: new Date(),
+                EndDate: new Date(),
                 Status: -1,
                 idApp: 0,
                 Search: '',
                 idAppsearch: 0,
-                Type: 'All'
+                Type: 'All',
+                idCountry: 'All'
             }
             $scope.GetAllAppInfo(function() {
 
@@ -591,13 +647,14 @@
 
         $scope.SearchReset = function() {
             $scope.modelSearch = {
-                StartDate: '',
-                EndDate: '',
+                StartDate: new Date(),
+                EndDate: new Date(),
                 Status: -1,
                 idApp: 0,
                 Search: '',
                 idAppsearch: 0,
-                Type: 'All'
+                Type: 'All',
+                idCountry: 'All'
             }
             $scope.flag = false;
             //$scope.apiMedia.removeAll();
