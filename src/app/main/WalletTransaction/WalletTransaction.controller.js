@@ -360,7 +360,7 @@
             } else if (data == 3) {
                 status = '<span style="color:Brown;">Void</span>';
             } else if (data == 4) {
-                status = '<span style="color:red;">Expiry</span>';
+                status = '<span style="color:red;">Expired</span>';
             }
             return status;
 
@@ -448,9 +448,9 @@
                     }
                 } else if (status == 4) {
                     if ($rootScope.FlgModifiedAccess) {
-                        btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
-                            '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="green-500-fg"></md-icon>' +
-                            '<md-tooltip md-visible="" md-direction="">Approve</md-tooltip>' +
+                        btns += '<md-button class="edit-button md-icon-button"  ng-click="RenewOrderService(' + data.id + ')" aria-label="">' +
+                            '<md-icon md-font-icon="icon-account-network"  class="blue-500-fg"></md-icon>' +
+                            '<md-tooltip md-visible="" md-direction="">Renew</md-tooltip>' +
                             '</md-button>';
 
                         btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatusVoid(' + data.id + ')" aria-label="">' +
@@ -480,9 +480,9 @@
                         }
                     } else if (status == 4) {
                         if ($rootScope.FlgModifiedAccess) {
-                            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ')" aria-label="">' +
-                                '<md-icon md-font-icon="icon-checkbox-marked-circle"  class="green-500-fg"></md-icon>' +
-                                '<md-tooltip md-visible="" md-direction="">Approve</md-tooltip>' +
+                            btns += '<md-button class="edit-button md-icon-button"  ng-click="RenewOrderService(' + data.id + ')" aria-label="">' +
+                                '<md-icon md-font-icon="icon-account-network"  class="blue-500-fg"></md-icon>' +
+                                '<md-tooltip md-visible="" md-direction="">Renew</md-tooltip>' +
                                 '</md-button>';
 
 
@@ -700,6 +700,25 @@
 
         }
 
+        $scope.ShowAll = function() {
+            $scope.modelSearch = {
+                StartDate: '',
+                EndDate: '',
+                Status: -1,
+                idApp: 0,
+                Search: '',
+                idAppsearch: 0,
+                Type: 'All',
+                idCountry: 'All'
+            }
+            $scope.flag = false;
+            //$scope.apiMedia.removeAll();
+            //$scope.GetAllAppInfo(function() {
+            $scope.WalletTransactionReload(true);
+            //});
+
+        }
+
         $scope.ExportWalletTransaction = function() {
             var search = '';
             if ($scope.modelSearch.Search == '' || $scope.modelSearch.Search == '') {
@@ -719,6 +738,12 @@
             } else {
                 EndDate = '';
             }
+            var Country = '';
+            if ($scope.modelSearch.idCountry != 'All') {
+                Country = _.findWhere($scope.lstCountry, { id: parseInt($scope.modelSearch.idCountry) }).Country;
+            } else {
+                Country = '';
+            }
             var Status = $scope.modelSearch.Status;
 
             var idApp = 0;
@@ -727,7 +752,7 @@
             }
             var idAppsearch = $scope.modelSearch.idAppsearch;
 
-            window.location = $rootScope.RoutePath + "WalletTransaction/ExportWalletTransaction?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&search=" + search + "&idApp=" + idApp + "&idAppsearch=" + idAppsearch;
+            window.location = $rootScope.RoutePath + "WalletTransaction/ExportWalletTransaction?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&search=" + search + "&idApp=" + idApp + "&idAppsearch=" + idAppsearch + "&Country=" + Country;
         }
 
         $scope.OpenPaymentReceiptModal = function(ev, id) {

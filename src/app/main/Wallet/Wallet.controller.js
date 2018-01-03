@@ -280,8 +280,14 @@
             } else {
                 idApp = $scope.modelSearch.idApp;
             }
+            var Country = '';
+            if ($scope.modelSearch.idCountry != 'All') {
+                Country = _.findWhere($scope.lstCountry, { id: parseInt($scope.modelSearch.idCountry) }).Country;
+            } else {
+                Country = '';
+            }
 
-            window.location = $rootScope.RoutePath + "WalletTransaction/ExportWallet?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp;
+            window.location = $rootScope.RoutePath + "WalletTransaction/ExportWallet?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country;;
         }
 
         $scope.SearchReset = function() {
@@ -295,6 +301,20 @@
             $scope.Search = "";
             $('#modelsearch').val("");
             $scope.GetAllWalletes(true);
+        }
+
+        $scope.ShowAll = function() {
+            $scope.modelSearch = {
+                StartDate: new Date(),
+                EndDate: new Date(),
+                Type: 'All',
+                idApp: GidApp,
+                idCountry: 'All'
+            }
+            $scope.Search = "";
+            $('#modelsearch').val("");
+            $scope.GetAllWalletes(true);
+
         }
 
         $scope.init();
