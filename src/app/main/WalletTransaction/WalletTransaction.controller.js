@@ -449,7 +449,7 @@
                             '</md-button>';
 
                         btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatusVoid(' + data.id + ')" aria-label="">' +
-                            '<md-icon md-font-icon="icon-no"  class="Brown-500-fg"></md-icon>' +
+                            '<md-icon md-font-icon="icon-no"  class="orange-500-fg"></md-icon>' +
                             '<md-tooltip md-visible="" md-direction="">Void Wallet Transaction</md-tooltip>' +
                             '</md-button>';
                     }
@@ -468,7 +468,7 @@
                             '</md-button>';
 
                         btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatusVoid(' + data.id + ')" aria-label="">' +
-                            '<md-icon md-font-icon="icon-no"  class="Brown-500-fg"></md-icon>' +
+                            '<md-icon md-font-icon="icon-no"  class="orange-500-fg"></md-icon>' +
                             '<md-tooltip md-visible="" md-direction="">Void Wallet Transaction</md-tooltip>' +
                             '</md-button>';
                     }
