@@ -245,7 +245,7 @@
                 } else if (statusname == "Void") {
                     status = '<span style="color:orange;">Void</span>';
                 } else if (statusname == "Completed") {
-                    status = '<span style="color:orange;">Completed</span>';
+                    status = '<span style="color:blue;">Completed</span>';
                 } else if (statusname == "Expire") {
                     status = '<span style="color:red;">Expire</span>';
                 }
