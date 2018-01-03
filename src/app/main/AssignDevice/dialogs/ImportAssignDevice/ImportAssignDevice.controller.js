@@ -31,9 +31,9 @@
 
         $scope.getAllApps = function() {
             $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo")
-            .then(function(res) {
-                $scope.appNames = res.data;
-            });
+                .then(function(res) {
+                    $scope.appNames = res.data;
+                });
         };
 
         $scope.assign = function() {
@@ -45,40 +45,40 @@
             var formData = new FormData();
             formData.append('file', $scope.excelFiles[0].lfFile);
             formData.append('createdBy', $scope.model.createdBy);
-            
+
             if ($scope.canShow) {
                 formData.append('appName', $scope.model.appName);
             } else {
                 formData.append('appName', $rootScope.appName);
             }
 
-            $http.post($rootScope.RoutePath + "admin/assignDeviceByExcel", formData, {
-                transformRequest: angular.identity,
-                headers: { 'Content-Type': undefined }
-            })
-            .then(function(res) {
-                if (res.data.success) {
-                    $scope.materialFileApi.removeAll();
-                    $mdDialog.hide(true);
-                }
-                
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent(res.data.message)
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            })
-            .catch(function(err) {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Unable to assign device. Please try again later.')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            });
+            $http.post($rootScope.RoutePath + "admin/assignDeviceByExcelNew", formData, {
+                    transformRequest: angular.identity,
+                    headers: { 'Content-Type': undefined }
+                })
+                .then(function(res) {
+                    if (res.data.success) {
+                        $scope.materialFileApi.removeAll();
+                        $mdDialog.hide(true);
+                    }
+
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(res.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                })
+                .catch(function(err) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Unable to assign device. Please try again later.')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                });
         };
-        
+
         $scope.clearSearchAppName = function() {
             $scope.searchAppName = '';
         };

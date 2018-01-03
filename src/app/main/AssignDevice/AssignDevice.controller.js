@@ -42,16 +42,14 @@
                     $scope.devices.length = 0;
                     // Make sure not null
                     if ($scope.selectedAgent) {
-                        console.log(data.data)
-                            // For page change (selectedAgent stays the same)
+                        // For page change (selectedAgent stays the same)
                         for (var i = 0; i < data.data.length; ++i) {
                             var dar = data.data[i];
                             data.data[i].isChecked = (dar && dar.agentId === $scope.selectedAgent.id) ? true : false;
                             data.data[i].isDisabled = false;
                         }
                     } else {
-                        console.log(data.data)
-                            // For on load new page all false (no agent selected)
+                        // For on load new page all false (no agent selected)
                         for (var i = 0; i < data.data.length; ++i) {
                             data.data[i].isChecked = false;
                             data.data[i].isDisabled = false;
