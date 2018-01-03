@@ -358,7 +358,7 @@
             } else if (data == 2) {
                 status = '<span style="color:orange;">Completed</span>';
             } else if (data == 3) {
-                status = '<span style="color:yellow;">Void</span>';
+                status = '<span style="color:Brown;">Void</span>';
             } else if (data == 4) {
                 status = '<span style="color:red;">Expiry</span>';
             }
@@ -453,8 +453,8 @@
                             '<md-tooltip md-visible="" md-direction="">Approve</md-tooltip>' +
                             '</md-button>';
 
-                        btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ',4)" aria-label="">' +
-                            '<md-icon md-font-icon="icon-no"  class="orange-500-fg"></md-icon>' +
+                        btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatusVoid(' + data.id + ')" aria-label="">' +
+                            '<md-icon md-font-icon="icon-no"  class="Brown-500-fg"></md-icon>' +
                             '<md-tooltip md-visible="" md-direction="">Void Wallet Transaction</md-tooltip>' +
                             '</md-button>';
                     }
@@ -486,8 +486,8 @@
                                 '</md-button>';
 
 
-                            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ',4)" aria-label="">' +
-                                '<md-icon md-font-icon="icon-no"  class="orange-500-fg"></md-icon>' +
+                            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatusVoid(' + data.id + ')" aria-label="">' +
+                                '<md-icon md-font-icon="icon-no"  class="Brown-500-fg"></md-icon>' +
                                 '<md-tooltip md-visible="" md-direction="">Void Wallet Transaction</md-tooltip>' +
                                 '</md-button>';
                         }
@@ -511,6 +511,42 @@
                     UserName: $cookieStore.get('UserName')
                 }
                 $http.get($rootScope.RoutePath + "WalletTransaction/ApproveTransaction", {
+                    params: params
+                }).then(function(data) {
+                    if (data.data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        First = 1;
+                        $scope.WalletTransactionReload(true);
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                });
+            });
+
+        }
+
+        $scope.ChangeStatusVoid = function(id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure you want to Void this Transaction?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function(ISConfirm) {
+
+                var params = {
+                    id: id,
+                    UserName: $cookieStore.get('UserName')
+                }
+                $http.get($rootScope.RoutePath + "WalletTransaction/VoidTransaction", {
                     params: params
                 }).then(function(data) {
                     if (data.data.success == true) {
