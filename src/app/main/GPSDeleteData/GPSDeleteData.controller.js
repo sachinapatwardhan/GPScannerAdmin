@@ -36,7 +36,6 @@
                 type: "get",
                 dataSrc: function(json) {
                     if (json.success != false) {
-                        console.log("#####", json)
                         $scope.lstdata = json.data;
                         return json.data;
                     } else {
