@@ -634,7 +634,7 @@
 
                             //Product
                             var lstProducts = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Products';
+                                return obj.tblmodulemgmt.Module == 'Product';
                             });
                             if (lstProducts.length > 0) {
                                 msNavigationService.saveItem('Order Services.Product', {
