@@ -305,8 +305,8 @@
 
         $scope.ShowAll = function() {
             $scope.modelSearch = {
-                StartDate: new Date(),
-                EndDate: new Date(),
+                StartDate: '',
+                EndDate: '',
                 Type: 'All',
                 idApp: GidApp,
                 idCountry: 'All'
