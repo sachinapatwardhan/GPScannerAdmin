@@ -208,7 +208,7 @@
             <form name="formWalletTransaction" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
                 <div layout="row" layout-wrap>
                     <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="50" ng-if="IsShow">
-                        <label>App Info</label>
+                        <label>App Name</label>
                         <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true" ng-change="GetDeviceID(model.idApp,true)">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="searchdropdown.searchAppInfo" type="search" placeholder="Search for a App .." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
@@ -239,7 +239,7 @@
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="50">
                         <label>DeviceId</label>
-                        <md-select Name="DeviceId" ng-model="model.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true">
+                        <md-select Name="DeviceId" ng-model="model.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="model.Type == 'Debit'">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="searchdropdown.searchDeviceId" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
