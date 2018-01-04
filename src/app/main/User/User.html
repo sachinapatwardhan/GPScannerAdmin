@@ -161,6 +161,15 @@
                             </div>
                         </div>
                     </md-input-container>
+                    <md-input-container flex="100" flex-gt-sm="100" flex-gt-md="33">
+                        <label>Country Name</label>
+                        <md-select Name="country" ng-model="model.country" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllUser(true)">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="o.Country" ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">{{o.Country}}</md-option>
+                        </md-select>
+                    </md-input-container>
                 </div>
                 <div ng-show="FlgImage" class="row" flex="100" flex-gt-xs="100">
                     <img ng-src="{{myCroppedImage}}" id="UploadedImage" err-src="assets/images/no-image.png" width="150px" />

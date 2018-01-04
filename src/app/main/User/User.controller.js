@@ -44,6 +44,13 @@
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.GetAllInfoList();
             }
+            GetAllCountry();
+        }
+
+        function GetAllCountry() {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
+                $scope.lstCountry = data.data;
+            });
         }
         $scope.GetAllInfoList = function() {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
@@ -62,6 +69,7 @@
             $scope.searchCity = '';
             $scope.searchLocation = '';
             $scope.searchSubLocation = '';
+            vm.searchTermCountry = '';
         };
 
         $scope.onSearchChange = function($event) {
