@@ -197,6 +197,7 @@
                     DTColumnBuilder.newColumn('SerialNum'),
                     DTColumnBuilder.newColumn('PhoneNum'),
                     DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                    DTColumnBuilder.newColumn('Country'),
                     // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                     DTColumnBuilder.newColumn('AppName'),
                     DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
@@ -215,6 +216,7 @@
                     DTColumnBuilder.newColumn('SerialNum'),
                     DTColumnBuilder.newColumn('PhoneNum'),
                     DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                    DTColumnBuilder.newColumn('Country'),
                     // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                     DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
@@ -246,6 +248,7 @@
                 },
                 type: "get",
                 dataSrc: function(json) {
+                    console.log(json.data);
                     if (json.success != false) {
                         for (var i = 0; i < json.data.length; i++) {
                             if (json.data[i].Type === 'M2-U') {
