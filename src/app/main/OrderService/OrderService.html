@@ -18,7 +18,7 @@
             </div>
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+                <input id="modelsearch" ng-model="modelSearch.Search" ng-change="GetAllOrderService(true)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
             <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
                 <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
