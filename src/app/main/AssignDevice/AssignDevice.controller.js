@@ -14,6 +14,18 @@
 
         //////////
 
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
+        if ($rootScope.UserRoles.indexOf('Super Admin') !== -1) {
+            $scope.canShow = true;
+        } else {
+            $scope.canShow = false;
+        }
+
+        $scope.modelsearch = {
+            idApp: '',
+            AppName: $rootScope.AppName
+        }
+
         // DataTables
 
         $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -30,6 +42,7 @@
                 url: $rootScope.RoutePath + 'admin/getAllGpsDevicesNew',
                 data: function(d) {
                     d.search.value = $scope.searchTerm;
+                    d.AppName = $scope.modelsearch.AppName;
                     if ($scope.selectedAgent) {
                         d.agentId = $scope.selectedAgent.id;
                     } else {
@@ -175,6 +188,7 @@
         // Variables
 
         $scope.searchTerm = '';
+
         $scope.devices = [];
 
         // Functions
@@ -182,6 +196,35 @@
         $scope.init = function() {
 
         };
+
+        $scope.getAllApps = function() {
+            $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo")
+                .then(function(res) {
+                    console.log(res)
+                    $scope.appNames = res.data;
+
+                    var objApp = _.findWhere($scope.appNames, { AppName: $scope.modelsearch.AppName });
+                    if (objApp != null) {
+                        $scope.modelsearch.idApp = objApp.Id;
+                    }
+                });
+        };
+        $scope.getAllApps();
+
+
+        $scope.AppNameChange = function() {
+
+            if ($scope.modelsearch.idApp != '') {
+                $scope.modelsearch.AppName = _.findWhere($scope.appNames, { Id: parseInt($scope.modelsearch.idApp) }).AppName;
+            } else {
+                $scope.modelsearch.AppName = "";
+            }
+            $scope.searchAgent = '';
+            $scope.selectedAgent = undefined;
+            $scope.dtInstance.reloadData(function() {}, true);
+        };
+
+
 
         $scope.onAgentSelected = function() {
             // Make sure not null
@@ -196,9 +239,10 @@
         };
 
         $scope.GetAutocompleteAgents = function(searchAgent) {
-            return $http.get($rootScope.RoutePath + 'admin/getAutocompleteSalesAgent', {
+            return $http.get($rootScope.RoutePath + 'admin/getAutocompleteSalesAgentNew', {
                     params: {
-                        username: searchAgent
+                        username: searchAgent,
+                        idApp: $scope.modelsearch.idApp
                     }
                 })
                 .then(function(res) {
@@ -239,7 +283,7 @@
             $http.post($rootScope.RoutePath + 'admin/assignDevice', {
                     deviceId: $scope.devices[i].DeviceId,
                     userId: $scope.selectedAgent.id,
-                    appName: $rootScope.AppName,
+                    appName: $scope.modelsearch.AppName,
                     assign: $scope.devices[i].isChecked
                 })
                 .then(function(res) {

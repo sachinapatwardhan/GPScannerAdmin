@@ -25,8 +25,20 @@
         </div>
         <div class="content-card" layout="column" flex>
             <div class="content fullpage-datatable" layout="column" layout-padding flex>
+                <div layout-gt-sm="row" ng-if="canShow">
+                    <md-input-container flex>
+                        <label>App Name</label>
+                        <md-select name="idApp" ng-model="modelsearch.idApp" ng-change="AppNameChange()">
+                            <md-option ng-value="item.Id" ng-repeat="item in appNames">
+                                {{ item.AppName }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
                 <div class="row">
-                    <md-autocomplete md-selected-item="selectedAgent" md-selected-item-change="onAgentSelected()" md-search-text="searchAgent" md-items="agent in GetAutocompleteAgents(searchAgent)" md-item-text="agent.username" md-require-match="true" md-delay="150" placeholder="Type in an agent username">
+                    <md-autocomplete md-selected-item="selectedAgent" md-selected-item-change="onAgentSelected()" md-search-text="searchAgent" md-items="agent in GetAutocompleteAgents(searchAgent)" md-item-text="agent.username" md-no-cache="true" md-require-match="true"
+                        md-delay="150" placeholder="Type in an agent username">
                         <md-item-template>
                             <span md-highlight-text="searchAgent">{{ agent.username }}</span>
                         </md-item-template>
