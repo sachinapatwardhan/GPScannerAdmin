@@ -49,7 +49,7 @@
             if ($scope.canShow) {
                 formData.append('appName', $scope.model.appName);
             } else {
-                formData.append('appName', $rootScope.appName);
+                formData.append('appName', $rootScope.AppName);
             }
 
             $http.post($rootScope.RoutePath + "admin/assignDeviceByExcelNew", formData, {

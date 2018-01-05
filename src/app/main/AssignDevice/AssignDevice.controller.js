@@ -239,7 +239,7 @@
             $http.post($rootScope.RoutePath + 'admin/assignDevice', {
                     deviceId: $scope.devices[i].DeviceId,
                     userId: $scope.selectedAgent.id,
-                    appName: $rootScope.appName,
+                    appName: $rootScope.AppName,
                     assign: $scope.devices[i].isChecked
                 })
                 .then(function(res) {
