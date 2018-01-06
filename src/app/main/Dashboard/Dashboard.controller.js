@@ -12,7 +12,32 @@
         var socket = io($rootScope.Socket_URL, {
             'forceNew': true
         });
+
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.appId = localStorage.getItem('appId');
+        $scope.AppName = localStorage.getItem('appName');
+        $scope.selectAppName = $scope.AppName;
+
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstAppInfo = data.data;
+            })
+        }
+        $scope.GetAllInfoList();
+        $scope.selectedAppName = function(o) {
+            if (o != 'All') {
+                $scope.selectAppName = o.AppName;
+                $rootScope.appId = o.id;
+                $scope.AppName = o.AppName;
+            } else {
+                $scope.selectAppName = 'All';
+                $rootScope.appId = '';
+                $scope.AppName = '';
+            }
+
+            $scope.init();
+            $scope.getCurrentLocation(false);
+        }
 
         function callDeviceStatus() {
             for (var t = 0; t < $scope.lstActiveVehicle.length; t++) {
@@ -2010,8 +2035,11 @@
         $scope.GetAllExpiredDevice = function() {
             $scope.ExpiryDevicelist = [];
             var params = {
-                AppName: localStorage.getItem('appName')
-            }
+                    AppName: $scope.AppName
+                }
+                // if ($scope.selectAppName != null && $scope.selectAppName != '' && $scope.selectAppName != undefined) {
+                //     params.AppName = $scope.selectAppName;
+                // }
             $http.get($rootScope.RoutePath + "bike/GetAllExpireDevice", { params: params }).then(function(data) {
                 for (var i = 0; i < data.data.length; i++) {
                     data.data[i].diff = timeDifference(moment(data.data[i].ExpiryDate).format('MM-DD-YYYY hh:mm:ss a'))

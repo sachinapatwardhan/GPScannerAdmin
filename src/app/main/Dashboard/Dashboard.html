@@ -11,6 +11,26 @@
                 </div>
                 <div class="title">Dashboard</div>
             </div>
+            <div ng-if="UserRoles == 'Super Admin'">
+                <div class="selected-project">{{selectAppName}}</div>
+
+                <md-menu id="projects-menu" md-offset="0 48">
+                    <md-button class="md-icon-button project-selector" ng-click="$mdOpenMenu()" aria-label="Select project" md-menu-origin md-menu-align-target>
+                        <md-icon md-font-icon="icon-dots-horizontal"></md-icon>
+                    </md-button>
+
+                    <md-menu-content width="3" class="md-background-bg">
+                        <md-button ng-click="selectedAppName('All')">
+                            <span ng-class="{'secondary-text': selectAppName == All}">All</span>
+                        </md-button>
+                        <md-menu-item ng-repeat="o in lstAppInfo">
+                            <md-button ng-click="selectedAppName(o)" aria-label="o.AppName">
+                                <span ng-class="{'secondary-text': selectAppName == o}">{{o.AppName}}</span>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
         </div>
         <div class="content">
             <div class="widget-group" layout="row" flex="100" layout-wrap>
