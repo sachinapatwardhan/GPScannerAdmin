@@ -18,7 +18,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
-                idApp: $rootScope.appId,
+                idApp: parseInt($rootScope.appId),
             }
             $scope.modelSearch = {
                     Search: '',
@@ -275,7 +275,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
-                idApp: $rootScope.appId,
+                idApp: parseInt($rootScope.appId),
             }
 
             $rootScope.FlgAddedEditlocal = false;
@@ -284,7 +284,6 @@
             }
             $scope.flag = true;
             $scope.resetForm();
-            $scope.model.idApp = $rootScope.appId;
         }
 
         $scope.ResetModel = function() {
@@ -293,7 +292,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
-                idApp: $rootScope.appId,
+                idApp: parseInt($rootScope.appId),
 
             }
             $scope.modelSearch = {

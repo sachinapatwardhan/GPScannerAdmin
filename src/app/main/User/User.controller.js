@@ -28,7 +28,7 @@
                 gender: '',
                 image: '',
                 IsMobileVerify: false,
-                idApp: $rootScope.appId,
+                idApp: parseInt($rootScope.appId),
             };
             //$scope.GetAllUser();
             $scope.GetAllRoles();
@@ -750,7 +750,7 @@
                     gender: '',
                     image: '',
                     IsMobileVerify: false,
-                    idApp: $rootScope.appId,
+                    idApp: parseInt($rootScope.appId),
                 };
                 $scope.tab = {
                     selectedIndex: 1
@@ -785,7 +785,7 @@
                 gender: '',
                 image: '',
                 IsMobileVerify: false,
-                idApp: $rootScope.appId,
+                idApp: parseInt($rootScope.appId),
             };
             $scope.FlgImage = 0;
             $scope.FlgCropImage = 0;
