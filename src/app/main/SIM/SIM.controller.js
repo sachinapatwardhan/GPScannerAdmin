@@ -9,8 +9,9 @@
     function SIMController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.appId = localStorage.getItem('appId');
+        $rootScope.AppName = localStorage.getItem('appName');
         var vm = this;
-        vm.getAllSIMInfo = getAllSIMInfo;
+        // vm.getAllSIMInfo = getAllSIMInfo;
         $scope.init = function() {
             $scope.model = {
                 Id: 0,
@@ -25,7 +26,7 @@
                 // $scope.Search = '';  
             $scope.FlgAddedEditlocal = true;
             $scope.flag = false;
-            getAllSIMInfo();
+            // getAllSIMInfo();
             $scope.GetAlltelco();
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.GetAllInfoList();
@@ -33,7 +34,6 @@
         }
         $scope.GetAllInfoList = function() {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
-                console.log(data)
                 $scope.lstAppInfo = data.data;
             })
         }
@@ -43,36 +43,153 @@
             });
         }
 
-        function getAllSIMInfo() {
-            $http.get($rootScope.RoutePath + "sim/GetAllSIMInfo").then(function(data) {
-                $scope.lstSIMInfo = data.data;
-            })
+        // function getAllSIMInfo() {
+        //     $http.get($rootScope.RoutePath + "sim/GetAllSIMInfo").then(function(data) {
+        //         $scope.lstSIMInfo = data.data;
+        //     })
+        // }
+        // ----------------------------------------------------------------------
+        $scope.GetAllSIMDetail = function(IsUpdate) {
+            var resetPaging = false;
+            if (IsUpdate == true) {
+                resetPaging = true;
+            };
+            $scope.dtInstance.reloadData(callback, resetPaging);
+            $('#SIMDetail').dataTable()._fnPageChange(0);
+            $('#SIMDetail').dataTable()._fnAjaxUpdate();
         }
 
-        $scope.dtCustomOptions = DTOptionsBuilder.newOptions()
-            .withPaginationType('full_numbers')
-            .withDisplayLength(25)
-            .withOption('responsive', true)
-            // .withOption('autoWidth', true)
-            .withOption('aaSorting', [0, 'asc'])
-            .withOption('deferRender', true)
-            .withOption('paging', true)
-            .withOption('language', {
-                'zeroRecords': "No Record Found",
-                'emptyTable': "No Record Found"
-            })
-            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"info"i><"pagination"p>>>')
-            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
-            .withOption('scrollY', 'auto'),
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+            $scope.FilterStatus = 1;
+            $scope.dtColumns = [
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('SerialNum'),
+                DTColumnBuilder.newColumn('PhoneNum'),
+                DTColumnBuilder.newColumn('TelName').renderWith(Valuefun),
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                DTColumnBuilder.newColumn('AppName').renderWith(Valuefun),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+            ]
 
-            vm.dtColumnDefs = [
-                DTColumnDefBuilder.newColumnDef(0),
-                DTColumnDefBuilder.newColumnDef(1),
-                DTColumnDefBuilder.newColumnDef(2),
-                // DTColumnDefBuilder.newColumnDef(3),
-                DTColumnDefBuilder.newColumnDef(3).notSortable()
-            ];
+            $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
+                    url: $rootScope.RoutePath + "sim/GetAllSIMInfoNew",
+                    data: function(d) {
+                        if ($scope.modelSearch.Search == '') {
+                            d.search = '';
+                        } else {
+                            d.search = $scope.modelSearch.Search;
+                        }
+                        return d;
+                    },
+                    type: "get",
+                    dataSrc: function(json) {
+                        if (json.success != false) {
+                            $scope.lstSIMInfo = json.data;
+                            return json.data;
+                        } else {
+                            return [];
+                        }
+                    },
+                })
+                .withOption('processing', true) //for show progress bar
+                .withOption('serverSide', true) // for server side processing
+                .withPaginationType('simple') // for get full pagination options // first / last / prev / next and page numbers
+                .withDisplayLength(25) // Page size
+                .withOption('aaSorting', [4, 'desc'])
+                .withOption('responsive', true)
+                .withOption('autoWidth', true)
+                .withOption('createdRow', createdRow)
+                .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+                .withOption('scrollY', 'auto');
+        });
         $scope.dtInstance = {};
+
+        $scope.reloadData = function() {}
+
+        function callback(json) {}
+
+        //compile Datatable And Apply Class
+        function createdRow(row, data, dataIndex) {
+            // Recompiling so we can bind Angular directive to the DT
+            $compile(angular.element(row).contents())($scope);
+        }
+
+        function NumberHtml(data, type, full, meta) {
+            return (meta.row + 1);
+        }
+
+        function DrawDateFormatNumberHtml(data, type, full, meta) {
+            var date = data.tbldrawdate.DrawDate;
+            if (date != null) {
+                return moment(date).format('DD-MM-YYYY')
+            } else {
+                return '';
+            }
+        }
+
+        function Valuefun(data) {
+            var value = '';
+            if (data != null && data != undefined && data != '') {
+                value = data;
+            }
+            return value;
+        }
+
+        function dateFormat(date) {
+            if (date != null) {
+                return moment(date).format('DD-MM-YYYY hh:mm:ss a')
+            } else {
+                return '';
+            }
+        }
+
+
+        function actionsHtml(data, type, full, meta) {
+            var btns = '<div layout="row">'
+
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="editSIMById(' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+            }
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="DeleteSIM(' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
+            }
+            btns += '</div>'
+            return btns;
+        };
+        //--------------------------------------------------------------------------
+
+
+
+        // $scope.dtCustomOptions = DTOptionsBuilder.newOptions()
+        //     .withPaginationType('full_numbers')
+        //     .withDisplayLength(25)
+        //     .withOption('responsive', true)
+        //     // .withOption('autoWidth', true)
+        //     .withOption('aaSorting', [0, 'asc'])
+        //     .withOption('deferRender', true)
+        //     .withOption('paging', true)
+        //     .withOption('language', {
+        //         'zeroRecords': "No Record Found",
+        //         'emptyTable': "No Record Found"
+        //     })
+        //     // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"info"i><"pagination"p>>>')
+        //     .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+        //     .withOption('scrollY', 'auto'),
+
+        //     vm.dtColumnDefs = [
+        //         DTColumnDefBuilder.newColumnDef(0),
+        //         DTColumnDefBuilder.newColumnDef(1),
+        //         DTColumnDefBuilder.newColumnDef(2),
+        //         // DTColumnDefBuilder.newColumnDef(3),
+        //         DTColumnDefBuilder.newColumnDef(3).notSortable()
+        //     ];
+        // $scope.dtInstance = {};
 
         $scope.SaveSIMInfo = function(o) {
             $http.post($rootScope.RoutePath + "sim/SaveSIMInfo", o).then(function(data) {
@@ -86,7 +203,8 @@
                     $scope.flag = false;
                     // $scope.init();
                     $scope.ResetModel();
-                    getAllSIMInfo();
+                    // getAllSIMInfo();
+                    $scope.GetAllSIMDetail(true);
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
@@ -98,7 +216,9 @@
 
             })
         }
-        $scope.editSIMById = function(o) {
+        $scope.editSIMById = function(id) {
+            var o = _.filter($scope.lstSIMInfo, { id: id });
+            o = o[0];
             $scope.model.Id = o.id;
             $scope.model.SerialNum = o.SerialNum;
             $scope.model.PhoneNum = parseInt(o.PhoneNum);
@@ -129,7 +249,8 @@
                             .hideDelay(3000)
                         );
                         $scope.ResetModel();
-                        getAllSIMInfo();
+                        // getAllSIMInfo();
+                        $scope.GetAllSIMDetail(true);
 
                     } else {
                         $mdToast.show(
@@ -163,6 +284,7 @@
             }
             $scope.flag = true;
             $scope.resetForm();
+            $scope.model.idApp = $rootScope.appId;
         }
 
         $scope.ResetModel = function() {

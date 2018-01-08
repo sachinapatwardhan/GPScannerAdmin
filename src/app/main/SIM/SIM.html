@@ -35,11 +35,8 @@
         </div>
         <div class="content-card " layout="column " flex>
             <div class="content fullpage-datatable " layout="column " flex>
-                <!--<table id="AppInfo " class="dataTable row-border hover " datatable=" " dt-instance="dtInstance " dt-columns="dtColumns " dt-options="dtOptions " width="100% ">-->
-                <!--<table class="dataTable cell-border row-border hover " datatable="ng " dt-options="dtCustomOptions " dt-instance="dtInstance " dt-column-defs="vm.dtColumnDefs " width="100% ">-->
-                <!-- <table class="dataTable row-border hover " datatable="ng " dt-instance="dtInstance " dt-options="dtOptions " dt-column-defs="dtColumnDefs "> -->
-                <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%">
-
+                <!-- <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%"> -->
+                <table id="SIMDetail" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
                             <th class="all ">
@@ -84,7 +81,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <!-- <tbody>
                         <tr ng-repeat="o in lstSIMInfo ">
                             <td>{{ $index+1 }}</td>
                             <td>{{o.SerialNum}} </td>
@@ -103,7 +100,7 @@
                                 </md-button>
                             </td>
                         </tr>
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
         </div>
