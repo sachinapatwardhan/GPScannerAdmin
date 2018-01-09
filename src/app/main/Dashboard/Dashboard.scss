@@ -1,83 +1,159 @@
-#e-commerce-products {
-    .center {
-        .header {
-            height: 136px !important;
-            min-height: 136px !important;
-            max-height: 136px !important;
-            padding: 24px 0;
-            .h1 {
-                md-icon {
-                    margin-right: 12px;
-                }
-            }
-            .product-count {
-                margin: 6px 0 0 36px;
-            }
-            .search {
-                position: relative;
-                padding-left: 24px;
-                max-width: 480px;
-                .search-icon {
-                    margin: 0 -24px 0 0;
-                }
-                .search-input {
-                    margin: 0 0 0 32px;
-                    background: none;
-                    font-size: 16px;
-                    line-height: 40px;
-                    height: 40px;
-                    color: #FFFFFF;
-                    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-                    transition: border-color 300ms ease;
-                    &:focus {
-                        border-color: rgba(255, 255, 255, 1);
-                    }
-                    &::-webkit-input-placeholder {
-                        color: rgba(255, 255, 255, 0.5);
-                    }
-                }
-            }
+#dashboard-project {
+  >.center {
+    >.header {
+      height: 100px;
+      min-height: 100px;
+      max-height: 100px;
+      padding: 10px 15px;
+      padding-bottom: 0;
+      .selected-project {
+        background: rgba(0, 0, 0, 0.12);
+        color: #FFFFFF;
+        padding: 8px 16px;
+        height: 40px;
+        line-height: 24px;
+        font-size: 16px;
+      }
+      .project-selector {
+        margin-left: 1px;
+        border-radius: 0;
+        background: rgba(0, 0, 0, 0.12);
+        md-icon {
+          color: #FFFFFF;
         }
-        .content-card {
-            .toolbar {
-                padding: 8px;
-            }
-            .content {
-                padding: 0;
-                .dataTables_wrapper {
-                    .dataTables_scrollHead {
-                        min-height: 64px;
-                        table {
-                            th {
-                                padding-top: 20px;
-                                padding-bottom: 20px;
-                            }
-                        }
-                    }
-                    .dataTables_scrollBody {
-                        .product-image {
-                            width: 52px;
-                            height: 52px;
-                            border: 1px solid rgba(0, 0, 0, 0.12);
-                        }
-                        .quantity-indicator {
-                            display: inline-block;
-                            vertical-align: middle;
-                            width: 8px;
-                            height: 8px;
-                            border-radius: 4px;
-                            margin-right: 8px;
-                            &+div {
-                                display: inline-block;
-                                vertical-align: middle;
-                            }
-                        }
-                        .edit-button {
-                            margin: 0;
-                        }
-                    }
-                }
-            }
-        }
+      }
     }
+    >.content {
+      background: none;
+      padding: 0;
+      >md-tabs {
+        >md-tabs-wrapper {
+          background: #FFFFFF;
+          box-shadow: $whiteframe-shadow-1dp;
+          padding: 0 24px;
+          md-tabs-canvas {
+            height: 56px;
+            md-pagination-wrapper {
+              height: 56px;
+            }
+            .md-tab {
+              padding: 16px 24px;
+              text-transform: none;
+            }
+          }
+        }
+        &:not(.md-dynamic-height) {
+          md-tabs-content-wrapper {
+            top: 56px;
+          }
+        }
+        >md-tabs-content-wrapper {
+          md-tab-content {
+            padding: 12px;
+          }
+        }
+      }
+    }
+  }
+  >.sidenav {
+    width: 330px;
+    min-width: 330px;
+    max-width: 330px;
+    padding: 0;
+    z-index: 51;
+    box-shadow: $whiteframe-shadow-8dp;
+    &.md-locked-open {
+      width: 250px;
+      min-width: 250px;
+      max-width: 250px;
+      z-index: 2;
+      box-shadow: none;
+      background: material-color('grey', '200');
+    }
+  }
+  #widgets {}
 }
+
+// #e-commerce-products {
+//   .center {
+//     .header {
+//       height: 136px !important;
+//       min-height: 136px !important;
+//       max-height: 136px !important;
+//       padding: 24px 0;
+//       .h1 {
+//         md-icon {
+//           margin-right: 12px;
+//         }
+//       }
+//       .product-count {
+//         margin: 6px 0 0 36px;
+//       }
+//       .search {
+//         position: relative;
+//         padding-left: 24px;
+//         max-width: 480px;
+//         .search-icon {
+//           margin: 0 -24px 0 0;
+//         }
+//         .search-input {
+//           margin: 0 0 0 32px;
+//           background: none;
+//           font-size: 16px;
+//           line-height: 40px;
+//           height: 40px;
+//           color: #FFFFFF;
+//           border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+//           transition: border-color 300ms ease;
+//           &:focus {
+//             border-color: rgba(255, 255, 255, 1);
+//           }
+//           &::-webkit-input-placeholder {
+//             color: rgba(255, 255, 255, 0.5);
+//           }
+//         }
+//       }
+//     }
+//     .content-card {
+//       .toolbar {
+//         padding: 8px;
+//       }
+//       .content {
+//         padding: 0;
+//         .dataTables_wrapper {
+//           .dataTables_scrollHead {
+//             min-height: 64px;
+//             table {
+//               th {
+//                 padding-top: 20px;
+//                 padding-bottom: 20px;
+//               }
+//             }
+//           }
+//           .dataTables_scrollBody {
+//             .product-image {
+//               width: 52px;
+//               height: 52px;
+//               border: 1px solid rgba(0, 0, 0, 0.12);
+//             }
+//             .quantity-indicator {
+//               display: inline-block;
+//               vertical-align: middle;
+//               width: 8px;
+//               height: 8px;
+//               border-radius: 4px;
+//               margin-right: 8px;
+//               &+div {
+//                 display: inline-block;
+//                 vertical-align: middle;
+//               }
+//             }
+//             .edit-button {
+//               margin: 0;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
