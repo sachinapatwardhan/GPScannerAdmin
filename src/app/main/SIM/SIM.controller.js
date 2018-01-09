@@ -11,7 +11,7 @@
         $rootScope.appId = localStorage.getItem('appId');
         $rootScope.AppName = localStorage.getItem('appName');
         var vm = this;
-        // vm.getAllSIMInfo = getAllSIMInfo;
+        // vm.GetAllSIMDetail = GetAllSIMDetail;
         $scope.init = function() {
             $scope.model = {
                 Id: 0,
@@ -49,7 +49,7 @@
         //     })
         // }
         // ----------------------------------------------------------------------
-        $scope.GetAllSIMDetail = function(IsUpdate) {
+        vm.GetAllSIMDetail = function(IsUpdate) {
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
@@ -93,7 +93,7 @@
                 })
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
-                .withPaginationType('simple') // for get full pagination options // first / last / prev / next and page numbers
+                .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
                 .withOption('aaSorting', [4, 'desc'])
                 .withOption('responsive', true)
@@ -101,6 +101,7 @@
                 .withOption('createdRow', createdRow)
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
                 .withOption('scrollY', 'auto');
+
         });
         $scope.dtInstance = {};
 
@@ -204,7 +205,7 @@
                     // $scope.init();
                     $scope.ResetModel();
                     // getAllSIMInfo();
-                    $scope.GetAllSIMDetail(true);
+                    vm.GetAllSIMDetail(true);
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
@@ -250,7 +251,7 @@
                         );
                         $scope.ResetModel();
                         // getAllSIMInfo();
-                        $scope.GetAllSIMDetail(true);
+                        vm.GetAllSIMDetail(true);
 
                     } else {
                         $mdToast.show(
@@ -348,6 +349,7 @@
                     Tasks: [],
                     event: ev,
                     Obj: vm,
+                    // UserRoles: $rootScope.UserRoles,
                 }
             })
         }
@@ -357,8 +359,9 @@
         }
 
         $scope.GetSerch = function(Search) {
-            $scope.dtInstance.DataTable.search(Search);
-            $scope.dtInstance.DataTable.search(Search).draw();
+            vm.GetAllSIMDetail(true)
+                // $scope.dtInstance.DataTable.search(Search);
+                // $scope.dtInstance.DataTable.search(Search).draw();
         };
 
         $scope.init();

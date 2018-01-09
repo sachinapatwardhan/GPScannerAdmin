@@ -6,23 +6,31 @@
         .controller('ImportSIMController', ImportSIMController);
 
     /** @ngInject */
-    function ImportSIMController($http, $mdDialog, $mdToast, $scope, $rootScope, Tasks, event, Obj) {
+    function ImportSIMController($http, $mdDialog, $mdToast, $cookieStore, $scope, $rootScope, Tasks, event, Obj) {
         var vm = this;
-        $scope.idTelCo = null,
-            $scope.GetAlltelco = function() {
-                $http.get($rootScope.RoutePath + "telco/GetAllCompany").then(function(data) {
-                    $scope.lstCompany = data.data;
-                });
-            }
+        vm.UserRoles = $rootScope.UserRoles[0];
+        $scope.idTelCo = null;
+        $scope.GetAlltelco = function() {
+            $http.get($rootScope.RoutePath + "telco/GetAllCompany").then(function(data) {
+                $scope.lstCompany = data.data;
+            });
+        }
         $scope.GetAlltelco();
+        $scope.idApp = parseInt(localStorage.getItem('appId'));
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstAppInfo = data.data;
+            })
+        }
+        $scope.GetAllInfoList();
 
         $scope.Import = function(o) {
             var formData = new FormData();
             angular.forEach($scope.Productfiles, function(obj1) {
                 formData.append('files[]', obj1.lfFile);
-                formData.append('idTelCo', $scope.idTelCo)
+                formData.append('idTelCo', $scope.idTelCo);
+                formData.append('idApp', $scope.idApp);
             });
-            console.log(formData)
             $http.post($rootScope.RoutePath + "sim/uploadExcelDevice", formData, {
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
@@ -36,8 +44,7 @@
                         .hideDelay(3000)
                     );
                     $scope.closeModel();
-                    console.log(Obj);
-                    Obj.getAllSIMInfo();
+                    Obj.GetAllSIMDetail();
 
                 } else {
                     $mdToast.show(
@@ -56,13 +63,14 @@
         }
         $scope.closeModel = function() {
             $scope.idTelCo = null;
+            $scope.idApp = parseInt(localStorage.getItem('appId'));
             $scope.apiReset.removeAll();
             $mdDialog.hide();
         }
 
         $scope.Reset = function() {
             $scope.apiReset.removeAll();
-            $scope.idTelCo = null;
+            // $scope.idTelCo = null;
         }
 
 

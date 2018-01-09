@@ -10,20 +10,36 @@
     </md-toolbar>
     <md-dialog-content ms-scroll>
         <form Name="formImport" class="md-inline-form">
-            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
-                <label>Telephone Company</label>
-                <md-select Name="idTelCo" ng-model="idTelCo" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                    <md-select-header class="demo-select-header">
-                        <input ng-model="vm.searchTermidTelCo" type="search" placeholder="Search for a Company.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                    </md-select-header>
-                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstCompany | filter:vm.searchTermidTelCo | orderBy: 'Name'">{{o.Name}}</md-option>
-                </md-select>
-                <div ng-messages="formTrackingdetails.idTelCo.$error" ng-if="formTrackingdetails.idTelCo.$touched" role="alert">
-                    <div ng-message="required">
-                        <span>Telephone Company is required.</span>
+            <div layout="row " layout-wrap>
+                <md-input-container class="md-block" flex="45" flex-gt-sm="45">
+                    <label>Telephone Company</label>
+                    <md-select Name="idTelCo" ng-model="idTelCo" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                        <md-select-header class="demo-select-header">
+                            <input ng-model="vm.searchTermidTelCo" type="search" placeholder="Search for a Company.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                        </md-select-header>
+                        <md-option ng-value="{{o.id}}" ng-repeat="o in lstCompany | filter:vm.searchTermidTelCo | orderBy: 'Name'">{{o.Name}}</md-option>
+                    </md-select>
+                    <div ng-messages="formTrackingdetails.idTelCo.$error" ng-if="formTrackingdetails.idTelCo.$touched" role="alert">
+                        <div ng-message="required">
+                            <span>Telephone Company is required.</span>
+                        </div>
                     </div>
-                </div>
-            </md-input-container>
+                </md-input-container>
+                <md-input-container class="md-block" flex="45" flex-gt-sm="45">
+                    <label>App Name</label>
+                    <md-select Name="AppName" ng-model="idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required ng-if="vm.UserRoles =='Super Admin'">
+                        <md-select-header class="demo-select-header">
+                            <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                        </md-select-header>
+                        <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                    </md-select>
+                    <div ng-messages="formTrackingdetails.AppName.$error" ng-if="formTrackingdetails.AppName.$touched" role="alert">
+                        <div ng-message="required">
+                            <span>App Name is required.</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
             <md-content class="md-padding">
 
                 <p>You must upload file same as excel template for Import SIM .
