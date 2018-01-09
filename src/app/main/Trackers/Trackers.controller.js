@@ -200,10 +200,10 @@
                     DTColumnBuilder.newColumn('Country'),
                     // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                     DTColumnBuilder.newColumn('AppName'),
-                    DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                    // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedBy'),
-                    DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
+                    // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
                 ]
             } else {
@@ -218,10 +218,10 @@
                     DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
                     DTColumnBuilder.newColumn('Country'),
                     // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
-                    DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                    // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('CreatedBy'),
-                    DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
+                    // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
                 ]
             }
