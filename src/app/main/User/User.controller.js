@@ -110,17 +110,25 @@
             // }, 1000);
 
             $scope.model.gender = o.gender;
-            $scope.model.IsMobileVerify = o.IsMobileVerify;
+            // $scope.model.IsMobileVerify = o.IsMobileVerify;
 
-            if (o.tbluserinroles.length > 0) {
-                for (var i = 0; i < o.tbluserinroles.length; i++) {
+            // if (o.tbluserinroles.length > 0) {
+            //     for (var i = 0; i < o.tbluserinroles.length; i++) {
+            //         var obj = _.findWhere($scope.lstRoles, {
+            //             id: o.tbluserinroles[i].roleId
+            //         })
+            //         obj.checked = true;
+            //     }
+            // }
+            if (o.Role != '') {
+                var str = o.Role.split(",");
+                for (var i = 0; i < str.length; i++) {
                     var obj = _.findWhere($scope.lstRoles, {
-                        id: o.tbluserinroles[i].roleId
+                        RoleName: str[i]
                     })
                     obj.checked = true;
                 }
             }
-
             $scope.model.image = o.image;
             $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
             if ($scope.model.image != null && $scope.model.image != '' && $scope.model.image != undefined) {
@@ -299,19 +307,36 @@
         // console.log($rootScope.CountryList);
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
-                DTColumnBuilder.newColumn('username').withOption('width', '12%'),
-                DTColumnBuilder.newColumn('email').withOption('width', '13%'),
-                DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
-                DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
-                // DTColumnBuilder.newColumn('AppName').renderWith(AppHtml),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
-            ]
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
+                    DTColumnBuilder.newColumn('username').withOption('width', '12%'),
+                    DTColumnBuilder.newColumn('email').withOption('width', '13%'),
+                    DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
+                    // DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
+                    DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
+                    DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
+                    // DTColumnBuilder.newColumn('tblappinfo.AppName').renderWith(AppHtml),
+                    DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
+                ]
+            } else {
+                $scope.dtColumns1 = [
+                    DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
+                    DTColumnBuilder.newColumn('username').withOption('width', '12%'),
+                    DTColumnBuilder.newColumn('email').withOption('width', '13%'),
+                    DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
+                    // DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
+                    DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
+                    DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
+                ]
+            }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "user/GetAllDynamicUser",
+                    url: $rootScope.RoutePath + "user/GetAllDynamicUserNew",
                     data: function(d) {
                         if ($scope.Search == '') {
                             d.search = '';
@@ -335,6 +360,7 @@
                         // console.log(json);
                         if (json.success != false) {
                             $scope.lstdata = json.data;
+                            console.log($scope.lstdata)
                             return json.data;
                         } else {
                             return [];
@@ -345,15 +371,16 @@
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
-                .withOption('aaSorting', [2, 'asc'])
+                .withOption('aaSorting', [0, 'desc'])
                 .withOption('responsive', true)
                 .withOption('createdRow', createdRow)
                 // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
-        $scope.dtInstance = {};
 
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
 
         //Reload Datatable
         $scope.GetAllUser = function(IsUpdate) {
@@ -361,9 +388,17 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            $scope.dtInstance.reloadData(callback, resetPaging);
-            $('#Usertable').dataTable()._fnPageChange(0);
-            $('#Usertable').dataTable()._fnAjaxUpdate();
+            if ($rootScope.UserRoles == 'Super Admin') {
+                vm.dtInstance.reloadData(callback, resetPaging);
+                $('#Usertable').dataTable()._fnPageChange(0);
+                $('#Usertable').dataTable()._fnAjaxUpdate();
+            } else {
+                vm.dtInstance1.reloadData(callback, resetPaging);
+                $('#Usertable1').dataTable()._fnPageChange(0);
+                $('#Usertable1').dataTable()._fnAjaxUpdate();
+            }
+
+
 
         }
 
@@ -385,12 +420,21 @@
         function AppHtml(data, type, full, meta) {
             // console.log(full)
             var appname = '';
-
-            if (full.AppName != null && full.AppName != undefined && full.AppName != '') {
-                appname = full.AppName;
+            if (full.tblappinfo != null && full.tblappinfo != undefined && full.tblappinfo != '') {
+                if (full.tblappinfo.AppName != null && full.tblappinfo.AppName != undefined && full.tblappinfo.AppName != '') {
+                    appname = full.tblappinfo.AppName;
+                }
             }
 
             return appname;
+        }
+
+        function CountryHtml(data) {
+            var country = '';
+            if (data != null && data != '' && data != undefined) {
+                country = data;
+            }
+            return country;
         }
 
         function roleHtml(data, type, full, meta) {
@@ -730,6 +774,8 @@
             $scope.Search = Search;
             $scope.GetAllUser(true);
         }
+
+
 
         $scope.ResetEdit = function() {
             if ($rootScope.FlgAddedAccess == true) {
