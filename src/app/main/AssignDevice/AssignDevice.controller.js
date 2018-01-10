@@ -121,11 +121,11 @@
                 return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';
             }),
             DTColumnBuilder.newColumn('CreatedBy'),
-            DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').renderWith(function(data, type, row, meta) {
-                return data === 1 ?
-                    '<span style="font-size: 20px; color: green;">&#x2714;</span>' :
-                    '<span style="font-size: 20px; color: red;">&#x2716;</span>';
-            }),
+            // DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').renderWith(function(data, type, row, meta) {
+            //     return data === 1 ?
+            //         '<span style="font-size: 20px; color: green;">&#x2714;</span>' :
+            //         '<span style="font-size: 20px; color: red;">&#x2716;</span>';
+            // }),
             DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
                 var template =
                     '<md-checkbox aria-label="assign" ng-disabled="devices[' + meta.row + '].isDisabled" ng-model="devices[' + meta.row + '].isChecked" ng-change="assignDevice(' + meta.row + ')"></md-checkbox>';
@@ -174,11 +174,11 @@
                 return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';
             }),
             DTColumnBuilder.newColumn('CreatedBy'),
-            DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').renderWith(function(data, type, row, meta) {
-                return data === 1 ?
-                    '<span style="font-size: 20px; color: green;">&#x2714;</span>' :
-                    '<span style="font-size: 20px; color: red;">&#x2716;</span>';
-            }),
+            // DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').renderWith(function(data, type, row, meta) {
+            //     return data === 1 ?
+            //         '<span style="font-size: 20px; color: green;">&#x2714;</span>' :
+            //         '<span style="font-size: 20px; color: red;">&#x2716;</span>';
+            // }),
             DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
                 var template =
                     '<md-checkbox aria-label="assign" ng-disabled="devices[' + meta.row + '].isDisabled" ng-model="devices[' + meta.row + '].isChecked" ng-change="assignDevice(' + meta.row + ')"></md-checkbox>';
