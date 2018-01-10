@@ -21,7 +21,8 @@
             //    EmailFrom: '',
             //};
             vm.GetAllEmailTemplate();
-            //$scope.tab = { selectedIndex: 0 };
+            $scope.modelSearch = { Search: '' }
+                //$scope.tab = { selectedIndex: 0 };
         }
 
         function GetAllEmailTemplate() {
@@ -47,7 +48,38 @@
                 }
             })
         }
-
+        $scope.DeleteEmailTemplate = function(Id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure to Delete this Email Template ?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function() {
+                var params = {
+                    idEmailTemplate: Id
+                };
+                $http.get($rootScope.RoutePath + "email/DeleteEmailTemplate", {
+                    params: params
+                }).success(function(data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.modelSearch.search = '';
+                        vm.GetAllEmailTemplate();
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                });
+            });
+        }
 
 
         $scope.Reset = function() {
@@ -57,23 +89,45 @@
 
         vm.dtOptions = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
-            .withDisplayLength(10)
+            .withDisplayLength(25)
             .withOption('responsive', true)
-            .withOption('autoWidth', true)
+            // .withOption('autoWidth', true)
+            .withOption('aaSorting', [0, 'asc'])
+            .withOption('deferRender', true)
+            .withOption('paging', true)
             .withOption('language', {
                 'zeroRecords': "No Record Found",
                 'emptyTable': "No Record Found"
             })
-            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
-            .withOption('dom', '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
-        // .withDOM('<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
-        vm.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-            DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4)
-        ];
+            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"info"i><"pagination"p>>>')
+            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+            .withOption('scrollY', 'auto'),
+
+
+            // .withPaginationType('full_numbers')
+            //     .withDisplayLength(10)
+            //     .withOption('responsive', true)
+            //     .withOption('autoWidth', true)
+            //     .withOption('language', {
+            //         'zeroRecords': "No Record Found",
+            //         'emptyTable': "No Record Found"
+            //     })
+            //     // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+            //     .withOption('dom', '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
+            // // .withDOM('<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
+            vm.dtColumnDefs = [
+                DTColumnDefBuilder.newColumnDef(0),
+                DTColumnDefBuilder.newColumnDef(1),
+                DTColumnDefBuilder.newColumnDef(2),
+                DTColumnDefBuilder.newColumnDef(3),
+                DTColumnDefBuilder.newColumnDef(4)
+            ];
+        $scope.dtInstance = {};
+        $scope.GetSerch = function(Search) {
+
+            $scope.dtInstance.DataTable.search(Search);
+            $scope.dtInstance.DataTable.search(Search).draw();
+        };
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.init();
