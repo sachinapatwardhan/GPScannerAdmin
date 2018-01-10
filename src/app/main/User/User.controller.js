@@ -360,7 +360,6 @@
                         // console.log(json);
                         if (json.success != false) {
                             $scope.lstdata = json.data;
-                            console.log($scope.lstdata)
                             return json.data;
                         } else {
                             return [];
