@@ -89,24 +89,28 @@
             DTColumnBuilder.newColumn('Type'),
             DTColumnBuilder.newColumn('IMEI'),
             DTColumnBuilder.newColumn('Version'),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
-                if (row.tblsimdetail && row.tblsimdetail.SerialNum) {
-                    return row.tblsimdetail.SerialNum;
-                }
-                return 'N/A';
-            }),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
-                if (row.tblsimdetail && row.tblsimdetail.PhoneNum) {
-                    return row.tblsimdetail.PhoneNum;
-                }
-                return 'N/A';
-            }),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
-                if (row.tblsimdetail && row.tblsimdetail.tbltelco && row.tblsimdetail.tbltelco.Name) {
-                    return row.tblsimdetail.tbltelco.Name;
-                }
-                return 'N/A';
-            }),
+            DTColumnBuilder.newColumn('Country'),
+            DTColumnBuilder.newColumn('SerialNum'),
+            DTColumnBuilder.newColumn('PhoneNum'),
+            DTColumnBuilder.newColumn('Name'),
+            // DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
+            //     if (row.tblsimdetail && row.tblsimdetail.SerialNum) {
+            //         return row.tblsimdetail.SerialNum;
+            //     }
+            //     return 'N/A';
+            // }),
+            // DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
+            //     if (row.tblsimdetail && row.tblsimdetail.PhoneNum) {
+            //         return row.tblsimdetail.PhoneNum;
+            //     }
+            //     return 'N/A';
+            // }),
+            // DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
+            //     if (row.tblsimdetail && row.tblsimdetail.tbltelco && row.tblsimdetail.tbltelco.Name) {
+            //         return row.tblsimdetail.tbltelco.Name;
+            //     }
+            //     return 'N/A';
+            // }),
             DTColumnBuilder.newColumn('AppName'),
             DTColumnBuilder.newColumn('ExpiryDate').renderWith(function(data, type, row, meta) {
                 var parsed = moment(data);
@@ -139,24 +143,28 @@
             DTColumnBuilder.newColumn('Type'),
             DTColumnBuilder.newColumn('IMEI'),
             DTColumnBuilder.newColumn('Version'),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
-                if (row.tblsimdetail && row.tblsimdetail.SerialNum) {
-                    return row.tblsimdetail.SerialNum;
-                }
-                return 'N/A';
-            }),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
-                if (row.tblsimdetail && row.tblsimdetail.PhoneNum) {
-                    return row.tblsimdetail.PhoneNum;
-                }
-                return 'N/A';
-            }),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
-                if (row.tblsimdetail && row.tblsimdetail.tbltelco && row.tblsimdetail.tbltelco.Name) {
-                    return row.tblsimdetail.tbltelco.Name;
-                }
-                return 'N/A';
-            }),
+            DTColumnBuilder.newColumn('Country'),
+            DTColumnBuilder.newColumn('SerialNum'),
+            DTColumnBuilder.newColumn('PhoneNum'),
+            DTColumnBuilder.newColumn('Name'),
+            // DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
+            //     if (row.tblsimdetail && row.tblsimdetail.SerialNum) {
+            //         return row.tblsimdetail.SerialNum;
+            //     }
+            //     return 'N/A';
+            // }),
+            // DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
+            //     if (row.tblsimdetail && row.tblsimdetail.PhoneNum) {
+            //         return row.tblsimdetail.PhoneNum;
+            //     }
+            //     return 'N/A';
+            // }),
+            // DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
+            //     if (row.tblsimdetail && row.tblsimdetail.tbltelco && row.tblsimdetail.tbltelco.Name) {
+            //         return row.tblsimdetail.tbltelco.Name;
+            //     }
+            //     return 'N/A';
+            // }),
             DTColumnBuilder.newColumn('ExpiryDate').renderWith(function(data, type, row, meta) {
                 var parsed = moment(data);
                 return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';
@@ -200,7 +208,6 @@
         $scope.getAllApps = function() {
             $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo")
                 .then(function(res) {
-                    console.log(res)
                     $scope.appNames = res.data;
 
                     var objApp = _.findWhere($scope.appNames, { AppName: $scope.modelsearch.AppName });
