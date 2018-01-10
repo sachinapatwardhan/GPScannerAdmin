@@ -14,9 +14,10 @@
 
         $scope.dtColumns = [
             DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
-            DTColumnBuilder.newColumn('username'),
-            DTColumnBuilder.newColumn('Name'),
-            DTColumnBuilder.newColumn('DeviceId'),
+            DTColumnBuilder.newColumn('username').renderWith(Displayfun),
+            DTColumnBuilder.newColumn('Name').renderWith(Displayfun),
+            DTColumnBuilder.newColumn('DeviceId').renderWith(Displayfun),
+            DTColumnBuilder.newColumn('RequestType'),
             DTColumnBuilder.newColumn('Status').renderWith(Statusfan),
             DTColumnBuilder.newColumn('CreatedBy'),
             DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
@@ -73,6 +74,14 @@
         function createdRow(row, data, dataIndex) {
             // Recompiling so we can bind Angular directive to the DT
             $compile(angular.element(row).contents())($scope);
+        }
+
+        function Displayfun(data) {
+            var value = 'N/A';
+            if (data != '' && data != null && data != undefined) {
+                value = data;
+            }
+            return value;
         }
 
         function Statusfan(data, type, full, meta) {
