@@ -39,6 +39,18 @@
                         $scope.model.CurrentDate = DeviceDatetime;
                         $scope.model.CurrentSpeed = obj.Speed.toFixed(2);
                         new CustomMarker12(new google.maps.LatLng(obj.Latitude, obj.Longitude), map, obj.IsEngine, DeviceDatetime, obj.Direction, true)
+                        if (IsOnline == false) {
+                            $(".customMarkeroncar").attr("class", "customMarkeroffcar");
+                            $(".customMarkeractivecar").attr("class", "customMarkeroffcar");
+                        } else {
+                            if (obj.IsEngine == false) {
+                                $(".customMarkeroffcar").attr("class", "customMarkeractivecar");
+                                $(".customMarkeroncar").attr("class", "customMarkeractivecar");
+                            } else {
+                                $(".customMarkeroffcar").attr("class", "customMarkeroncar");
+                                $(".customMarkeractivecar").attr("class", "customMarkeroncar");
+                            }
+                        }
                     }
                 }
             });
