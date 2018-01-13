@@ -21,10 +21,10 @@
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button>
-                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length>0 && Search == ''"> -->
-                <!-- <md-icon md-font-icon="icon-file-excel"></md-icon> -->
-                <!-- <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip> -->
-                <!-- </md-button> -->
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length>0 && Search == ''">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
+                </md-button>
             </div>
         </div>
         <div class="content-card" layout="column" flex>
@@ -98,7 +98,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">GPS Positioning</span>
+                                    <span class="column-title">Positioning</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -109,6 +109,36 @@
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Direction</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IsEngine</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Voltage</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Odo Meter</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">AD1</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">AD2</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Altitude</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -146,36 +176,15 @@
                                     <span class="column-title">IsDoor</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">IsEngine</span>
-                                </div>
-                            </th>
+
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Created Date</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Altitude</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">AD1</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">AD2</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Odo Meter</span>
-                                </div>
-                            </th>
+
+
+
                         </tr>
                     </thead>
                 </table>

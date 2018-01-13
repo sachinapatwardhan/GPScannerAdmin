@@ -74,6 +74,12 @@
             DTColumnBuilder.newColumn('GPSPositioning'),
             DTColumnBuilder.newColumn('Speed'),
             DTColumnBuilder.newColumn('Direction'),
+            DTColumnBuilder.newColumn('IsEngine').renderWith(IsFlg),
+            DTColumnBuilder.newColumn('AD2').renderWith(voltageCalc),
+            DTColumnBuilder.newColumn('OdoMeter'),
+            DTColumnBuilder.newColumn('AD1'),
+            DTColumnBuilder.newColumn('AD2'),
+            DTColumnBuilder.newColumn('Altitude'),
             DTColumnBuilder.newColumn('Status'),
             DTColumnBuilder.newColumn('IsRelayToStopTheCar').renderWith(IsFlg),
             DTColumnBuilder.newColumn('IsSirenSound').renderWith(IsFlg),
@@ -81,12 +87,10 @@
             DTColumnBuilder.newColumn('IsUnlockTheDoor').renderWith(IsFlg),
             DTColumnBuilder.newColumn('IsSOS').renderWith(IsFlg),
             DTColumnBuilder.newColumn('IsDoor').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsEngine').renderWith(IsFlg),
             DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
-            DTColumnBuilder.newColumn('Altitude'),
-            DTColumnBuilder.newColumn('AD1'),
-            DTColumnBuilder.newColumn('AD2'),
-            DTColumnBuilder.newColumn('OdoMeter'),
+
+
+
         ]
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -110,7 +114,6 @@
                     }
                     d.idApp = $rootScope.appId;
                     d.AppName = $rootScope.AppName;
-                    console.log(d)
                     return d;
                 },
                 type: "get",
@@ -176,6 +179,14 @@
             } else {
                 return '';
             }
+        }
+
+        function voltageCalc(data) {
+            var Voltage = '';
+            if (data != null & data != '' && data != undefined) {
+                Voltage = Math.round((parseInt(data, 16) * 6 / 1024) * 100) / 100;
+            }
+            return Voltage;
         }
 
         function IsFlg(data, type, full, meta) {
