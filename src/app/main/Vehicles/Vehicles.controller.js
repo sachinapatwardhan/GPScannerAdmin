@@ -573,6 +573,7 @@
                 StartDate: null,
                 idType: null,
             }
+            $scope.query = '';
             $scope.resetForm();
         }
         $scope.ResetModel = function() {

@@ -225,7 +225,7 @@
                         </div>
                         <div align="left">
                             <md-button class="md-raised md-primary" ng-disabled="!formVehicledetails.$valid" ng-click="CreateVehicleDetails(model)">Save</md-button>
-                            <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>
+                            <md-button class="md-accent md-raised" ng-click="ResetData()" ng-if="model.id==0">Reset</md-button>
                             <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
                         </div>
                     </div>
