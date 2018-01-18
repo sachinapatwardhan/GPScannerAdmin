@@ -57,18 +57,33 @@
         //Dynamic Pagging
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
-                DTColumnBuilder.newColumn('username'),
-                DTColumnBuilder.newColumn('email'),
-                // DTColumnBuilder.newColumn('OwnerName'),
-                DTColumnBuilder.newColumn('phone'),
-                DTColumnBuilder.newColumn('country'),
-                DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
-                DTColumnBuilder.newColumn('TotalDevice'),
-                DTColumnBuilder.newColumn('AppName'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
-            ]
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('username'),
+                    DTColumnBuilder.newColumn('email'),
+                    // DTColumnBuilder.newColumn('OwnerName'),
+                    DTColumnBuilder.newColumn('phone'),
+                    DTColumnBuilder.newColumn('country'),
+                    DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
+                    DTColumnBuilder.newColumn('TotalDevice'),
+                    DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                ]
+            } else {
+                $scope.dtColumns1 = [
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('username'),
+                    DTColumnBuilder.newColumn('email'),
+                    // DTColumnBuilder.newColumn('OwnerName'),
+                    DTColumnBuilder.newColumn('phone'),
+                    DTColumnBuilder.newColumn('country'),
+                    DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
+                    DTColumnBuilder.newColumn('TotalDevice'),
+                    // DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                ]
+            }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "user/GetAllDynamicOwnerCustomer",
@@ -112,7 +127,8 @@
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
-        $scope.dtInstance = {};
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
 
 
         //Reload Datatable
@@ -122,9 +138,13 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            $scope.dtInstance.reloadData(callback, resetPaging);
-            $('#Customer').dataTable()._fnAjaxUpdate();
-
+            if ($rootScope.UserRoles == 'Super Admin') {
+                vm.dtInstance.reloadData(callback, resetPaging);
+                $('#Customer').dataTable()._fnAjaxUpdate();
+            } else {
+                vm.dtInstance1.reloadData(callback, resetPaging);
+                $('#Customer1').dataTable()._fnAjaxUpdate();
+            }
         }
 
         $scope.reloadData = function() {}
