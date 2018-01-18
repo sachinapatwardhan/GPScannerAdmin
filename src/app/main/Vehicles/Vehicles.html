@@ -17,6 +17,10 @@
                 <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
             <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
+                    <md-icon md-font-icon="icon-filter-variant"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
+                </md-button>
                 <div ng-if="FlgAddedEditlocal">
                     <md-button class="md-raised md-background" ng-click="vm.Reset()">
                         <span translate="Add New Vehicle">Add New Vehicle</span>
@@ -25,6 +29,38 @@
             </div>
         </div>
         <div class="content-card" layout="column" flex>
+            <div class="ShowContentBox">
+                <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                        <label>Expiry Start Date</label>
+                        <input name="Start" mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="modelSearch.EndDate" format="DD-MM-YYYY" ng-model="modelSearch.StartDate">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                        <label>Expiry End Date</label>
+                        <input name="End" mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="modelSearch.StartDate" format="DD-MM-YYYY" ng-model="modelSearch.EndDate">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                        <label>Vehicle Type</label>
+                        <md-select Name="idType" ng-model="modelSearch.idType" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change=" vm.GetAllDynamicVehicles(true)">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTermVehicleType" type="search" placeholder="Search for a Vehicle Type.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <div align="left">
+                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click=" vm.GetAllDynamicVehicles(true)" aria-label="Search">
+                            <md-icon md-font-icon="icon-magnify"></md-icon>
+                            <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()" aria-label="Reset Search">
+                            <md-icon md-font-icon="icon-refresh"></md-icon>
+                            <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
             <div class="content fullpage-datatable" layout="column" flex>
                 <table id="VehicleDetail" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
@@ -39,11 +75,11 @@
                                     <span class="column-title">Vehicle</span>
                                 </div>
                             </th>
-                            <!-- <th class="secondary-text">
+                            <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">User Name</span>
                                 </div>
-                            </th> -->
+                            </th>
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Tracker Id</span>
@@ -57,6 +93,11 @@
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Expiry Date</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -169,10 +210,9 @@
                                     </div>
                                 </div>
                             </md-input-container>-->
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>HandShake Date Time </label>
                                 <input mdc-datetime-picker date="true" time="true" type="text" id="HandshakDatetime" format="DD-MM-YYYY hh:mm A" ng-model="model.HandshakDatetime">
-                                <!--<input type="number" name="HandshakDatetime" ng-model="model.HandshakDatetime">-->
                                 <div ng-messages="formVehicledetails.HandshakDatetime.$error" ng-if="formVehicledetails.HandshakDatetime.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>Max Speed field is required</span>
@@ -181,7 +221,7 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <md-checkbox class="md-secondary" ng-model="model.IsOnline" value="{{model.IsOnline}}" flex></md-checkbox>&nbsp;&nbsp;Is Online
-                            </md-input-container>
+                            </md-input-container> -->
                         </div>
                         <div align="left">
                             <md-button class="md-raised md-primary" ng-disabled="!formVehicledetails.$valid" ng-click="CreateVehicleDetails(model)">Save</md-button>

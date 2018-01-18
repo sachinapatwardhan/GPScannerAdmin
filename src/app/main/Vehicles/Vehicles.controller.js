@@ -20,7 +20,7 @@
                 Name: '',
                 deviceid: '',
                 renewaldate: null,
-                HandshakDatetime: new Date(),
+                HandshakDatetime: null,
                 MaxSpeed: 0,
                 BatteryPercentage: 0,
                 IsACC: 0,
@@ -41,8 +41,14 @@
                 idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
-                idType: '',
+                idType: null,
             };
+
+            $scope.modelSearch = {
+                EndDate: null,
+                StartDate: null,
+                idType: null,
+            }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
             // $scope.query = '';
@@ -59,7 +65,7 @@
                 Name: '',
                 deviceid: '',
                 renewaldate: 0,
-                HandshakDatetime: new Date(),
+                HandshakDatetime: null,
                 MaxSpeed: 0,
                 BatteryPercentage: 0,
                 IsACC: 0,
@@ -80,8 +86,13 @@
                 idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
-                idType: '',
+                idType: null,
             };
+            $scope.modelSearch = {
+                EndDate: null,
+                StartDate: null,
+                idType: null,
+            }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
             // $scope.query = '';
@@ -202,10 +213,11 @@
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
                 DTColumnBuilder.newColumn('Name'),
-                // DTColumnBuilder.newColumn('username'),
+                DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
                 DTColumnBuilder.newColumn('DeviceType'),
                 DTColumnBuilder.newColumn('Type'),
+                DTColumnBuilder.newColumn('Displyrenewaldate').renderWith(ExpirydateFormat),
                 DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
@@ -222,6 +234,7 @@
                     if ($rootScope.UserRoles == "Sales Agent") {
                         d.UserId = $rootScope.UserId;
                     }
+                    d.AdvanceSearch = $scope.modelSearch;
                     d.appId = $rootScope.appId;
                     return d;
                 },
@@ -263,9 +276,18 @@
             }
         }
 
+        function ExpirydateFormat(data, type, full, meta) {
+            if (data != null && data != '') {
+                return moment(data).format('DD-MM-YYYY')
+            } else {
+                return "";
+            }
+
+        }
+
         function dateFormat(data, type, full, meta) {
             if (data != null && data != '') {
-                return $rootScope.convertdateformat(data, 1);
+                return moment(data).format('DD-MM-YYYY hh:mm:ss a')
             } else {
                 return "";
             }
@@ -523,7 +545,7 @@
                 Name: '',
                 deviceid: '',
                 renewaldate: null,
-                HandshakDatetime: new Date(),
+                HandshakDatetime: null,
                 MaxSpeed: 0,
                 BatteryPercentage: 0,
                 IsACC: 0,
@@ -544,8 +566,13 @@
                 idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
-                idType: '',
+                idType: null,
             };
+            $scope.modelSearch = {
+                EndDate: null,
+                StartDate: null,
+                idType: null,
+            }
             $scope.resetForm();
         }
         $scope.ResetModel = function() {
@@ -555,7 +582,7 @@
                 Name: '',
                 deviceid: '',
                 renewaldate: null,
-                HandshakDatetime: new Date(),
+                HandshakDatetime: null,
                 MaxSpeed: 0,
                 BatteryPercentage: 0,
                 IsACC: 0,
@@ -576,14 +603,38 @@
                 idSalesAgent: null,
                 DeviceType: '',
                 IMEI: '',
-                idType: '',
+                idType: null,
             };
+            $scope.modelSearch = {
+                EndDate: null,
+                StartDate: null,
+                idType: null,
+            }
             $scope.selectedItem = null;
             // // $scope.query = '';
             $scope.flag = false;
             $scope.resetForm();
         }
+        $scope.SearchReset = function() {
+            $scope.modelSearch = {
+                EndDate: null,
+                StartDate: null,
+                idType: null,
+            }
+            GetAllDynamicVehicles(true);
+        }
+        $scope.toggle = function() {
+            if (!$scope.flgforIcon) {
+                $scope.flgforIcon = true;
+            } else {
+                $scope.flgforIcon = false;
+            }
 
+            $(function() {
+                $(".showBtn").toggleClass("active");
+                $(".ShowContentBox").slideToggle();
+            });
+        };
         $scope.init();
     }
 
