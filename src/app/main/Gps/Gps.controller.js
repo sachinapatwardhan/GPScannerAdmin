@@ -175,7 +175,7 @@
         function Datetimefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
                 var newdate = data * 1000;
-                return moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm A");
+                return moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm:ss A");
             } else {
                 return '';
             }
