@@ -19,7 +19,6 @@
             //Dynamic Pagging
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
-            console.log($rootScope.UserRoles)
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.dtColumns = [
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
