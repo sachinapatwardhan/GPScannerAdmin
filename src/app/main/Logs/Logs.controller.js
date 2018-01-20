@@ -31,6 +31,7 @@
             $scope.flag = false;
             $scope.GetAllGpsDevice();
             $rootScope.appId = localStorage.getItem('appId');
+            $rootScope.AppName = localStorage.getItem('appName');
         }
 
         $scope.GetAllGpsDevice = function() {
@@ -129,7 +130,7 @@
             ]
 
             $scope.dtOptionsHandShake = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "settings/GetAllDynamickHandshake",
+                url: $rootScope.RoutePath + "settings/GetAllDynamickHandshakeNew",
                 data: function(d) {
                     if ($scope.Search == '') {
                         d.search = '';
@@ -152,6 +153,7 @@
                         d.DeviceId = $scope.modelHandShake.DeviceId;
                     }
                     d.idApp = $rootScope.appId;
+                    d.AppName = $rootScope.AppName;
                     return d;
                 },
                 type: "get",

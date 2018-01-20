@@ -20,6 +20,7 @@
             $scope.searchAlarm = "";
             $scope.searchDevice = "";
             $rootScope.appId = localStorage.getItem('appId');
+            $rootScope.AppName = localStorage.getItem('appName');
             $scope.GetAllGpsDevice();
             AlarmCode();
         }
@@ -73,7 +74,7 @@
         ]
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "gpsdata/GetAllAlarm",
+                url: $rootScope.RoutePath + "gpsdata/GetAllAlarmNew",
                 data: function(d) {
                     if ($scope.Search != "") {
                         d.search = $scope.Search;
@@ -93,6 +94,7 @@
                     }
                     d.AlarmCode = $scope.ModelSearch.AlarmCode == 'All' ? '' : $scope.ModelSearch.AlarmCode;
                     d.idApp = $rootScope.appId;
+                    d.AppName = $rootScope.AppName;
                     return d;
                 },
                 type: "get",
