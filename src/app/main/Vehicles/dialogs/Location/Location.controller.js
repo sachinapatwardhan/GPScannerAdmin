@@ -26,6 +26,18 @@
             $scope.$apply(function() {
                 if (deviceid == obj.DeviceId) {
                     IsOnline = obj.Status;
+                    if (IsOnline == false) {
+                        $(".customMarkeroncar").attr("class", "customMarkeroffcar");
+                        $(".customMarkeractivecar").attr("class", "customMarkeroffcar");
+                    } else {
+                        if ($rootScope.IsEngine == false) {
+                            $(".customMarkeroffcar").attr("class", "customMarkeractivecar");
+                            $(".customMarkeroncar").attr("class", "customMarkeractivecar");
+                        } else {
+                            $(".customMarkeroffcar").attr("class", "customMarkeroncar");
+                            $(".customMarkeractivecar").attr("class", "customMarkeroncar");
+                        }
+                    }
                 }
             });
         });
@@ -39,6 +51,7 @@
                         $scope.model.CurrentDate = DeviceDatetime;
                         $scope.model.CurrentSpeed = obj.Speed.toFixed(2);
                         new CustomMarker12(new google.maps.LatLng(obj.Latitude, obj.Longitude), map, obj.IsEngine, DeviceDatetime, obj.Direction, true)
+                        $rootScope.IsEngine == obj.IsEngine;
                         if (IsOnline == false) {
                             $(".customMarkeroncar").attr("class", "customMarkeroffcar");
                             $(".customMarkeractivecar").attr("class", "customMarkeroffcar");
