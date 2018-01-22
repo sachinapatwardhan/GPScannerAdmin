@@ -41,11 +41,12 @@
                         <input name="End" mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="modelSearch.StartDate" format="DD-MM-YYYY" ng-model="modelSearch.EndDate">
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                        <label>Vehicle Type</label>
+                        <label>Vehicle Type </label>
                         <md-select Name="idType" ng-model="modelSearch.idType" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change=" vm.GetAllDynamicVehicles(true)">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="vm.searchTermVehicleType" type="search" placeholder="Search for a Vehicle Type.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
+                            <md-option ng-value="-1">All</md-option>
                             <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
                         </md-select>
                     </md-input-container>

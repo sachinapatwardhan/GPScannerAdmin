@@ -44,7 +44,7 @@
             'app.DrivingBehaviour',
             'app.telco',
             'app.appinfo',
-            'app.Logs',
+            'app.HandShake',
             'app.SIM',
             'app.Utility',
             'app.TransferDevice',

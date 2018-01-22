@@ -442,16 +442,16 @@
                             }
 
                             // // Logs
-                            var Logs = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Logs';
+                            var HandShake = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Hand Shake';
                             });
-                            if (Logs.length > 0) {
-                                var MenuName = $rootScope.AppName + '.Logs';
+                            if (HandShake.length > 0) {
+                                var MenuName = $rootScope.AppName + '.Hand Shake';
                                 msNavigationService.saveItem(MenuName, {
                                     // msNavigationService.saveItem('Maark.Logs', {
-                                    title: 'Logs',
-                                    state: 'app.Logs',
-                                    order: Logs[0].tblmodulemgmt.DisplayOrder,
+                                    title: 'Hand Shake',
+                                    state: 'app.HandShake',
+                                    order: HandShake[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
                                 });
                             }
@@ -773,7 +773,7 @@
                             // ------------------------------Main module----------------------------------
                             if (lstGPSDelete.length > 0 || lstManageCustomer.length > 0 || lstVehicleLastUse.length > 0 ||
                                 lstVehicle.length > 0 || gps.length > 0 || Alarm.length > 0 || CanBusData.length > 0 ||
-                                DrivingBehaviour.length > 0 || Logs.length > 0 || lstVehicleType.length > 0) {
+                                DrivingBehaviour.length > 0 || HandShake.length > 0 || lstVehicleType.length > 0) {
                                 var MenuName = $rootScope.AppName;
                                 msNavigationService.saveItem(MenuName, {
                                     title: MenuName,

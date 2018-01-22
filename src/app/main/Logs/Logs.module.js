@@ -2,23 +2,23 @@
     'use strict';
 
     angular
-        .module('app.Logs', [])
+        .module('app.HandShake', [])
         .config(config);
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider) {
         // State
         $stateProvider
-            .state('app.Logs', {
-                url: '/Logs',
+            .state('app.HandShake', {
+                url: '/HandShake',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/Logs/Logs.html',
                         controller: 'LogsController as vm'
                     }
                 },
-                bodyClass: 'Logs',
-                ModuleName: 'Logs'
+                bodyClass: 'Hand Shake',
+                ModuleName: 'Hand Shake'
             });
 
         // Translation

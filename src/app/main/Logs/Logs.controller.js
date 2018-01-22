@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.Logs')
+        .module('app.HandShake')
         .controller('LogsController', LogsController);
 
     /** @ngInject */

@@ -47,7 +47,7 @@
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
-                idType: null,
+                idType: "-1",
             }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -91,7 +91,7 @@
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
-                idType: null,
+                idType: "-1",
             }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -234,7 +234,11 @@
                     if ($rootScope.UserRoles == "Sales Agent") {
                         d.UserId = $rootScope.UserId;
                     }
+
                     d.AdvanceSearch = $scope.modelSearch;
+                    // if (d.AdvanceSearch.idType == 'All') {
+                    //     // d.AdvanceSearch.idType = null;
+                    // }
                     d.appId = $rootScope.appId;
                     return d;
                 },
@@ -571,7 +575,7 @@
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
-                idType: null,
+                idType: "-1",
             }
             $scope.query = '';
             $scope.resetForm();
@@ -620,7 +624,7 @@
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
-                idType: null,
+                idType: "-1",
             }
             GetAllDynamicVehicles(true);
         }
