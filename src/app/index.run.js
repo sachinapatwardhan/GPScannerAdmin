@@ -39,7 +39,7 @@
 
         var url = $window.location.protocol + "//" + $window.location.host + "/";
         // var url = "http://192.168.1.50:3000/"
-        
+
         var params = {
             AdminUrl: url,
         }
@@ -251,7 +251,7 @@
                                 msNavigationService.saveItem('Dashboard', {
                                     title: 'Dashboard',
                                     state: 'app.Dashboard',
-                                    // icon: 'icon-lock',
+                                    icon: 'icon-view-dashboard',
                                     order: lstDashboard[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
                                 });
@@ -756,6 +756,82 @@
                                     weight: 1
                                 });
                             }
+
+                            //Email Template
+                            var lstEmailTemplate = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Email Template';
+                            });
+                            if (lstEmailTemplate.length > 0) {
+                                msNavigationService.saveItem('Settings.Email Template', {
+                                    title: 'Email Template',
+                                    state: 'app.EmailTemplate',
+                                    order: lstEmailTemplate[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            // ------------------------------Main module----------------------------------
+                            if (lstGPSDelete.length > 0 || lstManageCustomer.length > 0 || lstVehicleLastUse.length > 0 ||
+                                lstVehicle.length > 0 || gps.length > 0 || Alarm.length > 0 || CanBusData.length > 0 ||
+                                DrivingBehaviour.length > 0 || Logs.length > 0 || lstVehicleType.length > 0) {
+                                var MenuName = $rootScope.AppName;
+                                msNavigationService.saveItem(MenuName, {
+                                    title: MenuName,
+                                    icon: 'icon-map-marker-radius',
+                                    weight: 1
+                                });
+                            }
+
+                            if (lstSetting.length > 0 || TelephoneCompany.length > 0 || AppInfo.length > 0 ||
+                                lstLanguage.length > 0 || lstMobileLanguageResource.length > 0 || lstServiceType.length > 0 ||
+                                lstAttributes.length > 0
+                            ) {
+                                msNavigationService.saveItem('CMS', {
+                                    title: 'CMS',
+                                    icon: 'icon-cellphone-settings',
+                                    weight: 1
+                                });
+                            }
+                            if (lstRoles.length > 0 || lstUserPermission.length > 0 || lstuser.length > 0 ||
+                                $rootScope.AdminUserId == $cookieStore.get('UserId')) {
+
+                                msNavigationService.saveItem('Users', {
+                                    title: 'Users',
+                                    icon: 'icon-account',
+                                    // order: lstUsersMain[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            if (lstCountryStateCity.length > 0 || lstTrackers.length > 0 || SIM.length > 0 || lstUtility.length > 0 ||
+                                lstTransferDevice.length > 0 || lstAssignDevice.length > 0 || lstVehicleMonitor.length > 0 ||
+                                lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0) {
+                                msNavigationService.saveItem('Settings', {
+                                    title: 'Settings',
+                                    icon: 'icon-steam',
+                                    // order: lstSettings[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            if (lstProducts.length > 0 || lstoservice.length > 0) {
+                                msNavigationService.saveItem('Order Services', {
+                                    title: 'Order Service',
+                                    icon: 'icon-cart-outline',
+                                    // order: lstOrderServiceMain[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            if (lstWalletTransation.length > 0) {
+                                msNavigationService.saveItem('Wallet', {
+                                    title: 'Wallet',
+                                    icon: 'icon-wallet',
+                                    weight: 1
+                                });
+                            }
+
+
                         }
                     });
                 }
