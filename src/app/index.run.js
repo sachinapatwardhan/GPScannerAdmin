@@ -808,7 +808,7 @@
                                 lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0) {
                                 msNavigationService.saveItem('Settings', {
                                     title: 'Settings',
-                                    icon: 'icon-steam',
+                                    icon: 'icon-cog',
                                     // order: lstSettings[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
                                 });
