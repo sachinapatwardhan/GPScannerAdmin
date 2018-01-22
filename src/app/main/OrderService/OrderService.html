@@ -201,13 +201,31 @@
                 <form name="formOrderService " novalidate class="md-inline-form " aria-invalid="false ">
                     <div class="content ">
                         <div layout="row " layout-wrap>
-                            <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
+                            <!-- <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
                                 <label>User Name</label>
                                 <input type="text " name="UserName " ng-model="model.UserName " required>
                                 <div ng-messages="formOrderService.UserName.$error " ng-if="formOrderService.UserName.$touched " role="alert ">
                                     <div ng-message="required ">
                                         <span>User Name field is required</span>
                                     </div>
+                                </div>
+                            </md-input-container> -->
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Select user</label>
+                                <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.email"
+                                    placeholder="Select User">
+                                    <md-item-template>
+                                        <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No user matching "{{query}}" were found
+                                    </md-not-found>
+                                </md-autocomplete>
+                                <div ng-messages="formOrderService.email.$error" ng-if="formOrderService.email.$touched">
+                                    <div ng-message="required">Please select user</div>
+                                    <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
+                                        No User matching {{query}} were found.
+                                    </md-not-found>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
@@ -218,6 +236,25 @@
                                         <span>Device Id field is required</span>
                                     </div>
                                 </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>VehicleName</label>
+                                <input type="text" name="Name" ng-model="model.Name" required maxlength="150" md-maxlength="150">
+                                <div ng-messages="formOrderService.Name.$error" ng-if="formOrderService.Name.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Vehicle Name field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Vehicle Type</label>
+                                <md-select Name="idType" ng-model="model.idType" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermVehicleType" type="search" placeholder="Search for a Vehicle Type.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
+                                </md-select>
+
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
                                 <label>App Name</label>

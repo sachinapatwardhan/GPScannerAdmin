@@ -9,7 +9,7 @@
     function LogsController($http, $scope, $rootScope, $filter, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
-        vm.dtInstanceHandshake = {};
+
         vm.dtInstanceGps = {};
         $scope.init = function() {
             $scope.modelDevice = {
@@ -26,10 +26,10 @@
                 ToDate: '',
                 DeviceId: '',
             };
-            $scope.flaglink = 0;
+            $scope.flaglink = 1;
             $scope.Search = '';
             $scope.flag = false;
-            $scope.GetAllGpsDevice();
+            // $scope.GetAllGpsDevice();
             $rootScope.appId = localStorage.getItem('appId');
             $rootScope.AppName = localStorage.getItem('appName');
         }
@@ -154,6 +154,7 @@
                     }
                     d.idApp = $rootScope.appId;
                     d.AppName = $rootScope.AppName;
+
                     return d;
                 },
                 type: "get",
@@ -165,24 +166,25 @@
                     } else {
                         return [];
                         $scope.lstTotal = 0;
-
                     }
                 },
             })
+
 
             .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
-                .withOption('aaSorting', [1, 'DESC'])
+                .withOption('aaSorting', [1, 'desc'])
                 .withOption('responsive', true)
-                .withOption('autoWidth', true)
-                // .withOption('deferRender', true)
                 .withOption('createdRow', createdRow)
-                // .withOption('bFilter', false)
+                // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
+        vm.dtInstanceHandshake = {};
+
+        function callback(json) {}
 
         function GetAllDynamicHandShake(IsUpdate) {
             var resetPaging = false;
@@ -195,14 +197,10 @@
 
         $scope.reloadData = function() {}
 
-        function callback(json) {}
-
-        //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
             // Recompiling so we can bind Angular directive to the DT
             $compile(angular.element(row).contents())($scope);
         }
-
 
         function NumberHtml(data, type, full, meta) {
             return (meta.row + 1);
@@ -228,110 +226,111 @@
 
         //---------------------------------------------------------- GPS Logs _--------------------------------------------------------------//
 
-        $scope.dtColumnsGps = [
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
-            DTColumnBuilder.newColumn('DeviceId'),
-            DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
-            DTColumnBuilder.newColumn('Latitude'),
-            DTColumnBuilder.newColumn('Longitude'),
-            DTColumnBuilder.newColumn('Speed'),
-            DTColumnBuilder.newColumn('Direction'),
-            DTColumnBuilder.newColumn('Status'),
-            DTColumnBuilder.newColumn('IsEngine').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsRelayToStopTheCar').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsSirenSound').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsLockTheDoor').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsUnlockTheDoor').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsSOS').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsDoor').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('GPSPositioning'),
-            DTColumnBuilder.newColumn('Altitude'),
-            DTColumnBuilder.newColumn('AD1'),
-            DTColumnBuilder.newColumn('AD2'),
-            DTColumnBuilder.newColumn('OdoMeter'),
-        ]
+        // $scope.dtColumnsGps = [
+        //     DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+        //     DTColumnBuilder.newColumn('DeviceId'),
+        //     DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
+        //     DTColumnBuilder.newColumn('Latitude'),
+        //     DTColumnBuilder.newColumn('Longitude'),
+        //     DTColumnBuilder.newColumn('Speed'),
+        //     DTColumnBuilder.newColumn('Direction'),
+        //     DTColumnBuilder.newColumn('Status'),
+        //     DTColumnBuilder.newColumn('IsEngine').renderWith(IsFlg),
+        //     DTColumnBuilder.newColumn('IsRelayToStopTheCar').renderWith(IsFlg),
+        //     DTColumnBuilder.newColumn('IsSirenSound').renderWith(IsFlg),
+        //     DTColumnBuilder.newColumn('IsLockTheDoor').renderWith(IsFlg),
+        //     DTColumnBuilder.newColumn('IsUnlockTheDoor').renderWith(IsFlg),
+        //     DTColumnBuilder.newColumn('IsSOS').renderWith(IsFlg),
+        //     DTColumnBuilder.newColumn('IsDoor').renderWith(IsFlg),
+        //     DTColumnBuilder.newColumn('GPSPositioning'),
+        //     DTColumnBuilder.newColumn('Altitude'),
+        //     DTColumnBuilder.newColumn('AD1'),
+        //     DTColumnBuilder.newColumn('AD2'),
+        //     DTColumnBuilder.newColumn('OdoMeter'),
+        // ]
 
-        $scope.dtOptionsGps = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "gpsdata/GetAllGpsData",
-                data: function(d) {
-                    if ($scope.Search != "") {
-                        d.search = $scope.Search;
-                    } else {
-                        d.search = "";
-                    }
-                    d.DeviceId = $scope.modelSearch.DeviceId == 'All' ? '' : $scope.modelSearch.DeviceId;
-                    if ($scope.modelSearch.FromDate != '') {
-                        d.StartDate = $scope.modelSearch.FromDate.toUTCString();
-                    } else {
-                        d.StartDate = ''
-                    }
-                    if ($scope.modelSearch.ToDate != '') {
-                        d.EndDate = $scope.modelSearch.ToDate.toUTCString();
-                    } else {
-                        d.EndDate = ''
-                    }
-                    return d;
-                },
-                type: "get",
-                dataSrc: function(json) {
-                    if (json.success != false) {
-                        $scope.lstdata = json.data;
-                        return json.data;
-                    } else {
-                        return [];
-                    }
-                },
-            })
-            .withOption('processing', true) //for show progress bar
-            .withOption('serverSide', true) // for server side processing
-            .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
-            .withDisplayLength(25) // Page size
-            .withOption('aaSorting', [2, 'desc'])
-            .withOption('responsive', true)
-            .withOption('createdRow', createdRow)
-            //.withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
-            .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
-            .withOption('scrollY', 'auto');
+        // $scope.dtOptionsGps = DTOptionsBuilder.newOptions().withOption('ajax', {
+        //         url: $rootScope.RoutePath + "gpsdata/GetAllGpsData",
+        //         data: function(d) {
+        //             if ($scope.Search != "") {
+        //                 d.search = $scope.Search;
+        //             } else {
+        //                 d.search = "";
+        //             }
+        //             d.DeviceId = $scope.modelSearch.DeviceId == 'All' ? '' : $scope.modelSearch.DeviceId;
+        //             if ($scope.modelSearch.FromDate != '') {
+        //                 d.StartDate = $scope.modelSearch.FromDate.toUTCString();
+        //             } else {
+        //                 d.StartDate = ''
+        //             }
+        //             if ($scope.modelSearch.ToDate != '') {
+        //                 d.EndDate = $scope.modelSearch.ToDate.toUTCString();
+        //             } else {
+        //                 d.EndDate = ''
+        //             }
+        //             return d;
+        //         },
+        //         type: "get",
+        //         dataSrc: function(json) {
+        //             if (json.success != false) {
+
+        //                 $scope.lstdata = json.data;
+        //                 return json.data;
+        //             } else {
+        //                 return [];
+        //             }
+        //         },
+        //     })
+        //     .withOption('processing', true) //for show progress bar
+        //     .withOption('serverSide', true) // for server side processing
+        //     .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
+        //     .withDisplayLength(25) // Page size
+        //     .withOption('aaSorting', [2, 'desc'])
+        //     .withOption('responsive', true)
+        //     .withOption('createdRow', createdRow)
+        //     //.withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+        //     .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+        //     .withOption('scrollY', 'auto');
 
 
-        function GetAllGpsData(IsUpdate) {
-            var resetPaging = false;
-            if (IsUpdate == true) {
-                resetPaging = true;
-            };
-            vm.dtInstanceGps.reloadData(callback, resetPaging);
-            $('#GPSLogs').dataTable()._fnAjaxUpdate();
-        }
+        // function GetAllGpsData(IsUpdate) {
+        //     var resetPaging = false;
+        //     if (IsUpdate == true) {
+        //         resetPaging = true;
+        //     };
+        //     vm.dtInstanceGps.reloadData(callback, resetPaging);
+        //     $('#GPSLogs').dataTable()._fnAjaxUpdate();
+        // }
 
-        function Datetimefun(data, type, full, meta) {
-            if (data != '' && data != null && data != undefined) {
-                var newdate = data * 1000;
-                return moment(moment.utc(newdate).toDate()).format("DD-MM-YYYY hh:mm A");
-            } else {
-                return '';
-            }
-        }
+        // function Datetimefun(data, type, full, meta) {
+        //     if (data != '' && data != null && data != undefined) {
+        //         var newdate = data * 1000;
+        //         return moment(moment.utc(newdate).toDate()).format("DD-MM-YYYY hh:mm A");
+        //     } else {
+        //         return '';
+        //     }
+        // }
 
-        function IsFlg(data, type, full, meta) {
-            var Flg;
-            if (data == true || data == 'true' || data == 1) {
-                Flg = '<i class="icon-checkbox-marked-circle green-500-fg"></i>';
-            } else {
-                Flg = '<i class="icon-cancel red-500-fg"></i>';
-            }
+        // function IsFlg(data, type, full, meta) {
+        //     var Flg;
+        //     if (data == true || data == 'true' || data == 1) {
+        //         Flg = '<i class="icon-checkbox-marked-circle green-500-fg"></i>';
+        //     } else {
+        //         Flg = '<i class="icon-cancel red-500-fg"></i>';
+        //     }
 
-            return Flg;
+        //     return Flg;
 
-        }
+        // }
 
-        function Datefun(data, type, full, meta) {
-            if (data != '' && data != null && data != undefined) {
-                // return $filter('date')(data, "dd-MM-yyyy");
-                return moment(moment.utc(data).toDate()).format("DD-MM-YYYY hh:mm A");
-            } else {
-                return '';
-            }
-        }
+        // function Datefun(data, type, full, meta) {
+        //     if (data != '' && data != null && data != undefined) {
+        //         // return $filter('date')(data, "dd-MM-yyyy");
+        //         return moment(moment.utc(data).toDate()).format("DD-MM-YYYY hh:mm A");
+        //     } else {
+        //         return '';
+        //     }
+        // }
 
         $scope.ResetTab = function() {
             $scope.modelDevice = {
@@ -339,7 +338,7 @@
                 Command: '',
             }
             $scope.flag = false;
-            $scope.flaglink = 0;
+            $scope.flaglink = 1;
         }
 
         $scope.ResetModel1 = function() {
@@ -365,6 +364,7 @@
         }
 
         $scope.ResetSearch = function() {
+            console.log($scope.flaglink)
             if ($scope.flaglink == 1) {
                 $scope.ResetModel1();
                 GetAllDynamicHandShake(true);
@@ -388,6 +388,7 @@
         };
 
         $scope.GetSearch = function(Search) {
+            console.log($scope.flaglink)
             $scope.Search = Search;
             if ($scope.flaglink == 0) {
                 vm.dtInstanceDevice.DataTable.search(Search);

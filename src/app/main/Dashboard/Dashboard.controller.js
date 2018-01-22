@@ -2042,7 +2042,12 @@
                 // }
             $http.get($rootScope.RoutePath + "bike/GetAllExpireDevice", { params: params }).then(function(data) {
                 for (var i = 0; i < data.data.length; i++) {
-                    data.data[i].diff = timeDifference(moment(data.data[i].ExpiryDate).format('MM-DD-YYYY hh:mm:ss a'))
+                    if (data.data[i].renewaldate != null && data.data[i].renewaldate != '' && data.data[i].renewaldate != undefined) {
+                        data.data[i].diff = timeDifference(moment(data.data[i].renewaldate).format('MM-DD-YYYY hh:mm:ss a'));
+                        // if (data.data[i].diff < 0) {
+                        //     data.data[i].diff = 'Expired';
+                        // }
+                    }
                 }
                 $timeout(function() {
                     $scope.ExpiryDevicelist = data.data;
@@ -2056,53 +2061,134 @@
             DTColumnDefBuilder.newColumnDef(3),
         ];
 
-        function timeDifference(Start) {
+        // function timeDifference(Start) {
 
-            var one_day = 1000 * 60 * 60 * 24;
-            var date2 = new Date(Start);
-            var date1 = new Date();
-            date1.setHours(0);
-            date1.setMinutes(0);
-            date1.setSeconds(0);
+        //     var one_day = 1000 * 60 * 60 * 24;
+        //     var date2 = new Date(Start);
 
-            var date1_ms = date1.getTime();
-            var date2_ms = date2.getTime();
-            var difference_ms = date2_ms - date1_ms;
-            difference_ms = difference_ms / 1000;
-            var seconds = Math.floor(difference_ms % 60);
-            difference_ms = difference_ms / 60;
-            var minutes = Math.floor(difference_ms % 60);
-            difference_ms = difference_ms / 60;
-            var hours = Math.floor(difference_ms % 24);
-            var days = Math.floor(difference_ms / 24);
+        //     var date1 = new Date();
+
+        //     date1.setHours(0);
+        //     date1.setMinutes(0);
+        //     date1.setSeconds(0);
+        //     // console.log(date2)
+        //     // console.log(date1)
 
 
-            var displaydata = "";
-            if (days > 0) {
-                displaydata = days + ' days';
+        //     var date1_ms = date1.getTime();
+        //     var date2_ms = date2.getTime();
+        //     var difference_ms = date2_ms - date1_ms;
+        //     difference_ms = difference_ms / 1000;
+        //     var seconds = Math.floor(difference_ms % 60);
+        //     difference_ms = difference_ms / 60;
+        //     var minutes = Math.floor(difference_ms % 60);
+        //     difference_ms = difference_ms / 60;
+        //     var hours = Math.floor(difference_ms % 24);
+        //     var days = Math.floor(difference_ms / 24);
+
+
+        //     var displaydata = "";
+        //     if (days > 0) {
+        //         displaydata = days + ' days';
+        //     }
+        //     // return displaydata;
+        //     var x = days;
+        //     var y = 365;
+        //     var y2 = 31;
+        //     var remainder = x % y;
+        //     var casio = remainder % y2;
+        //     var year = (x - remainder) / y;
+        //     var month = (remainder - casio) / y2;
+        //     var result = '';
+        //     if (year != 0) {
+        //         result = year + " year  ";
+        //     }
+        //     if (month != 0 && year == 0) {
+        //         result += month + " month  ";
+        //     }
+        //     if (casio != 0 && month == 0) {
+        //         result += casio + " days  ";
+        //     }
+        //     // console.log(year, " ", month, " ", casio, " ")
+        //     if (year <= 0 && month < 0 && casio < 0) {
+        //         result = 'Expired';
+        //     }
+
+
+        //     // var a = moment(date2);
+        //     // var b = moment(date1);
+        //     // console.log(a)
+        //     // console.log(b)
+        //     // var D = a.diff(b, 'days');
+        //     // var M = a.diff(b, 'month');
+        //     // var Y = a.diff(b, 'years');
+        //     // console.log(D, "- ", M, "- ", Y);
+        //     var diff = a.from(b, true);
+        //     console.log("Diiff=", diff);
+        //     // var result = displaydata + "@--- Year ---" + year + "--- Month ---" + month + "--- Day ---" + casio;
+
+        //     return result;
+        // }
+
+        function timeDifference(date_2) {
+            var date_2 = new Date(date_2);
+            var date_1 = new Date();
+            date_2.setHours(0);
+            date_2.setMinutes(0);
+            date_2.setSeconds(0);
+            date_1.setHours(0);
+            date_1.setMinutes(0);
+            date_1.setSeconds(0);
+            //convert to UTC
+            var date2_UTC = new Date(Date.UTC(date_2.getUTCFullYear(), date_2.getUTCMonth(), date_2.getUTCDate()));
+            var date1_UTC = new Date(Date.UTC(date_1.getUTCFullYear(), date_1.getUTCMonth(), date_1.getUTCDate()));
+
+
+            var yAppendix, mAppendix, dAppendix;
+
+
+            //--------------------------------------------------------------
+            var days = date2_UTC.getDate() - date1_UTC.getDate();
+            if (days < 0) {
+
+                date2_UTC.setMonth(date2_UTC.getMonth() - 1);
+                days += DaysInMonth(date2_UTC);
             }
-            // return displaydata;
-            var x = days;
-            var y = 365;
-            var y2 = 31;
-            var remainder = x % y;
-            var casio = remainder % y2;
-            var year = (x - remainder) / y;
-            var month = (remainder - casio) / y2;
+            //--------------------------------------------------------------
+            var months = date2_UTC.getMonth() - date1_UTC.getMonth();
+            if (months < 0) {
+                date2_UTC.setFullYear(date2_UTC.getFullYear() - 1);
+                months += 12;
+            }
+            //--------------------------------------------------------------
+            var years = date2_UTC.getFullYear() - date1_UTC.getFullYear();
+
+
             var result = '';
-            if (year != 0) {
-                result = year + " year  ";
-            }
-            if (month != 0 && year == 0) {
-                result += month + " month  ";
-            }
-            if (casio != 0 && month == 0) {
-                result += casio + " days  ";
-            }
 
-            // var result = displaydata + "@--- Year ---" + year + "--- Month ---" + month + "--- Day ---" + casio;
+            if (years > 1) yAppendix = " years";
+            else yAppendix = " year";
+            if (months > 1) mAppendix = " months";
+            else mAppendix = " month";
+            if (days > 1) dAppendix = " days";
+            else dAppendix = " day";
 
+            if (years != 0) {
+                result = years + yAppendix;
+            } else if (years == 0 && months != 0) {
+                result = months + mAppendix;
+            } else if (years == 0 & months == 0) {
+                result = days + dAppendix;
+            }
             return result;
+        }
+
+
+        function DaysInMonth(date2_UTC) {
+            var monthStart = new Date(date2_UTC.getFullYear(), date2_UTC.getMonth(), 1);
+            var monthEnd = new Date(date2_UTC.getFullYear(), date2_UTC.getMonth() + 1, 1);
+            var monthLength = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
+            return monthLength;
         }
     }
 })();

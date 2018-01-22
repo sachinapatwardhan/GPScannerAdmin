@@ -20,27 +20,18 @@
             </div>
         </div>
         <div class="content-card" layout="column" flex>
-            <ul class="tabsList">
-                <li ng-click="ResetTab()" ng-if="flaglink == 0"><a href="" class="active">Device Logs</a></li>
+            <!-- <ul class="tabsList"> -->
+            <!-- <li ng-click="ResetTab()" ng-if="flaglink == 0"><a href="" class="active">Device Logs</a></li>
                 <li ng-click="ResetTab()" ng-if="flaglink != 0"><a href="">Device Logs</a></li>
                 <li ng-click="ResetModel1()" ng-if="flaglink == 1"><a href="" class="active">HandhShake Logs</a></li>
-                <li ng-click="ResetModel1()" ng-if="flaglink != 1"><a href="">HandhShake Logs</a></li>
-                <!-- <li ng-click="ResetModel2()" ng-if="flaglink == 2"><a href="" class="active">GPSData Logs</a></li>
+                <li ng-click="ResetModel1()" ng-if="flaglink != 1"><a href="">HandhShake Logs</a></li> -->
+            <!-- <li ng-click="ResetModel2()" ng-if="flaglink == 2"><a href="" class="active">GPSData Logs</a></li>
                 <li ng-click="ResetModel2()" ng-if="flaglink != 2"><a href="">GPSData Logs</a></li> -->
-            </ul>
-            <div class="ShowContentBox" ng-if="flaglink == 0">
+            <!-- </ul> -->
+            <!-- <div class="ShowContentBox" ng-if="flaglink == 0">
                 <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
                 <div layout="row" layout-wrap>
-                    <!-- <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                        <label>DeviceId</label>
-                        <md-select Name="DeviceId" ng-model="modelDevice.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="searchDevice" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                            </md-select-header>
-                            <md-option value="All">All</md-option>
-                            <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstdevice| filter: searchDevice | orderBy : 'CreatedDate':true">{{o.DeviceId}}</md-option>
-                        </md-select>
-                    </md-input-container> -->
+                
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>DeviceId</label>
                         <input type="text" name="DeviceId" ng-model="modelDevice.DeviceId">
@@ -108,7 +99,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> -->
             <div class="ShowContentBox" ng-if="flaglink == 1">
                 <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
                 <div layout="row" layout-wrap>
