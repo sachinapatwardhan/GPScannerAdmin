@@ -123,6 +123,7 @@
             this.direction = LastDirection;
             this.IsAnimation = isAnimation;
             this.IsEngineStatus = IsEngine;
+            $rootScope.IsEngine = this.IsEngineStatus;
             this.setMap(mapLocation);
         }
 
@@ -139,7 +140,7 @@
                 div = this.div_ = $('.customMarkeroffcar')[0];
                 animatediv = $('.customMarkeroffcar');
             } else {
-                if (this.IsEngineStatus == false) {
+                if ($rootScope.IsEngine == false) {
                     div = this.div_ = $('.customMarkeractivecar')[0];
                     animatediv = $('.customMarkeractivecar');
                 } else {
@@ -158,7 +159,7 @@
                 if (IsOnline == false) {
                     div.className = "customMarkeroffcar";
                 } else {
-                    if (this.IsEngineStatus == false) {
+                    if ($rootScope.IsEngine == false) {
                         div.className = "customMarkeractivecar";
                     } else {
                         div.className = "customMarkeroncar";
