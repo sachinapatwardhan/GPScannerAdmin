@@ -122,7 +122,7 @@
             $scope.FilterStatus = '';
 
             $scope.dtColumnsHandShake = [
-                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '5%'),
                 DTColumnBuilder.newColumn('Datetime').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('DeviceId').renderWith(DeviceIdHtml),
                 // DTColumnBuilder.newColumn('Power'),
@@ -136,6 +136,7 @@
                         d.search = '';
                     } else {
                         d.search = $scope.Search;
+                        d.start = 0;
                     }
 
                     if ($scope.modelHandShake.FromDate != '') {
@@ -364,7 +365,6 @@
         }
 
         $scope.ResetSearch = function() {
-            console.log($scope.flaglink)
             if ($scope.flaglink == 1) {
                 $scope.ResetModel1();
                 GetAllDynamicHandShake(true);
@@ -388,7 +388,6 @@
         };
 
         $scope.GetSearch = function(Search) {
-            console.log($scope.flaglink)
             $scope.Search = Search;
             if ($scope.flaglink == 0) {
                 vm.dtInstanceDevice.DataTable.search(Search);
