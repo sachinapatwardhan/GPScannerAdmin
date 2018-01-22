@@ -491,7 +491,7 @@
                     '</md-button>';
             }
             if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword(' + data.id + ')" aria-label="">' +
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword($event,' + data.id + ')" aria-label="">' +
                     '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
                     '</md-button>';
@@ -561,8 +561,27 @@
             });
         }
 
+        $scope.ResetPassword = function(ev, id) {
+            var obj = _.findWhere($scope.lstdata, { id: id })
+            $mdDialog.show({
+                controller: 'UserPasswordConifrmationController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/User/dialogs/PasswordConfirmation/PasswordConfirmation.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    obj: obj,
+                    Tasks: [],
+                    event: ev,
+                    VM: vm,
+                    flg: 1
+                }
+            })
+        }
+
         //Reset Password User By Id
-        $scope.ResetPassword = function(id) {
+        $scope.ResetPassword1 = function(id) {
             $scope.obj = _.findWhere($scope.lstdata, {
                 id: id
             });
@@ -610,6 +629,7 @@
         $scope.ChangePassword = function(ev, id) {
             var obj = _.findWhere($scope.lstdata, { id: id })
             $mdDialog.show({
+                skipHide: true,
                 controller: 'UserChangePasswordController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/User/dialogs/ChangePassword/ChangePassword.html',

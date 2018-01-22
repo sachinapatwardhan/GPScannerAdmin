@@ -6,7 +6,7 @@
         .controller('ChangePasswordCustomerController', ChangePasswordCustomerController);
 
     /** @ngInject */
-    function ChangePasswordCustomerController($mdToast, $http, $mdDialog, $scope, obj, Tasks, event, VM, $rootScope) {
+    function ChangePasswordCustomerController($mdToast, $document, $http, $mdDialog, $scope, obj, Tasks, event, VM, $rootScope) {
         var vm = this;
         $scope.RoutePath = $rootScope.RoutePath;
         $scope.init = function() {
@@ -18,7 +18,36 @@
                 UserId: obj.id,
             };
         }
-        $scope.ChangePassword = function(o) {
+
+
+        $scope.ChangePassword = function(ev, o) {
+            if (o.confirmpassword != o.password) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Password and Confirm Password does not match...')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else {
+                $mdDialog.show({
+                    // skipHide: true,
+                    controller: 'PasswordConifrmationController',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/Customer/dialogs/PasswordConfirmation/PasswordConfirmation.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: false,
+                    locals: {
+                        obj: o,
+                        Tasks: [],
+                        event: ev,
+                        VM: vm,
+                        flg: 0
+                    }
+                })
+            }
+        }
+        $scope.ChangePassword1 = function(o) {
             $http.post($rootScope.RoutePath + "account/changepassword", o).then(function(response) {
 
                 if (response.data.success == true) {
