@@ -46,7 +46,7 @@
                             <md-select-header class="demo-select-header">
                                 <input ng-model="vm.searchTermVehicleType" type="search" placeholder="Search for a Vehicle Type.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
-                            <md-option ng-value="-1">All</md-option>
+                            <md-option ng-value='null'>All</md-option>
                             <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
                         </md-select>
                     </md-input-container>

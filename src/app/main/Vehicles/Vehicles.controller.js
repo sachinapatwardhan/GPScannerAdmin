@@ -47,7 +47,7 @@
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
-                idType: "-1",
+                idType: null,
             }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -91,7 +91,7 @@
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
-                idType: "-1",
+                idType: null,
             }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -575,7 +575,7 @@
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
-                idType: "-1",
+                idType: null,
             }
             $scope.query = '';
             $scope.resetForm();
@@ -624,7 +624,7 @@
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
-                idType: "-1",
+                idType: null,
             }
             GetAllDynamicVehicles(true);
         }
