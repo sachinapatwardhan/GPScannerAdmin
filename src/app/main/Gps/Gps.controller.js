@@ -21,6 +21,7 @@
             $scope.GetAllGpsDevice();
             $rootScope.appId = localStorage.getItem('appId');
             $rootScope.AppName = localStorage.getItem('appName');
+            $rootScope.UserRoles = $cookieStore.get('UserRoles');
         }
 
         $scope.GetSerch = function(Search) {
@@ -88,9 +89,6 @@
             DTColumnBuilder.newColumn('IsSOS').renderWith(IsFlg),
             DTColumnBuilder.newColumn('IsDoor').renderWith(IsFlg),
             DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
-
-
-
         ]
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -113,7 +111,10 @@
                         d.EndDate = ''
                     }
                     d.idApp = $rootScope.appId;
-                    d.AppName = $rootScope.AppName;
+                    if ($rootScope.UserRoles != 'Super Admin') {
+                        d.AppName = $rootScope.AppName;
+                    }
+
                     return d;
                 },
                 type: "get",
@@ -214,7 +215,11 @@
 
         //Dynamic Pagging End
         $scope.Export = function() {
-            window.location.href = $rootScope.RoutePath + "gpsdata/ExportAllGpsData?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate;
+            var AppName = '';
+            if ($rootScope.UserRoles == 'Super Admin') {
+                AppName = $rootScope.AppName;
+            }
+            window.location.href = $rootScope.RoutePath + "gpsdata/ExportAllGpsDataNew?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&TimeZone=" + $rootScope.CurrentTimeZone + "&AppName=" + AppName;
 
         }
 

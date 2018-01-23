@@ -9,7 +9,7 @@
     function LogsController($http, $scope, $rootScope, $filter, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
-
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
         vm.dtInstanceGps = {};
         $scope.init = function() {
             $scope.modelDevice = {
@@ -154,8 +154,9 @@
                         d.DeviceId = $scope.modelHandShake.DeviceId;
                     }
                     d.idApp = $rootScope.appId;
-                    d.AppName = $rootScope.AppName;
-
+                    if ($rootScope.UserRoles != 'Super Admin') {
+                        d.AppName = $rootScope.AppName;
+                    }
                     return d;
                 },
                 type: "get",
