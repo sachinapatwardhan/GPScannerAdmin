@@ -3,10 +3,10 @@
 
     angular
         .module('app.HandShake')
-        .controller('LogsController', LogsController);
+        .controller('HandShakeController', HandShakeController);
 
     /** @ngInject */
-    function LogsController($http, $scope, $rootScope, $filter, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
+    function HandShakeController($http, $scope, $rootScope, $filter, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
         $rootScope.UserRoles = $cookieStore.get('UserRoles');

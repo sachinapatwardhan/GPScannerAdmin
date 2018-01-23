@@ -13,8 +13,8 @@
                 url: '/HandShake',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/main/Logs/Logs.html',
-                        controller: 'LogsController as vm'
+                        templateUrl: 'app/main/HandShake/HandShake.html',
+                        controller: 'HandShakeController as vm'
                     }
                 },
                 bodyClass: 'Hand Shake',
