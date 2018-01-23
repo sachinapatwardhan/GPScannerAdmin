@@ -85,6 +85,7 @@
                                     .hideDelay(3000)
                                 );
                             }
+                            $mdDialog.hide()
                             HideLoader();
                         }
                         $mdDialog.hide();
@@ -97,6 +98,8 @@
                         .position('top right')
                         .hideDelay(3000)
                     );
+                    $mdDialog.hide();
+                    HideLoader();
                 }
             })
 
