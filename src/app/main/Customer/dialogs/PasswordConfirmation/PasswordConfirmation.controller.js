@@ -20,7 +20,7 @@
                 // email: $scope.obj.email,
                 // idApp: $rootScope.appId,
                 id: obj.id,
-                AppName: localStorage.getItem('appName'),
+                AppName: obj.AppName,
                 password: password
             }
             ShowLoader();
@@ -62,7 +62,7 @@
             ShowLoader();
             $http.get($rootScope.RoutePath + "account/passwordVerification", { params: params }).then(function(data) {
                 if (data.data.success == true) {
-                    obj.AppName = localStorage.getItem('appName');
+                    // obj.AppName = localStorage.getItem('appName');
                     $http.post($rootScope.RoutePath + "account/changepasswordNew", obj).then(function(response) {
                         if (response.data.success == true) {
                             $mdToast.show(
@@ -85,6 +85,7 @@
                                     .hideDelay(3000)
                                 );
                             }
+                            HideLoader();
                         }
                         $mdDialog.hide();
                         HideLoader();

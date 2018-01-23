@@ -16,6 +16,7 @@
                 password: '',
                 confirmpassword: '',
                 UserId: obj.id,
+                AppName: obj.AppName
             };
         }
 
@@ -85,6 +86,8 @@
                     oldpassword: '',
                     password: '',
                     confirmpassword: '',
+                    UserId: obj.id,
+                    AppName: obj.AppName
                 };
                 $scope.FormChangePassword.$setUntouched();
                 $scope.FormChangePassword.$setPristine();

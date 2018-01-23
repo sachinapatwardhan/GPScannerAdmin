@@ -21,7 +21,7 @@
                 // email: $scope.obj.email,
                 // idApp: $rootScope.appId,
                 id: obj.id,
-                AppName: localStorage.getItem('appName'),
+                AppName: obj.AppName,
                 password: password
             }
             ShowLoader();
