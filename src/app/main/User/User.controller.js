@@ -310,7 +310,7 @@
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.dtColumns = [
                     DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
+                    // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
                     DTColumnBuilder.newColumn('username').withOption('width', '12%'),
                     DTColumnBuilder.newColumn('email').withOption('width', '13%'),
                     DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
@@ -319,19 +319,27 @@
                     DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
                     // DTColumnBuilder.newColumn('tblappinfo.AppName').renderWith(AppHtml),
                     DTColumnBuilder.newColumn('AppName'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
+
+                    DTColumnBuilder.newColumn('AppVersion'),
+                    DTColumnBuilder.newColumn('Platform'),
+                    DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%').withOption('class', 'text-center')
                 ]
             } else {
                 $scope.dtColumns1 = [
                     DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
+                    // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
                     DTColumnBuilder.newColumn('username').withOption('width', '12%'),
                     DTColumnBuilder.newColumn('email').withOption('width', '13%'),
                     DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
                     // DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
                     DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
                     DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '20%').withOption('class', 'text-center')
+
+                    DTColumnBuilder.newColumn('AppVersion'),
+                    DTColumnBuilder.newColumn('Platform'),
+                    DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%').withOption('class', 'text-center')
                 ]
             }
 
@@ -457,9 +465,18 @@
             return varspan;
         };
 
+        function dateFormat(data, type, full, meta) {
+            if (data != null && data != '') {
+                return moment(data).format('DD-MM-YYYY hh:mm:ss a')
+            } else {
+                return "";
+            }
+
+        }
+
         function DateFormateHtml(data, type, full, meta) {
             if (data != null && data != undefined && data != '') {
-                return $rootScope.convertdate(data);
+                return $rootScope.convertdateformat(data, 2);
             } else {
                 return 'N/A';
             }

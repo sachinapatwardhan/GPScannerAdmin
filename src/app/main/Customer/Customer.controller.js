@@ -31,6 +31,7 @@
                     DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
                     DTColumnBuilder.newColumn('TotalDevice'),
                     DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn('LastLogin').renderWith(dateFormat),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
                 ]
             } else {
@@ -44,6 +45,7 @@
                     DTColumnBuilder.newColumn('OTP'),
                     DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
                     DTColumnBuilder.newColumn('TotalDevice'),
+                    DTColumnBuilder.newColumn('LastLogin').renderWith(dateFormat),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
                 ]
             }
@@ -147,6 +149,15 @@
             } else {
                 return ' <img src= "assets/images/no-image.png" height="50px" width="50px">';
             }
+        }
+
+        function dateFormat(data, type, full, meta) {
+            if (data != null && data != '') {
+                return moment(data).format('DD-MM-YYYY hh:mm:ss a')
+            } else {
+                return "";
+            }
+
         }
 
         function MaxSpeed(data, type, full, meta) {
