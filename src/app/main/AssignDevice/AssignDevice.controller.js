@@ -112,10 +112,10 @@
             //     return 'N/A';
             // }),
             DTColumnBuilder.newColumn('AppName'),
-            DTColumnBuilder.newColumn('ExpiryDate').renderWith(function(data, type, row, meta) {
-                var parsed = moment(data);
-                return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';
-            }),
+            // DTColumnBuilder.newColumn('ExpiryDate').renderWith(function(data, type, row, meta) {
+            //     var parsed = moment(data);
+            //     return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';
+            // }),
             DTColumnBuilder.newColumn('CreatedDate').renderWith(function(data, type, row, meta) {
                 var parsed = moment(data);
                 return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';
@@ -165,10 +165,10 @@
             //     }
             //     return 'N/A';
             // }),
-            DTColumnBuilder.newColumn('ExpiryDate').renderWith(function(data, type, row, meta) {
-                var parsed = moment(data);
-                return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';
-            }),
+            // DTColumnBuilder.newColumn('ExpiryDate').renderWith(function(data, type, row, meta) {
+            //     var parsed = moment(data);
+            //     return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';
+            // }),
             DTColumnBuilder.newColumn('CreatedDate').renderWith(function(data, type, row, meta) {
                 var parsed = moment(data);
                 return parsed.isValid() ? parsed.format('DD-MM-YYYY hh:mm:ss a') : 'N/A';

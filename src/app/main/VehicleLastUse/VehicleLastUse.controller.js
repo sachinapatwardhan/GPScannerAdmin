@@ -18,7 +18,8 @@
                 $scope.lstdata = data.data;
                 for (var i = 0; i < $scope.lstdata.length; i++) {
                     var newdate = $scope.lstdata[i].Date * 1000;
-                    $scope.lstdata[i].Date = moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm A");
+                    // $scope.lstdata[i].Date = moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm:ss A");
+                    $scope.lstdata[i].Date = moment(new Date($scope.lstdata[i].Date * 1000)).format('DD-MM-YYYY hh:mm:ss a');
                 }
             })
         }

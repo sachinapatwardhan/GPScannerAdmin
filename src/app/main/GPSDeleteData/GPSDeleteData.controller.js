@@ -20,8 +20,8 @@
             DTColumnBuilder.newColumn('RequestType'),
             DTColumnBuilder.newColumn('Status').renderWith(Statusfan),
             DTColumnBuilder.newColumn('CreatedBy'),
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
-            DTColumnBuilder.newColumn('ModifiedDate').renderWith(Datefun),
+            DTColumnBuilder.newColumn('DisplayCreatedDate').renderWith(Datefun),
+            DTColumnBuilder.newColumn('DisplayModifiedDate').renderWith(Datefun),
         ]
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -102,7 +102,7 @@
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
                 // return $filter('date')(data, "dd-MM-yyyy");
-                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
+                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm:ss A");
             } else {
                 return '';
             }
@@ -111,7 +111,7 @@
         function Datetimefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
                 var newdate = data * 1000;
-                return moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm A");
+                return moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm:ss A");
             } else {
                 return '';
             }

@@ -80,7 +80,7 @@
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
                 // return $filter('date')(data, "dd-MM-yyyy");
-                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
+                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm:ss A");
             } else {
                 return '';
             }

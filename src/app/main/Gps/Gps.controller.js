@@ -88,7 +88,7 @@
             DTColumnBuilder.newColumn('IsUnlockTheDoor').renderWith(IsFlg),
             DTColumnBuilder.newColumn('IsSOS').renderWith(IsFlg),
             DTColumnBuilder.newColumn('IsDoor').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
+            // DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
         ]
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {

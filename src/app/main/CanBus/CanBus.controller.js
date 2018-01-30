@@ -81,7 +81,7 @@
             DTColumnBuilder.newColumn('SingleFuelConsumptionVolume'),
             DTColumnBuilder.newColumn('TotalFuelConsumptionVolume'),
             DTColumnBuilder.newColumn('CurrentErrorCodeNumbers'),
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
+            DTColumnBuilder.newColumn('DisplayCreatedDate').renderWith(Datefun),
             DTColumnBuilder.newColumn('HarshAccelerationNo'),
             DTColumnBuilder.newColumn('HarshBrakeNo'),
             // DTColumnBuilder.newColumn('IsLockTheDoor').renderWith(IsFlg),
@@ -161,7 +161,8 @@
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
                 // return $filter('date')(data, "dd-MM-yyyy");
-                return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
+                // return moment(moment.utc(data).toDate()).format("DD/MM/YYYY hh:mm A");
+                return moment(data).format('DD-MM-YYYY hh:mm:ss a')
             } else {
                 return '';
             }
