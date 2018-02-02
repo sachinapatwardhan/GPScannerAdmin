@@ -64,7 +64,7 @@
                 iduser: '',
                 Name: '',
                 deviceid: '',
-                renewaldate: 0,
+                renewaldate: null,
                 HandshakDatetime: null,
                 MaxSpeed: 0,
                 BatteryPercentage: 0,
@@ -281,6 +281,7 @@
         }
 
         function ExpirydateFormat(data, type, full, meta) {
+            console.log(data)
             if (data != null && data != '') {
                 return moment(data).format('DD-MM-YYYY')
             } else {
@@ -384,7 +385,7 @@
             } else {
                 $scope.model.IsOnline = false;
             }
-            $scope.model.renewaldate = new Date(o.renewaldate);
+            // $scope.model.renewaldate = new Date(o.renewaldate);
             $scope.model.MaxSpeed = o.MaxSpeed;
             $scope.model.IsACC = o.IsACC;
             $scope.model.SleepMode = o.SleepMode;
