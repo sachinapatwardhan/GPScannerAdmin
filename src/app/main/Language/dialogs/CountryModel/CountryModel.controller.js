@@ -2,11 +2,11 @@
     'use strict';
 
     angular
-        .module('app.Trackers')
-        .controller('CountryModelCtrl', CountryModelCtrl);
+        .module('app.Language')
+        .controller('LanguageCountryModelCtrl', LanguageCountryModelCtrl);
 
     /** @ngInject */
-    function CountryModelCtrl($http, $mdDialog, $scope, $rootScope, $mdToast, Id) {
+    function LanguageCountryModelCtrl($http, $mdDialog, $scope, $rootScope, $mdToast, Id) {
 
         $scope.init = function() {
 

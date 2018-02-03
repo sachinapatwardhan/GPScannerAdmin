@@ -329,7 +329,7 @@
         })
         $scope.openModel = function(Id) {
             $mdDialog.show({
-                controller: 'CountryModelCtrl',
+                controller: 'LanguageCountryModelCtrl',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/Language/dialogs/CountryModel/CountryModel.html',
                 parent: angular.element($document.body),
