@@ -67,5 +67,6 @@
             'app.AuditLog',
             'app.ManageCustomer',
             'app.GPSDeleteData',
+            'app.userfeedback'
         ]);
 })();

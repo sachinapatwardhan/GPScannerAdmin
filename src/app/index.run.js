@@ -441,7 +441,7 @@
                                 });
                             }
 
-                            // // Logs
+                            // // Hand Shake
                             var HandShake = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Hand Shake';
                             });
@@ -769,6 +769,18 @@
                                     weight: 1
                                 });
                             }
+                            //User FeedBack
+                            var lstUserFeedback = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'User Feedback';
+                            });
+                            if (lstUserFeedback.length > 0) {
+                                msNavigationService.saveItem('Settings.User Feedback', {
+                                    title: 'User Feedback',
+                                    state: 'app.userfeedback',
+                                    order: lstUserFeedback[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
 
                             // ------------------------------Main module----------------------------------
                             if (lstGPSDelete.length > 0 || lstManageCustomer.length > 0 || lstVehicleLastUse.length > 0 ||
@@ -805,7 +817,7 @@
 
                             if (lstCountryStateCity.length > 0 || lstTrackers.length > 0 || SIM.length > 0 || lstUtility.length > 0 ||
                                 lstTransferDevice.length > 0 || lstAssignDevice.length > 0 || lstVehicleMonitor.length > 0 ||
-                                lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0) {
+                                lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0 || lstUserFeedback.length) {
                                 msNavigationService.saveItem('Settings', {
                                     title: 'Settings',
                                     icon: 'icon-cog',
