@@ -67,6 +67,7 @@
             'app.AuditLog',
             'app.ManageCustomer',
             'app.GPSDeleteData',
-            'app.userfeedback'
+            'app.userfeedback',
+            'app.SharedVehicle'
         ]);
 })();

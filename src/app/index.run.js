@@ -782,10 +782,24 @@
                                 });
                             }
 
+                            var SharedVehicle = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Shared Vehicle';
+                            });
+                            if (SharedVehicle.length > 0) {
+                                var MenuName = $rootScope.AppName + '.Shared Vehicle';
+                                msNavigationService.saveItem(MenuName, {
+                                    // msNavigationService.saveItem('Maark.Logs', {
+                                    title: 'Shared Vehicle',
+                                    state: 'app.SharedVehicle',
+                                    order: SharedVehicle[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
                             // ------------------------------Main module----------------------------------
                             if (lstGPSDelete.length > 0 || lstManageCustomer.length > 0 || lstVehicleLastUse.length > 0 ||
                                 lstVehicle.length > 0 || gps.length > 0 || Alarm.length > 0 || CanBusData.length > 0 ||
-                                DrivingBehaviour.length > 0 || HandShake.length > 0 || lstVehicleType.length > 0) {
+                                DrivingBehaviour.length > 0 || HandShake.length > 0 || lstVehicleType.length > 0 || SharedVehicle.length > 0) {
                                 var MenuName = $rootScope.AppName;
                                 msNavigationService.saveItem(MenuName, {
                                     title: MenuName,

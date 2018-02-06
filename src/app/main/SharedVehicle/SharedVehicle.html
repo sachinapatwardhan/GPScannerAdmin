@@ -1,0 +1,159 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-if="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Shared Vehicle">Shared Vehicle</span>
+                </div>
+
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-raised md-background" ng-click="Reset()">
+                        <span translate="Share Vehicle">Share Vehicle</span>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <div class="content-card" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table id="sharevehicle" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Vehicle Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device Id</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">User</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Share User</span>
+                                </div>
+                            </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed" layout="column" ng-show="flag">
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to Vehicle" ng-click="ResetModel()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="Share vehicle">Share vehicle</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content" layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-content class="md-padding">
+                <form name="FormshareVehicle" novalidate class="md-inline-form" aria-invalid="false">
+                    <div class="content">
+                        <div layout="row" layout-wrap>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
+                                <label>App Name</label>
+                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required ng-change="ChangeAppName()">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                                </md-select>
+                                <div ng-messages="formTrackingdetails.AppName.$error" ng-if="formTrackingdetails.AppName.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>App Name is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" layout-wrap>
+                            <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                                <label>Device Id</label>
+                                <md-select Name="DeviceId" ng-model="model.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="AddUserEmail(model.DeviceId)" required>
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="searchDevice" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.deviceId}}" ng-repeat="o in lstDevice| filter: searchDevice | orderBy : 'CreatedDate':true">{{o.deviceId}}</md-option>
+                                </md-select>
+                                <div ng-messages="FormshareVehicle.DeviceId.$error" ng-if="FormshareVehicle.DeviceId.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Device Id is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="50" flex-gt-md="20">
+                                <label>User Email:</label>
+                                <input type="text" name="email" ng-model="modelDisplay.Shareemail" ng-disabled="true">
+                            </md-input-container>
+                        </div>
+                        <div layout="row" layout-wrap>
+                            <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="50" flex-gt-md="20">
+                                <label>Select User for Share Vehicle</label>
+                                <md-select Name="email" ng-model="model.email" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="searchemail" type="search" placeholder="Search for a share vehicle user.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="o.email" ng-repeat="o in lstUser| filter: searchemail | orderBy : 'email':false">{{o.email}}</md-option>
+                                </md-select>
+                                <div ng-messages="FormshareVehicle.email.$error" ng-if="FormshareVehicle.email.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>User for Share Vehicle is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                        </div>
+
+                        <div align="left">
+                            <md-button class="md-raised md-primary" ng-disabled="!FormshareVehicle.$valid" ng-click="shareVehicle(model)">Save</md-button>
+                            <md-button class="md-accent md-raised" ng-click="ResetData()" ng-if="model.id==0">Reset</md-button>
+                            <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+                        </div>
+                    </div>
+                </form>
+            </md-content>
+        </div>
+    </div>
+</div>
