@@ -78,18 +78,28 @@
             });
 
         }
-
-        $scope.dtColumns = [
-            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
-            DTColumnBuilder.newColumn('Name'),
-            DTColumnBuilder.newColumn('DeviceId'),
-            DTColumnBuilder.newColumn('sharedUser'),
-            DTColumnBuilder.newColumn('email'),
-            // DTColumnBuilder.newColumn('createdby'),
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
-        ]
-
+        if ($rootScope.UserRoles == 'Super Admin') {
+            $scope.dtColumns = [
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('Name'),
+                DTColumnBuilder.newColumn('DeviceId'),
+                DTColumnBuilder.newColumn('sharedUser'),
+                DTColumnBuilder.newColumn('email'),
+                DTColumnBuilder.newColumn('AppName'),
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+            ]
+        } else {
+            $scope.dtColumns1 = [
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('Name'),
+                DTColumnBuilder.newColumn('DeviceId'),
+                DTColumnBuilder.newColumn('sharedUser'),
+                DTColumnBuilder.newColumn('email'),
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+            ]
+        }
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "sharedevice/GetAllSharedUser",
                 data: function(d) {
@@ -99,7 +109,7 @@
                         d.search = "";
                     }
                     if ($rootScope.UserRoles != 'Super Admin') {
-                        d.appId = $scope.appId
+                        d.appId = localStorage.getItem('appId')
                     }
                     return d;
                 },
@@ -124,7 +134,7 @@
             .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
             .withOption('scrollY', 'auto');
         vm.dtInstance = {};
-
+        vm.dtInstance1 = {};
 
         //Reload Datatable
         $scope.GetAllShareDevice = function(IsUpdate) {
@@ -132,7 +142,15 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             }
-            vm.dtInstance.reloadData(callback, resetPaging);
+
+
+            if ($rootScope.UserRoles == 'Super Admin') {
+                vm.dtInstance.reloadData(callback, resetPaging);
+                $('#sharevehicle').dataTable()._fnAjaxUpdate();
+            } else {
+                vm.dtInstance1.reloadData(callback, resetPaging);
+                $('#sharevehicle1').dataTable()._fnAjaxUpdate();
+            }
         }
 
         $scope.reloadData = function() {}
