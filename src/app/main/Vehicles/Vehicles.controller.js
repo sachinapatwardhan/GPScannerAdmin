@@ -43,6 +43,7 @@
                 IMEI: '',
                 idType: null,
             };
+            $scope.modelUpdateDate = { renewaldate: null, id: '' };
 
             $scope.modelSearch = {
                 EndDate: null,
@@ -54,6 +55,7 @@
             // $scope.query = '';
             $scope.Search = '';
             $scope.flag = false;
+            $scope.ShowDtl = false;
             $rootScope.appId = localStorage.getItem('appId');
             $scope.getAllVehicleType();
         }
@@ -88,6 +90,8 @@
                 IMEI: '',
                 idType: null,
             };
+            $scope.modelUpdateDate = { renewaldate: null, id: '' };
+
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
@@ -98,6 +102,7 @@
             // $scope.query = '';
             $scope.Search = '';
             $scope.flag = false;
+            $scope.ShowDtl = false;
         }
         $scope.getAllVehicleType = function() {
             $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype").then(function(data) {
@@ -281,7 +286,6 @@
         }
 
         function ExpirydateFormat(data, type, full, meta) {
-            console.log(data)
             if (data != null && data != '') {
                 return moment(data).format('DD-MM-YYYY')
             } else {
@@ -317,6 +321,11 @@
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="FetchVehicleById(' + data.id + ')">' +
                     '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="EditDates(' + data.id + ',$event)" aria-label="">' +
+                    '<md-icon md-font-icon="icon-calendar-check-multiple" ></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Update Date</md-tooltip>' +
                     '</md-button>';
             }
             if ($rootScope.FlgDeletedAccess) {
@@ -363,7 +372,43 @@
             return (meta.row + 1);
         }
 
-        //Edit Location
+        $scope.EditDates = function(id, ev) {
+            var obj = _.findWhere($scope.lstVehicledata, {
+                id: id
+            });
+            $scope.vehicleName = obj.Name;
+            $scope.modelUpdateDate.id = id;
+            $scope.modelUpdateDate.renewaldate = new Date(obj.Displyrenewaldate);
+            $scope.ShowDtl = true;
+
+        }
+        $scope.UpdateExpiryDate = function() {
+                var params = $scope.modelUpdateDate;
+                console.log(params)
+                $http.get($rootScope.RoutePath + "vehicles/UpdateExpiryDate", {
+                    params: params
+                }).success(function(data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.init();
+                        $scope.resetForm();
+                        GetAllDynamicVehicles(true);
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                });
+            }
+            //Edit Location
         $scope.FetchVehicleById = function(id) {
             $rootScope.FlgAddedEditlocal = true;
             var o = _.findWhere($scope.lstVehicledata, {
@@ -573,6 +618,9 @@
                 IMEI: '',
                 idType: null,
             };
+
+            $scope.modelUpdateDate = { renewaldate: null, id: '' };
+
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
@@ -611,6 +659,8 @@
                 IMEI: '',
                 idType: null,
             };
+            $scope.modelUpdateDate = { renewaldate: null, id: '' };
+
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
@@ -619,6 +669,7 @@
             $scope.selectedItem = null;
             // // $scope.query = '';
             $scope.flag = false;
+            $scope.ShowDtl = false;
             $scope.resetForm();
         }
         $scope.SearchReset = function() {

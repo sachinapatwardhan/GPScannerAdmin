@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content fullpage-datatable" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex ng-show="ShowDtl==false">
                 <table id="VehicleDetail" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
@@ -119,6 +119,24 @@
                         </tr>
                     </thead>
                 </table>
+            </div>
+            <div class="content" layout-margin ng-show="ShowDtl==true">
+                <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                    <form name="FormManageDate" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
+                        <h2 style="color:green;">Vehicle : {{vehicleName}}</h2>
+                        <br/>
+                        <md-input-container class="md-block" flex="50">
+                            <label> Expiry Date</label>
+                            <input name="dStart" mdc-datetime-picker date="true" time="false" ng-required="true" type="text" id="time" format="DD-MM-YYYY" ng-model="modelUpdateDate.renewaldate">
+                        </md-input-container>
+                        <div>
+                            <md-button class="md-raised md-primary" ng-click="UpdateExpiryDate()" ng-disabled="FormManageDate.$invalid">
+                                Update Date</md-button>
+                            <md-button class="md-raised md-warn" ng-click="ResetModel()">
+                                cancel</md-button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
