@@ -384,7 +384,6 @@
         }
         $scope.UpdateExpiryDate = function() {
                 var params = $scope.modelUpdateDate;
-                console.log(params)
                 $http.get($rootScope.RoutePath + "vehicles/UpdateExpiryDate", {
                     params: params
                 }).success(function(data) {
