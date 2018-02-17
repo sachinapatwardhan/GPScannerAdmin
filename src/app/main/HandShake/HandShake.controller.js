@@ -132,11 +132,11 @@
             $scope.dtOptionsHandShake = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "settings/GetAllDynamickHandshakeNew",
                 data: function(d) {
-                    if ($scope.Search == '') {
+                    if ($scope.Search == '' || $scope.Search == undefined || $scope.Search == null) {
                         d.search = '';
                     } else {
                         d.search = $scope.Search;
-                        d.start = 0;
+                        // d.start = 0;
                     }
 
                     if ($scope.modelHandShake.FromDate != '') {
@@ -194,6 +194,7 @@
                 resetPaging = true;
             };
             vm.dtInstanceHandshake.reloadData(callback, resetPaging);
+            $('#HandShakeLog').dataTable()._fnPageChange(0);
             $('#HandShakeLog').dataTable()._fnAjaxUpdate();
         }
 
@@ -218,8 +219,8 @@
 
         function dateFormat(data, type, full, meta) {
             if (data != null && data != '') {
-                return $rootScope.convertdateformat(data, 1);
-                // return moment(data).format('DD-MM-YYYY hh:mm:ss a')
+                // return $rootScope.convertdateformat(data, 1);
+                return moment(data).format('DD-MM-YYYY hh:mm:ss a')
             } else {
                 return "";
             }
@@ -391,11 +392,14 @@
         $scope.GetSearch = function(Search) {
             $scope.Search = Search;
             if ($scope.flaglink == 0) {
+                console.log("!...............0")
                 vm.dtInstanceDevice.DataTable.search(Search);
                 vm.dtInstanceDevice.DataTable.search(Search).draw();
             } else if ($scope.flaglink == 1) {
+                console.log("!...............1")
                 GetAllDynamicHandShake(true);
             } else if ($scope.flaglink == 2) {
+                console.log("!...............2")
                 GetAllGpsData(true);
             }
         }
