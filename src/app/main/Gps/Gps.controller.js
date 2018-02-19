@@ -213,6 +213,8 @@
                 EndDate: '',
             }
             $scope.Search = "";
+            $scope.formGPS.$setUntouched();
+            $scope.formGPS.$setPristine();
             $('#modelsearch').val("");
             $scope.GetAllGpsData(true);
         }

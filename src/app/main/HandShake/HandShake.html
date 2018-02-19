@@ -101,21 +101,27 @@
                 </table>
             </div> -->
             <div class="ShowContentBox">
-                <!-- <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i> -->
-                <div layout="row" layout-wrap>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                        <label>From Date</label>
-                        <input mdc-datetime-picker date="true" time="true" type="text" id="time" max-date="modelHandShake.ToDate" format="DD-MM-YYYY hh:mm A" ng-model="modelHandShake.FromDate">
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                        <label>To Date</label>
-                        <input mdc-datetime-picker date="true" time="true" type="text" id="time" min-date="modelHandShake.FromDate" format="DD-MM-YYYY hh:mm A" ng-model="modelHandShake.ToDate">
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                        <label>DeviceId</label>
-                        <input type="text" name="DeviceId" ng-model="modelHandShake.DeviceId">
-                    </md-input-container>
-                    <!-- <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                <form name="formHandShake" novalidate class="md-inline-form" aria-invalid="false">
+                    <!-- <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i> -->
+                    <div layout="row" layout-wrap>
+                        <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                            <label>From Date</label>
+                            <input mdc-datetime-picker date="true" time="true" type="text" id="time" max-date="modelHandShake.ToDate" format="DD-MM-YYYY hh:mm A" ng-model="modelHandShake.FromDate">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                            <label>To Date</label>
+                            <input mdc-datetime-picker date="true" time="true" type="text" id="time" min-date="modelHandShake.FromDate" format="DD-MM-YYYY hh:mm A" ng-model="modelHandShake.ToDate">
+                        </md-input-container>
+                        <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                            <label>DeviceId</label>
+                            <input type="text" name="DeviceId" ng-model="modelHandShake.DeviceId" required>
+                            <div ng-messages="formHandShake.DeviceId.$error" ng-if="formHandShake.DeviceId.$touched" role="alert">
+                                <div ng-message="required">
+                                    <span>DeviceId field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <!-- <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>DeviceId</label>
                         <md-select Name="DeviceId" ng-model="modelHandShake.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
                             <md-select-header class="demo-select-header">
@@ -125,17 +131,17 @@
                             <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstdevice| filter: searchDevice | orderBy : 'CreatedDate':true">{{o.DeviceId}}</md-option>
                         </md-select>
                     </md-input-container> -->
-                    <div align="left">
-                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetSearch()" aria-label="Search">
-                            <md-icon md-font-icon="icon-magnify"></md-icon>
-                            <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
-                        </md-button>
-                        <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="ResetSearch()" aria-label="Reset Search">
-                            <md-icon md-font-icon="icon-refresh"></md-icon>
-                            <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
-                        </md-button>
+                        <div align="left">
+                            <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetSearch()" ng-disabled="!formHandShake.$valid" aria-label="Search">
+                                <md-icon md-font-icon="icon-magnify"></md-icon>
+                                <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
+                            </md-button>
+                            <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="ResetSearch()" aria-label="Reset Search">
+                                <md-icon md-font-icon="icon-refresh"></md-icon>
+                                <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
+                            </md-button>
+                        </div>
                     </div>
-                </div>
             </div>
             <div class="content fullpage-datatable" layout="column" flex ng-if="flaglink == 1">
                 <table id="HandShakeLog" class="dataTable cell-border row-border hover" datatable="" dt-instance="vm.dtInstanceHandshake" dt-columns="dtColumnsHandShake" dt-options="dtOptionsHandShake" width="100%">

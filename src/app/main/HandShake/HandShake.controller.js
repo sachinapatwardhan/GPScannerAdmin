@@ -354,6 +354,8 @@
             };
             $scope.flag = false;
             $scope.flaglink = 1;
+            $scope.formHandShake.$setUntouched();
+            $scope.formHandShake.$setPristine();
         }
 
         $scope.ResetModel2 = function() {
