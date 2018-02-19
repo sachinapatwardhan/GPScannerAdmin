@@ -389,6 +389,11 @@
             });
         };
 
+        $(function() {
+            $(".showBtn").toggleClass("active");
+            $(".ShowContentBox").slideToggle();
+        });
+
         $scope.GetSearch = function(Search) {
             $scope.Search = Search;
             if ($scope.flaglink == 0) {

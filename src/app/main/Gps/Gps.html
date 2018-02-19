@@ -17,10 +17,10 @@
                 <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
             <div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
+                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
-                </md-button>
+                </md-button> -->
                 <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length>0 && Search == ''">
                     <md-icon md-font-icon="icon-file-excel"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
@@ -29,7 +29,7 @@
         </div>
         <div class="content-card" layout="column" flex>
             <div class="ShowContentBox">
-                <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
+                <!-- <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i> -->
                 <div layout="row" layout-wrap>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>Start Date</label>
@@ -45,7 +45,7 @@
               <md-option ng-repeat="o in lstdevice  | orderBy : 'CreatedDate':true" value="{{o.DeviceId}}">{{o.DeviceId}}</md-option>
             </md-select>
           </md-input-container> -->
-                    <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                    <!-- <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>Device Id</label>
                         <md-select Name="DeviceId" ng-model="ModelSearch.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllGpsData(true)">
                             <md-select-header class="demo-select-header">
@@ -54,6 +54,10 @@
                             <md-option value="All">All</md-option>
                             <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstdevice| filter: searchDevice | orderBy : 'CreatedDate':true">{{o.DeviceId}}</md-option>
                         </md-select>
+                    </md-input-container> -->
+                    <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                        <label>Device Id</label>
+                        <input type="text" name="DeviceId" ng-model="ModelSearch.DeviceId">
                     </md-input-container>
                     <div align="left">
                         <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetAllGpsData(true)" aria-label="Search">

@@ -12,7 +12,7 @@
 
         $scope.init = function() {
             $scope.ModelSearch = {
-                DeviceId: 'All',
+                DeviceId: '',
                 StartDate: '',
                 EndDate: '',
             }
@@ -47,6 +47,10 @@
                 $(".ShowContentBox").slideToggle();
             });
         };
+        $(function() {
+            $(".showBtn").toggleClass("active");
+            $(".ShowContentBox").slideToggle();
+        });
 
 
 
@@ -204,7 +208,7 @@
 
         $scope.SearchReset = function() {
             $scope.ModelSearch = {
-                DeviceId: 'All',
+                DeviceId: '',
                 StartDate: '',
                 EndDate: '',
             }
