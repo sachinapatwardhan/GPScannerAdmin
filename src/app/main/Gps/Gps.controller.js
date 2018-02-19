@@ -134,7 +134,7 @@
             .withOption('processing', true) //for show progress bar
             .withOption('serverSide', true) // for server side processing
             .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
-            .withDisplayLength(25) // Page size
+            .withDisplayLength(100) // Page size
             .withOption('aaSorting', [2, 'desc'])
             .withOption('responsive', true)
             .withOption('createdRow', createdRow)
