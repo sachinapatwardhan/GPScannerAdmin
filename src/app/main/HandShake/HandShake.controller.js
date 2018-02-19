@@ -371,7 +371,10 @@
         $scope.ResetSearch = function() {
             if ($scope.flaglink == 1) {
                 $scope.ResetModel1();
-                GetAllDynamicHandShake(true);
+                $('#HandShakeLog').dataTable()._fnPageChange(0);
+                $('#HandShakeLog').dataTable()._fnAjaxUpdate();
+                // $("#HandShakeLog").remove();
+                // GetAllDynamicHandShake(true);
             } else if ($scope.flaglink == 2) {
                 $scope.ResetModel2();
                 GetAllGpsData(true);

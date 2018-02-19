@@ -215,8 +215,12 @@
             $scope.Search = "";
             $scope.formGPS.$setUntouched();
             $scope.formGPS.$setPristine();
+            // $("#gps").DataTable().destroy();
+            $('#gps').dataTable()._fnPageChange(0);
+            $('#gps').dataTable()._fnAjaxUpdate();
+            // $("#gps").remove();
             $('#modelsearch').val("");
-            $scope.GetAllGpsData(true);
+            // $scope.GetAllGpsData(true);
         }
 
         //Dynamic Pagging End
