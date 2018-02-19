@@ -76,6 +76,13 @@
                 $scope.model.EEDefaultFrom = obj.EEDefaultFrom;
                 $scope.model.EEValidateEmailAddresses = obj.EEValidateEmailAddresses;
                 $scope.model.IdApp = obj.IdApp;
+            } else {
+                $scope.model.id = '';
+                $scope.model.DefaultEmailFrom = '';
+                $scope.model.NotificationEmailTo = '';
+                $scope.model.EEMandrillKey = '';
+                $scope.model.EEDefaultFrom = '';
+                $scope.model.EEValidateEmailAddresses = null;
             }
         }
 
