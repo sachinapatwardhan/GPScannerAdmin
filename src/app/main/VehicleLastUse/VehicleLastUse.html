@@ -5,7 +5,7 @@
             <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
                 <div class="h1" layout="row" layout-align="start center">
                     <md-icon md-font-icon="icon-cube-outline"></md-icon>
-                    <span translate="Vehicle Not Use">Vehicle Not Use </span>
+                    <span translate="10 Days No Use">10 Days No Use </span>
                 </div>
                 <div class="product-count secondary-text" hide-xs>
                     <span>Total Vehicle :</span>
@@ -107,11 +107,11 @@
                                     <span class="column-title">Type</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <!-- <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">User Name</span>
                                 </div>
-                            </th>
+                            </th> -->
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Email</span>
@@ -127,7 +127,16 @@
                                     <span class="column-title">Last Use Date</span>
                                 </div>
                             </th>
-
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Days</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">AppName</span>
+                                </div>
+                            </th>
 
                         </tr>
                     </thead>
@@ -138,11 +147,12 @@
                             <td>{{o.deviceid}} </td>
                             <td>{{o.Type}} </td>
                             <td>{{o.vehicleType}}</td>
-                            <td>{{o.username}}</td>
+                            <!-- <td>{{o.username}}</td> -->
                             <td>{{o.email}}</td>
                             <td>{{o.phone}}</td>
                             <td>{{o.Date}}</td>
-
+                            <td>{{o.Days}}</td>
+                            <td>{{o.AppName}}</td>
                         </tr>
                     </tbody>
                 </table>

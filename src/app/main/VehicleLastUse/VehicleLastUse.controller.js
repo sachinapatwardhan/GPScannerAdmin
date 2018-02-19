@@ -19,8 +19,13 @@
                 for (var i = 0; i < $scope.lstdata.length; i++) {
                     var newdate = $scope.lstdata[i].Date * 1000;
                     // $scope.lstdata[i].Date = moment(moment.utc(newdate).toDate()).format("DD/MM/YYYY hh:mm:ss A");
+                    var timeDiff = (new Date()).getTime() - (new Date($scope.lstdata[i].Date * 1000)).getTime();
+                    var diffDays = Math.round(timeDiff / (1000 * 3600 * 24));
+                    $scope.lstdata[i].Days = diffDays + ' days';
                     $scope.lstdata[i].Date = moment(new Date($scope.lstdata[i].Date * 1000)).format('DD-MM-YYYY hh:mm:ss a');
+
                 }
+                $scope.lstdata = data.data;
             })
         }
 
