@@ -31,11 +31,11 @@
         //     weight: 1
         // });
 
-        msNavigationServiceProvider.saveItem('Settings.EmailSetting', {
-            title: 'Email Setting',
-            state: 'app.EmailSetting',
-            icon: 'icon-lock',
-            weight: 1
-        });
+        // msNavigationServiceProvider.saveItem('Settings.EmailSetting', {
+        //     title: 'Email Setting',
+        //     state: 'app.EmailSetting',
+        //     icon: 'icon-lock',
+        //     weight: 1
+        // });
     }
 })();
