@@ -18,7 +18,7 @@
                 EEMandrillKey: '',
                 EEDefaultFrom: '',
                 EEValidateEmailAddresses: null,
-                IdApp: null,
+                IdApp: '',
             };
             $scope.AppName = '';
             $scope.flag = false;
@@ -27,8 +27,8 @@
         }
 
         $scope.getAllAppName = function() {
-            $http.get($rootScope.RoutePath + "Email/GetAllAppName").then(function(data) {
-                $scope.lstAppName = data.data.data;
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstAppName = data.data;
             })
         }
         $scope.GetAllEmailSetting = function() {
@@ -37,6 +37,7 @@
             });
         }
         $scope.AddNewEmail = function() {
+            $scope.resetModel();
             $scope.flag = true;
         }
 
@@ -48,7 +49,7 @@
                 EEMandrillKey: '',
                 EEDefaultFrom: '',
                 EEValidateEmailAddresses: null,
-                IdApp: null,
+                IdApp: '',
             };
             $scope.AppName = '';
             $scope.formEmailSetting.$setUntouched();
@@ -63,6 +64,19 @@
             }
             $scope.resetModel();
 
+        }
+
+        $scope.GetEmailTemplateByAppId = function() {
+            var obj = _.findWhere($scope.lstdata, { IdApp: parseInt($scope.model.IdApp) })
+            if (obj != null && obj != undefined && obj != '') {
+                $scope.model.id = obj.id;
+                $scope.model.DefaultEmailFrom = obj.DefaultEmailFrom;
+                $scope.model.NotificationEmailTo = obj.NotificationEmailTo;
+                $scope.model.EEMandrillKey = obj.EEMandrillKey;
+                $scope.model.EEDefaultFrom = obj.EEDefaultFrom;
+                $scope.model.EEValidateEmailAddresses = obj.EEValidateEmailAddresses;
+                $scope.model.IdApp = obj.IdApp;
+            }
         }
 
         $scope.GetEmailSetting = function() {

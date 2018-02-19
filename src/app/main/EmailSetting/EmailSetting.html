@@ -182,15 +182,15 @@
                         <label>Id</label>
                         <input ng-model="model.id">
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.id!=''">
+                    <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.id!=''">
                         <label>App Name </label>
                         <input type="text" ng-model="AppName" ng-disabled="true">
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.id==''">
+                    </md-input-container> -->
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                         <label>App Name </label>
-                        <md-select name="Name" ng-model="model.IdApp" aria-placeholder="Select App Name" data-md-container-class="selectdemoSelectHeader" required>
+                        <md-select name="Name" ng-model="model.IdApp" aria-placeholder="Select App Name" data-md-container-class="selectdemoSelectHeader" required ng-change="GetEmailTemplateByAppId()">
                             <md-option>Select App Name</md-option>
-                            <md-option value="{{o.Id}}" ng-repeat="o in lstAppName">{{o.AppName}}</md-option>
+                            <md-option value="{{o.id}}" ng-repeat="o in lstAppName">{{o.AppName}}</md-option>
                         </md-select>
                         <div ng-messages="formEmailSetting.Name.$error" ng-if="formEmailSetting.Name.$touched" role="alert">
                             <div ng-message="required">
