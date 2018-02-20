@@ -14,10 +14,10 @@
             $scope.model = {
                 id: '',
                 DefaultEmailFrom: '',
-                NotificationEmailTo: '',
-                EEMandrillKey: '',
-                EEDefaultFrom: '',
-                EEValidateEmailAddresses: null,
+                SMTPService: '',
+                SMTPhost: '',
+                SMTPuser: '',
+                SMTPpass: '',
                 IdApp: '',
             };
             $scope.AppName = '';
@@ -34,6 +34,7 @@
         $scope.GetAllEmailSetting = function() {
             $http.get($rootScope.RoutePath + "Email/GetAllEmailSettingNew").then(function(data) {
                 $scope.lstdata = data.data;
+                console.log(data)
             });
         }
         $scope.AddNewEmail = function() {
@@ -45,10 +46,10 @@
             $scope.model = {
                 id: '',
                 DefaultEmailFrom: '',
-                NotificationEmailTo: '',
-                EEMandrillKey: '',
-                EEDefaultFrom: '',
-                EEValidateEmailAddresses: null,
+                SMTPService: '',
+                SMTPhost: '',
+                SMTPuser: '',
+                SMTPpass: '',
                 IdApp: '',
             };
             $scope.AppName = '';
@@ -71,18 +72,18 @@
             if (obj != null && obj != undefined && obj != '') {
                 $scope.model.id = obj.id;
                 $scope.model.DefaultEmailFrom = obj.DefaultEmailFrom;
-                $scope.model.NotificationEmailTo = obj.NotificationEmailTo;
-                $scope.model.EEMandrillKey = obj.EEMandrillKey;
-                $scope.model.EEDefaultFrom = obj.EEDefaultFrom;
-                $scope.model.EEValidateEmailAddresses = obj.EEValidateEmailAddresses;
+                $scope.model.SMTPService = obj.SMTPService;
+                $scope.model.SMTPhost = obj.SMTPhost;
+                $scope.model.SMTPuser = obj.SMTPuser;
+                $scope.model.SMTPpass = obj.SMTPpass;
                 $scope.model.IdApp = obj.IdApp;
             } else {
                 $scope.model.id = '';
                 $scope.model.DefaultEmailFrom = '';
-                $scope.model.NotificationEmailTo = '';
-                $scope.model.EEMandrillKey = '';
-                $scope.model.EEDefaultFrom = '';
-                $scope.model.EEValidateEmailAddresses = null;
+                $scope.model.SMTPService = '';
+                $scope.model.SMTPhost = '';
+                $scope.model.SMTPuser = '';
+                $scope.model.SMTPpass = null;
             }
         }
 
@@ -91,10 +92,10 @@
                 if (data.data.data != null) {
                     $scope.model.id = data.data.data.id;
                     $scope.model.DefaultEmailFrom = data.data.data.DefaultEmailFrom;
-                    $scope.model.NotificationEmailTo = data.data.data.NotificationEmailTo;
-                    $scope.model.EEMandrillKey = data.data.data.EEMandrillKey;
-                    $scope.model.EEDefaultFrom = data.data.data.EEDefaultFrom;
-                    $scope.model.EEValidateEmailAddresses = data.data.data.EEValidateEmailAddresses;
+                    $scope.model.SMTPService = data.data.data.SMTPService;
+                    $scope.model.SMTPhost = data.data.data.SMTPhost;
+                    $scope.model.SMTPuser = data.data.data.SMTPuser;
+                    $scope.model.SMTPpass = data.data.data.SMTPpass;
                 }
             });
         }
@@ -102,10 +103,10 @@
             $scope.flag = true;
             $scope.model.id = o.id;
             $scope.model.DefaultEmailFrom = o.DefaultEmailFrom;
-            $scope.model.NotificationEmailTo = o.NotificationEmailTo;
-            $scope.model.EEMandrillKey = o.EEMandrillKey;
-            $scope.model.EEDefaultFrom = o.EEDefaultFrom;
-            $scope.model.EEValidateEmailAddresses = o.EEValidateEmailAddresses;
+            $scope.model.SMTPService = o.SMTPService;
+            $scope.model.SMTPhost = o.SMTPhost;
+            $scope.model.SMTPuser = o.SMTPuser;
+            $scope.model.SMTPpass = o.SMTPpass;
             $scope.model.IdApp = o.IdApp;
             $scope.AppName = o.tblappinfo.AppName;
         }

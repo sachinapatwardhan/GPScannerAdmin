@@ -114,15 +114,24 @@
 
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Notification Email To</span>
+                                    <span class="column-title">SMTP Service</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">EE Default From</span>
+                                    <span class="column-title">SMTP host</span>
                                 </div>
                             </th>
-
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">SMTP User</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">SMTP Password</span>
+                                </div>
+                            </th>
                             <th class="all">
                                 <div class="table-header">
                                     <span class="column-title">Action</span>
@@ -136,8 +145,10 @@
                             <td>{{ $index+1 }}</td>
                             <td>{{o.tblappinfo.AppName}} </td>
                             <td>{{o.DefaultEmailFrom}} </td>
-                            <td>{{o.NotificationEmailTo}} </td>
-                            <td>{{o.EEDefaultFrom}} </td>
+                            <td>{{o.SMTPService}} </td>
+                            <td>{{o.SMTPhost}} </td>
+                            <td>{{o.SMTPuser}} </td>
+                            <td>{{o.SMTPpass}}</td>
                             <td>
                                 <md-button class="edit-button md-icon-button" ng-click="editEmailSettingById(o)">
                                     <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
@@ -203,32 +214,50 @@
                         <input name="DefaultEmailFrom" ng-model="model.DefaultEmailFrom" maxlength="150" md-maxlength="150" required>
                         <div ng-messages="formEmailSetting.DefaultEmailFrom.$error" ng-if="formEmailSetting.DefaultEmailFrom.$touched" role="alert">
                             <div ng-message="required">
-                                <span>Default Email From default from is required</span>
+                                <span>Default Email From is required</span>
                             </div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm="50">
-                        <label>Notification email to </label>
-                        <input name="NotificationEmailTo" ng-model="model.NotificationEmailTo" required maxlength="150" md-maxlength="150">
-                        <div ng-messages="formEmailSetting.NotificationEmailTo.$error" ng-if="formEmailSetting.NotificationEmailTo.$touched" role="alert">
+                        <label>SMTP Service </label>
+                        <input name="SMTPService" ng-model="model.SMTPService" required maxlength="150" md-maxlength="150" required>
+                        <div ng-messages="formEmailSetting.SMTPService.$error" ng-if="formEmailSetting.SMTPService.$touched" role="alert">
                             <div ng-message="required">
-                                <span>Notification email to name is required</span>
+                                <span>SMTP Service is required</span>
                             </div>
                         </div>
                     </md-input-container>
 
                     <md-input-container class="md-block" flex-gt-sm="50">
-                        <label>EE default from</label>
-                        <input name="EEDefaultFrom" ng-model="model.EEDefaultFrom" maxlength="150" md-maxlength="150">
-                        <div ng-messages="formEmailSetting.EEDefaultFrom.$error" ng-if="formEmailSetting.EEDefaultFrom.$touched" role="alert">
+                        <label>SMT Phost</label>
+                        <input name="SMTPhost" ng-model="model.SMTPhost" maxlength="150" md-maxlength="150" required>
+                        <div ng-messages="formEmailSetting.SMTPhost.$error" ng-if="formEmailSetting.SMTPhost.$touched" role="alert">
                             <div ng-message="required">
-                                <span>EE default from is required</span>
+                                <span>SMTP host is required</span>
                             </div>
                         </div>
                     </md-input-container>
-                    <label>EE validate email addresses</label>
+                    <md-input-container class="md-block" flex-gt-sm="50" required>
+                        <label>SMTP User</label>
+                        <input name="SMTPuser" ng-model="model.SMTPuser" maxlength="150" md-maxlength="150" required>
+                        <div ng-messages="formEmailSetting.SMTPuser.$error" ng-if="formEmailSetting.SMTPuser.$touched" role="alert">
+                            <div ng-message="required">
+                                <span>SMTP User is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="50" required>
+                        <label>SMTP Password</label>
+                        <input name="SMTPpass" ng-model="model.SMTPpass" maxlength="150" md-maxlength="150" required>
+                        <div ng-messages="formEmailSetting.SMTPpass.$error" ng-if="formEmailSetting.SMTPpass.$touched" role="alert">
+                            <div ng-message="required">
+                                <span>SMTP Password is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <!-- <label>EE validate email addresses</label>
                     <br/>
-                    <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="model.EEValidateEmailAddresses" class="md-primary"></md-checkbox>
+                    <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="model.EEValidateEmailAddresses" class="md-primary"></md-checkbox> -->
                     <div align="left">
                         <md-button class="md-raised md-primary" ng-disabled="!formEmailSetting.$valid" ng-if="FlgModifiedAccess" ng-click="SaveEmailSetting(model)">Save</md-button>
                         <md-button class="md-accent md-raised" ng-click="resetModel()">Reset</md-button>
