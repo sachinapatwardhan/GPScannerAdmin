@@ -18,7 +18,7 @@
 
         $scope.ResetPassword = function() {
             var Email = $scope.model.email;
-            $http.get($rootScope.RoutePath + "account/forgotpasswordNew?email=" + Email.toLowerCase() + "&idApp=1&AppName=" + localStorage.getItem('appName')).then(function(response) {
+            $http.get($rootScope.RoutePath + "account/forgotpasswordNew?email=" + Email.toLowerCase() + "&idApp=" + $rootScope.appId + "&AppName=" + localStorage.getItem('appName')).then(function(response) {
                 console.log(response);
                 if (response.data.success == true) {
                     $mdToast.show(
