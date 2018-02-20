@@ -10,15 +10,15 @@
         // State
         $stateProvider
             .state('app.VehicleLastUse', {
-                url: '/VehicleLastUse',
+                url: '/10DaysInactive',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/VehicleLastUse/VehicleLastUse.html',
                         controller: 'VehicleLastUseController as vm'
                     }
                 },
-                bodyClass: 'Vehicle Last Use',
-                ModuleName: 'Vehicle Last Use'
+                bodyClass: '10 Days Inactive',
+                ModuleName: '10 Days Inactive'
             });
 
         // Translation

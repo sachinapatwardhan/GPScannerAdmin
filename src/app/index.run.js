@@ -18,8 +18,8 @@
         // $rootScope.RoutePath = "http://localhost:7212/";
         // $rootScope.Socket_URL = "http://localhost:7212";
 
-        $rootScope.RoutePath = "http://192.168.1.53:7212/";
-        $rootScope.Socket_URL = "http://192.168.1.53:7212";
+        // $rootScope.RoutePath = "http://192.168.1.53:7212/";
+        // $rootScope.Socket_URL = "http://192.168.1.53:7212";
 
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
@@ -27,8 +27,8 @@
         // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
         // $rootScope.RoutePath = "http://api.maark.my:7212/";
         // $rootScope.Socket_URL = "http://api.maark.my:7212";
-        // $rootScope.RoutePath = "http://uatapi.maark.my/";
-        // $rootScope.Socket_URL = "http://uatapi.maark.my";
+        $rootScope.RoutePath = "http://uatapi.maark.my/";
+        $rootScope.Socket_URL = "http://uatapi.maark.my";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
         var x = new Date();
@@ -576,12 +576,12 @@
 
                             //VehicleLastUse
                             var lstVehicleLastUse = _.filter(lstAllPages, function(obj) {
-                                return obj.tblmodulemgmt.Module == 'Vehicle Last Use';
+                                return obj.tblmodulemgmt.Module == '10 Days Inactive';
                             });
                             if (lstVehicleLastUse.length > 0) {
-                                var MenuName = $rootScope.AppName + '.Vehicle Last Use';
+                                var MenuName = $rootScope.AppName + '.10 Days Inactive';
                                 msNavigationService.saveItem(MenuName, {
-                                    title: '10 Days No Uses',
+                                    title: '10 Days Inactive',
                                     state: 'app.VehicleLastUse',
                                     order: lstVehicleLastUse[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
