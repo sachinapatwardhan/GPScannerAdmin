@@ -12,11 +12,39 @@
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
-                $rootScope.appId = localStorage.getItem('appId');
-                $rootScope.AppName = localStorage.getItem('appName');
-                // console.log($rootScope.appId);
+
+            $scope.model = {
+                id: '',
+                username: '',
+                email: '',
+                phone: '',
+                country: '',
+                idApp: '',
             }
-            //Dynamic Pagging
+            $scope.modelSearch = {
+                AppName: '',
+                country: '',
+            }
+            $rootScope.appId = localStorage.getItem('appId');
+            $rootScope.AppName = localStorage.getItem('appName');
+            // console.log($rootScope.appId);
+            GetAllCountry();
+            $scope.GetAllInfoList();
+        }
+
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstAppInfo = data.data;
+            })
+        }
+
+        function GetAllCountry() {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
+                $scope.lstCountry = data.data;
+            });
+        }
+
+        //Dynamic Pagging
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
             if ($rootScope.UserRoles == 'Super Admin') {
@@ -197,8 +225,54 @@
                     '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
                     '</md-button>';
             }
+
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="EditCustomer(' + data.id + ')" aria-label="Edit Location">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip  md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+            }
+            if ($rootScope.FlgDeletedAccess) {
+                btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteCustomer(' + data.id + ')" aria-label="Add SubLocation">' +
+                    '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible=""  md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
+            }
             return btns;
         };
+
+        $scope.DeleteCustomer = function(id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure to Delete this Customer ?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function() {
+                var params = {
+                    id: id
+                };
+                $http.get($rootScope.RoutePath + "user/DeleteCustomer", {
+                    params: params
+                }).success(function(data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.GetAllUser(true);
+
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+                });
+            })
+        }
 
         $scope.ChangePassword = function(ev, id) {
             var obj = _.findWhere($scope.lstdata, { id: id })
@@ -222,6 +296,41 @@
             $scope.Search = Search;
             $scope.GetAllUser(true);
         }
+
+        $scope.EditCustomer = function(id) {
+            var o = _.filter($scope.lstdata, { id: id })
+            $scope.flag = true;
+            $scope.model.id = o[0].id;
+            $scope.model.username = o[0].username;
+            $scope.model.email = o[0].email;
+            $scope.model.phone = o[0].phone;
+            $scope.model.country = o[0].country;
+            $scope.model.idApp = o[0].idApp;
+        }
+
+        $scope.updateCustomer = function() {
+            $http.post($rootScope.RoutePath + "user/updateCustomer", $scope.model).success(function(data) {
+                if (data.success == true) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                    $scope.GetAllUser(true);
+                    $scope.flag = false;
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                }
+            })
+        }
+
+
         $scope.ResetPassword = function(ev, id) {
             var obj = _.findWhere($scope.lstdata, { id: id })
             $mdDialog.show({
@@ -306,6 +415,39 @@
 
 
         //Dynamic Pagging End
+
+        $scope.ResetData = function() {
+            $scope.model = {
+                id: '',
+                username: '',
+                email: '',
+                phone: '',
+                country: '',
+                idApp: '',
+            }
+            $scope.resetForm();
+        }
+
+        $scope.Reset = function() {
+            $scope.flag = false;
+            $scope.model = {
+                id: '',
+                username: '',
+                email: '',
+                phone: '',
+                country: '',
+                idApp: '',
+            }
+            $scope.resetForm();
+
+        }
+        $scope.SearchReset = function() {
+            $scope.modelSearch = {
+                AppName: '',
+                country: '',
+            }
+            $scope.GetAllUser(true);
+        }
 
         $scope.init();
     }
