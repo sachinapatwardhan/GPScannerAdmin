@@ -127,7 +127,12 @@
                         <br/>
                         <md-input-container class="md-block" flex="50">
                             <label> Expiry Date</label>
-                            <input name="dStart" mdc-datetime-picker date="true" time="false" ng-required="true" type="text" id="time" format="DD-MM-YYYY" ng-model="modelUpdateDate.renewaldate">
+                            <input name="dStart" mdc-datetime-picker date="true" time="false" required type="text" id="time" format="DD-MM-YYYY" ng-model="modelUpdateDate.renewaldate">
+                            <div ng-messages="FormManageDate.dStart.$error" ng-if="FormManageDate.dStart.$touched" role="alert">
+                                <div ng-message="required">
+                                    <span>Expiry Date field is required</span>
+                                </div>
+                            </div>
                         </md-input-container>
                         <div>
                             <md-button class="md-raised md-primary" ng-click="UpdateExpiryDate()" ng-disabled="FormManageDate.$invalid">

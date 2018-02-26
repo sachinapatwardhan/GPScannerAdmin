@@ -378,7 +378,11 @@
             });
             $scope.vehicleName = obj.Name;
             $scope.modelUpdateDate.id = id;
-            $scope.modelUpdateDate.renewaldate = new Date(obj.Displyrenewaldate);
+            if (obj.Displyrenewaldate != null && obj.Displyrenewaldate != undefined && obj.Displyrenewaldate !== '') {
+                $scope.modelUpdateDate.renewaldate = new Date(obj.Displyrenewaldate);
+            } else {
+                $scope.modelUpdateDate.renewaldate = null
+            }
             $scope.ShowDtl = true;
 
         }
@@ -580,6 +584,9 @@
         $scope.resetForm = function() {
             $scope.formVehicledetails.$setUntouched();
             $scope.formVehicledetails.$setPristine();
+            $scope.FormManageDate.$setUntouched();
+            $scope.FormManageDate.$setPristine();
+
         }
 
         $scope.ResetTab = function() {
