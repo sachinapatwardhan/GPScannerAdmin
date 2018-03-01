@@ -182,6 +182,7 @@
         }
 
         $scope.CreateVehicleDetails = function(o) {
+            $scope.model.deviceid = parseInt($scope.model.IMEI.toString().slice(1));
             $http.get($rootScope.RoutePath + "bike/SaveVehicle", { params: o }).then(function(data) {
                 if (data.data.success == true) {
                     $mdToast.show(

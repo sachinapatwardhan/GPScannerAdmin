@@ -120,7 +120,7 @@
             //         obj.checked = true;
             //     }
             // }
-            if (o.Role != '') {
+            if (o.Role != '' && o.Role != null && o.Role != undefined) {
                 var str = o.Role.split(",");
                 for (var i = 0; i < str.length; i++) {
                     var obj = _.findWhere($scope.lstRoles, {

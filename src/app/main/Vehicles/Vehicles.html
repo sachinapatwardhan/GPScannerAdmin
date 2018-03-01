@@ -217,7 +217,7 @@
                             </md-input-container>-->
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>IMEI Number</label>
-                                <input type="text" name="IMEI" ng-model="model.IMEI" ng-required="true" maxlength="50" ng-blur="chkTrackerId(model.IMEI)">
+                                <input type="text" name="IMEI" ng-model="model.IMEI" ng-required="true" maxlength="50">
                                 <div ng-messages="formVehicledetails.IMEI.$error" ng-if="formVehicledetails.IMEI.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>IMEI Number field is required</span>
