@@ -11,14 +11,24 @@
         var vm = this;
 
         $scope.init = function() {
+            var StartDate = new Date();
+            StartDate.setHours(0);
+            StartDate.setMinutes(0);
+            StartDate.setSeconds(0);
+
+            var EndDate = new Date();
+            EndDate.setHours(23);
+            EndDate.setMinutes(59);
+            EndDate.setSeconds(59);
+
             $scope.ModelSearch = {
                 DeviceId: '',
-                StartDate: '',
-                EndDate: '',
+                StartDate: StartDate,
+                EndDate: EndDate,
             }
             $scope.Search = "";
             $scope.searchDevice = "";
-            $scope.GetAllGpsDevice();
+            // $scope.GetAllGpsDevice();
             $rootScope.appId = localStorage.getItem('appId');
             $rootScope.AppName = localStorage.getItem('appName');
             $rootScope.UserRoles = $cookieStore.get('UserRoles');
@@ -207,10 +217,20 @@
         }
 
         $scope.SearchReset = function() {
+            var StartDate = new Date();
+            StartDate.setHours(0);
+            StartDate.setMinutes(0);
+            StartDate.setSeconds(0);
+
+            var EndDate = new Date();
+            EndDate.setHours(23);
+            EndDate.setMinutes(59);
+            EndDate.setSeconds(59);
+
             $scope.ModelSearch = {
                 DeviceId: '',
-                StartDate: '',
-                EndDate: '',
+                StartDate: StartDate,
+                EndDate: EndDate,
             }
             $scope.Search = "";
             $scope.formGPS.$setUntouched();
