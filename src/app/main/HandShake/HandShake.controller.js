@@ -12,13 +12,23 @@
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         vm.dtInstanceGps = {};
         $scope.init = function() {
+            var StartDate = new Date();
+            StartDate.setHours(0);
+            StartDate.setMinutes(0);
+            StartDate.setSeconds(0);
+
+            var EndDate = new Date();
+            EndDate.setHours(23);
+            EndDate.setMinutes(59);
+            EndDate.setSeconds(59);
+
             $scope.modelDevice = {
                 DeviceId: '',
                 Command: '',
             }
             $scope.modelHandShake = {
-                FromDate: '',
-                ToDate: '',
+                FromDate: StartDate,
+                ToDate: EndDate,
                 DeviceId: '',
             };
             $scope.modelSearch = {
@@ -138,7 +148,7 @@
                         d.search = $scope.Search;
                         // d.start = 0;
                     }
-
+                    d.DeviceId = $scope.modelHandShake.DeviceId == 'All' ? '' : $scope.modelHandShake.DeviceId;
                     if ($scope.modelHandShake.FromDate != '') {
                         d.fromdate = $scope.modelHandShake.FromDate.toUTCString();
                     } else {
@@ -150,9 +160,9 @@
                         d.todate = ''
                     }
 
-                    if ($scope.modelHandShake.DeviceId != '' && $scope.modelHandShake.DeviceId != null) {
-                        d.DeviceId = $scope.modelHandShake.DeviceId;
-                    }
+                    // if ($scope.modelHandShake.DeviceId != '' && $scope.modelHandShake.DeviceId != null) {
+                    //     d.DeviceId = $scope.modelHandShake.DeviceId;
+                    // }
                     d.idApp = $rootScope.appId;
                     if ($rootScope.UserRoles != 'Super Admin') {
                         d.AppName = $rootScope.AppName;
@@ -188,7 +198,7 @@
 
         function callback(json) {}
 
-        function GetAllDynamicHandShake(IsUpdate) {
+        $scope.GetAllDynamicHandShake = function(IsUpdate) {
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
@@ -334,52 +344,77 @@
         //         return '';
         //     }
         // }
+        $scope.SearchReset = function() {
+                var StartDate = new Date();
+                StartDate.setHours(0);
+                StartDate.setMinutes(0);
+                StartDate.setSeconds(0);
 
-        $scope.ResetTab = function() {
-            $scope.modelDevice = {
-                DeviceId: '',
-                Command: '',
-            }
-            $scope.flag = false;
-            $scope.flaglink = 1;
-        }
+                var EndDate = new Date();
+                EndDate.setHours(23);
+                EndDate.setMinutes(59);
+                EndDate.setSeconds(59);
 
-        $scope.ResetModel1 = function() {
-            $scope.modelHandShake = {
-                FromDate: '',
-                ToDate: '',
-                FromTime: '',
-                ToTime: '',
-                DeviceId: '',
-            };
-            $scope.flag = false;
-            $scope.flaglink = 1;
-            $scope.formHandShake.$setUntouched();
-            $scope.formHandShake.$setPristine();
-        }
-
-        $scope.ResetModel2 = function() {
-            $scope.modelSearch = {
-                FromDate: '',
-                ToDate: '',
-                DeviceId: '',
-            };
-            $scope.flag = false;
-            $scope.flaglink = 2;
-        }
-
-        $scope.ResetSearch = function() {
-            if ($scope.flaglink == 1) {
-                $scope.ResetModel1();
+                $scope.modelHandShake = {
+                    FromDate: StartDate,
+                    ToDate: EndDate,
+                    DeviceId: '',
+                };
+                $scope.Search = "";
+                $scope.flag = false;
+                $scope.flaglink = 1;
+                $scope.formHandShake.$setUntouched();
+                $scope.formHandShake.$setPristine();
+                // $("#gps").DataTable().destroy();
                 $('#HandShakeLog').dataTable()._fnPageChange(0);
                 $('#HandShakeLog').dataTable()._fnAjaxUpdate();
-                // $("#HandShakeLog").remove();
-                // GetAllDynamicHandShake(true);
-            } else if ($scope.flaglink == 2) {
-                $scope.ResetModel2();
-                GetAllGpsData(true);
+                // $("#gps").remove();
+                $('#modelsearch').val("");
+                // $scope.GetAllGpsData(true);
             }
-        }
+            // $scope.ResetTab = function() {
+            //     $scope.modelDevice = {
+            //         DeviceId: '',
+            //         Command: '',
+            //     }
+            //     $scope.flag = false;
+            //     $scope.flaglink = 1;
+            // }
+
+        // $scope.ResetModel1 = function() {
+        //     $scope.modelHandShake = {
+        //         FromDate: '',
+        //         ToDate: '',
+        //         DeviceId: '',
+        //     };
+        //     $scope.flag = false;
+        //     $scope.flaglink = 1;
+        //     $scope.formHandShake.$setUntouched();
+        //     $scope.formHandShake.$setPristine();
+        // }
+
+        // $scope.ResetModel2 = function() {
+        //     $scope.modelSearch = {
+        //         FromDate: '',
+        //         ToDate: '',
+        //         DeviceId: '',
+        //     };
+        //     $scope.flag = false;
+        //     $scope.flaglink = 2;
+        // }
+
+        // $scope.ResetSearch = function() {
+        //     if ($scope.flaglink == 1) {
+        //         $scope.ResetModel1();
+        //         $('#HandShakeLog').dataTable()._fnPageChange(0);
+        //         $('#HandShakeLog').dataTable()._fnAjaxUpdate();
+        //         // $("#HandShakeLog").remove();
+        //         // GetAllDynamicHandShake(true);
+        //     } else if ($scope.flaglink == 2) {
+        //         $scope.ResetModel2();
+        //         GetAllGpsData(true);
+        //     }
+        // }
 
         $scope.toggle = function() {
             if (!$scope.flgforIcon) {
@@ -407,7 +442,7 @@
                 vm.dtInstanceDevice.DataTable.search(Search).draw();
             } else if ($scope.flaglink == 1) {
                 console.log("!...............1")
-                GetAllDynamicHandShake(true);
+                $scope.GetAllDynamicHandShake(true);
             } else if ($scope.flaglink == 2) {
                 console.log("!...............2")
                 GetAllGpsData(true);
