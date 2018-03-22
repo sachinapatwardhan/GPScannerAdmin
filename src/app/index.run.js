@@ -15,8 +15,8 @@
                 $http.defaults.headers.common['Authorization'] = token;
             };
         }
-        // $rootScope.RoutePath = "http://localhost:7212/";
-        // $rootScope.Socket_URL = "http://localhost:7212";
+        $rootScope.RoutePath = "http://localhost:7212/";
+        $rootScope.Socket_URL = "http://localhost:7212";
 
         // $rootScope.RoutePath = "http://192.168.1.53:7212/";
         // $rootScope.Socket_URL = "http://192.168.1.53:7212";
@@ -27,8 +27,8 @@
         // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
         // $rootScope.RoutePath = "http://api.maark.my:7212/";
         // $rootScope.Socket_URL = "http://api.maark.my:7212";
-        $rootScope.RoutePath = "http://uatapi.maark.my/";
-        $rootScope.Socket_URL = "http://uatapi.maark.my";
+        // $rootScope.RoutePath = "http://uatapi.maark.my/";
+        // $rootScope.Socket_URL = "http://uatapi.maark.my";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
         var x = new Date();
@@ -835,6 +835,19 @@
                                 });
                             }
 
+                            var DeviceAccValue = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Device Acc';
+                            });
+                            if (DeviceAccValue.length > 0) {
+                                var MenuName = $rootScope.AppName + '.Device Acc';
+                                msNavigationService.saveItem(MenuName, {
+                                    // msNavigationService.saveItem('Maark.Logs', {
+                                    title: 'Device Acc',
+                                    state: 'app.deviceaccvalue',
+                                    order: DeviceAccValue[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
                             // ------------------------------Main module----------------------------------
                             if (lstGPSDelete.length > 0 || lstManageCustomer.length > 0 || lstVehicleLastUse.length > 0 ||
                                 lstVehicle.length > 0 || gps.length > 0 || Alarm.length > 0 || CanBusData.length > 0 ||

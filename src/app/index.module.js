@@ -71,6 +71,7 @@
             'app.SharedVehicle',
             'app.EmailSetting',
             // 'app.AssignRetailer',
-            'app.AssignLicence'
+            'app.AssignLicence',
+            'app.deviceaccvalue',
         ]);
 })();
