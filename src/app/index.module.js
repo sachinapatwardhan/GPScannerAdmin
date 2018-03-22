@@ -69,6 +69,8 @@
             'app.GPSDeleteData',
             'app.userfeedback',
             'app.SharedVehicle',
-            'app.EmailSetting'
+            'app.EmailSetting',
+            // 'app.AssignRetailer',
+            'app.AssignLicence'
         ]);
 })();

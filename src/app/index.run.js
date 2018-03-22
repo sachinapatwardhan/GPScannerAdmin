@@ -519,6 +519,33 @@
                                 });
                             }
 
+
+                            // Assign Licence to device
+                            var lstAssignLicence = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Assign Licence';
+                            });
+                            if (lstAssignLicence.length > 0) {
+                                msNavigationService.saveItem('Settings.Assign Licence', {
+                                    title: 'Assign Licence',
+                                    state: 'app.AssignLicence',
+                                    order: lstAssignLicence[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            // Assign Retailer to Sales Angent
+                            // var lstAssignRetailer = _.filter(lstAllPages, function(obj) {
+                            //     return obj.tblmodulemgmt.Module == 'Assign Retailer';
+                            // });
+                            // if (lstAssignRetailer.length > 0) {
+                            //     msNavigationService.saveItem('Settings.Assign Retailer', {
+                            //         title: 'Assign Retailer',
+                            //         state: 'app.AssignRetailer',
+                            //         order: lstAssignRetailer[0].tblmodulemgmt.DisplayOrder,
+                            //         weight: 1
+                            //     });
+                            // }
+
                             //VehicleType
                             var lstVehicleType = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Vehicle Type';
@@ -843,7 +870,9 @@
 
                             if (lstCountryStateCity.length > 0 || lstTrackers.length > 0 || SIM.length > 0 || lstUtility.length > 0 ||
                                 lstTransferDevice.length > 0 || lstAssignDevice.length > 0 || lstVehicleMonitor.length > 0 || lstEmailSetting.length > 0 ||
-                                lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0 || lstUserFeedback.length) {
+                                lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0 || lstUserFeedback.length ||
+                                /* lstAssignRetailer.length > 0  ||*/
+                                lstAssignLicence.length > 0) {
                                 msNavigationService.saveItem('Settings', {
                                     title: 'Settings',
                                     icon: 'icon-cog',
