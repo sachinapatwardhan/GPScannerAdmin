@@ -108,6 +108,7 @@
                 DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('LicenceNo'),
                 DTColumnBuilder.newColumn('DeviceId'),
+                DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('email'),
                 DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
