@@ -110,7 +110,7 @@
                 DTColumnBuilder.newColumn('DeviceId'),
                 DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('email'),
-                DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat1),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
@@ -189,6 +189,13 @@
             }
         }
 
+        function dateFormat1(date) {
+            if (date != null) {
+                return moment(date).format('DD-MM-YYYY')
+            } else {
+                return '';
+            }
+        }
 
         function actionsHtml(data, type, full, meta) {
             var btns = '<div layout="row">'

@@ -144,7 +144,7 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="25">
                                 <label>Expiry Date</label>
-                                <input name="dStart" mdc-datetime-picker date="true" time="true" required type="text" id="time" format="DD-MM-YYYY hh:mm:ss a" ng-model="model.ExpiryDate">
+                                <input name="dStart" mdc-datetime-picker date="true" time="false" required type="text" id="time" format="DD-MM-YYYY" ng-model="model.ExpiryDate">
                                 <div ng-messages="formLicence.dStart.$error" ng-if="formLicence.dStart.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>Expiry Date field is required</span>
