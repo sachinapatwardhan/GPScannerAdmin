@@ -53,7 +53,13 @@
             $scope.model.IdUser = o.IdUser;
             $scope.model.LicenceNo = o.LicenceNo;
             $scope.model.DeviceId = o.DeviceId;
-            $scope.model.ExpiryDate = o.ExpiryDate;
+            if (o.ExpiryDate != null && o.ExpiryDate != undefined && o.ExpiryDate != '') {
+                $scope.model.ExpiryDate = new Date(o.ExpiryDate);
+            } else {
+                var ExpiryDate = new Date();
+                ExpiryDate.setFullYear(ExpiryDate.getFullYear() + 1);
+                $scope.model.ExpiryDate = ExpiryDate;
+            }
             $scope.GetUserById($scope.model.IdUser);
             // CreatedDate = o.CreatedDate;
             // ModifiedDate = o.ModifiedDat;
