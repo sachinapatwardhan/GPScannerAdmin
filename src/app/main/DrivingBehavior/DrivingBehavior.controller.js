@@ -11,10 +11,19 @@
         var vm = this;
         vm.searchTermDevice = '';
         $scope.init = function() {
+            var StartDate = new Date();
+            StartDate.setHours(0);
+            StartDate.setMinutes(0);
+            StartDate.setSeconds(0);
+
+            var EndDate = new Date();
+            EndDate.setHours(23);
+            EndDate.setMinutes(59);
+            EndDate.setSeconds(59);
             $scope.ModelSearch = {
-                DeviceId: 'All',
-                StartDate: '',
-                EndDate: '',
+                DeviceId: '',
+                StartDate: StartDate,
+                EndDate: EndDate,
             }
             $scope.Search = "";
             $scope.GetAllGpsDevice();
@@ -178,10 +187,19 @@
         }
 
         $scope.SearchReset = function() {
+            var StartDate = new Date();
+            StartDate.setHours(0);
+            StartDate.setMinutes(0);
+            StartDate.setSeconds(0);
+
+            var EndDate = new Date();
+            EndDate.setHours(23);
+            EndDate.setMinutes(59);
+            EndDate.setSeconds(59);
             $scope.ModelSearch = {
-                DeviceId: 'All',
-                StartDate: '',
-                EndDate: '',
+                DeviceId: '',
+                StartDate: StartDate,
+                EndDate: EndDate,
             }
             $scope.Search = "";
             $('#modelsearch').val("");
@@ -192,6 +210,34 @@
         $scope.Export = function() {
             window.location.href = $rootScope.RoutePath + "canbusdata/ExportAllDrivingData?DeviceId=" + $scope.ModelSearch.DeviceId + "&StartDate=" + $scope.ModelSearch.StartDate + "&EndDate=" + $scope.ModelSearch.EndDate + "&search=" + $scope.Search + "&idApp=" + $rootScope.appId + "&TimeZone=" + $rootScope.CurrentTimeZone;
         }
+
+        $scope.SearchReset = function() {
+            var StartDate = new Date();
+            StartDate.setHours(0);
+            StartDate.setMinutes(0);
+            StartDate.setSeconds(0);
+
+            var EndDate = new Date();
+            EndDate.setHours(23);
+            EndDate.setMinutes(59);
+            EndDate.setSeconds(59);
+
+            $scope.ModelSearch = {
+                DeviceId: '',
+                StartDate: StartDate,
+                EndDate: EndDate,
+            }
+            $scope.Search = "";
+            $scope.formdrivingdata.$setUntouched();
+            $scope.formdrivingdata.$setPristine();
+            // $("#gps").DataTable().destroy();
+            $('#Drivingdata').dataTable()._fnPageChange(0);
+            $('#Drivingdata').dataTable()._fnAjaxUpdate();
+            // $("#gps").remove();
+            $('#modelsearch').val("");
+            // $scope.GetAllGpsData(true);
+        }
+
         $scope.init();
     }
 

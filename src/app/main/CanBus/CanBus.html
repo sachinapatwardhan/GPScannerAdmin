@@ -7,16 +7,32 @@
                     <md-icon md-font-icon="icon-cube-outline"></md-icon>
                     <span translate="Canbus Data"> Canbus Data</span>
                 </div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>* DeviceId field required to search data</span>
+                    <!-- <b>{{lstDetail}}</b> -->
+                </div>
                 <!--<div class="product-count secondary-text" hide-xs>
                     <span>Total Employee :</span>
                     <b>{{lstDetail}}</b>
                 </div>-->
             </div>
+
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
-                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+                <form name="formcanbus" novalidate class="search" aria-invalid="false" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                    <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                    <!-- <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex> -->
+                    <input type="text" name="DeviceId" class="search-input" ng-model="ModelSearch.DeviceId" placeholder="Enter DeviceId *" required flex>
+                </form>
             </div>
             <div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
+                <md-button class="md-icon-button md-raised md-hue-2" ng-disabled="!formcanbus.$valid" ng-click="GetAllCanbusData(true)" aria-label="Search">
+                    <md-icon md-font-icon="icon-magnify"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()" aria-label="Reset Search">
+                    <md-icon md-font-icon="icon-refresh"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
+                </md-button>
                 <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
@@ -45,7 +61,7 @@
               <md-option ng-repeat="o in lstdevice track by $index" value="{{o.DeviceId}}">{{o.DeviceId}}</md-option>
             </md-select>
           </md-input-container> -->
-                    <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                    <!-- <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>Device Id</label>
                         <md-select Name="DeviceId" ng-model="ModelSearch.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllCanbusData(true)">
                             <md-select-header class="demo-select-header">
@@ -54,16 +70,16 @@
                             <md-option value="All">All</md-option>
                             <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstdevice| filter: searchDevice | orderBy : 'CreatedDate':true">{{o.DeviceId}}</md-option>
                         </md-select>
-                    </md-input-container>
+                    </md-input-container> -->
                     <div align="left">
-                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetAllCanbusData(true)" aria-label="Search">
+                        <!-- <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetAllCanbusData(true)" aria-label="Search">
                             <md-icon md-font-icon="icon-magnify"></md-icon>
                             <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
                         </md-button>
                         <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()" aria-label="Reset Search">
                             <md-icon md-font-icon="icon-refresh"></md-icon>
                             <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
-                        </md-button>
+                        </md-button> -->
                     </div>
                 </div>
             </div>
