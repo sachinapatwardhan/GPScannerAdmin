@@ -9,18 +9,25 @@
     function ImportGpsDeviceController($http, $cookieStore, $mdDialog, $mdToast, $scope, $rootScope, Tasks, event, Obj, lstCountry) {
         var vm = this;
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
+        $rootScope.AppName = localStorage.getItem('appName');
         $scope.init = function() {
             $scope.model = {
-                Type: '',
+                Type: 'MT05',
                 IsOldDevice: 0,
                 CountryId: null,
                 CreatedBy: $rootScope.UserName,
-                AppName: '',
+                AppName: $rootScope.AppName,
             };
+
+
             if ($rootScope.UserRoles == "Super Admin") {
                 $scope.flag = true;
             } else {
                 $scope.flag = false;
+            }
+
+            if ($rootScope.AppName == 'Tracking') {
+                $scope.model.Type = 'MT05';
             }
             $scope.GetAllAppName();
         }

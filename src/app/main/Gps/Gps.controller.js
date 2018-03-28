@@ -9,7 +9,9 @@
     function GpsController($http, $scope, $rootScope, $filter, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
-
+        $rootScope.appId = localStorage.getItem('appId');
+        $rootScope.AppName = localStorage.getItem('appName');
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
             var StartDate = new Date();
             StartDate.setHours(0);
@@ -29,9 +31,7 @@
             $scope.Search = "";
             $scope.searchDevice = "";
             // $scope.GetAllGpsDevice();
-            $rootScope.appId = localStorage.getItem('appId');
-            $rootScope.AppName = localStorage.getItem('appName');
-            $rootScope.UserRoles = $cookieStore.get('UserRoles');
+
         }
 
         $scope.GetSerch = function(Search) {
@@ -80,30 +80,57 @@
         //Dynamic Pagging
 
         $scope.FilterStatus = 1;
-        $scope.dtColumns = [
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
-            DTColumnBuilder.newColumn('DeviceId'),
-            DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
-            DTColumnBuilder.newColumn('Latitude'),
-            DTColumnBuilder.newColumn('Longitude'),
-            DTColumnBuilder.newColumn('GPSPositioning'),
-            DTColumnBuilder.newColumn('Speed'),
-            DTColumnBuilder.newColumn('Direction'),
-            DTColumnBuilder.newColumn('IsEngine').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('AD2').renderWith(voltageCalc),
-            DTColumnBuilder.newColumn('OdoMeter'),
-            DTColumnBuilder.newColumn('AD1'),
-            DTColumnBuilder.newColumn('AD2'),
-            DTColumnBuilder.newColumn('Altitude'),
-            DTColumnBuilder.newColumn('Status'),
-            DTColumnBuilder.newColumn('IsRelayToStopTheCar').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsSirenSound').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsLockTheDoor').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsUnlockTheDoor').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsSOS').renderWith(IsFlg),
-            DTColumnBuilder.newColumn('IsDoor').renderWith(IsFlg),
-            // DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
-        ]
+        if ($rootScope.AppName == 'Tracking') {
+            $scope.dtColumns = [
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('DeviceId'),
+                DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
+                DTColumnBuilder.newColumn('Latitude'),
+                DTColumnBuilder.newColumn('Longitude'),
+                DTColumnBuilder.newColumn('GPSPositioning'),
+                DTColumnBuilder.newColumn('Speed'),
+                DTColumnBuilder.newColumn('Direction'),
+                DTColumnBuilder.newColumn('IsEngine').renderWith(IsFlg),
+                // DTColumnBuilder.newColumn('AD2').renderWith(voltageCalc),
+                // DTColumnBuilder.newColumn('OdoMeter'),
+                // DTColumnBuilder.newColumn('AD1'),
+                // DTColumnBuilder.newColumn('AD2'),
+                DTColumnBuilder.newColumn('Altitude'),
+                DTColumnBuilder.newColumn('Status'),
+                // DTColumnBuilder.newColumn('IsRelayToStopTheCar').renderWith(IsFlg),
+                // DTColumnBuilder.newColumn('IsSirenSound').renderWith(IsFlg),
+                // DTColumnBuilder.newColumn('IsLockTheDoor').renderWith(IsFlg),
+                // DTColumnBuilder.newColumn('IsUnlockTheDoor').renderWith(IsFlg),
+                // DTColumnBuilder.newColumn('IsSOS').renderWith(IsFlg),
+                // DTColumnBuilder.newColumn('IsDoor').renderWith(IsFlg),
+                // DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
+            ]
+        } else {
+            $scope.dtColumns = [
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('DeviceId'),
+                DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
+                DTColumnBuilder.newColumn('Latitude'),
+                DTColumnBuilder.newColumn('Longitude'),
+                DTColumnBuilder.newColumn('GPSPositioning'),
+                DTColumnBuilder.newColumn('Speed'),
+                DTColumnBuilder.newColumn('Direction'),
+                DTColumnBuilder.newColumn('IsEngine').renderWith(IsFlg),
+                DTColumnBuilder.newColumn('AD2').renderWith(voltageCalc),
+                DTColumnBuilder.newColumn('OdoMeter'),
+                DTColumnBuilder.newColumn('AD1'),
+                DTColumnBuilder.newColumn('AD2'),
+                DTColumnBuilder.newColumn('Altitude'),
+                DTColumnBuilder.newColumn('Status'),
+                DTColumnBuilder.newColumn('IsRelayToStopTheCar').renderWith(IsFlg),
+                DTColumnBuilder.newColumn('IsSirenSound').renderWith(IsFlg),
+                DTColumnBuilder.newColumn('IsLockTheDoor').renderWith(IsFlg),
+                DTColumnBuilder.newColumn('IsUnlockTheDoor').renderWith(IsFlg),
+                DTColumnBuilder.newColumn('IsSOS').renderWith(IsFlg),
+                DTColumnBuilder.newColumn('IsDoor').renderWith(IsFlg),
+                // DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
+            ]
+        }
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "gpsdata/GetAllGpsDataNew",

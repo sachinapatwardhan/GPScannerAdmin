@@ -26,6 +26,7 @@
         $scope.reload = function() {
             $http.get($rootScope.RoutePath + "vehicles/GetAllVehicleById?id=" + idVehicle).then(function(data) {
                 $scope.model = data.data;
+                ModalMethod.ListUpdate(data.data);
             })
         }
 

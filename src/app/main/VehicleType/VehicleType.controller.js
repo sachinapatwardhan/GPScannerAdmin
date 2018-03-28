@@ -8,6 +8,10 @@
     /** @ngInject */
     function VehicleTypeController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         var vm = this;
+        $rootScope.AppName = localStorage.getItem('appName');
+        $scope.modelApp = {
+            AppName: $rootScope.AppName
+        }
         $scope.init = function() {
             $scope.model = {
                 id: 0,
@@ -62,198 +66,247 @@
         $scope.SaveVehicleType = function(o) {
             var flg = true;
             var Message = '';
-
-            if ($scope.OnIcon.length == 0 && $scope.myCroppedOnIcon == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Home On Icon is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else if ($scope.ActiveIcon.length == 0 && $scope.myCroppedActiveIcon == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Home Activate Icon is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else if ($scope.OffIcon.length == 0 && $scope.myCroppedOffIcon == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Home Off Icon is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else if ($scope.LocateOnIcon.length == 0 && $scope.myCroppedLocateOnIcon == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Locate On Icon is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else if ($scope.LocateOffIcon.length == 0 && $scope.myCroppedLocateOffIcon == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Locate Off Icon is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else if ($scope.LocateActiveIcon.length == 0 && $scope.myCroppedLocateActiveIcon == '') {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Locate Active Icon is Required')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else if (flg == false) {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent(Message)
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            } else {
-                var on_flg = true;
-                var active_flg = true;
-                var off_flg = true;
-                var locate_on_flg = true;
-                var locate_active_flg = true;
-                var locate_off_flg = true;
-                if ($scope.OnIcon.length > 0) {
-                    var image = new Image();
-                    image.src = $scope.OnIcon[0].lfDataUrl;
-
-                    image.onload = function() {
-                        var height = this.height;
-                        var width = this.width;
-                        if (height != 50 || width != 31) {
-                            // on_flg = false;
-                        }
-                    };
-                }
-                if ($scope.ActiveIcon.length > 0) {
-                    var Activeimage = new Image();
-                    Activeimage.src = $scope.ActiveIcon[0].lfDataUrl;
-
-                    Activeimage.onload = function() {
-                        var height = this.height;
-                        var width = this.width;
-                        if (height != 50 || width != 31) {
-                            // active_flg = false;
-                        }
-                    };
-                }
-                if ($scope.OffIcon.length > 0) {
-                    var Offimage = new Image();
-                    Offimage.src = $scope.OffIcon[0].lfDataUrl;
-
-                    Offimage.onload = function() {
-                        var height = this.height;
-                        var width = this.width;
-                        if (height != 50 || width != 31) {
-                            // off_flg = false;
-                        }
-                    };
-                }
-
-                setTimeout(function() {
-                    if (on_flg == false) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('please upload vehicle status Home On Icon 31x50 px Size image')
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    } else if (active_flg == false) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('please upload vehicle status Home active Icon 31x50 px Size image')
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    } else if (off_flg == false) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('please upload vehicle status Home Off Icon 31x50 px Size image')
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    } else if (locate_on_flg == false) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('please upload vehicle status Locate On Icon 31x50 px Size image')
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    } else if (locate_active_flg == false) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('please upload vehicle status Locate active Icon 31x50 px Size image')
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    } else if (locate_off_flg == false) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent('please upload vehicle status Locate Off Icon 31x50 px Size image')
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
+            if ($scope.modelApp.AppName == 'Tracking') {
+                $http.post($rootScope.RoutePath + "vehicletype/SaveVehicleType", o).then(function(data) {
+                    var id;
+                    if (o.id != 0) {
+                        id = o.id;
                     } else {
-                        $http.post($rootScope.RoutePath + "vehicletype/SaveVehicleType", o).then(function(data) {
-                            var id;
-                            if (o.id != 0) {
-                                id = o.id;
-                            } else {
-                                id = data.data.data[0].id;
+                        id = data.data.data[0].id;
+                    }
+
+
+                    if (data.data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.ResetModel();
+                        $scope.GetAllVehicleType(true);
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    }
+
+
+                })
+            } else {
+                if ($scope.OnIcon.length == 0 && $scope.myCroppedOnIcon == '') {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Home On Icon is Required')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else if ($scope.ActiveIcon.length == 0 && $scope.myCroppedActiveIcon == '') {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Home Activate Icon is Required')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else if ($scope.OffIcon.length == 0 && $scope.myCroppedOffIcon == '') {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Home Off Icon is Required')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else if ($scope.LocateOnIcon.length == 0 && $scope.myCroppedLocateOnIcon == '') {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Locate On Icon is Required')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else if ($scope.LocateOffIcon.length == 0 && $scope.myCroppedLocateOffIcon == '') {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Locate Off Icon is Required')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else if ($scope.LocateActiveIcon.length == 0 && $scope.myCroppedLocateActiveIcon == '') {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Locate Active Icon is Required')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else if (flg == false) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(Message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else {
+                    var on_flg = true;
+                    var active_flg = true;
+                    var off_flg = true;
+                    var locate_on_flg = true;
+                    var locate_active_flg = true;
+                    var locate_off_flg = true;
+                    if ($scope.OnIcon.length > 0) {
+                        var image = new Image();
+                        image.src = $scope.OnIcon[0].lfDataUrl;
+
+                        image.onload = function() {
+                            var height = this.height;
+                            var width = this.width;
+                            if (height != 50 || width != 31) {
+                                // on_flg = false;
                             }
+                        };
+                    }
+                    if ($scope.ActiveIcon.length > 0) {
+                        var Activeimage = new Image();
+                        Activeimage.src = $scope.ActiveIcon[0].lfDataUrl;
 
-                            if ($scope.OnIcon.length > 0 || $scope.ActiveIcon.length > 0 || $scope.OffIcon.length > 0 || $scope.LocateOnIcon.length > 0 || $scope.LocateActiveIcon.length > 0 || $scope.LocateOffIcon.length > 0) {
-                                var formData = new FormData();
-                                if ($scope.OnIcon.length > 0) {
+                        Activeimage.onload = function() {
+                            var height = this.height;
+                            var width = this.width;
+                            if (height != 50 || width != 31) {
+                                // active_flg = false;
+                            }
+                        };
+                    }
+                    if ($scope.OffIcon.length > 0) {
+                        var Offimage = new Image();
+                        Offimage.src = $scope.OffIcon[0].lfDataUrl;
 
-                                    angular.forEach($scope.OnIcon, function(obj) {
-                                        var Logo = id + ',' + 'OnIcon';
-                                        formData.append(Logo, obj.lfFile);
-                                    });
-                                }
-                                if ($scope.ActiveIcon.length > 0) {
-                                    angular.forEach($scope.ActiveIcon, function(obj) {
-                                        var logo2 = id + ',' + 'ActiveIcon';
-                                        formData.append(logo2, obj.lfFile);
-                                    });
-                                }
-                                if ($scope.OffIcon.length > 0) {
-                                    angular.forEach($scope.OffIcon, function(obj) {
-                                        var logo3 = id + ',' + 'OffIcon';
-                                        formData.append(logo3, obj.lfFile);
-                                    });
-                                }
-                                if ($scope.LocateOnIcon.length > 0) {
+                        Offimage.onload = function() {
+                            var height = this.height;
+                            var width = this.width;
+                            if (height != 50 || width != 31) {
+                                // off_flg = false;
+                            }
+                        };
+                    }
 
-                                    angular.forEach($scope.LocateOnIcon, function(obj) {
-                                        var Logo = id + ',' + 'LocateOnIcon';
-                                        formData.append(Logo, obj.lfFile);
-                                    });
+                    setTimeout(function() {
+                        if (on_flg == false) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('please upload vehicle status Home On Icon 31x50 px Size image')
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        } else if (active_flg == false) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('please upload vehicle status Home active Icon 31x50 px Size image')
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        } else if (off_flg == false) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('please upload vehicle status Home Off Icon 31x50 px Size image')
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        } else if (locate_on_flg == false) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('please upload vehicle status Locate On Icon 31x50 px Size image')
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        } else if (locate_active_flg == false) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('please upload vehicle status Locate active Icon 31x50 px Size image')
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        } else if (locate_off_flg == false) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent('please upload vehicle status Locate Off Icon 31x50 px Size image')
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        } else {
+                            $http.post($rootScope.RoutePath + "vehicletype/SaveVehicleType", o).then(function(data) {
+                                var id;
+                                if (o.id != 0) {
+                                    id = o.id;
+                                } else {
+                                    id = data.data.data[0].id;
                                 }
-                                if ($scope.LocateActiveIcon.length > 0) {
-                                    angular.forEach($scope.LocateActiveIcon, function(obj) {
-                                        var logo2 = id + ',' + 'LocateActiveIcon';
-                                        formData.append(logo2, obj.lfFile);
-                                    });
-                                }
-                                if ($scope.LocateOffIcon.length > 0) {
-                                    angular.forEach($scope.LocateOffIcon, function(obj) {
-                                        var logo3 = id + ',' + 'LocateOffIcon';
-                                        formData.append(logo3, obj.lfFile);
-                                    });
-                                }
-                                $http.post($rootScope.RoutePath + "vehicletype/uploadFile", formData, {
-                                    transformRequest: angular.identity,
-                                    headers: {
-                                        'Content-Type': undefined
+
+                                if ($scope.OnIcon.length > 0 || $scope.ActiveIcon.length > 0 || $scope.OffIcon.length > 0 || $scope.LocateOnIcon.length > 0 || $scope.LocateActiveIcon.length > 0 || $scope.LocateOffIcon.length > 0) {
+                                    var formData = new FormData();
+                                    if ($scope.OnIcon.length > 0) {
+
+                                        angular.forEach($scope.OnIcon, function(obj) {
+                                            var Logo = id + ',' + 'OnIcon';
+                                            formData.append(Logo, obj.lfFile);
+                                        });
                                     }
-                                }).then(function(data) {
+                                    if ($scope.ActiveIcon.length > 0) {
+                                        angular.forEach($scope.ActiveIcon, function(obj) {
+                                            var logo2 = id + ',' + 'ActiveIcon';
+                                            formData.append(logo2, obj.lfFile);
+                                        });
+                                    }
+                                    if ($scope.OffIcon.length > 0) {
+                                        angular.forEach($scope.OffIcon, function(obj) {
+                                            var logo3 = id + ',' + 'OffIcon';
+                                            formData.append(logo3, obj.lfFile);
+                                        });
+                                    }
+                                    if ($scope.LocateOnIcon.length > 0) {
+
+                                        angular.forEach($scope.LocateOnIcon, function(obj) {
+                                            var Logo = id + ',' + 'LocateOnIcon';
+                                            formData.append(Logo, obj.lfFile);
+                                        });
+                                    }
+                                    if ($scope.LocateActiveIcon.length > 0) {
+                                        angular.forEach($scope.LocateActiveIcon, function(obj) {
+                                            var logo2 = id + ',' + 'LocateActiveIcon';
+                                            formData.append(logo2, obj.lfFile);
+                                        });
+                                    }
+                                    if ($scope.LocateOffIcon.length > 0) {
+                                        angular.forEach($scope.LocateOffIcon, function(obj) {
+                                            var logo3 = id + ',' + 'LocateOffIcon';
+                                            formData.append(logo3, obj.lfFile);
+                                        });
+                                    }
+                                    $http.post($rootScope.RoutePath + "vehicletype/uploadFile", formData, {
+                                        transformRequest: angular.identity,
+                                        headers: {
+                                            'Content-Type': undefined
+                                        }
+                                    }).then(function(data) {
+                                        if (data.data.success == true) {
+                                            $mdToast.show(
+                                                $mdToast.simple()
+                                                .textContent(data.data.message)
+                                                .position('top right')
+                                                .hideDelay(3000)
+                                            );
+                                            $scope.ResetModel();
+                                            $scope.GetAllVehicleType(true);
+                                        } else {
+                                            $mdToast.show(
+                                                $mdToast.simple()
+                                                .textContent(data.data.message)
+                                                .position('top right')
+                                                .hideDelay(3000)
+                                            );
+                                        }
+                                    })
+                                } else {
                                     if (data.data.success == true) {
                                         $mdToast.show(
                                             $mdToast.simple()
@@ -271,32 +324,15 @@
                                             .hideDelay(3000)
                                         );
                                     }
-                                })
-                            } else {
-                                if (data.data.success == true) {
-                                    $mdToast.show(
-                                        $mdToast.simple()
-                                        .textContent(data.data.message)
-                                        .position('top right')
-                                        .hideDelay(3000)
-                                    );
-                                    $scope.ResetModel();
-                                    $scope.GetAllVehicleType(true);
-                                } else {
-                                    $mdToast.show(
-                                        $mdToast.simple()
-                                        .textContent(data.data.message)
-                                        .position('top right')
-                                        .hideDelay(3000)
-                                    );
                                 }
-                            }
 
-                        })
-                    }
-                }, 100);
+                            })
+                        }
+                    }, 100);
 
+                }
             }
+
         }
         $scope.editVehicleTypeId = function(id) {
             var o = _.findWhere($scope.lstVehicleType, {
@@ -483,13 +519,14 @@
             $scope.myCroppedActiveIcon = '';
             $scope.myCroppedOffIcon = '';
 
-            $scope.apiOnIcon.removeAll();
-            $scope.apiActiveIcon.removeAll();
-            $scope.apiOffIcon.removeAll();
-            $scope.apiLocateOnIcon.removeAll();
-            $scope.apiLocateActiveIcon.removeAll();
-            $scope.apiLocateOffIcon.removeAll();
-
+            if ($scope.modelApp.AppName != 'Tracking') {
+                $scope.apiOnIcon.removeAll();
+                $scope.apiActiveIcon.removeAll();
+                $scope.apiOffIcon.removeAll();
+                $scope.apiLocateOnIcon.removeAll();
+                $scope.apiLocateActiveIcon.removeAll();
+                $scope.apiLocateOffIcon.removeAll();
+            }
             $scope.flag = true;
             $scope.resetForm();
         }
@@ -517,13 +554,14 @@
             $scope.myCroppedLocateOnIcon = '';
             $scope.myCroppedLocateActiveIcon = '';
             $scope.myCroppedLocateOffIcon = '';
-
-            $scope.apiOnIcon.removeAll();
-            $scope.apiActiveIcon.removeAll();
-            $scope.apiOffIcon.removeAll();
-            $scope.apiLocateOnIcon.removeAll();
-            $scope.apiLocateActiveIcon.removeAll();
-            $scope.apiLocateOffIcon.removeAll();
+            if ($scope.modelApp.AppName != 'Tracking') {
+                $scope.apiOnIcon.removeAll();
+                $scope.apiActiveIcon.removeAll();
+                $scope.apiOffIcon.removeAll();
+                $scope.apiLocateOnIcon.removeAll();
+                $scope.apiLocateActiveIcon.removeAll();
+                $scope.apiLocateOffIcon.removeAll();
+            }
 
             $scope.flag = false;
             $scope.resetForm();

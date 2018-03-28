@@ -12,10 +12,10 @@
         <form Name="formImport" class="md-inline-form">
             <md-content class="md-padding">
                 <div layout-gt-sm="row">
-                    <md-input-container class="md-block" flex="50" flex-gt-sm="25">
+                    <md-input-container class="md-block" flex="50" flex-gt-sm="25" ng-if="model.AppName != 'Tracking'">
                         <label>Type </label>
                         <md-select ng-model="model.Type" name="Type">
-                            <md-option name="Type1" value="TK510" selected="true">TK510</md-option>
+                            <md-option name="Type1" value="TK510">TK510</md-option>
                             <md-option name="Type2" value="TK208">TK208</md-option>
                             <md-option name="Type3" value="TK228">TK228</md-option>
                             <md-option name="Type4" value="GT08">GT08</md-option>

@@ -38,6 +38,10 @@
                 idApp: $rootScope.idApp,
             };
 
+            if ($rootScope.AppName == 'Tracking') {
+                $scope.model.Type = 'MT05';
+            }
+
             $scope.GetAllCountry();
             // $scope.GetAlltelco();
             $scope.GetAllUserBySalesRole();
@@ -110,6 +114,10 @@
                 AppName: $rootScope.AppName,
                 idApp: $rootScope.idApp,
             };
+
+            if ($rootScope.AppName == 'Tracking') {
+                $scope.model.Type = 'MT05';
+            }
             $scope.Search = '';
             $scope.flagEdit = false;
             $scope.flag = false;
@@ -185,45 +193,84 @@
         //Dynamic Pagging
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
-
             $scope.FilterStatus = '';
             if ($rootScope.UserRoles == 'Super Admin') {
-                $scope.dtColumns = [
-                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
-                    DTColumnBuilder.newColumn('DeviceId'),
-                    DTColumnBuilder.newColumn('Type'),
-                    DTColumnBuilder.newColumn('IMEI'),
-                    DTColumnBuilder.newColumn('Version'),
-                    DTColumnBuilder.newColumn('SerialNum'),
-                    DTColumnBuilder.newColumn('PhoneNum'),
-                    DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
-                    DTColumnBuilder.newColumn('Country'),
-                    // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
-                    DTColumnBuilder.newColumn('AppName'),
-                    // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn('CreatedBy'),
-                    // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
-                ]
+                if ($rootScope.AppName == 'Tracking') {
+                    $scope.dtColumns = [
+                        DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                        DTColumnBuilder.newColumn('DeviceId'),
+
+                        DTColumnBuilder.newColumn('IMEI'),
+                        DTColumnBuilder.newColumn('Version'),
+                        // DTColumnBuilder.newColumn('SerialNum'),
+                        // DTColumnBuilder.newColumn('PhoneNum'),
+                        // DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                        DTColumnBuilder.newColumn('Country'),
+                        // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
+                        DTColumnBuilder.newColumn('AppName'),
+                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedBy'),
+                        // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                    ]
+                } else {
+                    $scope.dtColumns = [
+                        DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                        DTColumnBuilder.newColumn('DeviceId'),
+                        DTColumnBuilder.newColumn('Type'),
+                        DTColumnBuilder.newColumn('IMEI'),
+                        DTColumnBuilder.newColumn('Version'),
+                        DTColumnBuilder.newColumn('SerialNum'),
+                        DTColumnBuilder.newColumn('PhoneNum'),
+                        DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                        DTColumnBuilder.newColumn('Country'),
+                        // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
+                        DTColumnBuilder.newColumn('AppName'),
+                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedBy'),
+                        // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                    ]
+                }
             } else {
-                $scope.dtColumns1 = [
-                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
-                    DTColumnBuilder.newColumn('DeviceId'),
-                    DTColumnBuilder.newColumn('Type'),
-                    DTColumnBuilder.newColumn('IMEI'),
-                    DTColumnBuilder.newColumn('Version'),
-                    DTColumnBuilder.newColumn('SerialNum'),
-                    DTColumnBuilder.newColumn('PhoneNum'),
-                    DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
-                    DTColumnBuilder.newColumn('Country'),
-                    // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
-                    // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn('CreatedBy'),
-                    // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
-                ]
+                if ($rootScope.AppName == 'Tracking') {
+                    $scope.dtColumns1 = [
+                        DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                        DTColumnBuilder.newColumn('DeviceId'),
+                        DTColumnBuilder.newColumn('IMEI'),
+                        DTColumnBuilder.newColumn('Version'),
+                        // DTColumnBuilder.newColumn('SerialNum'),
+                        // DTColumnBuilder.newColumn('PhoneNum'),
+                        // DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                        DTColumnBuilder.newColumn('Country'),
+                        // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
+                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedBy'),
+                        // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                    ]
+                } else {
+                    $scope.dtColumns1 = [
+                        DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                        DTColumnBuilder.newColumn('DeviceId'),
+                        DTColumnBuilder.newColumn('Type'),
+                        DTColumnBuilder.newColumn('IMEI'),
+                        DTColumnBuilder.newColumn('Version'),
+                        DTColumnBuilder.newColumn('SerialNum'),
+                        DTColumnBuilder.newColumn('PhoneNum'),
+                        DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                        DTColumnBuilder.newColumn('Country'),
+                        // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
+                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedBy'),
+                        // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                    ]
+                }
             }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -248,7 +295,7 @@
                 },
                 type: "get",
                 dataSrc: function(json) {
-                    console.log(json.data);
+                    // console.log(json.data);
                     if (json.success != false) {
                         for (var i = 0; i < json.data.length; i++) {
                             if (json.data[i].Type === 'M2-U') {
@@ -268,7 +315,7 @@
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
-                .withOption('aaSorting', [10, 'desc'])
+                .withOption('aaSorting', [0, 'desc'])
                 .withOption('responsive', true)
                 .withOption('autoWidth', true)
                 // .withOption('deferRender', true)
@@ -368,7 +415,11 @@
         };
         $scope.formsubmit = false;
         $scope.CreateGpsDevice = function(o, form) {
-            o.AppName = _.findWhere($scope.lstAppInfo, { id: parseInt(o.idApp) }).AppName;
+            if ($rootScope.UserRoles == 'Super Admin') {
+                o.AppName = _.findWhere($scope.lstAppInfo, { id: parseInt(o.idApp) }).AppName;
+            } else {
+                o.AppName = $rootScope.AppName;
+            }
             if (form.$invalid) {
                 $scope.formsubmit = true;
             } else {
@@ -572,6 +623,10 @@
                 AppName: $rootScope.AppName,
                 idApp: $rootScope.idApp,
             };
+
+            if ($rootScope.AppName == 'Tracking') {
+                $scope.model.Type = 'MT05';
+            }
             $scope.resetForm();
         }
 

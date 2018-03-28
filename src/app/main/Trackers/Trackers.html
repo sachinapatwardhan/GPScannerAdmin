@@ -52,7 +52,7 @@
                                     <span class="column-title">Device Id</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
                                     <span class="column-title">Type</span>
                                 </div>
@@ -67,18 +67,18 @@
                                     <span class="column-title">Version</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
                                     <span class="column-title">SIM Serial Number</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
                                     <span class="column-title">SIM Phone Number</span>
                                 </div>
                             </th>
 
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
                                     <span class="column-title">Tel Company</span>
                                 </div>
@@ -143,7 +143,7 @@
                                     <span class="column-title">Device Id</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
                                     <span class="column-title">Type</span>
                                 </div>
@@ -158,17 +158,17 @@
                                     <span class="column-title">Version</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
                                     <span class="column-title">SIM Serial Number</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
                                     <span class="column-title">SIM Phone Number</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
                                     <span class="column-title">Tel Company</span>
                                 </div>
@@ -269,7 +269,7 @@
                                     </div>
                                 </div>
                             </md-input-container>-->
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName != 'Tracking'">
                                 <label>Type</label>
                                 <md-select ng-model="model.Type" name="Type" required>
                                     <md-option name="Type1" value="TK510" selected="true">TK510</md-option>
@@ -303,7 +303,7 @@
                                     </div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName != 'Tracking'">
                                 <label>Sales Agent</label>
                                 <md-select Name="idSalesAgent" ng-model="model.idSalesAgent" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
                                     <md-select-header class="demo-select-header">
@@ -341,7 +341,7 @@
                                     </div>
                                 </div>
                             </md-input-container>-->
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName != 'Tracking'">
                                 <label>SIM Serial Number</label>
                                 <md-select Name="idSim" ng-model="model.idSim" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
                                     <md-select-header class="demo-select-header">

@@ -29,6 +29,10 @@
         // $rootScope.Socket_URL = "http://api.maark.my:7212";
         // $rootScope.RoutePath = "http://uatapi.maark.my/";
         // $rootScope.Socket_URL = "http://uatapi.maark.my";
+        // $rootScope.RoutePath = "http://api.itcdtracking.com/";
+        // $rootScope.Socket_URL = "http://api.itcdtracking.com:7212";
+        // $rootScope.RoutePath = "http://trackoxapi.themaark.in/";
+        // $rootScope.Socket_URL = "http://13.126.112.254:7212";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
         var x = new Date();
@@ -38,7 +42,8 @@
         // $rootScope.appName = 'Maark';
 
         var url = $window.location.protocol + "//" + $window.location.host + "/";
-        // var url = "http://192.168.1.50:3000/"
+        // var url = "http://admin.itcdtracking.com/"
+        // var url = "http://admin.trackox.com/";
 
         var params = {
             AdminUrl: url,

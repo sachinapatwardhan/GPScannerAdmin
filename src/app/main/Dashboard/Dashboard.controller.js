@@ -166,7 +166,7 @@
                 // var MethodCallFlag = true;
 
                 var FoundLocation = 0;
-                $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBike?idApp=' + $rootScope.appId).success(function(data) {
+                $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBikeNew?AppName=' + $scope.AppName).success(function(data) {
                     $scope.lstActiveVehicle = data.data;
                     callDeviceStatus();
                     for (var i = 0; i < $scope.lstActiveVehicle.length; i++) {

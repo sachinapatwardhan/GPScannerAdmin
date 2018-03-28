@@ -9,7 +9,13 @@
     function VehiclesController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
         var vm = this;
+        vm.ListUpdate = ListUpdate;
         vm.GetAllDynamicVehicles = GetAllDynamicVehicles;
+        $scope.ShowDtl = false;
+        $rootScope.AppName = localStorage.getItem('appName');
+        $scope.modelApp = {
+            AppName: $rootScope.AppName
+        }
         vm.Reset = Reset;
         var pendingSearch = angular.noop;
         $scope.flgValidation = true;
@@ -44,6 +50,8 @@
                 idType: null,
             };
             $scope.modelUpdateDate = { renewaldate: null, id: '' };
+
+
 
             $scope.modelSearch = {
                 EndDate: null,
@@ -177,7 +185,11 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            $scope.dtInstance.reloadData(callback, resetPaging);
+            if ($scope.modelApp.AppName == 'Tracking') {
+                vm.dtInstance1.reloadData(callback, resetPaging);
+            } else {
+                vm.dtInstance.reloadData(callback, resetPaging);
+            }
             $('#VehicleDetail').dataTable()._fnAjaxUpdate();
         }
 
@@ -216,19 +228,32 @@
 
             $scope.FilterStatus = '';
 
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
-                DTColumnBuilder.newColumn('username'),
-                DTColumnBuilder.newColumn('Name'),
-                DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
-                DTColumnBuilder.newColumn('DeviceType'),
-                DTColumnBuilder.newColumn('Type'),
-                DTColumnBuilder.newColumn('Displyrenewaldate').renderWith(ExpirydateFormat),
-                DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
-                DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
-            ]
-
+            if ($rootScope.AppName == 'Tracking') {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('username'),
+                    DTColumnBuilder.newColumn('Name'),
+                    DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
+                    DTColumnBuilder.newColumn('Type'),
+                    DTColumnBuilder.newColumn('Displyrenewaldate').renderWith(ExpirydateFormat),
+                    DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                ]
+            } else {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('username'),
+                    DTColumnBuilder.newColumn('Name'),
+                    DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
+                    DTColumnBuilder.newColumn('DeviceType'),
+                    DTColumnBuilder.newColumn('Type'),
+                    DTColumnBuilder.newColumn('Displyrenewaldate').renderWith(ExpirydateFormat),
+                    DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                ]
+            }
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "vehicles/GetAllDynamicVehicle",
                 data: function(d) {
@@ -276,7 +301,8 @@
                 // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
-        $scope.dtInstance = {};
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
 
         function DeviceIdHtml(data, type, full, meta) {
             if (data != null && data != '') {
@@ -335,11 +361,12 @@
                     '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
                     '</md-button>';
             }
-            btns += '<md-button class="edit-button md-icon-button" ng-click="OpenViewModel($event,' + data.id + ')">' +
-                '<md-icon md-font-icon="icon-cog" class="s18 brown-500-fg"></md-icon>' +
-                '<md-tooltip md-visible="" md-direction="">View Detail</md-tooltip>' +
-                '</md-button>';
-
+            if ($rootScope.AppName != "Tracking") {
+                btns += '<md-button class="edit-button md-icon-button" ng-click="OpenViewModel($event,' + data.id + ')">' +
+                    '<md-icon md-font-icon="icon-cog" class="s18 brown-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">View Detail</md-tooltip>' +
+                    '</md-button>';
+            }
             btns += '<md-button class="edit-button md-icon-button" ng-click="ShowModal($event,\'' + device + '\',\'' + data.Name + '\',\'' + data.IsOnline + '\')" aria-label="">' +
                 '<md-icon md-font-icon="icon-map-marker" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Location </md-tooltip>' +
                 '</md-button>';
@@ -558,6 +585,15 @@
                     objVehicle: o,
                 }
             });
+        }
+
+        function ListUpdate(obj) {
+            for (var i = 0; i < $scope.lstVehicledata.length; i++) {
+                if ($scope.lstVehicledata[i]['id'] == obj.id) {
+                    $scope.lstVehicledata[i] = obj;
+                    break;
+                }
+            }
         }
 
         $scope.ShowAlarmDetail = function(ev, id) {
