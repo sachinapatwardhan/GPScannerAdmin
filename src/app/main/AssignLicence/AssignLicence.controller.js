@@ -239,7 +239,7 @@
                     '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
                     '</md-button>';
             }
-            if (full.ExpiryDate != null && full.ExpiryDate != '') {
+            if (full.DeviceId != null && full.DeviceId != '') {
                 // var btn = "<div layout='row'>";
                 // btn += '<md-checkbox ng-model="checked[' + data + ']" ng-change="Select( ' + full.IsActive + ',' + full.id + ')" aria-label="Checkbox 1" class="md-primary"></md-checkbox>';
                 // btn += '</div>';
