@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -13,7 +13,7 @@
         var vm = this;
         var pendingSearch = angular.noop;
         // vm.GetAllLicenceDetail = GetAllLicenceDetail;
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.modelSearch = { Search: '' }
             $scope.model = {
                 Id: 0,
@@ -26,11 +26,11 @@
             $scope.selectedItem = null;
             $scope.flag = false;
         }
-        $scope.ResetModel = function() {
+        $scope.ResetModel = function () {
             $scope.Reset();
             $scope.flag = false;
         }
-        $scope.Reset = function() {
+        $scope.Reset = function () {
             $scope.modelSearch = { Search: '' }
             $scope.model = {
                 Id: 0,
@@ -46,7 +46,7 @@
             $scope.formLicence.$setPristine();
         }
 
-        $scope.EditLicence = function(Id) {
+        $scope.EditLicence = function (Id) {
             var o = _.findWhere($scope.lstLicence, { Id: Id })
             $scope.flag = true;
             $scope.model.Id = o.Id;
@@ -65,8 +65,8 @@
             // ModifiedDate = o.ModifiedDat;
         }
 
-        $scope.GetUserById = function(id) {
-            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function(data) {
+        $scope.GetUserById = function (id) {
+            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function (data) {
                 if (data.data.success == true) {
                     $scope.objUser = data.data.data;
                     $scope.selectedItem = $scope.objUser;
@@ -74,13 +74,13 @@
             })
         }
 
-        $scope.GetUserByName = function(query) {
+        $scope.GetUserByName = function (query) {
             var params = {
-                    UserName: query,
-                    appId: localStorage.getItem('appId'),
-                }
-                // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
-            $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function(data) {
+                UserName: query,
+                appId: localStorage.getItem('appId'),
+            }
+            // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -92,7 +92,7 @@
         }
 
         $scope.flgErrorNotFound = 1;
-        $scope.selectedItemChange = function(q) {
+        $scope.selectedItemChange = function (q) {
             if (q != null && q != undefined) {
                 $scope.model.IdUser = q.id;
                 $scope.flgErrorNotFound = 0;
@@ -102,7 +102,7 @@
             };
         }
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.FilterStatus = 1;
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
@@ -117,25 +117,25 @@
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "licence/GetAllLicence",
-                    data: function(d) {
-                        if ($scope.modelSearch.Search == '') {
-                            d.search = '';
-                        } else {
-                            d.search = $scope.modelSearch.Search;
-                        }
-                        return d;
-                    },
-                    type: "get",
-                    dataSrc: function(json) {
-                        if (json.success != false) {
-                            $scope.lstLicence = json.data;
-                            return json.data;
-                        } else {
-                            return [];
-                        }
-                    },
-                })
+                url: $rootScope.RoutePath + "licence/GetAllLicence",
+                data: function (d) {
+                    if ($scope.modelSearch.Search == '') {
+                        d.search = '';
+                    } else {
+                        d.search = $scope.modelSearch.Search;
+                    }
+                    return d;
+                },
+                type: "get",
+                dataSrc: function (json) {
+                    if (json.success != false) {
+                        $scope.lstLicence = json.data;
+                        return json.data;
+                    } else {
+                        return [];
+                    }
+                },
+            })
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
@@ -150,9 +150,9 @@
         });
         $scope.dtInstance = {};
 
-        $scope.reloadData = function() {}
+        $scope.reloadData = function () { }
 
-        function callback(json) {}
+        function callback(json) { }
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -212,11 +212,22 @@
                     '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
                     '</md-button>';
             }
+            if (full.ExpiryDate != null && full.ExpiryDate != '') {
+                // var btn = "<div layout='row'>";
+                // btn += '<md-checkbox ng-model="checked[' + data + ']" ng-change="Select( ' + full.IsActive + ',' + full.id + ')" aria-label="Checkbox 1" class="md-primary"></md-checkbox>';
+                // btn += '</div>';
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="renewal(' + full.Id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-upload"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Renew</md-tooltip>' +
+                    '</md-button>';
+            }
+            
+
             btns += '</div>'
             return btns;
         };
 
-        vm.GetAllLicenceDetail = function(IsUpdate) {
+        vm.GetAllLicenceDetail = function (IsUpdate) {
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
@@ -226,56 +237,27 @@
             $('#LicenceDetail').dataTable()._fnAjaxUpdate();
         }
 
-        $scope.GetSerch = function(Search) {
+        $scope.GetSerch = function (Search) {
             vm.GetAllLicenceDetail(true)
         };
         //--------------------------------------------------------------------------
 
-        $scope.SaveLicence = function(o) {
-            $http.get($rootScope.RoutePath + "licence/SaveLicenceDetail", { params: o }).then(function(data) {
-                if (data.data.success == true) {
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
-                    );
-                    $scope.ResetModel();
-                    vm.GetAllLicenceDetail(true);
-                } else {
-                    if (data.data.data == 'TOKEN') {
-                        $rootScope.logout();
-                    } else {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                    };
-
-                }
-            });
-        }
-
-        $scope.DeleteLicence = function(Id) {
+        $scope.renewal = function (id) {
             var confirm = $mdDialog.confirm()
-                .title('Are you sure to Delete this Licence ?')
+                .title('Are you sure to update this Licence ?')
                 .ok('Ok')
                 .cancel('Cancel')
-            $mdDialog.show(confirm).then(function() {
+            $mdDialog.show(confirm).then(function () {
                 var params = {
-                    Id: Id
+                    id: id
                 };
-                $http.get($rootScope.RoutePath + "licence/DeleteDeviceLicence", {
-                    params: params
-                }).success(function(data) {
-                    if (data.success == true) {
+                $http.get($rootScope.RoutePath + "licence/changestatusrenewal", { params: params }).then(function (data) {
+                    if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.ResetModel();
                         vm.GetAllLicenceDetail(true);
@@ -285,9 +267,74 @@
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                        };
+
+                    }
+                })
+            })
+        }
+
+        $scope.SaveLicence = function (o) {
+            $http.get($rootScope.RoutePath + "licence/SaveLicenceDetail", { params: o }).then(function (data) {
+                if (data.data.success == true) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                    );
+                    $scope.ResetModel();
+                    vm.GetAllLicenceDetail(true);
+                } else {
+                    if (data.data.data == 'TOKEN') {
+                        $rootScope.logout();
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                        );
+                    };
+
+                }
+            });
+        }
+
+        $scope.DeleteLicence = function (Id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure to Delete this Licence ?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function () {
+                var params = {
+                    Id: Id
+                };
+                $http.get($rootScope.RoutePath + "licence/DeleteDeviceLicence", {
+                    params: params
+                }).success(function (data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
                                 .textContent(data.message)
                                 .position('top right')
                                 .hideDelay(3000)
+                        );
+                        $scope.ResetModel();
+                        vm.GetAllLicenceDetail(true);
+                    } else {
+                        if (data.data.data == 'TOKEN') {
+                            $rootScope.logout();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                         }
                     }
