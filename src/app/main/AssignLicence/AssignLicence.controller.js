@@ -115,7 +115,7 @@
                 DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('email'),
                 DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat1),
-                DTColumnBuilder.newColumn(null).renderWith(daysHtml),
+                DTColumnBuilder.newColumn('ExpiryDate').renderWith(daysHtml),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
@@ -137,13 +137,6 @@
                 type: "get",
                 dataSrc: function (json) {
                     if (json.success != false) {
-                        // $scope.lstLicence = json.data;
-                        // for (var i = 0; i < $scope.lstLicence.length; i++) {
-                        //     var newdate = $scope.lstLicence[i].Date * 1000;
-                        //     var timeDiff = (new Date()).getTime() - (new Date($scope.lstdata[i].Date * 1000)).getTime();
-                        //     var diffDays = Math.round(timeDiff / (1000 * 3600 * 24));
-                        //     $scope.lstdata[i].Days = diffDays + ' days';
-                        // }
                         $scope.lstLicence = json.data;
                         console.log(json)
                         return json.data;
