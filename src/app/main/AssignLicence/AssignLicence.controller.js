@@ -23,6 +23,10 @@
                 ExpiryDate: null,
 
             }
+            $scope.ModelSearch = {
+                StartDate: '',
+                EndDate: '',
+            }
             $scope.selectedItem = null;
             $scope.flag = false;
         }
@@ -111,6 +115,7 @@
                 DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('email'),
                 DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat1),
+                DTColumnBuilder.newColumn(null).renderWith(daysHtml),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
@@ -124,12 +129,23 @@
                     } else {
                         d.search = $scope.modelSearch.Search;
                     }
+                    d.StartDate = $scope.ModelSearch.StartDate;
+                    d.EndDate = $scope.ModelSearch.EndDate;
+                    // console.log(d)
                     return d;
                 },
                 type: "get",
                 dataSrc: function (json) {
                     if (json.success != false) {
+                        // $scope.lstLicence = json.data;
+                        // for (var i = 0; i < $scope.lstLicence.length; i++) {
+                        //     var newdate = $scope.lstLicence[i].Date * 1000;
+                        //     var timeDiff = (new Date()).getTime() - (new Date($scope.lstdata[i].Date * 1000)).getTime();
+                        //     var diffDays = Math.round(timeDiff / (1000 * 3600 * 24));
+                        //     $scope.lstdata[i].Days = diffDays + ' days';
+                        // }
                         $scope.lstLicence = json.data;
+                        console.log(json)
                         return json.data;
                     } else {
                         return [];
@@ -162,6 +178,17 @@
 
         function NumberHtml(data, type, full, meta) {
             return (meta.row + 1);
+        }
+
+        function daysHtml(data, type, full, meta) {
+            var days = '';
+            if (full.ExpiryDate != null && full.ExpiryDate != '') {
+                var timeDiff =  (new Date(full.ExpiryDate)).getTime()-(new Date()).getTime() ;
+                var diffDays = Math.round(timeDiff / (1000 * 3600 * 24));
+                days = diffDays + ' days';
+              
+            }
+              return days;
         }
 
         function DrawDateFormatNumberHtml(data, type, full, meta) {
@@ -221,7 +248,7 @@
                     '<md-tooltip md-visible="" md-direction="">Renew</md-tooltip>' +
                     '</md-button>';
             }
-            
+
 
             btns += '</div>'
             return btns;
@@ -244,7 +271,7 @@
 
         $scope.renewal = function (id) {
             var confirm = $mdDialog.confirm()
-                .title('Are you sure to update this Licence ?')
+                .title('Are you sure you want to Renew This Licence ?')
                 .ok('Ok')
                 .cancel('Cancel')
             $mdDialog.show(confirm).then(function () {
@@ -341,6 +368,27 @@
                 });
             });
         };
+
+        $scope.toggle = function () {
+            if (!$scope.flgforIcon) {
+                $scope.flgforIcon = true;
+            } else {
+                $scope.flgforIcon = false;
+            }
+            $(function () {
+                $(".showBtn").toggleClass("active");
+                $(".ShowContentBox").slideToggle();
+            })
+        }
+
+        $scope.SearchReset = function () {
+            $scope.ModelSearch = {
+                StartDate: '',
+                EndDate: '',
+            }
+            vm.GetAllLicenceDetail(true);
+        }
+
 
 
         $scope.init();
