@@ -178,7 +178,8 @@
             // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
             .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
             .withOption('scrollY', 'auto');
-        $scope.dtInstance = {};
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
 
 
         //Reload Datatable
@@ -187,7 +188,11 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            $scope.dtInstance.reloadData(callback, resetPaging);
+            if ($rootScope.AppName == 'Tracking') {
+                vm.dtInstance1.reloadData(callback, resetPaging);
+            } else {
+                vm.dtInstance.reloadData(callback, resetPaging);
+            }
         }
 
         $scope.reloadData = function() {}
