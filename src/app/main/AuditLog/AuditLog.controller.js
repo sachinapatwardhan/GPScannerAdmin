@@ -59,6 +59,7 @@
                 if (json.success != false) {
                     $scope.$apply(function () {
                         $scope.lstdata = json.data;
+                        $scope.Totallog = json.recordsTotal;
                     })
                     return json.data;
                 } else {
