@@ -374,6 +374,20 @@
                                 });
                             }
 
+                            //Vehiclegroup
+                            var lstVehicleGroup = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Vehicle Group';
+                            });
+                            if (lstVehicleGroup.length > 0) {
+                                var MenuName = $rootScope.AppName + '.Vehicle Group';
+                                msNavigationService.saveItem(MenuName, {
+                                    // msNavigationService.saveItem('Maark.Vehicle', {
+                                    title: 'Vehicle Group',
+                                    state: 'app.VehicleGroup',
+                                    order: lstVehicleGroup[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
                             //gps
                             var gps = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Gps';
