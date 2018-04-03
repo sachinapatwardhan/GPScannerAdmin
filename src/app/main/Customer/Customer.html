@@ -210,6 +210,30 @@
                             </div>
                         </div>
                     </md-input-container>
+                    <md-input-container cflex="100" flex-gt-sm="50" flex-gt-md="33" ng-if="model.id == ''">
+                        <label>Password </label>
+                        <input name="password" type="password" ng-model="model.password" ng-required="true" md-maxlength="100">
+                        <div ng-messages="AddCustomerForm.password.$error" ng-if="AddCustomerForm.password.$touched">
+                            <div ng-message="required">
+                                <span>Password is required</span>
+                            </div>
+                            <div ng-message="md-maxlength">
+                                <span>Password is 100 char long</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33" ng-if="model.id == ''">
+                        <label>Confirm password </label>
+                        <input name="confirmpassword" type="password" ng-model="model.confirmpassword" ng-required="true" md-maxlength="100">
+                        <div ng-messages="AddCustomerForm.confirmpassword.$error" ng-if="AddCustomerForm.confirmpassword.$touched">
+                            <div ng-message="required">
+                                <span>Confirm password is required</span>
+                            </div>
+                            <div ng-message="md-maxlength">
+                                <span>Confirm password is 100 char long</span>
+                            </div>
+                        </div>
+                    </md-input-container>
                     <md-input-container flex="100" flex-gt-sm="100" flex-gt-md="33">
                         <label>Phone number</label>
                         <input type="text" name="Phone" ng-model="model.phone" placeholder="1234567890" ng-pattern='/^[+]*\d{2,4}[-]*\d{3,}[\s{1}]*\d{3,}$/' ng-maxlength="15">
@@ -247,7 +271,6 @@
                         </div>
                     </md-input-container>
                 </div>
-
                 <div align="center">
                     <md-button class="md-raised md-primary" ng-disabled="!AddCustomerForm.$valid" ng-click="CreateCustomer(model)">Save</md-button>
                     <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>

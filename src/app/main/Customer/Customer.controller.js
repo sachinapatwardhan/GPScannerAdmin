@@ -30,6 +30,8 @@
                 city: '',
                 gender: '',
                 image: '',
+                password: '',
+                confirmpassword: '',
                 IsMobileVerify: false,
                 idApp: $rootScope.appId,
             }
@@ -363,6 +365,17 @@
         }
         $scope.CreateCustomer = function(o) {
             o.roleId = _.where($scope.lstRoles, { RoleName: 'User' });
+            if (o.id == '') {
+                if (o.confirmpassword != o.password) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Password and Confirm Password does not match...')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                    return;
+                }
+            }
             $http.post($rootScope.RoutePath + "User/SaveCustomer", o).then(function(data) {
                 if (data.data.success == true) {
                     $mdToast.show(
@@ -493,6 +506,8 @@
                 city: '',
                 gender: '',
                 image: '',
+                password: '',
+                confirmpassword: '',
                 IsMobileVerify: false,
                 idApp: $rootScope.appId,
             }
@@ -523,6 +538,8 @@
                 city: '',
                 gender: '',
                 image: '',
+                password: '',
+                confirmpassword: '',
                 IsMobileVerify: false,
                 idApp: $rootScope.appId,
             }
