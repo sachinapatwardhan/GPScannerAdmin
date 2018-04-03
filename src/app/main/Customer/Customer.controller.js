@@ -12,23 +12,37 @@
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.init = function() {
-
+            $rootScope.appId = localStorage.getItem('appId');
+            $rootScope.AppName = localStorage.getItem('appName');
             $scope.model = {
                 id: '',
-                username: '',
                 email: '',
+                username: '',
                 phone: '',
+                createdby: 'Admin',
+                createddate: new Date(),
+                modifiedby: '',
+                modifieddate: null,
+                roleId: '',
+                userId: '',
                 country: '',
-                idApp: '',
+                state: '',
+                city: '',
+                gender: '',
+                image: '',
+                IsMobileVerify: false,
+                idApp: $rootScope.appId,
             }
+            $scope.clearSearchTerm();
             $scope.modelSearch = {
                 AppName: '',
                 country: '',
             }
-            $rootScope.appId = localStorage.getItem('appId');
-            $rootScope.AppName = localStorage.getItem('appName');
+
             // console.log($rootScope.appId);
+            $scope.flag = false;
             GetAllCountry();
+            $scope.GetAllRoles();
             $scope.GetAllInfoList();
         }
 
@@ -41,6 +55,13 @@
         function GetAllCountry() {
             $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
                 $scope.lstCountry = data.data;
+            });
+        }
+
+        $scope.GetAllRoles = function() {
+            // Data
+            $http.get($rootScope.RoutePath + "role/GetAllRole").then(function(data) {
+                $scope.lstRoles = data.data;
             });
         }
 
@@ -298,17 +319,25 @@
         }
 
         $scope.EditCustomer = function(id) {
-            var o = _.filter($scope.lstdata, { id: id })
+
+            var o = _.findWhere($scope.lstdata, { id: id });
+            for (var prop in $scope.model) {
+                $scope.model[prop] = o[prop];
+            }
+            $scope.model.createddate = o.CreatedDate;
+            $scope.model.modifieddate = new Date();
+            $scope.model.modifiedby = 'Admin';
             $scope.flag = true;
-            $scope.model.id = o[0].id;
-            $scope.model.username = o[0].username;
-            $scope.model.email = o[0].email;
-            $scope.model.phone = o[0].phone;
-            $scope.model.country = o[0].country;
-            $scope.model.idApp = o[0].idApp;
+            // $scope.model.id = o[0].id;
+            // $scope.model.username = o[0].username;
+            // $scope.model.email = o[0].email;
+            // $scope.model.phone = o[0].phone;
+            // $scope.model.country = o[0].country;
+            // $scope.model.idApp = o[0].idApp;
         }
 
         $scope.updateCustomer = function() {
+            $scope.model.idApp = $rootScope.idApp;
             $http.post($rootScope.RoutePath + "user/updateCustomer", $scope.model).success(function(data) {
                 if (data.success == true) {
                     $mdToast.show(
@@ -329,6 +358,37 @@
                 }
             })
         }
+        $scope.onSearchChange = function($event) {
+            $event.stopPropagation();
+        }
+        $scope.CreateCustomer = function(o) {
+            o.roleId = _.where($scope.lstRoles, { RoleName: 'User' });
+            $http.post($rootScope.RoutePath + "User/SaveCustomer", o).then(function(data) {
+                if (data.data.success == true) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                    $scope.resetForm();
+                    $scope.init();
+                    $scope.GetAllUser(true);
+                } else {
+                    if (data.data.data == 'TOKEN') {
+                        $rootScope.logout();
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                    };
+
+                }
+            });
+        };
 
 
         $scope.ResetPassword = function(ev, id) {
@@ -419,26 +479,67 @@
         $scope.ResetData = function() {
             $scope.model = {
                 id: '',
-                username: '',
                 email: '',
+                username: '',
                 phone: '',
+                createdby: 'Admin',
+                createddate: new Date(),
+                modifiedby: '',
+                modifieddate: null,
+                roleId: '',
+                userId: '',
                 country: '',
-                idApp: '',
+                state: '',
+                city: '',
+                gender: '',
+                image: '',
+                IsMobileVerify: false,
+                idApp: $rootScope.appId,
             }
+            $scope.clearSearchTerm();
             $scope.resetForm();
         }
-
+        $scope.clearSearchTerm = function() {
+            vm.searchTermidAppName = '';
+        }
         $scope.Reset = function() {
-            $scope.flag = false;
+            $rootScope.FlgAddedEditlocal = false;
+            if ($rootScope.FlgAddedAccess == true) {
+                $rootScope.FlgAddedEditlocal = true;
+            }
             $scope.model = {
                 id: '',
-                username: '',
                 email: '',
+                username: '',
                 phone: '',
+                createdby: 'Admin',
+                createddate: new Date(),
+                modifiedby: '',
+                modifieddate: null,
+                roleId: '',
+                userId: '',
                 country: '',
-                idApp: '',
+                state: '',
+                city: '',
+                gender: '',
+                image: '',
+                IsMobileVerify: false,
+                idApp: $rootScope.appId,
             }
+            $scope.flag = true;
+            $scope.clearSearchTerm();
             $scope.resetForm();
+
+        }
+
+        $scope.Cancel = function() {
+            $scope.ResetData();
+            $scope.flag = false;
+        }
+
+        $scope.resetForm = function() {
+            $scope.AddCustomerForm.$setUntouched();
+            $scope.AddCustomerForm.$setPristine();
 
         }
         $scope.SearchReset = function() {

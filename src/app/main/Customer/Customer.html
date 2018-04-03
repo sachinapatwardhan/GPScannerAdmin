@@ -18,6 +18,11 @@
             </div>
             <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
             </div>
+            <div ng-if="FlgAddedEditlocal">
+                <md-button class="md-raised md-background" ng-click="Reset()">
+                    <span translate="Add New Customer">Add New Customer</span>
+                </md-button>
+            </div>
             <!--<div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
                 <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
@@ -214,7 +219,7 @@
                         </div>
                     </md-input-container>
                     <md-input-container flex="100" flex-gt-sm="100" flex-gt-md="33">
-                        <label>Country name</label>
+                        <label>Country</label>
                         <md-select Name="country" ng-model="model.country" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
@@ -227,12 +232,26 @@
                             </div>
                         </div>
                     </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
+                        <label>App Name</label>
+                        <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                        </md-select>
+                        <div ng-messages="AddCustomerForm.AppName.$error" ng-if="AddCustomerForm.AppName.$touched" role="alert">
+                            <div ng-message="required">
+                                <span>App Name is required.</span>
+                            </div>
+                        </div>
+                    </md-input-container>
                 </div>
 
                 <div align="center">
-                    <md-button class="md-raised md-primary" ng-disabled="!AddCustomerForm.$valid" ng-click="updateCustomer(model)">Save</md-button>
+                    <md-button class="md-raised md-primary" ng-disabled="!AddCustomerForm.$valid" ng-click="CreateCustomer(model)">Save</md-button>
                     <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>
-                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                    <md-button class="md-raised md-warn" ng-click="Cancel()">Cancel</md-button>
                 </div>
         </div>
         </form>
