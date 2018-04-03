@@ -26,6 +26,8 @@
             $scope.selectedItem = null;
             $scope.Search = '';
             $scope.flag = false;
+            $scope.lstVehicleGroup = [];
+            $scope.lstVehicle = [];
             $rootScope.appId = localStorage.getItem('appId');
             $scope.clearSearchTerm();
         }
@@ -69,6 +71,8 @@
                 $scope.model.IdUser = '';
                 $scope.model.IdGroup = '';
                 $scope.model.idVehicle = '';
+                $scope.lstVehicleGroup = [];
+                $scope.lstVehicle = [];
                 $scope.flgErrorNotFound = 1;
             };
         }

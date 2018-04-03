@@ -124,6 +124,10 @@
                                     </md-select-header>
                                     <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicle |filter:vm.searchTermVehicle | orderBy: 'Name'">{{o.Name}}</md-option>
                                 </md-select>
+                                <div ng-messages="FormVehicleGroup.Vehicle.$error" ng-if="FormVehicleGroup.Vehicle.$touched">
+                                    <div ng-message="required">Please select Vehicle</div>
+                                </div>
+
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="model.id>0">
                                 <input type="text" value="{{VehicleName}}" ng-disabled="true">
@@ -136,6 +140,9 @@
                                     </md-select-header>
                                     <md-option ng-value="{{o.Id}}" ng-repeat="o in lstVehicleGroup |filter:vm.searchTermVehicleGroup | orderBy: 'GroupName'">{{o.GroupName}}</md-option>
                                 </md-select>
+                                <div ng-messages="FormVehicleGroup.GroupName.$error" ng-if="FormVehicleGroup.GroupName.$touched">
+                                    <div ng-message="required">Please select Vehicle Group</div>
+                                </div>
                             </md-input-container>
                             <input type="hidden" name="iduser" ng-model="model.IdUser" ng-required="true">
                             <div align="left">
