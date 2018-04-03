@@ -33,7 +33,7 @@
                 password: '',
                 confirmpassword: '',
                 IsMobileVerify: false,
-                idApp: $rootScope.appId,
+                idApp: parseInt($rootScope.appId),
             }
             $scope.clearSearchTerm();
             $scope.modelSearch = {
@@ -338,28 +338,28 @@
             // $scope.model.idApp = o[0].idApp;
         }
 
-        $scope.updateCustomer = function() {
-            $scope.model.idApp = $rootScope.idApp;
-            $http.post($rootScope.RoutePath + "user/updateCustomer", $scope.model).success(function(data) {
-                if (data.success == true) {
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(data.message)
-                        .position('top right')
-                        .hideDelay(3000)
-                    );
-                    $scope.GetAllUser(true);
-                    $scope.flag = false;
-                } else {
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(data.message)
-                        .position('top right')
-                        .hideDelay(3000)
-                    );
-                }
-            })
-        }
+        // $scope.updateCustomer = function() {
+        //     $scope.model.idApp = $rootScope.idApp;
+        //     $http.post($rootScope.RoutePath + "user/updateCustomer", $scope.model).success(function(data) {
+        //         if (data.success == true) {
+        //             $mdToast.show(
+        //                 $mdToast.simple()
+        //                 .textContent(data.message)
+        //                 .position('top right')
+        //                 .hideDelay(3000)
+        //             );
+        //             $scope.GetAllUser(true);
+        //             $scope.flag = false;
+        //         } else {
+        //             $mdToast.show(
+        //                 $mdToast.simple()
+        //                 .textContent(data.message)
+        //                 .position('top right')
+        //                 .hideDelay(3000)
+        //             );
+        //         }
+        //     })
+        // }
         $scope.onSearchChange = function($event) {
             $event.stopPropagation();
         }
@@ -509,7 +509,7 @@
                 password: '',
                 confirmpassword: '',
                 IsMobileVerify: false,
-                idApp: $rootScope.appId,
+                idApp: parseInt($rootScope.appId),
             }
             $scope.clearSearchTerm();
             $scope.resetForm();
@@ -541,7 +541,7 @@
                 password: '',
                 confirmpassword: '',
                 IsMobileVerify: false,
-                idApp: $rootScope.appId,
+                idApp: parseInt($rootScope.appId),
             }
             $scope.flag = true;
             $scope.clearSearchTerm();
