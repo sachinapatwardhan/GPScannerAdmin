@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function AppInfoController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
-
+        $rootScope.AppName = localStorage.getItem('appName');
         $scope.init = function() {
             $scope.model = {
                 Id: 0,

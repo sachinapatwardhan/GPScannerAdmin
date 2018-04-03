@@ -177,7 +177,7 @@
                                     </div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="33" ng-if="AppName!='Tracking'">
                                 <label>Licence Renewal Type</label>
                                 <md-select name="LicenceRenewalType" ng-model="model.LicenceRenewalType" ng-required="true">
                                     <md-option value="Monthly">Monthly</md-option>
@@ -190,7 +190,7 @@
                                     </div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="33" ng-if="AppName!='Tracking'">
                                 <label>Licence Type</label>
                                 <md-select name="LicenceType" ng-model="model.LicenceType" ng-required="true">
                                     <md-option value="Platform">Platform</md-option>
