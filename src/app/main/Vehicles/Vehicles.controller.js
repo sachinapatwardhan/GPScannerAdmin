@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function VehiclesController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
-
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
         var vm = this;
         vm.ListUpdate = ListUpdate;
         vm.GetAllDynamicVehicles = GetAllDynamicVehicles;
@@ -349,11 +349,12 @@
                     '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
                     '</md-button>';
-
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="EditDates(' + data.id + ',$event)" aria-label="">' +
-                    '<md-icon md-font-icon="icon-calendar-check-multiple" ></md-icon>' +
-                    '<md-tooltip md-visible="" md-direction="">Update Date</md-tooltip>' +
-                    '</md-button>';
+                if ($rootScope.UserRoles == 'Super Admin') {
+                    btns += '<md-button class="edit-button md-icon-button"  ng-click="EditDates(' + data.id + ',$event)" aria-label="">' +
+                        '<md-icon md-font-icon="icon-calendar-check-multiple" ></md-icon>' +
+                        '<md-tooltip md-visible="" md-direction="">Update Date</md-tooltip>' +
+                        '</md-button>';
+                }
             }
             if ($rootScope.FlgDeletedAccess) {
                 btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteVehicle(' + data.id + ',$event)">' +

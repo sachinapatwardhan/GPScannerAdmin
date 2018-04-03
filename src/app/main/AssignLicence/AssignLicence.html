@@ -24,13 +24,25 @@
             <div class="ShowContentBox">
                 <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
                 <div layout="row" layout-wrap>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-show="ModelSearch.days=='Date'">
                         <label>Start ExpiryDate</label>
                         <input mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="ModelSearch.EndDate" format="DD-MM-YYYY" ng-model="ModelSearch.StartDate">
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-show="ModelSearch.days=='Date'">
                         <label>End ExpiryDate</label>
                         <input mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="ModelSearch.StartDate" format="DD-MM-YYYY" ng-model="ModelSearch.EndDate">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="25" flex-gt-md="15">
+                        <label>Expiry Date</label>
+                        <md-select name="days" ng-model="ModelSearch.days" ng-change="ChangeSearchDate(ModelSearch.days)">
+                            <md-option value="-1">All</md-option>
+                            <md-option value="Week">By Week</md-option>
+                            <md-option value="Month">By Month</md-option>
+                            <md-option value="Quarter">By Quarter</md-option>
+                            <md-option value="Year">By Year</md-option>
+                            <md-option value="Date">By Date</md-option>
+                        </md-select>
+
                     </md-input-container>
                     <div align="left">
                         <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="vm.GetAllLicenceDetail(true)" aria-label="Search">
@@ -93,6 +105,16 @@
                                 <th class="secondary-text ">
                                     <div class="table-header ">
                                         <span class="column-title ">Days left</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Licence Type</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">App Name</span>
                                     </div>
                                 </th>
                                 <th class="secondary-text ">
@@ -169,6 +191,7 @@
                                     </div>
                                 </div>
                             </md-input-container>
+
                             <md-input-container class="md-block" flex="25">
                                 <label>Expiry Date</label>
                                 <input name="dStart" mdc-datetime-picker date="true" time="false" required type="text" id="time" format="DD-MM-YYYY" ng-model="model.ExpiryDate">

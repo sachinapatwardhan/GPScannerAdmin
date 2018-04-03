@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -13,7 +13,7 @@
         var vm = this;
         var pendingSearch = angular.noop;
         // vm.GetAllLicenceDetail = GetAllLicenceDetail;
-        $scope.init = function () {
+        $scope.init = function() {
             $scope.modelSearch = { Search: '' }
             $scope.model = {
                 Id: 0,
@@ -24,17 +24,18 @@
 
             }
             $scope.ModelSearch = {
+                days: '-1',
                 StartDate: '',
                 EndDate: '',
             }
             $scope.selectedItem = null;
             $scope.flag = false;
         }
-        $scope.ResetModel = function () {
+        $scope.ResetModel = function() {
             $scope.Reset();
             $scope.flag = false;
         }
-        $scope.Reset = function () {
+        $scope.Reset = function() {
             $scope.modelSearch = { Search: '' }
             $scope.model = {
                 Id: 0,
@@ -50,7 +51,7 @@
             $scope.formLicence.$setPristine();
         }
 
-        $scope.EditLicence = function (Id) {
+        $scope.EditLicence = function(Id) {
             var o = _.findWhere($scope.lstLicence, { Id: Id })
             $scope.flag = true;
             $scope.model.Id = o.Id;
@@ -69,8 +70,8 @@
             // ModifiedDate = o.ModifiedDat;
         }
 
-        $scope.GetUserById = function (id) {
-            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function (data) {
+        $scope.GetUserById = function(id) {
+            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function(data) {
                 if (data.data.success == true) {
                     $scope.objUser = data.data.data;
                     $scope.selectedItem = $scope.objUser;
@@ -78,13 +79,13 @@
             })
         }
 
-        $scope.GetUserByName = function (query) {
+        $scope.GetUserByName = function(query) {
             var params = {
-                UserName: query,
-                appId: localStorage.getItem('appId'),
-            }
-            // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
-            $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function (data) {
+                    UserName: query,
+                    appId: localStorage.getItem('appId'),
+                }
+                // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function(data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -96,7 +97,7 @@
         }
 
         $scope.flgErrorNotFound = 1;
-        $scope.selectedItemChange = function (q) {
+        $scope.selectedItemChange = function(q) {
             if (q != null && q != undefined) {
                 $scope.model.IdUser = q.id;
                 $scope.flgErrorNotFound = 0;
@@ -106,7 +107,7 @@
             };
         }
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
@@ -116,35 +117,52 @@
                 DTColumnBuilder.newColumn('email'),
                 DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat1),
                 DTColumnBuilder.newColumn('ExpiryDate').renderWith(daysHtml),
+                DTColumnBuilder.newColumn('LicenceType'),
+                DTColumnBuilder.newColumn('AppName'),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "licence/GetAllLicence",
-                data: function (d) {
-                    if ($scope.modelSearch.Search == '') {
-                        d.search = '';
-                    } else {
-                        d.search = $scope.modelSearch.Search;
-                    }
-                    d.StartDate = $scope.ModelSearch.StartDate;
-                    d.EndDate = $scope.ModelSearch.EndDate;
-                    // console.log(d)
-                    return d;
-                },
-                type: "get",
-                dataSrc: function (json) {
-                    if (json.success != false) {
-                        $scope.lstLicence = json.data;
-                        console.log(json)
-                        return json.data;
-                    } else {
-                        return [];
-                    }
-                },
-            })
+                    url: $rootScope.RoutePath + "licence/GetAllLicence",
+                    data: function(d) {
+
+                        if ($scope.modelSearch.Search == '') {
+                            d.search = '';
+                        } else {
+                            d.search = $scope.modelSearch.Search;
+                        }
+                        d.StartDate = $scope.ModelSearch.StartDate;
+
+                        if (d.StartDate != null && d.StartDate != undefined && d.StartDate != '') {
+                            d.StartDate.setHours(0);
+                            d.StartDate.setMinutes(0);
+                            d.StartDate.setSeconds(0);
+                        }
+                        d.EndDate = $scope.ModelSearch.EndDate;
+                        if (d.EndDate != null && d.EndDate != undefined && d.EndDate != '') {
+                            d.EndDate.setHours(0);
+                            d.EndDate.setMinutes(0);
+                            d.EndDate.setSeconds(0);
+                        }
+
+                        console.log(d.StartDate)
+                        console.log(d.EndDate)
+
+                        // console.log(d)
+                        return d;
+                    },
+                    type: "get",
+                    dataSrc: function(json) {
+                        if (json.success != false) {
+                            $scope.lstLicence = json.data;
+                            return json.data;
+                        } else {
+                            return [];
+                        }
+                    },
+                })
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
@@ -159,9 +177,9 @@
         });
         $scope.dtInstance = {};
 
-        $scope.reloadData = function () { }
+        $scope.reloadData = function() {}
 
-        function callback(json) { }
+        function callback(json) {}
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -176,12 +194,12 @@
         function daysHtml(data, type, full, meta) {
             var days = '';
             if (full.ExpiryDate != null && full.ExpiryDate != '') {
-                var timeDiff =  (new Date(full.ExpiryDate)).getTime()-(new Date()).getTime() ;
+                var timeDiff = (new Date(full.ExpiryDate)).getTime() - (new Date()).getTime();
                 var diffDays = Math.round(timeDiff / (1000 * 3600 * 24));
                 days = diffDays + ' days';
-              
+
             }
-              return days;
+            return days;
         }
 
         function DrawDateFormatNumberHtml(data, type, full, meta) {
@@ -247,37 +265,89 @@
             return btns;
         };
 
-        vm.GetAllLicenceDetail = function (IsUpdate) {
-            var resetPaging = false;
-            if (IsUpdate == true) {
-                resetPaging = true;
-            };
-            $scope.dtInstance.reloadData(callback, resetPaging);
-            $('#LicenceDetail').dataTable()._fnPageChange(0);
-            $('#LicenceDetail').dataTable()._fnAjaxUpdate();
+        vm.GetAllLicenceDetail = function(IsUpdate) {
+            if ($scope.ModelSearch.days == 'Date' && ($scope.ModelSearch.StartDate == null || $scope.ModelSearch.EndDate == null)) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent("Please select Date.")
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else {
+
+                var resetPaging = false;
+                if (IsUpdate == true) {
+                    resetPaging = true;
+                };
+                $scope.dtInstance.reloadData(callback, resetPaging);
+                $('#LicenceDetail').dataTable()._fnPageChange(0);
+                $('#LicenceDetail').dataTable()._fnAjaxUpdate();
+            }
         }
 
-        $scope.GetSerch = function (Search) {
+        $scope.GetSerch = function(Search) {
             vm.GetAllLicenceDetail(true)
         };
+
         //--------------------------------------------------------------------------
 
-        $scope.renewal = function (id) {
+        $scope.ChangeSearchDate = function(days) {
+            if (days == '-1') {
+                $scope.ModelSearch.StartDate = null;
+                $scope.ModelSearch.EndDate = null;
+            } else if (days == 'Date') {
+                $scope.ModelSearch.StartDate = null;
+                $scope.ModelSearch.EndDate = null;
+            } else if (days == 'Week') {
+                var StartDate = new Date();
+                var day = StartDate.getDay()
+                var diff = StartDate.getDate() - day;
+                StartDate = new Date(StartDate.setDate(diff));
+                var EndDate = new Date();
+                EndDate = new Date(EndDate.setDate(EndDate.getDate() - EndDate.getDay()));
+                EndDate.setDate(EndDate.getDate() + 7);
+                $scope.ModelSearch.StartDate = StartDate;
+                $scope.ModelSearch.EndDate = EndDate;
+            } else if (days == 'Month') {
+                var date = new Date();
+                var StartDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                var EndDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                $scope.ModelSearch.StartDate = StartDate;
+                $scope.ModelSearch.EndDate = EndDate;
+            } else if (days == 'Quarter') {
+                var date = new Date();
+                var StartDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                var EndDate = new Date(date.getFullYear(), date.getMonth() + 6, 0);
+                $scope.ModelSearch.StartDate = StartDate;
+                $scope.ModelSearch.EndDate = EndDate;
+            } else if (days == 'Year') {
+                var date = new Date();
+                var StartDate = new Date(date.getFullYear(), 1, 1);
+                var EndDate = new Date(date.getFullYear(), 12, 0);
+                $scope.ModelSearch.StartDate = StartDate;
+                $scope.ModelSearch.EndDate = EndDate;
+            }
+
+        }
+
+        $scope.renewal = function(id) {
+            var obj = _.findWhere($scope.lstLicence, { Id: id });
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to Renew This Licence ?')
                 .ok('Ok')
                 .cancel('Cancel')
-            $mdDialog.show(confirm).then(function () {
+            $mdDialog.show(confirm).then(function() {
                 var params = {
-                    id: id
+                    id: id,
+                    AppName: obj.AppName,
                 };
-                $http.get($rootScope.RoutePath + "licence/changestatusrenewal", { params: params }).then(function (data) {
+                $http.get($rootScope.RoutePath + "licence/changestatusrenewal", { params: params }).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                         );
                         $scope.ResetModel();
                         vm.GetAllLicenceDetail(true);
@@ -287,9 +357,9 @@
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                    .textContent(data.data.message)
-                                    .position('top right')
-                                    .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                             );
                         };
 
@@ -298,14 +368,14 @@
             })
         }
 
-        $scope.SaveLicence = function (o) {
-            $http.get($rootScope.RoutePath + "licence/SaveLicenceDetail", { params: o }).then(function (data) {
+        $scope.SaveLicence = function(o) {
+            $http.get($rootScope.RoutePath + "licence/SaveLicenceDetail", { params: o }).then(function(data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
                     );
                     $scope.ResetModel();
                     vm.GetAllLicenceDetail(true);
@@ -315,9 +385,9 @@
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                         );
                     };
 
@@ -325,24 +395,24 @@
             });
         }
 
-        $scope.DeleteLicence = function (Id) {
+        $scope.DeleteLicence = function(Id) {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure to Delete this Licence ?')
                 .ok('Ok')
                 .cancel('Cancel')
-            $mdDialog.show(confirm).then(function () {
+            $mdDialog.show(confirm).then(function() {
                 var params = {
                     Id: Id
                 };
                 $http.get($rootScope.RoutePath + "licence/DeleteDeviceLicence", {
                     params: params
-                }).success(function (data) {
+                }).success(function(data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                                .textContent(data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                         );
                         $scope.ResetModel();
                         vm.GetAllLicenceDetail(true);
@@ -352,9 +422,9 @@
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                    .textContent(data.message)
-                                    .position('top right')
-                                    .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                             );
                         }
                     }
@@ -362,20 +432,21 @@
             });
         };
 
-        $scope.toggle = function () {
+        $scope.toggle = function() {
             if (!$scope.flgforIcon) {
                 $scope.flgforIcon = true;
             } else {
                 $scope.flgforIcon = false;
             }
-            $(function () {
+            $(function() {
                 $(".showBtn").toggleClass("active");
                 $(".ShowContentBox").slideToggle();
             })
         }
 
-        $scope.SearchReset = function () {
+        $scope.SearchReset = function() {
             $scope.ModelSearch = {
+                days: '-1',
                 StartDate: '',
                 EndDate: '',
             }

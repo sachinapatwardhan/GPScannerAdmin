@@ -40,6 +40,17 @@
                                     <span class="column-title">Bundle Id</span>
                                 </div>
                             </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Licence Renewal Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Licence Type</span>
+                                </div>
+                            </th>
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">IOS Certificate</span>
@@ -161,6 +172,31 @@
                                 <label>Web App URL</label>
                                 <input type="text" name="WebAppUrl" ng-model="model.WebAppUrl" required>
                                 <div ng-messages="formAppInfo.WebAppUrl.$error" ng-if="formAppInfo.WebAppUrl.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>WebApp Url Id field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                <label>Licence Renewal Type</label>
+                                <md-select name="LicenceRenewalType" ng-model="model.LicenceRenewalType" ng-required="true">
+                                    <md-option value="Monthly">Monthly</md-option>
+                                    <md-option value="Quarterly">Quarterly</md-option>
+                                    <md-option value="Yearly">Yearly</md-option>
+                                </md-select>
+                                <div ng-messages="formAppInfo.LicenceRenewalType.$error" ng-if="formAppInfo.LicenceRenewalType.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Licence Renewal Type is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="33">
+                                <label>Licence Type</label>
+                                <md-select name="LicenceType" ng-model="model.LicenceType" ng-required="true">
+                                    <md-option value="Platform">Platform</md-option>
+                                    <md-option value="Platform + Sim">Platform + Sim</md-option>
+                                </md-select>
+                                <div ng-messages="formAppInfo.LicenceType.$error" ng-if="formAppInfo.LicenceType.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>WebApp Url Id field is required</span>
                                     </div>

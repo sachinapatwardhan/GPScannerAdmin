@@ -22,6 +22,8 @@
                 WebAppHeaderLogo: '',
                 AdminUrl: '',
                 WebAppUrl: '',
+                LicenceRenewalType: '-',
+                LicenceType: '',
             }
 
             $scope.FlgImage = '';
@@ -115,6 +117,8 @@
                 DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
                 DTColumnBuilder.newColumn('AppName'),
                 DTColumnBuilder.newColumn('BundleId'),
+                DTColumnBuilder.newColumn('LicenceRenewalType'),
+                DTColumnBuilder.newColumn('LicenceType'),
                 DTColumnBuilder.newColumn('IOSCertificate'),
                 DTColumnBuilder.newColumn('IOSKey'),
                 DTColumnBuilder.newColumn('AndroidId'),
@@ -233,6 +237,8 @@
             $scope.model.WebAppUrl = o.WebAppUrl;
             $scope.IOSC = o.IOSCertificate;
             $scope.IOSK = o.IOSKey;
+            $scope.model.LicenceRenewalType = o.LicenceRenewalType;
+            $scope.model.LicenceType = o.LicenceType;
             $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.ImageLogo; //$scope.AppLogo;
             if (o.ImageLogo != null && o.ImageLogo != '' && o.ImageLogo != undefined) {
                 $scope.FlgImage = 1;
@@ -523,6 +529,8 @@
                 WebAppHeaderLogo: '',
                 AdminUrl: '',
                 WebAppUrl: '',
+                LicenceRenewalType: '',
+                LicenceType: '',
             }
             $scope.flag = false;
 
@@ -547,6 +555,8 @@
                 WebAppHeaderLogo: '',
                 AdminUrl: '',
                 WebAppUrl: '',
+                LicenceRenewalType: '',
+                LicenceType: '',
             }
             $scope.FlgImage = '';
             $scope.FlgLoginImage = '';
