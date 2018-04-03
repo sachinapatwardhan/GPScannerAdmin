@@ -21,8 +21,8 @@
             </div>
         </div>
         <div class="content-card" layout="column" flex>
-            <div class="content fullpage-datatable" layout="column" flex>
-                <table id="AppInfo" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+            <div class="content fullpage-datatable" layout="column" flex ng-if="AppName!='Tracking'">
+                <table id="AppInfo" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
                             <th class="all">
@@ -51,6 +51,76 @@
                                     <span class="column-title">Licence Type</span>
                                 </div>
                             </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IOS Certificate</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IOS Key</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Android Id</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Android Key</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created By</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action  </span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="content fullpage-datatable" layout="column" flex ng-if="AppName=='Tracking'">
+                <table id="AppInfo1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance1" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">App Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Bundle Id</span>
+                                </div>
+                            </th>
+
+                            <!-- <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Licence Renewal Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Licence Type</span>
+                                </div>
+                            </th> -->
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">IOS Certificate</span>

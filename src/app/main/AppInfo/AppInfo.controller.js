@@ -8,6 +8,7 @@
     /** @ngInject */
     function AppInfoController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         $rootScope.AppName = localStorage.getItem('appName');
+        var vm = this;
         $scope.init = function() {
             $scope.model = {
                 Id: 0,
@@ -104,29 +105,51 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            $scope.dtInstance.reloadData(callback, resetPaging);
-            $('#AppInfo').dataTable()._fnAjaxUpdate();
+
+            if ($rootScope.AppName == "Tracking") {
+                vm.dtInstance1.reloadData(callback, resetPaging);
+                $('#AppInfo1').dataTable()._fnAjaxUpdate();
+            } else {
+                vm.dtInstance.reloadData(callback, resetPaging);
+                $('#AppInfo').dataTable()._fnAjaxUpdate();
+            }
 
         }
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
 
             $scope.FilterStatus = '';
-
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
-                DTColumnBuilder.newColumn('AppName'),
-                DTColumnBuilder.newColumn('BundleId'),
-                DTColumnBuilder.newColumn('LicenceRenewalType'),
-                DTColumnBuilder.newColumn('LicenceType'),
-                DTColumnBuilder.newColumn('IOSCertificate'),
-                DTColumnBuilder.newColumn('IOSKey'),
-                DTColumnBuilder.newColumn('AndroidId'),
-                DTColumnBuilder.newColumn('AndroidSenderId'),
-                DTColumnBuilder.newColumn('DisplyCreatedDate').renderWith(Datefun),
-                DTColumnBuilder.newColumn('CreatedBy'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
-            ]
+            if ($rootScope.AppName == "Tracking") {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn('BundleId'),
+                    // DTColumnBuilder.newColumn('LicenceRenewalType'),
+                    // DTColumnBuilder.newColumn('LicenceType'),
+                    DTColumnBuilder.newColumn('IOSCertificate'),
+                    DTColumnBuilder.newColumn('IOSKey'),
+                    DTColumnBuilder.newColumn('AndroidId'),
+                    DTColumnBuilder.newColumn('AndroidSenderId'),
+                    DTColumnBuilder.newColumn('DisplyCreatedDate').renderWith(Datefun),
+                    DTColumnBuilder.newColumn('CreatedBy'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                ]
+            } else {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn('BundleId'),
+                    DTColumnBuilder.newColumn('LicenceRenewalType'),
+                    DTColumnBuilder.newColumn('LicenceType'),
+                    DTColumnBuilder.newColumn('IOSCertificate'),
+                    DTColumnBuilder.newColumn('IOSKey'),
+                    DTColumnBuilder.newColumn('AndroidId'),
+                    DTColumnBuilder.newColumn('AndroidSenderId'),
+                    DTColumnBuilder.newColumn('DisplyCreatedDate').renderWith(Datefun),
+                    DTColumnBuilder.newColumn('CreatedBy'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                ]
+            }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "appinfo/GetAllAppInfo",
@@ -167,7 +190,8 @@
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
-        $scope.dtInstance = {};
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
         $scope.reloadData = function() {}
 
         function callback(json) {}
