@@ -56,8 +56,14 @@
                 },
                 type: 'get',
                 dataSrc: (function (json) {
-                    $scope.getApiAccess = json.data;
-                    return json.data;
+                    if (json.success != false) {
+                        $scope.$apply(function () {
+                            $scope.getApiAccess = json.data;
+                        })
+                            return json.data;
+                    } else {
+                        return [];
+                    }
                 })
             })
                 .withOption('processing', true)
