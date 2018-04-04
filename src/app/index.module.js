@@ -73,6 +73,7 @@
             // 'app.AssignRetailer',
             'app.AssignLicence',
             'app.deviceaccvalue',
+            'app.apiaccess',
             'app.VehicleGroup',
         ]);
 })();

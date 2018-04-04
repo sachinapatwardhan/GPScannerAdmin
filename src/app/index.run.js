@@ -288,8 +288,7 @@
                                 });
                             }
 
-
-
+                           
                             //Roles
                             var lstRoles = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Roles';
@@ -330,6 +329,18 @@
                                 });
                             }
 
+                             //APIAccess
+                              var lstaccess = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'ApiAccess';
+                            });
+                            if (lstaccess.length > 0) {
+                                msNavigationService.saveItem('Settings.ApiAccess', {
+                                    title: 'ApiAccess',
+                                    state: 'app.apiaccess',
+                                    order: lstaccess[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
 
                             // Tracker
                             var lstTrackers = _.filter(lstAllPages, function(obj) {
