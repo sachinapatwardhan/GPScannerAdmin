@@ -57,9 +57,9 @@
                 </div>
             </div>
             <div class="content-card " layout="column " flex>
-                <div class="content fullpage-datatable " layout="column " flex>
+                <div class="content fullpage-datatable " layout="column " flex ng-if="UserRoles=='Super Admin'">
                     <!-- <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%"> -->
-                    <table id="LicenceDetail" class="dataTable row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <table id="LicenceDetail" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                         <thead>
                             <tr>
                                 <th class="all ">
@@ -114,9 +114,95 @@
                                 </th>
                                 <th class="secondary-text ">
                                     <div class="table-header ">
+                                        <span class="column-title ">Licence Renewal Type</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
                                         <span class="column-title ">App Name</span>
                                     </div>
                                 </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Created Date</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Modified Date</span>
+                                    </div>
+                                </th>
+                                <th class="all ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Action</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+                <div class="content fullpage-datatable " layout="column " flex ng-if="UserRoles!='Super Admin'">
+                    <!-- <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%"> -->
+                    <table id="LicenceDetail1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance1" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="all ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">No</span>
+                                    </div>
+                                </th>
+                                <!--<th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">SIM Name</span>
+                                </div>
+                            </th>-->
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Licence No</span>
+                                    </div>
+                                </th>
+                                <!-- <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Vehicle Name</span>
+                                </div>
+                            </th> -->
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Device Id</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">User Name</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">User Email</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Expiry Date</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Days left</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Licence Type</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Licence Renewal Type</span>
+                                    </div>
+                                </th>
+
                                 <th class="secondary-text ">
                                     <div class="table-header ">
                                         <span class="column-title ">Created Date</span>
@@ -165,7 +251,7 @@
                     <h2 style="color:green;">Licence Number :{{model.LicenceNo}}</h2>
                     <div class="content ">
                         <div layout="row " layout-wrap>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="30">
+                            <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="30">
                                 <label>Select user</label>
                                 <md-autocomplete ng-required="true" md-input-name="IdUser" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.username"
                                     placeholder="Select User">
@@ -175,12 +261,12 @@
                                     <md-not-found>
                                         No user matching "{{query}}" were found
                                     </md-not-found>
-                                </md-autocomplete>
-                                <div ng-messages="formLicence.IdUser.$error" ng-if="formLicence.IdUser.$touched">
-                                    <div ng-message="required">Please select user</div>
-                                    <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;"> No User matching {{query}} were found.
-                                    </md-not-found>
-                                </div>
+                                </md-autocomplete> -->
+                            <div ng-messages="formLicence.IdUser.$error" ng-if="formLicence.IdUser.$touched">
+                                <div ng-message="required">Please select user</div>
+                                <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;"> No User matching {{query}} were found.
+                                </md-not-found>
+                            </div>
                             </md-input-container>
                             <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
                                 <label>Device Id</label>

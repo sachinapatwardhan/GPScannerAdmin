@@ -108,22 +108,41 @@
         }
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
-            $scope.FilterStatus = 1;
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
-                DTColumnBuilder.newColumn('LicenceNo'),
-                DTColumnBuilder.newColumn('DeviceId'),
-                DTColumnBuilder.newColumn('username'),
-                DTColumnBuilder.newColumn('email'),
-                DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat1),
-                DTColumnBuilder.newColumn('ExpiryDate').renderWith(daysHtml),
-                DTColumnBuilder.newColumn('LicenceType'),
-                DTColumnBuilder.newColumn('AppName'),
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
-                DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
-            ]
 
+            $scope.FilterStatus = 1;
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn('LicenceNo'),
+                    DTColumnBuilder.newColumn('DeviceId'),
+                    DTColumnBuilder.newColumn('username'),
+                    DTColumnBuilder.newColumn('email'),
+                    DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat1),
+                    DTColumnBuilder.newColumn('ExpiryDate').renderWith(daysHtml),
+                    DTColumnBuilder.newColumn('LicenceType'),
+                    DTColumnBuilder.newColumn('LicenceRenewalType'),
+                    DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                ]
+            } else {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn('LicenceNo'),
+                    DTColumnBuilder.newColumn('DeviceId'),
+                    DTColumnBuilder.newColumn('username'),
+                    DTColumnBuilder.newColumn('email'),
+                    DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat1),
+                    DTColumnBuilder.newColumn('ExpiryDate').renderWith(daysHtml),
+                    DTColumnBuilder.newColumn('LicenceType'),
+                    DTColumnBuilder.newColumn('LicenceRenewalType'),
+                    // DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                ]
+            }
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "licence/GetAllLicence",
                     data: function(d) {
@@ -146,10 +165,9 @@
                             d.EndDate.setMinutes(0);
                             d.EndDate.setSeconds(0);
                         }
-
-                        console.log(d.StartDate)
-                        console.log(d.EndDate)
-
+                        if ($rootScope.UserRoles != 'Super Admin') {
+                            d.idApp = $rootScope.appId;
+                        }
                         // console.log(d)
                         return d;
                     },
@@ -175,7 +193,8 @@
                 .withOption('scrollY', 'auto');
 
         });
-        $scope.dtInstance = {};
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
 
         $scope.reloadData = function() {}
 
@@ -237,18 +256,19 @@
 
         function actionsHtml(data, type, full, meta) {
             var btns = '<div layout="row">'
-
-            if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="EditLicence(' + data.Id + ')" aria-label="">' +
-                    '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
-                    '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
-                    '</md-button>';
-            }
-            if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="DeleteLicence(' + data.Id + ')" aria-label="">' +
-                    '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
-                    '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
-                    '</md-button>';
+            if ($rootScope.UserRoles == 'Super Admin') {
+                if ($rootScope.FlgModifiedAccess) {
+                    btns += '<md-button class="edit-button md-icon-button"  ng-click="EditLicence(' + data.Id + ')" aria-label="">' +
+                        '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                        '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                        '</md-button>';
+                }
+                if ($rootScope.FlgModifiedAccess) {
+                    btns += '<md-button class="edit-button md-icon-button"  ng-click="DeleteLicence(' + data.Id + ')" aria-label="">' +
+                        '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
+                        '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+                        '</md-button>';
+                }
             }
             if (full.DeviceId != null && full.DeviceId != '') {
                 // var btn = "<div layout='row'>";
@@ -279,9 +299,15 @@
                 if (IsUpdate == true) {
                     resetPaging = true;
                 };
-                $scope.dtInstance.reloadData(callback, resetPaging);
-                $('#LicenceDetail').dataTable()._fnPageChange(0);
-                $('#LicenceDetail').dataTable()._fnAjaxUpdate();
+                if ($rootScope.UserRoles == 'Super Admin') {
+                    vm.dtInstance.reloadData(callback, resetPaging);
+                    $('#LicenceDetail').dataTable()._fnPageChange(0);
+                    $('#LicenceDetail').dataTable()._fnAjaxUpdate();
+                } else {
+                    vm.dtInstance1.reloadData(callback, resetPaging);
+                    $('#LicenceDetail1').dataTable()._fnPageChange(0);
+                    $('#LicenceDetail1').dataTable()._fnAjaxUpdate();
+                }
             }
         }
 
