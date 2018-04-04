@@ -57,6 +57,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
+                IsOnline: '',
             }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -104,6 +105,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
+                IsOnline: '',
             }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -257,6 +259,7 @@
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "vehicles/GetAllDynamicVehicle",
                 data: function(d) {
+                    console.log(d)
                     if ($scope.Search == '') {
                         d.search = '';
                     } else {
@@ -669,6 +672,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
+                IsOnline: '',
             }
             $scope.query = '';
             $scope.resetForm();
@@ -709,6 +713,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
+                IsOnline: '',
             }
             $scope.selectedItem = null;
             // // $scope.query = '';
@@ -721,6 +726,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
+                IsOnline: '',
             }
             GetAllDynamicVehicles(true);
         }
@@ -736,6 +742,16 @@
                 $(".ShowContentBox").slideToggle();
             });
         };
+
+        $scope.Export = function() {
+            var UserId = $rootScope.UserRoles == "Sales Agent" ? $rootScope.UserId : '';
+            var IsOnline = $scope.modelSearch.IsOnline == null || $scope.modelSearch.IsOnline == undefined ? '' : $scope.modelSearch.IsOnline;
+            var idType = $scope.modelSearch.idType == null || $scope.modelSearch.idType == undefined ? '' : $scope.modelSearch.idType;
+            var StartDate = $scope.modelSearch.StartDate == null || $scope.modelSearch.StartDate == undefined ? '' : $scope.modelSearch.StartDate;
+            var EndDate = $scope.modelSearch.EndDate == null || $scope.modelSearch.EndDate == undefined ? '' : $scope.modelSearch.EndDate;
+            var IsTrackingApp = $scope.modelApp.AppName == 'Tracking' ? true : false;
+            window.location.href = $rootScope.RoutePath + "Vehicles/ExportVehicle?UserId=" + UserId + "&appId=" + $rootScope.appId + "&IsOnline=" + IsOnline + "&idType=" + idType + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&IsTrackingApp=" + IsTrackingApp;
+        }
         $scope.init();
     }
 

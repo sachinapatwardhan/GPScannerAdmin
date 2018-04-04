@@ -21,6 +21,10 @@
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstVehicledata.length > 0">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
+                </md-button>
                 <div ng-if="FlgAddedEditlocal">
                     <md-button class="md-raised md-background" ng-click="vm.Reset()">
                         <span translate="Add New Vehicle">Add New Vehicle</span>
@@ -50,8 +54,15 @@
                             <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
                         </md-select>
                     </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                        <label>Status </label>
+                        <md-select Name="IsOnline" ng-model="modelSearch.IsOnline" ng-change="vm.GetAllDynamicVehicles(true)">
+                            <md-option value='1'>Online</md-option>
+                            <md-option value='0'>Offline</md-option>
+                        </md-select>
+                    </md-input-container>
                     <div align="left">
-                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click=" vm.GetAllDynamicVehicles(true)" aria-label="Search">
+                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="vm.GetAllDynamicVehicles(true)" aria-label="Search">
                             <md-icon md-font-icon="icon-magnify"></md-icon>
                             <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
                         </md-button>
