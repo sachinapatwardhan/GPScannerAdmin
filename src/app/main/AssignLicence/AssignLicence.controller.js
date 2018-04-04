@@ -21,7 +21,8 @@
                 LicenceNo: '',
                 DeviceId: '',
                 ExpiryDate: null,
-
+                LicenceRenewalType: '',
+                LicenceType: '',
             }
             $scope.ModelSearch = {
                 days: '-1',
@@ -43,7 +44,8 @@
                 LicenceNo: '',
                 DeviceId: '',
                 ExpiryDate: null,
-
+                LicenceRenewalType: '',
+                LicenceType: '',
             }
             $scope.selectedItem = null;
             $scope.query = '';
@@ -58,16 +60,44 @@
             $scope.model.IdUser = o.IdUser;
             $scope.model.LicenceNo = o.LicenceNo;
             $scope.model.DeviceId = o.DeviceId;
+            if (o.LicenceRenewalType == null || o.LicenceRenewalType == undefined || o.LicenceRenewalType == '') {
+                $scope.model.LicenceRenewalType = o.appLicenceRenewalType;
+            } else {
+                $scope.model.LicenceRenewalType = o.LicenceRenewalType;
+            }
+            if (o.LicenceType == null || o.LicenceType == undefined || o.LicenceType == '') {
+                $scope.model.LicenceType = o.appLicenceType;
+            } else {
+                $scope.model.LicenceType = o.LicenceType;
+            }
+
+            console.log(o.ExpiryDate)
             if (o.ExpiryDate != null && o.ExpiryDate != undefined && o.ExpiryDate != '') {
                 $scope.model.ExpiryDate = new Date(o.ExpiryDate);
             } else {
-                var ExpiryDate = new Date();
-                ExpiryDate.setFullYear(ExpiryDate.getFullYear() + 1);
-                $scope.model.ExpiryDate = ExpiryDate;
+                $scope.changeExpiry($scope.model.LicenceRenewalType)
+                    // var ExpiryDate = new Date();
+                    // ExpiryDate.setFullYear(ExpiryDate.getFullYear() + 1);
+                    // $scope.model.ExpiryDate = ExpiryDate;
             }
             $scope.GetUserById($scope.model.IdUser);
             // CreatedDate = o.CreatedDate;
             // ModifiedDate = o.ModifiedDat;
+        }
+
+        $scope.changeExpiry = function(days) {
+            var ExpiryDate = new Date();
+            if (days == 'Yearly') {
+                ExpiryDate.setFullYear(ExpiryDate.getFullYear() + 1);
+                $scope.model.ExpiryDate = ExpiryDate;
+            } else if (days == 'Quarterly') {
+                ExpiryDate.setMonth(ExpiryDate.getMonth() + 3);
+                $scope.model.ExpiryDate = ExpiryDate;
+            } else if (days == 'Monthly') {
+                ExpiryDate.setMonth(ExpiryDate.getMonth() + 1);
+                $scope.model.ExpiryDate = ExpiryDate;
+            }
+
         }
 
         $scope.GetUserById = function(id) {
@@ -320,6 +350,8 @@
         //--------------------------------------------------------------------------
 
         $scope.ChangeSearchDate = function(days) {
+            var StartDate = new Date();
+            var EndDate = new Date();
             if (days == '-1') {
                 $scope.ModelSearch.StartDate = null;
                 $scope.ModelSearch.EndDate = null;
@@ -327,31 +359,34 @@
                 $scope.ModelSearch.StartDate = null;
                 $scope.ModelSearch.EndDate = null;
             } else if (days == 'Week') {
-                var StartDate = new Date();
-                var day = StartDate.getDay()
-                var diff = StartDate.getDate() - day;
-                StartDate = new Date(StartDate.setDate(diff));
-                var EndDate = new Date();
-                EndDate = new Date(EndDate.setDate(EndDate.getDate() - EndDate.getDay()));
+                // var StartDate = new Date();
+                // var day = StartDate.getDay()
+                // var diff = StartDate.getDate() - day;
+                // StartDate = new Date(StartDate.setDate(diff));
+                // var EndDate = new Date();
+                // EndDate = new Date(EndDate.setDate(EndDate.getDate() - EndDate.getDay()));
                 EndDate.setDate(EndDate.getDate() + 7);
                 $scope.ModelSearch.StartDate = StartDate;
                 $scope.ModelSearch.EndDate = EndDate;
             } else if (days == 'Month') {
-                var date = new Date();
-                var StartDate = new Date(date.getFullYear(), date.getMonth(), 1);
-                var EndDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                // var date = new Date();
+                // var StartDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                // var EndDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                EndDate.setMonth(EndDate.getMonth() + 1);
                 $scope.ModelSearch.StartDate = StartDate;
                 $scope.ModelSearch.EndDate = EndDate;
             } else if (days == 'Quarter') {
-                var date = new Date();
-                var StartDate = new Date(date.getFullYear(), date.getMonth(), 1);
-                var EndDate = new Date(date.getFullYear(), date.getMonth() + 6, 0);
+                // var date = new Date();
+                // var StartDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                // var EndDate = new Date(date.getFullYear(), date.getMonth() + 6, 0);
+                EndDate.setMonth(EndDate.getMonth() + 3);
                 $scope.ModelSearch.StartDate = StartDate;
                 $scope.ModelSearch.EndDate = EndDate;
             } else if (days == 'Year') {
-                var date = new Date();
-                var StartDate = new Date(date.getFullYear(), 1, 1);
-                var EndDate = new Date(date.getFullYear(), 12, 0);
+                // var date = new Date();
+                // var StartDate = new Date(date.getFullYear(), 1, 1);
+                // var EndDate = new Date(date.getFullYear(), 12, 0);
+                EndDate.setFullYear(EndDate.getFullYear() + 1);
                 $scope.ModelSearch.StartDate = StartDate;
                 $scope.ModelSearch.EndDate = EndDate;
             }

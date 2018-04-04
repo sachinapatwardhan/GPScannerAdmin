@@ -24,14 +24,6 @@
             <div class="ShowContentBox">
                 <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
                 <div layout="row" layout-wrap>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-show="ModelSearch.days=='Date'">
-                        <label>Start ExpiryDate</label>
-                        <input mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="ModelSearch.EndDate" format="DD-MM-YYYY" ng-model="ModelSearch.StartDate">
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-show="ModelSearch.days=='Date'">
-                        <label>End ExpiryDate</label>
-                        <input mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="ModelSearch.StartDate" format="DD-MM-YYYY" ng-model="ModelSearch.EndDate">
-                    </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-sm="25" flex-gt-md="15">
                         <label>Expiry Date</label>
                         <md-select name="days" ng-model="ModelSearch.days" ng-change="ChangeSearchDate(ModelSearch.days)">
@@ -44,6 +36,15 @@
                         </md-select>
 
                     </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-show="ModelSearch.days=='Date'">
+                        <label>Start ExpiryDate</label>
+                        <input mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="ModelSearch.EndDate" format="DD-MM-YYYY" ng-model="ModelSearch.StartDate">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-show="ModelSearch.days=='Date'">
+                        <label>End ExpiryDate</label>
+                        <input mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="ModelSearch.StartDate" format="DD-MM-YYYY" ng-model="ModelSearch.EndDate">
+                    </md-input-container>
+
                     <div align="left">
                         <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="vm.GetAllLicenceDetail(true)" aria-label="Search">
                             <md-icon md-font-icon="icon-magnify"></md-icon>
@@ -276,6 +277,32 @@
                                 <div ng-messages="formLicence.DeviceId.$error " ng-if="formLicence.DeviceId.$touched " role="alert ">
                                     <div ng-message="required ">
                                         <span>Device Id field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName!='Tracking'">
+                                <label>Licence Type</label>
+                                <md-select name="LicenceType" ng-model="model.LicenceType" ng-required="true">
+                                    <md-option value="Platform">Platform</md-option>
+                                    <md-option value="Platform + Sim">Platform + Sim</md-option>
+                                </md-select>
+                                <div ng-messages="formLicence.LicenceType.$error" ng-if="formLicence.LicenceType.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Licence Type field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName!='Tracking'">
+                                <label>Licence Renewal Type</label>
+                                <md-select name="LicenceRenewalType" ng-model="model.LicenceRenewalType" ng-required="true">
+                                    <md-option value="Monthly">Monthly</md-option>
+                                    <md-option value="Quarterly">Quarterly</md-option>
+                                    <md-option value="Yearly">Yearly</md-option>
+                                </md-select>
+                                <div ng-messages="formLicence.LicenceRenewalType.$error" ng-if="formLicence.LicenceRenewalType.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Licence Renewal Type is required</span>
                                     </div>
                                 </div>
                             </md-input-container>
