@@ -750,7 +750,8 @@
             var StartDate = $scope.modelSearch.StartDate == null || $scope.modelSearch.StartDate == undefined ? '' : $scope.modelSearch.StartDate;
             var EndDate = $scope.modelSearch.EndDate == null || $scope.modelSearch.EndDate == undefined ? '' : $scope.modelSearch.EndDate;
             var IsTrackingApp = $scope.modelApp.AppName == 'Tracking' ? true : false;
-            window.location.href = $rootScope.RoutePath + "Vehicles/ExportVehicle?UserId=" + UserId + "&appId=" + $rootScope.appId + "&IsOnline=" + IsOnline + "&idType=" + idType + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&IsTrackingApp=" + IsTrackingApp;
+            var CurrentOffset = $rootScope.CurrentOffset.charAt(0) == '+' ? $rootScope.CurrentOffset.replace('+', 'p') : $rootScope.CurrentOffset.replace('-', 'm');
+            window.location.href = $rootScope.RoutePath + "Vehicles/ExportVehicle?UserId=" + UserId + "&appId=" + $rootScope.appId + "&IsOnline=" + IsOnline + "&idType=" + idType + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&IsTrackingApp=" + IsTrackingApp + "&CurrentOffset=" + CurrentOffset;
         }
 
 
