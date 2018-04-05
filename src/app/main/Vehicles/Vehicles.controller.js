@@ -57,7 +57,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
-                IsOnline: '',
+                IsOnline: null,
             }
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];
@@ -259,7 +259,7 @@
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "vehicles/GetAllDynamicVehicle",
                 data: function(d) {
-                    console.log(d)
+                    // console.log(d)
                     if ($scope.Search == '') {
                         d.search = '';
                     } else {
@@ -672,7 +672,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
-                IsOnline: '',
+                IsOnline: null,
             }
             $scope.query = '';
             $scope.resetForm();
@@ -713,7 +713,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
-                IsOnline: '',
+                IsOnline: null,
             }
             $scope.selectedItem = null;
             // // $scope.query = '';
@@ -726,7 +726,7 @@
                 EndDate: null,
                 StartDate: null,
                 idType: null,
-                IsOnline: '',
+                IsOnline: null,
             }
             GetAllDynamicVehicles(true);
         }

@@ -57,6 +57,7 @@
                     <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                         <label>Status </label>
                         <md-select Name="IsOnline" ng-model="modelSearch.IsOnline" ng-change="vm.GetAllDynamicVehicles(true)">
+                            <md-option ng-value='null'>All</md-option>
                             <md-option value='1'>Online</md-option>
                             <md-option value='0'>Offline</md-option>
                         </md-select>
