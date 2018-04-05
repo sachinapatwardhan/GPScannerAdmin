@@ -752,6 +752,30 @@
             var IsTrackingApp = $scope.modelApp.AppName == 'Tracking' ? true : false;
             window.location.href = $rootScope.RoutePath + "Vehicles/ExportVehicle?UserId=" + UserId + "&appId=" + $rootScope.appId + "&IsOnline=" + IsOnline + "&idType=" + idType + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&IsTrackingApp=" + IsTrackingApp;
         }
+
+
+        $scope.DownloadExcelTemplate = function() {
+            window.location = $rootScope.RoutePath + "import/DownloadTemplate";
+        }
+
+        $scope.ShowImportModal = function(ev) {
+            $mdDialog.show({
+                controller: 'ImportDataController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/Vehicles/dialogs/ImportData/ImportData.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Tasks: [],
+                    event: ev,
+                    Obj: vm,
+                    lstCountry: $scope.lstCountry,
+                }
+            })
+        }
+
+
         $scope.init();
     }
 
