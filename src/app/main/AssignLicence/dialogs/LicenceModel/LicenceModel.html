@@ -1,0 +1,66 @@
+<md-dialog class="flex-50">
+    <!--<md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+            <span class="title">Devices</span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>-->
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Genrate Licence Number</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <ms-form-wizard flex>
+            <form name="vm.FormLicence" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
+                <md-content class="content" ms-scroll>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>App Name</label>
+                        <md-select Name="AppName" ng-model="model.AppName" md-on-close="ClearSearch()" data-md-container-class="selectdemoSelectHeader" required>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                        </md-select>
+                        <div ng-messages="vm.FormLicence.AppName.$error" ng-if="vm.FormLicence.AppName.$touched" role="alert">
+                            <div ng-message="required">
+                                <span>App Name is required.</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>Length </label>
+                        <input name="Length" type="number" ng-model="model.Length" ng-required="true">
+                        <div ng-messages="vm.FormLicence.Length.$error" ng-if="vm.FormLicence.Length.$touched">
+                            <div ng-message="required">
+                                <span>Length is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm="50">
+                        <label>Password</label>
+                        <input name="Password" type="password" ng-model="model.Pass" ng-required="true">
+                        <div ng-messages="vm.FormLicence.Password.$error" ng-if="vm.FormLicence.Password.$touched">
+                            <div ng-message="required">
+                                <span>Password is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <div layout="row" layout-align="start center">
+                        <md-button class="md-raised md-accent" ng-disabled="vm.FormLicence.$invalid" ng-click="CreateLicenceNumbers(model)">Save</md-button>
+                        <md-button class="md-raised md-defualt" ng-click="ResetData(vm.FormLicence)">Reset</md-button>
+                        <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+
+                    </div>
+                    <br/>
+                </md-content>
+            </form>
+        </ms-form-wizard>
+    </md-dialog-content>
+</md-dialog>

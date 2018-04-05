@@ -516,7 +516,20 @@
             vm.GetAllLicenceDetail(true);
         }
 
-
+        $scope.GenerateLicence = function(ev) {
+            $mdDialog.show({
+                controller: 'LicenceModelController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/AssignLicence/dialogs/LicenceModel/LicenceModel.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Tasks: [],
+                    event: ev,
+                }
+            })
+        }
 
         $scope.init();
     }

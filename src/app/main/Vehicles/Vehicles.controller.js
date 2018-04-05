@@ -352,7 +352,7 @@
                     '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
                     '</md-button>';
-                if ($rootScope.UserRoles == 'Super Admin') {
+                if ($rootScope.UserRoles == 'Super Admin' || $rootScope.AppName == 'Tracking') {
                     btns += '<md-button class="edit-button md-icon-button"  ng-click="EditDates(' + data.id + ',$event)" aria-label="">' +
                         '<md-icon md-font-icon="icon-calendar-check-multiple" ></md-icon>' +
                         '<md-tooltip md-visible="" md-direction="">Update Date</md-tooltip>' +
