@@ -49,8 +49,13 @@
         }
 
         $scope.CreateLicenceNumbers = function() {
-            $scope.model.AppName = _.findWhere($scope.lstAppInfo, { id: $scope.model.AppName }).AppName;
-            $http.get($rootScope.RoutePath + "licence/CreateLicenceNumbers", { params: $scope.model }).then(function(data) {
+            var AppName = _.findWhere($scope.lstAppInfo, { id: $scope.model.AppName }).AppName;
+            var params = {
+                AppName: AppName,
+                Pass: $scope.model.Pass,
+                Length: $scope.model.Length,
+            }
+            $http.get($rootScope.RoutePath + "licence/CreateLicenceNumbers", { params: params }).then(function(data) {
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent(data.data.message)
