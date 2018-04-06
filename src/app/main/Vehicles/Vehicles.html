@@ -21,11 +21,11 @@
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportModal($event)" aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportModal($event)" aria-label="Search" ng-if="modelApp.AppName=='Tracking'">
                     <md-icon md-font-icon="icon-import"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search" ng-if="modelApp.AppName=='Tracking'">
                     <md-icon md-font-icon="icon-download"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
                 </md-button>
