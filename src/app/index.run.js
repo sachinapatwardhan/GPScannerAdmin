@@ -777,8 +777,8 @@
                                 return obj.tblmodulemgmt.Module == 'Audit Log Liacense';
                             });
                             if (lstAuditLog.length > 0) {
-                                msNavigationService.saveItem('Settings.Audit Log Liacense', {
-                                    title: 'Audit Log Liacense',
+                                msNavigationService.saveItem('Settings.Audit Log Licence', {
+                                    title: 'Audit Log Licence',
                                     state: 'app.AuditLoglicense',
                                     order: lstAuditLogLicense[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
