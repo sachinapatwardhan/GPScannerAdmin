@@ -10,10 +10,10 @@
             </div>
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="search" ng-model="modelSearch.Search" ng-change="GetSerch(modelSearch.Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex ng-if="UserRoles=='Super Admin'">
+                <input id="search" ng-model="modelSearch.Search" ng-change="GetSerch(modelSearch.Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
             <div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="GenerateLicence($event)" aria-label="Generate Licence">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="GenerateLicence($event)" aria-label="Generate Licence" ng-if="UserRoles=='Super Admin'">
                     <md-icon md-font-icon="icon-import"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Generate Licence Number</md-tooltip>
                 </md-button>
@@ -48,7 +48,15 @@
                         <label>End ExpiryDate</label>
                         <input mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="ModelSearch.StartDate" format="DD-MM-YYYY" ng-model="ModelSearch.EndDate">
                     </md-input-container>
-
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" flex ng-if="UserRoles=='Super Admin'">
+                        <label>App Name</label>
+                        <md-select name="idApp" ng-model="ModelSearch.idApp">
+                            <md-option ng-value="-1">All</md-option>
+                            <md-option ng-value="item.Id" ng-repeat="item in appNames">
+                                {{ item.AppName }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
                     <div align="left">
                         <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="vm.GetAllLicenceDetail(true)" aria-label="Search">
                             <md-icon md-font-icon="icon-magnify"></md-icon>

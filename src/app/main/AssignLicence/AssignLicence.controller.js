@@ -28,9 +28,11 @@
                 days: '-1',
                 StartDate: '',
                 EndDate: '',
+                idApp: '-1',
             }
             $scope.selectedItem = null;
             $scope.flag = false;
+            $scope.getAllApps();
         }
         $scope.ResetModel = function() {
             $scope.Reset();
@@ -46,6 +48,7 @@
                 ExpiryDate: null,
                 LicenceRenewalType: '',
                 LicenceType: '',
+                idApp: '-1',
             }
             $scope.selectedItem = null;
             $scope.query = '';
@@ -53,8 +56,15 @@
             $scope.formLicence.$setPristine();
         }
 
+        $scope.getAllApps = function() {
+            $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo").then(function(res) {
+                $scope.appNames = res.data;
+            });
+        };
+
         $scope.EditLicence = function(Id) {
             var o = _.findWhere($scope.lstLicence, { Id: Id })
+            console.log(o)
             $scope.flag = true;
             $scope.model.Id = o.Id;
             $scope.model.IdUser = o.IdUser;
@@ -71,7 +81,7 @@
                 $scope.model.LicenceType = o.LicenceType;
             }
 
-            console.log(o.ExpiryDate)
+            // console.log(o.ExpiryDate)
             if (o.ExpiryDate != null && o.ExpiryDate != undefined && o.ExpiryDate != '') {
                 $scope.model.ExpiryDate = new Date(o.ExpiryDate);
             } else {
@@ -199,6 +209,10 @@
                         }
                         if ($rootScope.UserRoles != 'Super Admin') {
                             d.idApp = $rootScope.appId;
+                        } else {
+                            if ($scope.ModelSearch.idApp != null && $scope.ModelSearch.idApp != undefined && $scope.ModelSearch.idApp != '' && $scope.ModelSearch.idApp != '-1') {
+                                d.idApp = $scope.ModelSearch.idApp;
+                            }
                         }
                         // console.log(d)
                         return d;
@@ -294,13 +308,20 @@
                         '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
                         '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
                         '</md-button>';
+                    // if (full.DeviceId != null && full.DeviceId != undefined && full.DeviceId != '') {
+                    //     btns += '<md-button class="edit-button md-icon-button"  ng-click="openDeviceIdModel(' + data.Id + ')">' +
+                    //         '<md-icon md-font-icon="icon-rotate-3d"  class="s18 blue-500- fg "></md-icon>' +
+                    //         '<md-tooltip md-visible="" md-direction="">Transfer Device</md-tooltip>' +
+                    //         '</md-button>';
+                    // }
                 }
-                if ($rootScope.FlgModifiedAccess) {
+                if ($rootScope.FlgDeletedAccess) {
                     btns += '<md-button class="edit-button md-icon-button"  ng-click="DeleteLicence(' + data.Id + ')" aria-label="">' +
                         '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
                         '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
                         '</md-button>';
                 }
+
             }
             if (full.DeviceId != null && full.DeviceId != '') {
                 // var btn = "<div layout='row'>";
@@ -347,7 +368,33 @@
             vm.GetAllLicenceDetail(true)
         };
 
+        $rootScope.reloadLicence = function() {
+            vm.GetAllLicenceDetail(true)
+        }
+
         //--------------------------------------------------------------------------
+
+        $scope.openDeviceIdModel = function(Id) {
+            var o = _.findWhere($scope.lstLicence, { Id: Id })
+                // ShowLoader();
+            setTimeout(function() {
+                $mdDialog.show({
+                    controller: 'LicenceDeviceDetailCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/AssignLicence/dialogs/DeviceDetail/DeviceDetail.html',
+                    parent: angular.element($document.body),
+                    clickOutsideToClose: true,
+                    locals: {
+                        Id: Id,
+                        // userId: userId,
+                        // lstDevice: $scope.lstDevice,
+                        OldDeviceId: o.DeviceId,
+                    }
+                });
+                // HideLoader();
+            }, 100);
+
+        }
 
         $scope.ChangeSearchDate = function(days) {
             var StartDate = new Date();
@@ -512,6 +559,7 @@
                 days: '-1',
                 StartDate: '',
                 EndDate: '',
+                idApp: '-1',
             }
             vm.GetAllLicenceDetail(true);
         }
