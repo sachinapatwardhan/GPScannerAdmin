@@ -12,6 +12,15 @@
         vm.FormLicence = {};
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
+
+        function ShowLoader() {
+            document.getElementById('processingDashboard').style.display = "block";
+            document.body.scrollTop = "0px";
+        }
+
+        function HideLoader() {
+            document.getElementById('processingDashboard').style.display = "none";
+        }
         $scope.init = function() {
             $scope.model = {
                 AppName: '',
@@ -49,6 +58,7 @@
         }
 
         $scope.CreateLicenceNumbers = function() {
+            ShowLoader();
             var AppName = _.findWhere($scope.lstAppInfo, { id: $scope.model.AppName }).AppName;
             var params = {
                 AppName: AppName,
@@ -56,6 +66,7 @@
                 Length: $scope.model.Length,
             }
             $http.get($rootScope.RoutePath + "licence/CreateLicenceNumbers", { params: params }).then(function(data) {
+                HideLoader();
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent(data.data.message)
@@ -70,5 +81,7 @@
             })
         }
         $scope.init();
+
+
     }
 })();
