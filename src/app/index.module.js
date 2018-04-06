@@ -75,5 +75,6 @@
             'app.deviceaccvalue',
             'app.apiaccess',
             'app.VehicleGroup',
+            'app.AuditLoglicense',
         ]);
 })();

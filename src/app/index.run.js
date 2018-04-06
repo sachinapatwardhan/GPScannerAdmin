@@ -288,7 +288,7 @@
                                 });
                             }
 
-                           
+
                             //Roles
                             var lstRoles = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Roles';
@@ -329,8 +329,8 @@
                                 });
                             }
 
-                             //APIAccess
-                              var lstaccess = _.filter(lstAllPages, function(obj) {
+                            //APIAccess
+                            var lstaccess = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'ApiAccess';
                             });
                             if (lstaccess.length > 0) {
@@ -768,6 +768,19 @@
                                     title: 'Audit Log',
                                     state: 'app.AuditLog',
                                     order: lstAuditLog[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
+
+                            // AuditLogLicense
+                            var lstAuditLogLicense = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Audit Log Liacense';
+                            });
+                            if (lstAuditLog.length > 0) {
+                                msNavigationService.saveItem('Settings.Audit Log Liacense', {
+                                    title: 'Audit Log Liacense',
+                                    state: 'app.AuditLoglicense',
+                                    order: lstAuditLogLicense[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
                                 });
                             }
