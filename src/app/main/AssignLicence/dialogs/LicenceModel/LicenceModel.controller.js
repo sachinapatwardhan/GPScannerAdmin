@@ -6,7 +6,7 @@
         .controller('LicenceModelController', LicenceModelController);
 
     /** @ngInject */
-    function LicenceModelController($http, $mdDialog, $mdToast, $scope, $cookieStore, $rootScope, Tasks, event) {
+    function LicenceModelController($http, $mdDialog, $mdToast, $scope, $cookieStore, $rootScope, Tasks, event, Lvm) {
         var vm = this;
         vm.searchTermidAppName = '';
         vm.FormLicence = {};
@@ -64,6 +64,8 @@
                 );
                 if (data.data.success) {
                     $scope.ResetData();
+                    $scope.closeModel();
+                    Lvm.ReloadTable();
                 }
             })
         }

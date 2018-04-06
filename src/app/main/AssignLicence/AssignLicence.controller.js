@@ -11,7 +11,12 @@
         $rootScope.appId = localStorage.getItem('appId');
         $rootScope.AppName = localStorage.getItem('appName');
         var vm = this;
+        vm.ReloadTable = ReloadTable;
         var pendingSearch = angular.noop;
+
+        function ReloadTable() {
+            vm.GetAllLicenceDetail(true)
+        }
         // vm.GetAllLicenceDetail = GetAllLicenceDetail;
         $scope.init = function() {
             $scope.modelSearch = { Search: '' }
@@ -575,6 +580,7 @@
                 locals: {
                     Tasks: [],
                     event: ev,
+                    Lvm: vm,
                 }
             })
         }
