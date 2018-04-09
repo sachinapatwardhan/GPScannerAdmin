@@ -18,6 +18,9 @@
         $rootScope.RoutePath = "http://localhost:7212/";
         $rootScope.Socket_URL = "http://localhost:7212";
 
+        // $rootScope.RoutePath = "http://localhost:7312/";
+        // $rootScope.Socket_URL = "http://localhost:7312";
+
         // $rootScope.RoutePath = "http://192.168.1.53:7212/";
         // $rootScope.Socket_URL = "http://192.168.1.53:7212";
 
@@ -776,7 +779,7 @@
                             var lstAuditLogLicense = _.filter(lstAllPages, function(obj) {
                                 return obj.tblmodulemgmt.Module == 'Audit Log Liacense';
                             });
-                            if (lstAuditLog.length > 0) {
+                            if (lstAuditLogLicense.length > 0) {
                                 msNavigationService.saveItem('Settings.Audit Log Licence', {
                                     title: 'Audit Log Licence',
                                     state: 'app.AuditLoglicense',
