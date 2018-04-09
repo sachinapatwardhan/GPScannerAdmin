@@ -54,22 +54,40 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            $scope.dtInstance.reloadData(callback, resetPaging);
-            $('#SIMDetail').dataTable()._fnPageChange(0);
-            $('#SIMDetail').dataTable()._fnAjaxUpdate();
+            if ($rootScope.UserRoles == "Super Admin") {
+                vm.dtInstance.reloadData(callback, resetPaging);
+                $('#SIMDetail').dataTable()._fnPageChange(0);
+                $('#SIMDetail').dataTable()._fnAjaxUpdate();
+            } else {
+                vm.dtInstance.reloadData(callback, resetPaging);
+                $('#SIMDetail1').dataTable()._fnPageChange(0);
+                $('#SIMDetail1').dataTable()._fnAjaxUpdate();
+            }
         }
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
-                DTColumnBuilder.newColumn('SerialNum'),
-                DTColumnBuilder.newColumn('PhoneNum'),
-                DTColumnBuilder.newColumn('TelName').renderWith(Valuefun),
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
-                DTColumnBuilder.newColumn('AppName').renderWith(Valuefun),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
-            ]
+            if ($rootScope.UserRoles == "Super Admin") {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn('SerialNum'),
+                    DTColumnBuilder.newColumn('PhoneNum'),
+                    DTColumnBuilder.newColumn('TelName').renderWith(Valuefun),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('AppName').renderWith(Valuefun),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                ]
+            } else {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn('SerialNum'),
+                    DTColumnBuilder.newColumn('PhoneNum'),
+                    DTColumnBuilder.newColumn('TelName').renderWith(Valuefun),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                    // DTColumnBuilder.newColumn('AppName').renderWith(Valuefun),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                ]
+            }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "sim/GetAllSIMInfoNew",
@@ -78,6 +96,10 @@
                             d.search = '';
                         } else {
                             d.search = $scope.modelSearch.Search;
+                        }
+                        d.idApp = '';
+                        if ($rootScope.UserRoles != "Super Admin") {
+                            d.idApp = $rootScope.appId;
                         }
                         return d;
                     },
@@ -103,7 +125,8 @@
                 .withOption('scrollY', 'auto');
 
         });
-        $scope.dtInstance = {};
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
 
         $scope.reloadData = function() {}
 
@@ -354,8 +377,12 @@
             })
         }
         $scope.ExportExcel = function() {
+            var idApp = '';
+            if ($rootScope.UserRoles != "Super Admin") {
+                idApp = $rootScope.appId;
+            }
             var CurrentOffset = encodeURIComponent($rootScope.CurrentOffset);
-            window.location = $rootScope.RoutePath + "sim/Export?CurrentOffset=" + CurrentOffset;
+            window.location = $rootScope.RoutePath + "sim/Export?CurrentOffset=" + CurrentOffset + "&idApp=" + idApp;
         }
 
         $scope.GetSerch = function(Search) {

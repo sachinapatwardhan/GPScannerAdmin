@@ -25,9 +25,9 @@
                         </div>
                     </div>
                 </md-input-container>
-                <md-input-container class="md-block" flex="45" flex-gt-sm="45">
+                <md-input-container class="md-block" flex="45" flex-gt-sm="45" ng-if="vm.UserRoles =='Super Admin'">
                     <label>App Name</label>
-                    <md-select Name="AppName" ng-model="idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required ng-if="vm.UserRoles =='Super Admin'">
+                    <md-select Name="AppName" ng-model="idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
                         <md-select-header class="demo-select-header">
                             <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                         </md-select-header>
