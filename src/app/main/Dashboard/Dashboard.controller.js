@@ -16,6 +16,18 @@
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.appId = localStorage.getItem('appId');
         $scope.AppName = localStorage.getItem('appName');
+
+        //for map icon
+        if ($scope.AppName != "Tracking") {
+            $scope.OnlineImage = "/assets/images/icon-map-car-on2.png";
+            $scope.OfflineImage = "/assets/images/icon-map-car--off2.png";
+            $scope.ActiveImage = "/assets/images/icon-map-car-active2.png";
+        } else {
+            $scope.OnlineImage = "/assets/images/locate-live.png.png";
+            $scope.OfflineImage = "/assets/images/locate-disconnect.png";
+            $scope.ActiveImage = "/assets/images/locate-active.png";
+        }
+        //endicon
         $scope.selectAppName = $scope.AppName;
 
         $scope.GetAllInfoList = function() {
@@ -176,6 +188,7 @@
                     }
                     $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 1 });
                     $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0 });
+
 
                     function setActiveVehicle(i) {
                         if (i < $scope.lstActiveVehicle.length) {

@@ -63,9 +63,18 @@
             $rootScope.UserRoles = $cookieStore.get('UserRoles');
         }
         $scope.GetAllSerialnumber = function() {
-            $http.get($rootScope.RoutePath + "sim/GetAllSIMInfo").then(function(data) {
-                $scope.lstSIMInfo = data.data;
-            })
+            if ($rootScope.AppName != "Tracking") {
+                $http.get($rootScope.RoutePath + "sim/GetAllSIMInfo").then(function(data) {
+                    $scope.lstSIMInfo = data.data;
+                })
+            } else {
+                var params = {
+                    idApp: $rootScope.idApp
+                }
+                $http.get($rootScope.RoutePath + "sim/GetAllSIMInfoForTrackingApp", { params: params }).then(function(data) {
+                    $scope.lstSIMInfo = data.data;
+                })
+            }
         }
 
         $scope.GetAllInfoList = function() {
@@ -194,7 +203,6 @@
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = '';
-            console.log($rootScope.AppName)
             if ($rootScope.UserRoles == 'Super Admin') {
                 if ($rootScope.AppName == 'Tracking') {
                     $scope.dtColumns = [

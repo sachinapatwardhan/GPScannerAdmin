@@ -69,6 +69,7 @@
             $scope.getAllVehicleType();
         }
 
+
         $scope.gotoVehicleList = function() {
             $scope.model = {
                 id: 0,
@@ -206,7 +207,7 @@
                         .hideDelay(3000)
                     );
                     $scope.resetForm();
-                    $scope.init();
+                    $scope.ResetOnly();
                     GetAllDynamicVehicles(true);
                 } else {
                     if (data.data.data == 'TOKEN') {
@@ -430,7 +431,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
-                        $scope.init();
+                        $scope.ResetOnly();
                         $scope.resetForm();
                         GetAllDynamicVehicles(true);
                     } else {
@@ -514,7 +515,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
-                        $scope.init();
+                        $scope.ResetOnly();
                         $scope.resetForm();
                         GetAllDynamicVehicles(true);
                     } else {
@@ -776,6 +777,42 @@
             })
         }
 
+        $scope.ResetOnly = function() {
+            $scope.model = {
+                id: 0,
+                iduser: '',
+                Name: '',
+                deviceid: '',
+                renewaldate: null,
+                HandshakDatetime: null,
+                MaxSpeed: 0,
+                BatteryPercentage: 0,
+                IsACC: 0,
+                SleepMode: 0,
+                IsOnline: 0,
+                GPRSInterval: 10,
+                GPRSStopInterval: 0,
+                Arm: 0,
+                OdoMeter: 0,
+                HeartbeatInterval: 1,
+                Relay: null,
+                Siren: null,
+                UserDefined: null,
+                DoorLock: null,
+                DoorUnlock: null,
+                TimeZone: null,
+                IsDelete: 0,
+                idSalesAgent: null,
+                DeviceType: '',
+                IMEI: '',
+                idType: null,
+            };
+            $scope.selectedItem = null;
+            $scope.objSelectedUser = [];
+            // $scope.query = '';
+            $scope.flag = false;
+            $scope.ShowDtl = false;
+        }
 
         $scope.init();
     }
