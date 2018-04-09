@@ -194,6 +194,7 @@
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = '';
+            console.log($rootScope.AppName)
             if ($rootScope.UserRoles == 'Super Admin') {
                 if ($rootScope.AppName == 'Tracking') {
                     $scope.dtColumns = [
@@ -202,9 +203,9 @@
 
                         DTColumnBuilder.newColumn('IMEI'),
                         DTColumnBuilder.newColumn('Version'),
-                        // DTColumnBuilder.newColumn('SerialNum'),
-                        // DTColumnBuilder.newColumn('PhoneNum'),
-                        // DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                        DTColumnBuilder.newColumn('SerialNum'),
+                        DTColumnBuilder.newColumn('PhoneNum'),
+                        DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
                         DTColumnBuilder.newColumn('Country'),
                         // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                         DTColumnBuilder.newColumn('AppName'),
@@ -241,9 +242,9 @@
                         DTColumnBuilder.newColumn('DeviceId'),
                         DTColumnBuilder.newColumn('IMEI'),
                         DTColumnBuilder.newColumn('Version'),
-                        // DTColumnBuilder.newColumn('SerialNum'),
-                        // DTColumnBuilder.newColumn('PhoneNum'),
-                        // DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                        DTColumnBuilder.newColumn('SerialNum'),
+                        DTColumnBuilder.newColumn('PhoneNum'),
+                        DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
                         DTColumnBuilder.newColumn('Country'),
                         // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                         // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
