@@ -16,7 +16,8 @@
             });
         }
         $scope.GetAlltelco();
-        $scope.idApp = parseInt(localStorage.getItem('appId'));
+        $scope.model = { idApp: parseInt(localStorage.getItem('appId')) };
+        // $scope.model.idApp = parseInt(localStorage.getItem('appId'));
         $scope.GetAllInfoList = function() {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
                 $scope.lstAppInfo = data.data;
@@ -29,7 +30,7 @@
             angular.forEach($scope.Productfiles, function(obj1) {
                 formData.append('files[]', obj1.lfFile);
                 formData.append('idTelCo', $scope.idTelCo);
-                formData.append('idApp', $scope.idApp);
+                formData.append('idApp', $scope.model.idApp);
             });
             $http.post($rootScope.RoutePath + "sim/uploadExcelDevice", formData, {
                 transformRequest: angular.identity,
@@ -63,7 +64,7 @@
         }
         $scope.closeModel = function() {
             $scope.idTelCo = null;
-            $scope.idApp = parseInt(localStorage.getItem('appId'));
+            $scope.model.idApp = parseInt(localStorage.getItem('appId'));
             $scope.apiReset.removeAll();
             $mdDialog.hide();
         }
