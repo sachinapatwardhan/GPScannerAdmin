@@ -17,7 +17,7 @@
             $scope.OfflineImage = "/assets/images/icon-map-car--off2.png";
             $scope.ActiveImage = "/assets/images/icon-map-car-active2.png";
         } else {
-            $scope.OnlineImage = "/assets/images/locate-live.png.png";
+            $scope.OnlineImage = "/assets/images/locate-live.png";
             $scope.OfflineImage = "/assets/images/locate-disconnect.png";
             $scope.ActiveImage = "/assets/images/locate-active.png";
         }
