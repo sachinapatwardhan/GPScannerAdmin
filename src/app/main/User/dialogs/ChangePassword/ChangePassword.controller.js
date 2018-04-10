@@ -10,6 +10,7 @@
 
         var vm = this;
         $scope.RoutePath = $rootScope.RoutePath;
+        $scope.DisplayEmail = obj.email;
         $scope.init = function() {
             $scope.model = {
                 username: obj.username,

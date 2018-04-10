@@ -9,6 +9,7 @@
     function ChangePasswordCustomerController($mdToast, $document, $http, $mdDialog, $scope, obj, Tasks, event, VM, $rootScope) {
         var vm = this;
         $scope.RoutePath = $rootScope.RoutePath;
+        $scope.DisplayEmail = obj.email;
         $scope.init = function() {
             $scope.model = {
                 username: obj.username,

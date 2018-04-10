@@ -8,7 +8,7 @@
     /** @ngInject */
     function PasswordConifrmationController($mdToast, $http, $mdDialog, $scope, obj, Tasks, event, VM, $rootScope, flg) {
         var vm = this;
-        $scope.username = obj.username;
+        $scope.username = obj.email;
         $scope.RoutePath = $rootScope.RoutePath;
         $scope.flg = flg;
         $scope.init = function() {

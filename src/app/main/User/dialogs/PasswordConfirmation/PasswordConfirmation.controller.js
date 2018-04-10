@@ -8,7 +8,7 @@
     /** @ngInject */
     function UserPasswordConifrmationController($mdToast, $http, $mdDialog, $scope, obj, Tasks, event, VM, $rootScope, flg) {
 
-        $scope.username = obj.username;
+        $scope.username = obj.email;
         var vm = this;
         $scope.RoutePath = $rootScope.RoutePath;
         $scope.flg = flg;
