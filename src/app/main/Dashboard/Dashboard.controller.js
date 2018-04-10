@@ -397,40 +397,19 @@
             var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
 
             if (point) {
-                if (this.IsAnimation == true) {
-                    $scope.IsAnimationStart = true;
-                    animatediv.animate({
-                        'left': point.x + 'px',
-                        'top': point.y + 'px'
-                    }, 1000, function() {});
+                div.style.left = point.x + 'px';
+                div.style.top = point.y + 'px';
 
-                    setTimeout(function() {
-                        $scope.IsAnimationStart = false;
-                    }, 1200);
+                CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
+                CustomeInfoWindowdiv.style.top = (point.y - 180) + 'px';
+                if (this.objVehicle.IsOnline == 1 && this.objVehicle.IsEngine == true) {
 
-                    animatCustomeInfoWindowdiv.animate({
-                        'left': (point.x - 125) + 'px',
-                        'top': (point.y - 180) + 'px'
-                    }, 800, function() {});
-
-                    this.IsAnimation = false;
                     var heading = parseFloat(this.objVehicle.Direction) + 90;
                     div.style.transform = 'rotate(' + heading + 'deg)';
                     animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
                 } else {
-                    $scope.IsAnimationStart = true;
-                    setTimeout(function() {
-                        $scope.IsAnimationStart = false;
-                    }, 10);
-                    div.style.left = point.x + 'px';
-                    div.style.top = point.y + 'px';
-
-                    CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
-                    CustomeInfoWindowdiv.style.top = (point.y - 180) + 'px';
-
-                    var heading = parseFloat(this.objVehicle.Direction) + 90;
-                    div.style.transform = 'rotate(' + heading + 'deg)';
-                    animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                    div.style.transform = 'rotate(0deg)';
+                    animatediv.css('-webkit-transform', 'rotate(0deg)');
                 }
             }
         };

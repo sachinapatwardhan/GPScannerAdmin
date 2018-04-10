@@ -11,7 +11,8 @@
         var map;
         $scope.RoutePath = $rootScope.RoutePath;
         $scope.AppName = localStorage.getItem('appName');
-        //for map icon
+        console.log(IsOnline)
+            //for map icon
         if ($scope.AppName != "Tracking") {
             $scope.OnlineImage = "/assets/images/icon-map-car-on2.png";
             $scope.OfflineImage = "/assets/images/icon-map-car--off2.png";
@@ -260,19 +261,27 @@
                     // }, 800, function() {});
 
                     this.IsAnimation = false;
-
-                    var heading = parseFloat(this.direction) + 90;
-                    div.style.transform = 'rotate(' + heading + 'deg)';
-                    animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                    if (IsOnline == true && $rootScope.IsEngine == true) {
+                        var heading = parseFloat(this.direction) + 90;
+                        div.style.transform = 'rotate(' + heading + 'deg)';
+                        animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                    } else {
+                        div.style.transform = 'rotate(0deg)';
+                        animatediv.css('-webkit-transform', 'rotate(0deg)');
+                    }
                 } else {
                     div.style.left = point.x + 'px';
                     div.style.top = point.y + 'px';
                     // CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
                     // CustomeInfoWindowdiv.style.top = (point.y - 230) + 'px';
-
-                    var heading = parseFloat(this.direction) + 90;
-                    div.style.transform = 'rotate(' + heading + 'deg)';
-                    animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                    if (IsOnline == true && $rootScope.IsEngine == true) {
+                        var heading = parseFloat(this.direction) + 90;
+                        div.style.transform = 'rotate(' + heading + 'deg)';
+                        animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                    } else {
+                        div.style.transform = 'rotate(0deg)';
+                        animatediv.css('-webkit-transform', 'rotate(0deg)');
+                    }
                 }
             }
         };
