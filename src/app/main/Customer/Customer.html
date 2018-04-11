@@ -19,6 +19,10 @@
             <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
             </div>
             <div ng-if="FlgAddedEditlocal">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length > 0">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
+                </md-button>
                 <md-button class="md-raised md-background" ng-click="Reset()">
                     <span translate="Add New Customer">Add New Customer</span>
                 </md-button>
