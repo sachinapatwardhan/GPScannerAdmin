@@ -69,7 +69,6 @@
 
         $scope.EditLicence = function(Id) {
             var o = _.findWhere($scope.lstLicence, { Id: Id })
-            console.log(o)
             $scope.flag = true;
             $scope.model.Id = o.Id;
             $scope.model.IdUser = o.IdUser;
@@ -190,6 +189,7 @@
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
                 ]
             }
+
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                     url: $rootScope.RoutePath + "licence/GetAllLicence",
                     data: function(d) {
@@ -313,12 +313,12 @@
                         '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
                         '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
                         '</md-button>';
-                    // if (full.DeviceId != null && full.DeviceId != undefined && full.DeviceId != '') {
-                    //     btns += '<md-button class="edit-button md-icon-button"  ng-click="openDeviceIdModel(' + data.Id + ')">' +
-                    //         '<md-icon md-font-icon="icon-rotate-3d"  class="s18 blue-500- fg "></md-icon>' +
-                    //         '<md-tooltip md-visible="" md-direction="">Transfer Device</md-tooltip>' +
-                    //         '</md-button>';
-                    // }
+                    if (full.DeviceId != null && full.DeviceId != undefined && full.DeviceId != '') {
+                        btns += '<md-button class="edit-button md-icon-button"  ng-click="openDeviceIdModel(' + data.Id + ')">' +
+                            '<md-icon md-font-icon="icon-rotate-3d"  class="s18 blue-500- fg "></md-icon>' +
+                            '<md-tooltip md-visible="" md-direction="">Transfer Device</md-tooltip>' +
+                            '</md-button>';
+                    }
                 }
                 if ($rootScope.FlgDeletedAccess) {
                     btns += '<md-button class="edit-button md-icon-button"  ng-click="DeleteLicence(' + data.Id + ')" aria-label="">' +
@@ -509,6 +509,17 @@
                 }
             });
         }
+
+        // $scope.AssignLicence = function() {
+        //     var params = {
+        //         AppName: 'HC CARGO'
+        //     };
+        //     $http.get($rootScope.RoutePath + "vehicles/AssignLicenceToExistVehicle", {
+        //         params: params
+        //     }).success(function(data) {
+        //         console.log(data.message)
+        //     })
+        // }
 
         $scope.DeleteLicence = function(Id) {
             var confirm = $mdDialog.confirm()
