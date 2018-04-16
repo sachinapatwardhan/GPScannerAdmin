@@ -70,7 +70,7 @@
             'app.userfeedback',
             'app.SharedVehicle',
             'app.EmailSetting',
-            // 'app.AssignRetailer',
+            'app.AssignRetailer',
             'app.AssignLicence',
             'app.deviceaccvalue',
             'app.apiaccess',

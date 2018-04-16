@@ -567,17 +567,17 @@
                             }
 
                             // Assign Retailer to Sales Angent
-                            // var lstAssignRetailer = _.filter(lstAllPages, function(obj) {
-                            //     return obj.tblmodulemgmt.Module == 'Assign Retailer';
-                            // });
-                            // if (lstAssignRetailer.length > 0) {
-                            //     msNavigationService.saveItem('Settings.Assign Retailer', {
-                            //         title: 'Assign Retailer',
-                            //         state: 'app.AssignRetailer',
-                            //         order: lstAssignRetailer[0].tblmodulemgmt.DisplayOrder,
-                            //         weight: 1
-                            //     });
-                            // }
+                            var lstAssignRetailer = _.filter(lstAllPages, function(obj) {
+                                return obj.tblmodulemgmt.Module == 'Assign Retailer';
+                            });
+                            if (lstAssignRetailer.length > 0) {
+                                msNavigationService.saveItem('Settings.Assign Retailer', {
+                                    title: 'Assign Retailer',
+                                    state: 'app.AssignRetailer',
+                                    order: lstAssignRetailer[0].tblmodulemgmt.DisplayOrder,
+                                    weight: 1
+                                });
+                            }
 
                             //VehicleType
                             var lstVehicleType = _.filter(lstAllPages, function(obj) {
