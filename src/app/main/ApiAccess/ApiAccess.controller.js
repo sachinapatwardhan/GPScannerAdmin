@@ -38,7 +38,7 @@
             DTColumnBuilder.newColumn('Name').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('Phone').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('Email').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('tblappinfo.AppName').withOption('class', 'text-center'),
+            DTColumnBuilder.newColumn('AppName').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('Token').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('Key').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat).withOption('class', 'text-center'),
@@ -60,7 +60,7 @@
                         $scope.$apply(function () {
                             $scope.getApiAccess = json.data;
                         })
-                            return json.data;
+                        return json.data;
                     } else {
                         return [];
                     }
@@ -126,20 +126,51 @@
 
         function actionHtml(data, type, full, meta) {
             var btns = '<div layout="row">';
+
             if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="EditApiAccess(' + full.id + ')" aria-label="Edit Organization">' +
+                
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="AddDevice(' + full.id + ',$event)" aria-label="Add device">' +
+                    '<md-icon md-font-icon="icon-plus-circle"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Give Access</md-tooltip>' +
+                    '</md-button>';
+            }
+
+            if ($rootScope.FlgModifiedAccess) {
+
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="EditApiAccess(' + full.id + ')" aria-label="Edit apiaccess">' +
                     '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
                     '</md-button>';
             }
             if ($rootScope.FlgDeletedAccess) {
-                btns += '<md-button class="edit-button md-icon-button" ng-click="DelApiAccess(' + full.id + ')" aria-label="Del Organization">' +
+                btns += '<md-button class="edit-button md-icon-button" ng-click="DelApiAccess(' + full.id + ')" aria-label="Del apiaccess">' +
                     '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
                     '</md-button>';
             }
             btns += '</div>';
             return btns;
+        }
+
+        $scope.AddDevice = function (id, ev) {
+            var obj = _.findWhere($scope.getApiAccess, { id: parseInt(id) })
+            if (obj) {
+                $mdDialog.show({
+                    controller: 'devicemodelController',
+                    controllerAs: vm,
+                    templateUrl: 'app/main/ApiAccess/dialogs/adddevice/adddevice.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clcikOutsideToClose: true,
+                    locals: {
+                        event: ev,
+                        VM: vm,
+                        AppName: obj.AppName,
+                        apiaccessid: id,
+                    }
+                })
+            }
+
         }
 
         $scope.AddnewAPIAccess = function () {
@@ -165,6 +196,8 @@
         }
 
         $scope.CreateApiAccess = function (o) {
+            o.AppName = _.findWhere($scope.lstAppInfo, { id: o.AppName }).AppName
+            console.log(o)
             $http.post($rootScope.RoutePath + "apiaccess/SaveAccessClient", o).then(function (data) {
                 if (data.data.success == true) {
                     $scope.flag = false;
