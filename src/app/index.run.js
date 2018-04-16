@@ -338,7 +338,7 @@
                             });
                             if (lstaccess.length > 0) {
                                 msNavigationService.saveItem('Settings.ApiAccess', {
-                                    title: 'ApiAccess',
+                                    title: 'Api Access',
                                     state: 'app.apiaccess',
                                     order: lstaccess[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
