@@ -1,0 +1,59 @@
+<md-dialog class="task-dialog" aria-label="New Task" style="min-width: 1000px">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Device List </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content ms-scroll class="white-bg">
+
+        <md-content class="md-padding">
+            <div class="row">
+                <md-input-container class="md-block" flex="100">
+                    <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" placeholder="Search">
+                </md-input-container>
+            </div>
+            <table id="devicelist" class="dataTable row-border cell-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns"
+                dt-options="dtOptions" width="100%">
+                <thead>
+                    <tr>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title ">No</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title ">Select Device</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Device Id</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <!--<tbody>
+                    <tr ng-repeat="o in lstdevicelist |orderBy :'DeviceId'">
+                        <td class="text-center">
+                            <md-checkbox value="o.isSelect" ng-model="o.isSelect" ng-change="Select(o.id)" aria-label="Checkbox 1" class="md-primary">
+                            </md-checkbox>
+                        </td>
+
+                        <td class="text-center">
+                            {{o.DeviceId}}
+                        </td>
+                    </tr>
+                    <tr class="text-center" ng-if="Dynamiclist.length==0">
+                        <td colspan="8"> No record Found!</td>
+                    </tr>
+                </tbody>-->
+            </table>
+        </md-content>
+    </md-dialog-content>
+</md-dialog>
