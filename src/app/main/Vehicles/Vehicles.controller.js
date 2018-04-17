@@ -48,7 +48,7 @@
                 DeviceType: '',
                 IMEI: '',
                 idType: null,
-                AppName: $rootScope.AppName,
+                AppName: $rootScope.AppName
             };
             $scope.modelUpdateDate = { renewaldate: null, id: '' };
 
@@ -100,7 +100,7 @@
                 DeviceType: '',
                 IMEI: '',
                 idType: null,
-                AppName: $rootScope.AppName,
+                AppName: $rootScope.AppName
             };
             $scope.modelUpdateDate = { renewaldate: null, id: '' };
 
@@ -200,7 +200,6 @@
 
         $scope.CreateVehicleDetails = function(o) {
             $scope.model.deviceid = parseInt($scope.model.IMEI.toString().slice(1));
-            console.log(o)
             $http.get($rootScope.RoutePath + "bike/SaveVehicle", { params: o }).then(function(data) {
                 if (data.data.success == true) {
                     $mdToast.show(
@@ -668,7 +667,7 @@
                 DeviceType: '',
                 IMEI: '',
                 idType: null,
-                AppName: $rootScope.AppName,
+                AppName: $rootScope.AppName
             };
 
             $scope.modelUpdateDate = { renewaldate: null, id: '' };
@@ -711,7 +710,7 @@
                 DeviceType: '',
                 IMEI: '',
                 idType: null,
-                AppName: $rootScope.AppName,
+                AppName: $rootScope.AppName
             };
             $scope.modelUpdateDate = { renewaldate: null, id: '' };
 
@@ -811,7 +810,7 @@
                 DeviceType: '',
                 IMEI: '',
                 idType: null,
-                AppName: $rootScope.AppName,
+                AppName: $rootScope.AppName
             };
             $scope.selectedItem = null;
             $scope.objSelectedUser = [];

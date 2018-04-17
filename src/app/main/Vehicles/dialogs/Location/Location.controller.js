@@ -261,26 +261,38 @@
                     // }, 800, function() {});
 
                     this.IsAnimation = false;
-                    if (IsOnline == true && $rootScope.IsEngine == true) {
+                    if ($scope.AppName == "Tracking") {
+                        if (IsOnline == true && $rootScope.IsEngine == true) {
+                            var heading = parseFloat(this.direction) + 90;
+                            div.style.transform = 'rotate(' + heading + 'deg)';
+                            animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                        } else {
+                            div.style.transform = 'rotate(0deg)';
+                            animatediv.css('-webkit-transform', 'rotate(0deg)');
+                        }
+                    } else {
                         var heading = parseFloat(this.direction) + 90;
                         div.style.transform = 'rotate(' + heading + 'deg)';
                         animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
-                    } else {
-                        div.style.transform = 'rotate(0deg)';
-                        animatediv.css('-webkit-transform', 'rotate(0deg)');
                     }
                 } else {
                     div.style.left = point.x + 'px';
                     div.style.top = point.y + 'px';
                     // CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
                     // CustomeInfoWindowdiv.style.top = (point.y - 230) + 'px';
-                    if (IsOnline == true && $rootScope.IsEngine == true) {
+                    if ($scope.AppName == "Tracking") {
+                        if (IsOnline == true && $rootScope.IsEngine == true) {
+                            var heading = parseFloat(this.direction) + 90;
+                            div.style.transform = 'rotate(' + heading + 'deg)';
+                            animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                        } else {
+                            div.style.transform = 'rotate(0deg)';
+                            animatediv.css('-webkit-transform', 'rotate(0deg)');
+                        }
+                    } else {
                         var heading = parseFloat(this.direction) + 90;
                         div.style.transform = 'rotate(' + heading + 'deg)';
                         animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
-                    } else {
-                        div.style.transform = 'rotate(0deg)';
-                        animatediv.css('-webkit-transform', 'rotate(0deg)');
                     }
                 }
             }

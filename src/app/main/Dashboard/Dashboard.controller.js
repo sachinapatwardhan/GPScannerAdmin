@@ -402,14 +402,23 @@
 
                 CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
                 CustomeInfoWindowdiv.style.top = (point.y - 180) + 'px';
-                if (this.objVehicle.IsOnline == 1 && this.objVehicle.IsEngine == true) {
 
+
+                if ($scope.AppName == "Tracking") {
+
+                    if (this.objVehicle.IsOnline == 1 && this.objVehicle.IsEngine == true) {
+
+                        var heading = parseFloat(this.objVehicle.Direction) + 90;
+                        div.style.transform = 'rotate(' + heading + 'deg)';
+                        animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+                    } else {
+                        div.style.transform = 'rotate(0deg)';
+                        animatediv.css('-webkit-transform', 'rotate(0deg)');
+                    }
+                } else {
                     var heading = parseFloat(this.objVehicle.Direction) + 90;
                     div.style.transform = 'rotate(' + heading + 'deg)';
                     animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
-                } else {
-                    div.style.transform = 'rotate(0deg)';
-                    animatediv.css('-webkit-transform', 'rotate(0deg)');
                 }
             }
         };
