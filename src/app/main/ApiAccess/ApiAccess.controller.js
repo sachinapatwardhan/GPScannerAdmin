@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -10,12 +10,12 @@
 
         var vm = this;
 
-        $scope.init = function () {
+        $scope.init = function() {
             $scope.initapiaccess();
             $scope.flag = false;
         }
 
-        $scope.initapiaccess = function () {
+        $scope.initapiaccess = function() {
             $scope.model = {
                 id: 0,
                 Name: '',
@@ -27,8 +27,8 @@
             $scope.GetAllInfoList();
         }
 
-        $scope.GetAllInfoList = function () {
-            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
                 $scope.lstAppInfo = data.data;
             })
         }
@@ -47,25 +47,25 @@
         ]
 
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (req, res) {
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(req, res) {
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                url: $rootScope.RoutePath + "apiaccess/GetAllAccessClient",
-                data: function (d) {
-                    d.search = $scope.Search;
-                    return d
-                },
-                type: 'get',
-                dataSrc: (function (json) {
-                    if (json.success != false) {
-                        $scope.$apply(function () {
-                            $scope.getApiAccess = json.data;
-                        })
-                        return json.data;
-                    } else {
-                        return [];
-                    }
+                    url: $rootScope.RoutePath + "apiaccess/GetAllAccessClient",
+                    data: function(d) {
+                        d.search = $scope.Search;
+                        return d
+                    },
+                    type: 'get',
+                    dataSrc: (function(json) {
+                        if (json.success != false) {
+                            $scope.$apply(function() {
+                                $scope.getApiAccess = json.data;
+                            })
+                            return json.data;
+                        } else {
+                            return [];
+                        }
+                    })
                 })
-            })
                 .withOption('processing', true)
                 .withOption('serverSide', true)
                 .withPaginationType('full_numbers')
@@ -79,7 +79,7 @@
         })
         $scope.dtInstance = {};
         //Reload Datatable
-        $scope.GetAllApiAccess = function (IsUpdate) {
+        $scope.GetAllApiAccess = function(IsUpdate) {
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
@@ -91,9 +91,9 @@
 
         }
 
-        $scope.reloadData = function () { }
+        $scope.reloadData = function() {}
 
-        function callback(json) { }
+        function callback(json) {}
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -128,7 +128,7 @@
             var btns = '<div layout="row">';
 
             if ($rootScope.FlgModifiedAccess) {
-                
+
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="AddDevice(' + full.id + ',$event)" aria-label="Add device">' +
                     '<md-icon md-font-icon="icon-plus-circle"  class="s18 green-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Give Access</md-tooltip>' +
@@ -152,7 +152,7 @@
             return btns;
         }
 
-        $scope.AddDevice = function (id, ev) {
+        $scope.AddDevice = function(id, ev) {
             var obj = _.findWhere($scope.getApiAccess, { id: parseInt(id) })
             if (obj) {
                 $mdDialog.show({
@@ -173,14 +173,14 @@
 
         }
 
-        $scope.AddnewAPIAccess = function () {
+        $scope.AddnewAPIAccess = function() {
             $scope.flag = true;
             $scope.initapiaccess();
             $scope.FormAccessCLient.$setPristine();
             $scope.FormAccessCLient.$setUntouched();
         }
 
-        $scope.EditApiAccess = function (id) {
+        $scope.EditApiAccess = function(id) {
             $scope.initapiaccess();
             var o = _.findWhere($scope.getApiAccess, {
                 id: id
@@ -195,10 +195,10 @@
 
         }
 
-        $scope.CreateApiAccess = function (o) {
+        $scope.CreateApiAccess = function(o) {
             o.AppName = _.findWhere($scope.lstAppInfo, { id: o.AppName }).AppName
             console.log(o)
-            $http.post($rootScope.RoutePath + "apiaccess/SaveAccessClient", o).then(function (data) {
+            $http.post($rootScope.RoutePath + "apiaccess/SaveAccessClient", o).then(function(data) {
                 if (data.data.success == true) {
                     $scope.flag = false;
                     $scope.initapiaccess();
@@ -206,22 +206,22 @@
 
                     $mdToast.show(
                         $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
                     );
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
                     );
                 }
             })
         }
 
-        $scope.UpdateStatus = function (id) {
+        $scope.UpdateStatus = function(id) {
             var message = '';
             var IsActive = 0;
             var o = _.findWhere($scope.getApiAccess, {
@@ -243,18 +243,18 @@
                 .ok('Yes')
                 .cancel('No');
 
-            $mdDialog.show(confirm).then(function () {
+            $mdDialog.show(confirm).then(function() {
                 var params = {
                     id: id,
                     IsActive: IsActive
                 }
-                $http.get($rootScope.RoutePath + "apiaccess/UpdateIsActiveStatus", { params: params }).then(function (data) {
+                $http.get($rootScope.RoutePath + "apiaccess/UpdateIsActiveStatus", { params: params }).then(function(data) {
                     if (data.data.success) {
                         $mdToast.show(
                             $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                         );
                         // $scope.ResetModel();
                         $scope.GetAllApiAccess(true);
@@ -264,9 +264,9 @@
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                    .textContent(data.data.message)
-                                    .position('top right')
-                                    .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                             );
                         }
                     }
@@ -274,63 +274,63 @@
             });
         }
 
-        $scope.DelApiAccess = function (id) {
+        $scope.DelApiAccess = function(id) {
             var confirm = $mdDialog.confirm()
                 .title("Are you sure to delete this data ?")
                 .ok("Yes")
                 .cancel("No");
-            $mdDialog.show(confirm).then(function () {
+            $mdDialog.show(confirm).then(function() {
                 var params = {
                     id: id
                 }
                 $http.get($rootScope.RoutePath + "apiaccess/DelAccessClient", { params: params })
-                    .success(function (data) {
+                    .success(function(data) {
                         if (data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                    .textContent(data.message)
-                                    .position('top right')
-                                    .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                             );
                             $scope.GetAllApiAccess();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                    .textContent(data.message)
-                                    .position('top right')
-                                    .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                             );
                         }
                     })
             })
         }
 
-        $scope.ResetData = function () {
+        $scope.ResetData = function() {
             $scope.initapiaccess();
             $scope.FormAccessCLient.$setPristine();
             $scope.FormAccessCLient.$setUntouched();
         }
 
-        $scope.GetSerch = function (Search) {
+        $scope.GetSerch = function(Search) {
             $scope.Search = Search;
             $scope.GetAllApiAccess();
         }
 
-        $scope.Reset = function () {
+        $scope.Reset = function() {
             $scope.flag = false;
             $scope.init();
         }
 
-        $scope.GoToLIst = function () {
+        $scope.GoToLIst = function() {
             $scope.flag = false;
             $scope.init();
         }
 
-        $scope.clearSearchTerm = function () {
+        $scope.clearSearchTerm = function() {
             $scope.searchTermidAppName = '';
         };
 
-        $scope.onSearchChange = function ($event) {
+        $scope.onSearchChange = function($event) {
             $event.stopPropagation();
         }
 
