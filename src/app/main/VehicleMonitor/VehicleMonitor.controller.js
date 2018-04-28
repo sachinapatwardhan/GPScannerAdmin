@@ -7,7 +7,6 @@
 
     /** @ngInject */
     function VehicleMonitorController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
-        console.log("###############")
 
         var pendingSearch, cancelSearch = angular.noop;
         var cachedQuery, lastSearch;
@@ -38,7 +37,6 @@
                 idApp: appid,
             }
             $http.get($rootScope.RoutePath + "vehicles/GetAllVehicleDeviceId", { params: params }).then(function(data) {
-                console.log(data)
                 $scope.lstDevice = data.data
                 $scope.deviceidlst = [];
                 for (var i = 0; i < data.data.length > 0; i++) {

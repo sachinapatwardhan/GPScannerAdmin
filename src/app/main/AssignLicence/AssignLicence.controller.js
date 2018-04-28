@@ -84,8 +84,6 @@
             } else {
                 $scope.model.LicenceType = o.LicenceType;
             }
-
-            // console.log(o.ExpiryDate)
             if (o.ExpiryDate != null && o.ExpiryDate != undefined && o.ExpiryDate != '') {
                 $scope.model.ExpiryDate = new Date(o.ExpiryDate);
             } else {
@@ -101,6 +99,7 @@
 
         $scope.changeExpiry = function(days) {
             var ExpiryDate = new Date();
+
             if (days == 'Yearly') {
                 ExpiryDate.setFullYear(ExpiryDate.getFullYear() + 1);
                 $scope.model.ExpiryDate = ExpiryDate;
@@ -378,6 +377,48 @@
         }
 
         //--------------------------------------------------------------------------
+        $scope.AssignLicence = function() {
+            var params = {
+                idApp: $rootScope.appId
+            }
+            $http.get($rootScope.RoutePath + "licence/GetLienceToAssignDevice", { params: params }).then(function(data) {
+                console.log(data.data)
+                if (data.data) {
+                    var o = data.data;
+                    $scope.flag = true;
+                    $scope.model.Id = o.Id;
+                    $scope.model.IdUser = o.IdUser;
+                    $scope.model.LicenceNo = o.LicenceNo;
+                    $scope.model.DeviceId = o.DeviceId;
+                    if (o.LicenceRenewalType == null || o.LicenceRenewalType == undefined || o.LicenceRenewalType == '') {
+                        $scope.model.LicenceRenewalType = o.appLicenceRenewalType;
+                    } else {
+                        $scope.model.LicenceRenewalType = o.LicenceRenewalType;
+                    }
+                    if (o.LicenceType == null || o.LicenceType == undefined || o.LicenceType == '') {
+                        $scope.model.LicenceType = o.appLicenceType;
+                    } else {
+                        $scope.model.LicenceType = o.LicenceType;
+                    }
+                    if (o.ExpiryDate != null && o.ExpiryDate != undefined && o.ExpiryDate != '') {
+                        $scope.model.ExpiryDate = new Date(o.ExpiryDate);
+                    } else {
+                        $scope.changeExpiry($scope.model.LicenceRenewalType)
+                            // var ExpiryDate = new Date();
+                            // ExpiryDate.setFullYear(ExpiryDate.getFullYear() + 1);
+                            // $scope.model.ExpiryDate = ExpiryDate;
+                    }
+                    $scope.GetUserById($scope.model.IdUser);
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent("No more Licence avilable to assign Device. Please genrate Licence.")
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                }
+            })
+        }
 
         $scope.openDeviceIdModel = function(Id) {
             var o = _.findWhere($scope.lstLicence, { Id: Id })

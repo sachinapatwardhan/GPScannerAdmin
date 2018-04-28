@@ -56,19 +56,31 @@
                 socket.on($scope.lstActiveVehicle[t].deviceid + 'BikeDeviceStatus', function(msg) {
                     var obj = JSON.parse(msg);
                     $scope.$apply(function() {
-                        if ($scope.lstDevices != undefined) {
-                            if ($scope.lstActiveVehicle != null && $scope.lstActiveVehicle != undefined) {
-                                for (var i = 0; i < $scope.lstActiveVehicle.length; i++) {
-                                    if ($scope.lstActiveVehicle[t].deviceid == obj.DeviceId) {
-                                        $scope.lstActiveVehicle[t].IsOnline = obj.Status;
-                                        $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: true });
-                                        $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: false });
-                                        var VehicleID = $scope.lstActiveVehicle[t].Name;
-                                        new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude), map, VehicleID, $scope.lstActiveVehicle[t])
-                                    }
+                        // if ($scope.lstDevices != undefined) {
+                        if ($scope.lstActiveVehicle != null && $scope.lstActiveVehicle != undefined) {
+                            for (var t = 0; t < $scope.lstActiveVehicle.length; t++) {
+                                if ($scope.lstActiveVehicle[t].deviceid == obj.DeviceId) {
+                                    $scope.lstActiveVehicle[t].IsOnline = obj.Status;
+                                    $scope.ActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
+                                            if (item.IsOnline == 1 || item.IsOnline == true) {
+                                                return item
+                                            }
+                                        })
+                                        //  _.where($scope.lstActiveVehicle, { IsOnline: true });
+                                    $scope.NotActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
+                                        if (item.id != null && (item.IsOnline == 0 || item.IsOnline == false)) {
+                                            return item;
+                                        }
+                                    })
+                                    console.log("A....", $scope.ActiveDevice.length)
+                                    console.log($scope.NotActiveDevice.length)
+                                    $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
+                                    var VehicleID = $scope.lstActiveVehicle[t].Name;
+                                    new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude), map, VehicleID, $scope.lstActiveVehicle[t])
                                 }
                             }
                         }
+                        // }
                     });
                 });
 
@@ -87,7 +99,6 @@
                                 objVehicle.Longitude = obj.Longitude;
 
                                 var VehicleID = objVehicle.Name;
-
                                 new CustomMarker(new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude), map, VehicleID, objVehicle)
                             };
                         }
@@ -187,8 +198,13 @@
                         }
                     }
                     $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 1 });
-                    $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0 });
-
+                    // $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0 });
+                    $scope.NotActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
+                        if (item.id != null && item.IsOnline == 0) {
+                            return item;
+                        }
+                    })
+                    $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
 
                     function setActiveVehicle(i) {
                         if (i < $scope.lstActiveVehicle.length) {
