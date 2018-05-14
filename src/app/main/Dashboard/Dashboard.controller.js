@@ -9,6 +9,7 @@
 
         var vm = this;
         var map;
+        var SimpleMarker;
         var socket = io($rootScope.Socket_URL, {
             'forceNew': true
         });
@@ -22,10 +23,12 @@
             $scope.OnlineImage = "/assets/images/icon-map-car-on2.png";
             $scope.OfflineImage = "/assets/images/icon-map-car--off2.png";
             $scope.ActiveImage = "/assets/images/icon-map-car-active2.png";
+            $scope.SimpleMarkerIcon = "/assets/images/locate-active-blue.png";
         } else {
             $scope.OnlineImage = "/assets/images/locate-live.png";
             $scope.OfflineImage = "/assets/images/locate-disconnect.png";
             $scope.ActiveImage = "/assets/images/locate-active.png";
+            $scope.SimpleMarkerIcon = "/assets/images/locate-active.png";
         }
         //endicon
         $scope.selectAppName = $scope.AppName;
@@ -60,25 +63,49 @@
                         if ($scope.lstActiveVehicle != null && $scope.lstActiveVehicle != undefined) {
                             for (var t = 0; t < $scope.lstActiveVehicle.length; t++) {
                                 if ($scope.lstActiveVehicle[t].deviceid == obj.DeviceId) {
+                                    if (obj.Status == true) {
+                                        obj.Status = 1;
+                                    } else {
+                                        obj.Status = 0;
+                                    }
                                     $scope.lstActiveVehicle[t].IsOnline = obj.Status;
-                                    $scope.ActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
-                                            if (item.IsOnline == 1 || item.IsOnline == true) {
-                                                return item
-                                            }
-                                        })
-                                        //  _.where($scope.lstActiveVehicle, { IsOnline: true });
-                                    $scope.NotActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
-                                        if (item.id != null && (item.IsOnline == 0 || item.IsOnline == false)) {
-                                            return item;
-                                        }
-                                    })
-                                    console.log("A....", $scope.ActiveDevice.length)
-                                    console.log($scope.NotActiveDevice.length)
-                                    $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
+                                    // $scope.ActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
+                                    //         if (item.IsOnline == 1 || item.IsOnline == true) {
+                                    //             return item
+                                    //         }
+                                    //     })
+                                    //     //  _.where($scope.lstActiveVehicle, { IsOnline: true });
+                                    // $scope.NotActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
+                                    //         if (item.id != null && (item.IsOnline == 0 || item.IsOnline == false)) {
+                                    //             return item;
+                                    //         }
+                                    //     })
+                                    //     // console.log("A....", $scope.ActiveDevice.length)
+                                    //     // console.log($scope.NotActiveDevice.length)
+                                    // $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
+                                    $scope.ManageDashBoardCount();
                                     var VehicleID = $scope.lstActiveVehicle[t].Name;
-                                    new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude), map, VehicleID, $scope.lstActiveVehicle[t])
+                                    //new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude), map, VehicleID, $scope.lstActiveVehicle[t])
+                                    SimpleMarker = new google.maps.Marker({
+                                        map: map,
+                                        position: new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude),
+                                        icon: $scope.SimpleMarkerIcon
+                                    });
+                                    var infowindow = new google.maps.InfoWindow();
+                                    var EngineStatus = $scope.lstActiveVehicle[t].IsEngine == true ? "Engine On" : "Engine Off";
+                                    var DeviceDatetime = moment(moment.utc(new Date($scope.lstActiveVehicle[t].Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
+                                    var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[t].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[t].deviceid + '">' + parseFloat($scope.lstActiveVehicle[t].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[t].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                                    google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
+                                        return function() {
+                                            infowindow.setContent(content);
+                                            infowindow.open(map, SimpleMarker);
+                                        };
+                                    })(SimpleMarker, content, infowindow));
+
                                 }
+
                             }
+
                         }
                         // }
                     });
@@ -97,9 +124,25 @@
                                 objVehicle.Direction = obj.Direction;
                                 objVehicle.Latitude = obj.Latitude;
                                 objVehicle.Longitude = obj.Longitude;
-
                                 var VehicleID = objVehicle.Name;
-                                new CustomMarker(new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude), map, VehicleID, objVehicle)
+                                // new CustomMarker(new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude), map, VehicleID, objVehicle)
+                                SimpleMarker = new google.maps.Marker({
+                                    map: map,
+                                    position: new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude),
+                                    icon: $scope.SimpleMarkerIcon
+                                });
+                                var infowindow = new google.maps.InfoWindow();
+                                var EngineStatus = objVehicle.IsEngine == true ? "Engine On" : "Engine Off";
+                                var DeviceDatetime = moment(moment.utc(new Date(objVehicle.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
+                                var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + objVehicle.deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + objVehicle.deviceid + '">' + parseFloat(objVehicle.Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + objVehicle.deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                                google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
+                                    return function() {
+                                        infowindow.setContent(content);
+                                        infowindow.open(map, SimpleMarker);
+                                    };
+                                })(SimpleMarker, content, infowindow));
+
+
                             };
                         }
                     });
@@ -197,14 +240,7 @@
                             $scope.lstActiveVehicle[i].IsOnline = 0;
                         }
                     }
-                    $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 1 });
-                    // $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0 });
-                    $scope.NotActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
-                        if (item.id != null && item.IsOnline == 0) {
-                            return item;
-                        }
-                    })
-                    $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
+                    $scope.ManageDashBoardCount();
 
                     function setActiveVehicle(i) {
                         if (i < $scope.lstActiveVehicle.length) {
@@ -213,7 +249,22 @@
                             var VehicleID = $scope.lstActiveVehicle[i].Name;
                             var objVehicle = $scope.lstActiveVehicle[i];
                             if ($scope.lstActiveVehicle[i].Latitude != null && $scope.lstActiveVehicle[i].Longitude != null) {
-                                new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude), map, VehicleID, objVehicle)
+                                // new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude), map, VehicleID, objVehicle)
+                                SimpleMarker = new google.maps.Marker({
+                                    map: map,
+                                    position: new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude),
+                                    icon: $scope.SimpleMarkerIcon
+                                });
+                                var infowindow = new google.maps.InfoWindow();
+                                var EngineStatus = $scope.lstActiveVehicle[i].IsEngine == true ? "Engine On" : "Engine Off";
+                                var DeviceDatetime = moment(moment.utc(new Date($scope.lstActiveVehicle[i].Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
+                                var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[i].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[i].deviceid + '">' + parseFloat($scope.lstActiveVehicle[i].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[i].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                                google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
+                                    return function() {
+                                        infowindow.setContent(content);
+                                        infowindow.open(map, SimpleMarker);
+                                    };
+                                })(SimpleMarker, content, infowindow));
                             }
                             setActiveVehicle(i + 1);
                         }
@@ -233,6 +284,17 @@
             })
         }
 
+        $scope.ManageDashBoardCount = function() {
+            $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 1 });
+            // $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0 });
+            $scope.NotActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
+                if (item.id != null && item.IsOnline == 0) {
+                    return item;
+                }
+            })
+            $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
+        }
+
         $scope.getCurrentLocation = function(flag) {
             var posOptions = { timeout: 7000, enableHighAccuracy: false };
             try {
@@ -250,6 +312,7 @@
 
         $scope.getCurrentLocation(false);
 
+
         function CustomMarker(latlng, map, VehicleID, objVehicle) {
             this.latlng_ = latlng;
             // this.imageSrc = imageSrc;
@@ -263,6 +326,9 @@
             // trigger a call to panes_changed which should in turn call draw.
             this.setMap(map);
         }
+
+
+
 
         CustomMarker.prototype = new google.maps.OverlayView();
         CustomMarker.prototype.draw = function() {
