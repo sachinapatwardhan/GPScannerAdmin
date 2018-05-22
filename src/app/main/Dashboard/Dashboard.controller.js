@@ -83,7 +83,7 @@
                                     //     // console.log("A....", $scope.ActiveDevice.length)
                                     //     // console.log($scope.NotActiveDevice.length)
                                     // $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
-                                    $scope.ManageDashBoardCount();
+
                                     var VehicleID = $scope.lstActiveVehicle[t].Name;
                                     //new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude), map, VehicleID, $scope.lstActiveVehicle[t])
                                     SimpleMarker = new google.maps.Marker({
@@ -94,7 +94,25 @@
                                     var infowindow = new google.maps.InfoWindow();
                                     var EngineStatus = $scope.lstActiveVehicle[t].IsEngine == true ? "Engine On" : "Engine Off";
                                     var DeviceDatetime = moment(moment.utc(new Date($scope.lstActiveVehicle[t].Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
-                                    var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[t].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[t].deviceid + '">' + parseFloat($scope.lstActiveVehicle[t].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[t].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                                    // var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[t].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[t].deviceid + '">' + parseFloat($scope.lstActiveVehicle[t].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[t].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+
+                                    var content = '<div class="CustomInfoWindow">' +
+                                        '    <h3>' + VehicleID + '</h3>' +
+                                        '    <ul>' +
+                                        '        <li>' +
+                                        '            <i class="ion-ios-clock" style="color:green;"></i>' +
+                                        '            <span>' + DeviceDatetime + '</span>' +
+                                        '        </li>' +
+                                        '        <li>' +
+                                        '            <i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i>' +
+                                        '            <span>' + parseFloat($scope.lstActiveVehicle[t].Speed).toFixed(2) + ' km/h </span>' +
+                                        '        </li>' +
+                                        '        <li>' +
+                                        '            <i class="ion-gear-b localEngineSymbol" style="color:green;"></i>' +
+                                        '            <span> ' + EngineStatus + ' </span>' +
+                                        '        </li>' +
+                                        '    </ul>' +
+                                        '</div>';
                                     google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
                                         return function() {
                                             infowindow.setContent(content);
@@ -102,10 +120,11 @@
                                         };
                                     })(SimpleMarker, content, infowindow));
 
+
                                 }
 
                             }
-
+                            $scope.ManageDashBoardCount();
                         }
                         // }
                     });
@@ -134,7 +153,24 @@
                                 var infowindow = new google.maps.InfoWindow();
                                 var EngineStatus = objVehicle.IsEngine == true ? "Engine On" : "Engine Off";
                                 var DeviceDatetime = moment(moment.utc(new Date(objVehicle.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
-                                var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + objVehicle.deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + objVehicle.deviceid + '">' + parseFloat(objVehicle.Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + objVehicle.deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                                // var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + objVehicle.deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + objVehicle.deviceid + '">' + parseFloat(objVehicle.Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + objVehicle.deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                                var content = '<div class="CustomInfoWindow">' +
+                                    '    <h3>' + VehicleID + '</h3>' +
+                                    '    <ul>' +
+                                    '        <li>' +
+                                    '            <i class="ion-ios-clock" style="color:green;"></i>' +
+                                    '            <span>' + DeviceDatetime + '</span>' +
+                                    '        </li>' +
+                                    '        <li>' +
+                                    '            <i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i>' +
+                                    '            <span>' + objVehicle.Speed + ' km/h </span>' +
+                                    '        </li>' +
+                                    '        <li>' +
+                                    '            <i class="ion-gear-b localEngineSymbol" style="color:green;"></i>' +
+                                    '            <span> ' + EngineStatus + ' </span>' +
+                                    '        </li>' +
+                                    '    </ul>' +
+                                    '</div>';
                                 google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
                                     return function() {
                                         infowindow.setContent(content);
@@ -181,7 +217,6 @@
             // $scope.GetAllDevice();
             $scope.GetAllMontName();
             $scope.GetAllYearName();
-
             $scope.TotalShopperCustomer = 0;
             $scope.TotalOwnerCustomer = 0;
             $scope.GetAllExpiredDevice();
@@ -258,7 +293,25 @@
                                 var infowindow = new google.maps.InfoWindow();
                                 var EngineStatus = $scope.lstActiveVehicle[i].IsEngine == true ? "Engine On" : "Engine Off";
                                 var DeviceDatetime = moment(moment.utc(new Date($scope.lstActiveVehicle[i].Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
-                                var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[i].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[i].deviceid + '">' + parseFloat($scope.lstActiveVehicle[i].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[i].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                                // var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[i].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[i].deviceid + '">' + parseFloat($scope.lstActiveVehicle[i].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[i].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+
+                                var content = '<div class="CustomInfoWindow">' +
+                                    '    <h3>' + VehicleID + '</h3>' +
+                                    '    <ul>' +
+                                    '        <li>' +
+                                    '            <i class="ion-ios-clock" style="color:green;"></i>' +
+                                    '            <span>' + DeviceDatetime + '</span>' +
+                                    '        </li>' +
+                                    '        <li>' +
+                                    '            <i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i>' +
+                                    '            <span>' + parseFloat($scope.lstActiveVehicle[i].Speed).toFixed(2) + ' km/h </span>' +
+                                    '        </li>' +
+                                    '        <li>' +
+                                    '            <i class="ion-gear-b localEngineSymbol" style="color:green;"></i>' +
+                                    '            <span> ' + EngineStatus + ' </span>' +
+                                    '        </li>' +
+                                    '    </ul>' +
+                                    '</div>';
                                 google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
                                     return function() {
                                         infowindow.setContent(content);
