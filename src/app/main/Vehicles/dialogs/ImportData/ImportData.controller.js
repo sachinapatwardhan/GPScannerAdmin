@@ -57,7 +57,6 @@
                         .hideDelay(3000)
                     );
                     $scope.closeModel();
-                    Obj.GetPetDevice();
 
                 } else {
                     $mdToast.show(

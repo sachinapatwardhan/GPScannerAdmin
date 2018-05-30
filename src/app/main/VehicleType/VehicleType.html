@@ -58,6 +58,11 @@
                             </th>
                             <th class="secondary-text ">
                                 <div class="table-header ">
+                                    <span class="column-title ">App Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
                                     <span class="column-title ">IsActive</span>
                                 </div>
                             </th>
@@ -122,6 +127,19 @@
                 <form name="formVehicleType " novalidate class="md-inline-form " aria-invalid="false ">
                     <div class="content ">
                         <div layout="row " layout-wrap>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
+                                <label>App Name</label>
+                                <md-select Name="AppName" ng-model="model.idApp" required>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo track by o.id">{{o.AppName}}</md-option>
+                                </md-select>
+                                <div ng-messages="formVehicleType.AppName.$error" ng-if="formVehicleType.AppName.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>App Name is required.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <!-- </div>
+                        <div layout="row " layout-wrap> -->
                             <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
                                 <label>Vehicle Type</label>
                                 <input type="text " name="Type" ng-model="model.Type " required>
@@ -130,6 +148,12 @@
                                         <span>Vehicle Type field is required</span>
                                     </div>
                                 </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking'">
+                            <md-input-container class="md-block" flex="100" flex-gt-xs="25">
+                                Is Icon Upload ?
+                                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="model.IsIconDynamic" class="md-primary"></md-checkbox>
                             </md-input-container>
                         </div>
                         <!-- <div layout="row " layout-wrap>
@@ -181,13 +205,13 @@
                                 </md-input-container>
                             </md-input-container>
                         </div> -->
-                        <div ng-show="FlgOnIcon && modelApp.AppName != 'Tracking'" class="row" flex="100" flex-gt-xs="50">
+                        <div ng-show="FlgOnIcon && modelApp.AppName != 'Tracking' && model.IsIconDynamic==true" class="row" flex="100" flex-gt-xs="50">
                             <img ng-src="{{myCroppedOnIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
 
                             <br />
                             <md-button class="md-raised md-primary" ng-click="RemoveImage('OnIcon')">Remove</md-button>
                         </div>
-                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking'">
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
                                 <label>Home On Icon</label>
                                 <md-input-container class="md-block" flex>
@@ -199,13 +223,13 @@
                             </md-input-container>
                         </div>
 
-                        <div ng-show="FlgActiveIcon && modelApp.AppName != 'Tracking'" class="row" flex="100" flex-gt-xs="50">
+                        <div ng-show="FlgActiveIcon && modelApp.AppName != 'Tracking' && model.IsIconDynamic==true" class="row" flex="100" flex-gt-xs="50">
                             <img ng-src="{{myCroppedActiveIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
 
                             <br />
                             <md-button class="md-raised md-primary" ng-click="RemoveImage('ActiveIcon')">Remove</md-button>
                         </div>
-                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking'">
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
                                 <label>Home Active Icon</label>
                                 <md-input-container class="md-block" flex>
@@ -217,12 +241,12 @@
                             </md-input-container>
                         </div>
 
-                        <div ng-show="FlgOffIcon && modelApp.AppName != 'Tracking'" class="row" flex="100" flex-gt-xs="50">
+                        <div ng-show="FlgOffIcon && modelApp.AppName != 'Tracking' && model.IsIconDynamic==true" class="row" flex="100" flex-gt-xs="50">
                             <img ng-src="{{myCroppedOffIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
                             <br />
                             <md-button class="md-raised md-primary" ng-click="RemoveImage('OffIcon')">Remove</md-button>
                         </div>
-                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking'">
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
                                 <label>Home Off Icon</label>
                                 <md-input-container class="md-block" flex>
@@ -234,13 +258,30 @@
                             </md-input-container>
                         </div>
 
-                        <div ng-show="FlgLocateOnIcon && modelApp.AppName != 'Tracking'" class="row" flex="100" flex-gt-xs="50">
+                        <div ng-show="FlgPowerCuttIcon && modelApp.AppName != 'Tracking' && model.IsIconDynamic==true" class="row" flex="100" flex-gt-xs="50">
+                            <img ng-src="{{myCroppedPowerCuttIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
+                            <br />
+                            <md-button class="md-raised md-primary" ng-click="RemoveImage('PowerCuttIcon')">Remove</md-button>
+                        </div>
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
+                                <label>Home Powercut Icon</label>
+                                <md-input-container class="md-block" flex>
+                                    <lf-ng-md-file-input name="files07" lf-placeholder="Vehicle Status Home Powercut Icon" lf-files="PowerCuttIcon" lf-api="apiPowerCuttIcon" onchange="angular.element(this).scope().setPowerCuttIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
+                                    <div ng-messages="formVehicleType.files07.$error" style="color:red;">
+                                        <div ng-message="mimetype">Only .png image file supported</div>
+                                    </div>
+                                </md-input-container>
+                            </md-input-container>
+                        </div>
+
+                        <div ng-show="FlgLocateOnIcon && modelApp.AppName != 'Tracking' && model.IsIconDynamic==true" class="row" flex="100" flex-gt-xs="50">
                             <img ng-src="{{myCroppedLocateOnIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
 
                             <br />
                             <md-button class="md-raised md-primary" ng-click="RemoveImage('LocateOnIcon')">Remove</md-button>
                         </div>
-                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking'">
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
                                 <label>Locate On Icon</label>
                                 <md-input-container class="md-block" flex>
@@ -252,13 +293,13 @@
                             </md-input-container>
                         </div>
 
-                        <div ng-show="FlgLocateActiveIcon && modelApp.AppName != 'Tracking'" class="row" flex="100" flex-gt-xs="50">
+                        <div ng-show="FlgLocateActiveIcon && modelApp.AppName != 'Tracking' && model.IsIconDynamic==true" class="row" flex="100" flex-gt-xs="50">
                             <img ng-src="{{myCroppedLocateActiveIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
 
                             <br />
                             <md-button class="md-raised md-primary" ng-click="RemoveImage('LocateActiveIcon')">Remove</md-button>
                         </div>
-                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking'">
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
                                 <label>Locate Active Icon</label>
                                 <md-input-container class="md-block" flex>
@@ -270,12 +311,12 @@
                             </md-input-container>
                         </div>
 
-                        <div ng-show="FlgLocateOffIcon && modelApp.AppName != 'Tracking'" class="row" flex="100" flex-gt-xs="50">
+                        <div ng-show="FlgLocateOffIcon && modelApp.AppName != 'Tracking' && model.IsIconDynamic==true" class="row" flex="100" flex-gt-xs="50">
                             <img ng-src="{{myCroppedLocateOffIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
                             <br />
                             <md-button class="md-raised md-primary" ng-click="RemoveImage('LocateOffIcon')">Remove</md-button>
                         </div>
-                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking'">
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
                             <md-input-container class="md-block" flex="100" flex-gt-sm="50">
                                 <label>Locate Off Icon</label>
                                 <md-input-container class="md-block" flex>
@@ -286,7 +327,25 @@
                                 </md-input-container>
                             </md-input-container>
                         </div>
-                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking'">
+
+                        <div ng-show="FlgLocatePowerCuttIcon && modelApp.AppName != 'Tracking' && model.IsIconDynamic==true" class="row" flex="100" flex-gt-xs="50">
+                            <img ng-src="{{myCroppedLocatePowerCuttIcon}}" id="UploadedImage" err-src="assets/images/no-image.png" width="30px" />
+                            <br />
+                            <md-button class="md-raised md-primary" ng-click="RemoveImage('LocatePowerCuttIcon')">Remove</md-button>
+                        </div>
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="50">
+                                <label>Locate Powercut Icon</label>
+                                <md-input-container class="md-block" flex>
+                                    <lf-ng-md-file-input name="files08" lf-placeholder="Vehicle Status Locate Powercut Icon" lf-files="LocatePowerCuttIcon" lf-api="apiLocatePowerCuttIcon" onchange="angular.element(this).scope().setLocatePowerCuttIcon(this)" lf-mimetype="image/png" preview></lf-ng-md-file-input>
+                                    <div ng-messages="formVehicleType.files08.$error" style="color:red;">
+                                        <div ng-message="mimetype">Only .png image file supported</div>
+                                    </div>
+                                </md-input-container>
+                            </md-input-container>
+                        </div>
+
+                        <div layout="row" flex="100" flex-gt-sm="100" flex-gt-md="100" ng-show="modelApp.AppName != 'Tracking' && model.IsIconDynamic==true">
                             <md-input-container class="md-block" flex="100" flex-gt-xs="25">
                                 IsRotate
                                 <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="model.LocateIsRotate" class="md-primary"></md-checkbox>

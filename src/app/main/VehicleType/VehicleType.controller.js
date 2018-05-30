@@ -9,21 +9,26 @@
     function VehicleTypeController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         var vm = this;
         $rootScope.AppName = localStorage.getItem('appName');
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $scope.modelApp = {
             AppName: $rootScope.AppName
         }
         $scope.init = function() {
             $scope.model = {
                 id: 0,
+                idApp: parseInt(localStorage.getItem('appId')),
                 Type: '',
                 IsActive: true,
                 OnIcon: '',
                 OffIcon: '',
+                PowerCuttIcon: '',
                 ActiveIcon: '',
                 LocateOnIcon: '',
                 LocateOffIcon: '',
                 LocateActiveIcon: '',
+                LocatePowerCuttIcon: '',
                 LocateIsRotate: true,
+                IsIconDynamic: false
             }
             $scope.modelSearch = {
                 Search: '',
@@ -32,27 +37,38 @@
             $scope.FlgOnIcon = '';
             $scope.FlgActiveIcon = '';
             $scope.FlgOffIcon = '';
+            $scope.FlgPowerCuttIcon = '';
             $scope.FlgLocateOnIcon = '';
             $scope.FlgLocateActiveIcon = '';
             $scope.FlgLocateOffIcon = '';
+            $scope.FlgLocatePowerCuttIcon = '';
 
             $scope.myCroppedOnIcon = '';
             $scope.myCroppedActiveIcon = '';
             $scope.myCroppedOffIcon = '';
+            $scope.myCroppedPowerCuttIcon = '';
             $scope.myCroppedLocateOnIcon = '';
             $scope.myCroppedLocateActiveIcon = '';
             $scope.myCroppedLocateOffIcon = '';
+            $scope.myCroppedLocatePowerCuttIcon = '';
 
             $scope.FlgAddedEditlocal = true;
             $scope.flag = false;
-            $scope.GetAlltelco();
+            // $scope.GetAlltelco();
+            $scope.GetAllInfoList();
         }
 
-        $scope.GetAlltelco = function() {
-            $http.get($rootScope.RoutePath + "telco/GetAllCompany").then(function(data) {
-                $scope.lstCompany = data.data;
-            });
+        $scope.GetAllInfoList = function() {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+                $scope.lstAppInfo = data.data;
+            })
         }
+
+        // $scope.GetAlltelco = function() {
+        //     $http.get($rootScope.RoutePath + "telco/GetAllCompany").then(function(data) {
+        //         $scope.lstCompany = data.data;
+        //     });
+        // }
 
         // function GetAllVehicleType() {
         //     $http.get($rootScope.RoutePath + "vehicletype/Getvehicletype").then(function(data) {
@@ -66,7 +82,7 @@
         $scope.SaveVehicleType = function(o) {
             var flg = true;
             var Message = '';
-            if ($scope.modelApp.AppName == 'Tracking') {
+            if ($scope.modelApp.AppName == 'Tracking' || $scope.model.IsIconDynamic == false) {
                 $http.post($rootScope.RoutePath + "vehicletype/SaveVehicleType", o).then(function(data) {
                     var id;
                     if (o.id != 0) {
@@ -118,6 +134,13 @@
                         .position('top right')
                         .hideDelay(3000)
                     );
+                } else if ($scope.PowerCuttIcon.length == 0 && $scope.myCroppedPowerCuttIcon == '') {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Home Powercut Icon is Required')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
                 } else if ($scope.LocateOnIcon.length == 0 && $scope.myCroppedLocateOnIcon == '') {
                     $mdToast.show(
                         $mdToast.simple()
@@ -136,6 +159,13 @@
                     $mdToast.show(
                         $mdToast.simple()
                         .textContent('Locate Active Icon is Required')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else if ($scope.LocatePowerCuttIcon.length == 0 && $scope.myCroppedLocatePowerCuttIcon == '') {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Locate Powercut Icon is Required')
                         .position('top right')
                         .hideDelay(3000)
                     );
@@ -182,6 +212,19 @@
                         Offimage.src = $scope.OffIcon[0].lfDataUrl;
 
                         Offimage.onload = function() {
+                            var height = this.height;
+                            var width = this.width;
+                            if (height != 50 || width != 31) {
+                                // off_flg = false;
+                            }
+                        };
+                    }
+
+                    if ($scope.PowerCuttIcon.length > 0) {
+                        var PowerCutimage = new Image();
+                        PowerCutimage.src = $scope.PowerCuttIcon[0].lfDataUrl;
+
+                        PowerCutimage.onload = function() {
                             var height = this.height;
                             var width = this.width;
                             if (height != 50 || width != 31) {
@@ -242,7 +285,7 @@
                                     id = data.data.data[0].id;
                                 }
 
-                                if ($scope.OnIcon.length > 0 || $scope.ActiveIcon.length > 0 || $scope.OffIcon.length > 0 || $scope.LocateOnIcon.length > 0 || $scope.LocateActiveIcon.length > 0 || $scope.LocateOffIcon.length > 0) {
+                                if ($scope.OnIcon.length > 0 || $scope.ActiveIcon.length > 0 || $scope.OffIcon.length > 0 || $scope.PowerCuttIcon.length > 0 || $scope.LocateOnIcon.length > 0 || $scope.LocateActiveIcon.length > 0 || $scope.LocateOffIcon.length > 0 || $scope.LocatePowerCuttIcon.length > 0) {
                                     var formData = new FormData();
                                     if ($scope.OnIcon.length > 0) {
 
@@ -263,6 +306,13 @@
                                             formData.append(logo3, obj.lfFile);
                                         });
                                     }
+                                    console.log($scope.PowerCuttIcon)
+                                    if ($scope.PowerCuttIcon.length > 0) {
+                                        angular.forEach($scope.PowerCuttIcon, function(obj) {
+                                            var logo4 = id + ',' + 'PowerCuttIcon';
+                                            formData.append(logo4, obj.lfFile);
+                                        });
+                                    }
                                     if ($scope.LocateOnIcon.length > 0) {
 
                                         angular.forEach($scope.LocateOnIcon, function(obj) {
@@ -280,6 +330,12 @@
                                         angular.forEach($scope.LocateOffIcon, function(obj) {
                                             var logo3 = id + ',' + 'LocateOffIcon';
                                             formData.append(logo3, obj.lfFile);
+                                        });
+                                    }
+                                    if ($scope.LocatePowerCuttIcon.length > 0) {
+                                        angular.forEach($scope.LocatePowerCuttIcon, function(obj) {
+                                            var logo4 = id + ',' + 'LocatePowerCuttIcon';
+                                            formData.append(logo4, obj.lfFile);
                                         });
                                     }
                                     $http.post($rootScope.RoutePath + "vehicletype/uploadFile", formData, {
@@ -338,14 +394,23 @@
             var o = _.findWhere($scope.lstVehicleType, {
                 id: id
             });
+
+            if (o.OnIcon == null || o.OnIcon == '') {
+                $scope.model.IsIconDynamic = false;
+            } else {
+                $scope.model.IsIconDynamic = true;
+            }
             $scope.model.id = o.id;
+            $scope.model.idApp = o.idApp;
             $scope.model.Type = o.Type;
             $scope.model.OnIcon = o.OnIcon;
             $scope.model.ActiveIcon = o.ActiveIcon;
             $scope.model.OffIcon = o.OffIcon;
+            $scope.model.PowerCuttIcon = o.PowerCuttIcon;
             $scope.model.LocateOnIcon = o.LocateOnIcon;
             $scope.model.LocateActiveIcon = o.LocateActiveIcon;
             $scope.model.LocateOffIcon = o.LocateOffIcon;
+            $scope.model.LocatePowerCuttIcon = o.LocatePowerCuttIcon;
             if (o.LocateIsRotate == 1) {
                 $scope.model.LocateIsRotate = true;
             } else {
@@ -376,6 +441,14 @@
                 $scope.FlgOffIcon = 0;
             }
 
+            if (o.PowerCuttIcon != null && o.PowerCuttIcon != '' && o.PowerCuttIcon != undefined) {
+                $scope.FlgPowerCuttIcon = 1;
+                $scope.myCroppedPowerCuttIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.PowerCuttIcon; //$scope.AppLogo;
+
+            } else {
+                $scope.FlgPowerCuttIcon = 0;
+            }
+
             if (o.LocateOnIcon != null && o.LocateOnIcon != '' && o.LocateOnIcon != undefined) {
                 $scope.FlgLocateOnIcon = 1;
                 $scope.myCroppedLocateOnIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.LocateOnIcon; //$scope.AppLogo;
@@ -398,6 +471,14 @@
 
             } else {
                 $scope.FlgLocateOffIcon = 0;
+            }
+
+            if (o.LocatePowerCuttIcon != null && o.LocatePowerCuttIcon != '' && o.LocatePowerCuttIcon != undefined) {
+                $scope.FlgLocatePowerCuttIcon = 1;
+                $scope.myCroppedLocatePowerCuttIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + o.LocatePowerCuttIcon; //$scope.AppLogo;
+
+            } else {
+                $scope.FlgLocatePowerCuttIcon = 0;
             }
             $scope.flag = true;
         }
@@ -494,15 +575,19 @@
         $scope.Reset = function() {
             $scope.model = {
                 id: 0,
+                idApp: parseInt(localStorage.getItem('appId')),
                 Type: '',
                 IsActive: true,
                 OnIcon: '',
                 OffIcon: '',
+                PowerCuttIcon: '',
                 ActiveIcon: '',
                 LocateOnIcon: '',
                 LocateOffIcon: '',
                 LocateActiveIcon: '',
+                LocatePowerCuttIcon: '',
                 LocateIsRotate: true,
+                IsIconDynamic: false
             }
             $scope.modelSearch = {
                 Search: '',
@@ -514,18 +599,32 @@
             $scope.FlgOnIcon = '';
             $scope.FlgActiveIcon = '';
             $scope.FlgOffIcon = '';
+            $scope.FlgPowerCuttIcon = '';
+            $scope.FlgLocateOnIcon = '';
+            $scope.FlgLocateActiveIcon = '';
+            $scope.FlgLocateOffIcon = '';
+            $scope.FlgLocatePowerCuttIcon = '';
 
             $scope.myCroppedOnIcon = '';
             $scope.myCroppedActiveIcon = '';
             $scope.myCroppedOffIcon = '';
+            $scope.myCroppedPowerCuttIcon = '';
+            $scope.myCroppedLocateOnIcon = '';
+            $scope.myCroppedLocateActiveIcon = '';
+            $scope.myCroppedLocateOffIcon = '';
+            $scope.myCroppedLocatePowerCuttIcon = '';
+
+
 
             if ($scope.modelApp.AppName != 'Tracking') {
                 $scope.apiOnIcon.removeAll();
                 $scope.apiActiveIcon.removeAll();
                 $scope.apiOffIcon.removeAll();
+                $scope.apiPowerCuttIcon.removeAll();
                 $scope.apiLocateOnIcon.removeAll();
                 $scope.apiLocateActiveIcon.removeAll();
                 $scope.apiLocateOffIcon.removeAll();
+                $scope.apiLocatePowerCuttIcon.removeAll();
             }
             $scope.flag = true;
             $scope.resetForm();
@@ -534,33 +633,47 @@
         $scope.ResetModel = function() {
             $scope.model = {
                 id: 0,
+                idApp: parseInt(localStorage.getItem('appId')),
                 Type: '',
                 IsActive: true,
                 OnIcon: '',
                 OffIcon: '',
+                PowerCuttIcon: '',
                 ActiveIcon: '',
+                LocateOnIcon: '',
+                LocateOffIcon: '',
+                LocateActiveIcon: '',
+                LocatePowerCuttIcon: '',
                 LocateIsRotate: true,
+                IsIconDynamic: false
             }
             $scope.FlgOnIcon = '';
             $scope.FlgActiveIcon = '';
             $scope.FlgOffIcon = '';
+            $scope.FlgPowerCuttIcon = '';
             $scope.FlgLocateOnIcon = '';
             $scope.FlgLocateActiveIcon = '';
             $scope.FlgLocateOffIcon = '';
+            $scope.FlgLocatePowerCuttIcon = '';
 
             $scope.myCroppedOnIcon = '';
             $scope.myCroppedActiveIcon = '';
             $scope.myCroppedOffIcon = '';
+            $scope.myCroppedPowerCuttIcon = '';
             $scope.myCroppedLocateOnIcon = '';
             $scope.myCroppedLocateActiveIcon = '';
             $scope.myCroppedLocateOffIcon = '';
+            $scope.myCroppedLocatePowerCuttIcon = '';
+
             if ($scope.modelApp.AppName != 'Tracking') {
                 $scope.apiOnIcon.removeAll();
                 $scope.apiActiveIcon.removeAll();
                 $scope.apiOffIcon.removeAll();
+                $scope.apiPowerCuttIcon.removeAll();
                 $scope.apiLocateOnIcon.removeAll();
                 $scope.apiLocateActiveIcon.removeAll();
                 $scope.apiLocateOffIcon.removeAll();
+                $scope.apiLocatePowerCuttIcon.removeAll();
             }
 
             $scope.flag = false;
@@ -619,6 +732,7 @@
                 DTColumnBuilder.newColumn('Type'),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('CreatedBy'),
+                DTColumnBuilder.newColumn('tblappinfo.AppName').renderWith(AppNameHtml),
                 DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable(),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
             ]
@@ -679,6 +793,14 @@
             }
         }
 
+        function AppNameHtml(data, type, full, meta) {
+            if (data != null && data != undefined) {
+                return data;
+            } else {
+                return 'Default';
+            }
+        }
+
         function dateFormat(date) {
             if (date != null) {
                 return moment(date).format('DD-MM-YYYY hh:mm:ss a')
@@ -736,6 +858,10 @@
                 $scope.myCroppedOffIcon = '';
                 $scope.FlgOffIcon = 0;
                 $scope.OffIcon = [];
+            } else if (o == 'PowerCuttIcon') {
+                $scope.myCroppedPowerCuttIcon = '';
+                $scope.FlgPowerCuttIcon = 0;
+                $scope.PowerCuttIcon = [];
             } else if (o == 'LocateOnIcon') {
                 $scope.myCroppedLocateOnIcon = '';
                 $scope.FlgLocateOnIcon = 0;
@@ -749,6 +875,10 @@
                 $scope.myCroppedLocateOffIcon = '';
                 $scope.FlgLocateOffIcon = 0;
                 $scope.LocateOffIcon = [];
+            } else if (o == 'LocatePowerCuttIcon') {
+                $scope.myCroppedLocatePowerCuttIcon = '';
+                $scope.FlgLocatePowerCuttIcon = 0;
+                $scope.LocatePowerCuttIcon = [];
             }
         }
 
@@ -764,6 +894,10 @@
             $scope.FlgOffIcon = 0;
             // $scope.myCroppedOffIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.OffIcon;
         };
+        $scope.setPowerCuttIcon = function(element) {
+            $scope.FlgPowerCuttIcon = 0;
+            // $scope.myCroppedOffIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.OffIcon;
+        };
         $scope.setLocateOnIcon = function(element) {
             $scope.FlgLocateOnIcon = 0;
             // $scope.myCroppedOnIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.OnIcon;
@@ -774,6 +908,10 @@
         };
         $scope.setLocateOffIcon = function(element) {
             $scope.FlgLocateOffIcon = 0;
+            // $scope.myCroppedOffIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.OffIcon;
+        };
+        $scope.setLocatePowerCuttIcon = function(element) {
+            $scope.FlgLocatePowerCuttIcon = 0;
             // $scope.myCroppedOffIcon = $rootScope.RoutePath + 'MediaUploads/FileUpload/' + $scope.model.OffIcon;
         };
 

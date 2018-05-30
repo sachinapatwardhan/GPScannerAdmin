@@ -24,6 +24,7 @@
                 DeviceId: '',
                 IMEI: '',
                 // CreatedDate: '',
+                Company: 'Maark',
                 Type: '',
                 Version: '',
                 CreatedBy: '',
@@ -101,7 +102,9 @@
         }
 
         $scope.GetDeviceId = function(IMEI) {
-            $scope.model.DeviceId = parseInt($scope.model.IMEI.toString().slice(1));
+            if ($scope.model.IMEI != '') {
+                $scope.model.DeviceId = parseInt($scope.model.IMEI.toString().slice(1));
+            }
         }
 
         $scope.gotoTRACKERList = function() {
@@ -111,6 +114,7 @@
                 IMEI: '',
                 // CreatedDate: '',
                 Type: '',
+                Company: 'Maark',
                 Version: '',
                 CreatedBy: '',
                 CountryId: null,
@@ -227,6 +231,7 @@
                     $scope.dtColumns = [
                         DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
                         DTColumnBuilder.newColumn('DeviceId'),
+                        DTColumnBuilder.newColumn('Company'),
                         DTColumnBuilder.newColumn('Type'),
                         DTColumnBuilder.newColumn('IMEI'),
                         DTColumnBuilder.newColumn('Version'),
@@ -248,6 +253,25 @@
                     $scope.dtColumns1 = [
                         DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
                         DTColumnBuilder.newColumn('DeviceId'),
+                        DTColumnBuilder.newColumn('IMEI'),
+                        DTColumnBuilder.newColumn('Version'),
+                        DTColumnBuilder.newColumn('SerialNum'),
+                        DTColumnBuilder.newColumn('PhoneNum'),
+                        DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
+                        DTColumnBuilder.newColumn('Country'),
+                        // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
+                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('CreatedBy'),
+                        // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                    ]
+                } else if ($rootScope.AppName == 'DoTracks' || $rootScope.AppName == 'Trackox') {
+                    $scope.dtColumns1 = [
+                        DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                        DTColumnBuilder.newColumn('DeviceId'),
+                        DTColumnBuilder.newColumn('Company'),
+                        DTColumnBuilder.newColumn('Type'),
                         DTColumnBuilder.newColumn('IMEI'),
                         DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('SerialNum'),
@@ -306,11 +330,6 @@
                 dataSrc: function(json) {
                     // console.log(json.data);
                     if (json.success != false) {
-                        for (var i = 0; i < json.data.length; i++) {
-                            if (json.data[i].Type === 'M2-U') {
-                                json.data[i].Type = 'C2';
-                            }
-                        }
                         $scope.lstdata = json.data;
                         $scope.TotalTrackers = json.recordsTotal
                         return json.data;
@@ -443,6 +462,7 @@
                 // } else {
                 //     o.ExpiryDate = null;
                 // }
+                console.log(o)
                 $http.post($rootScope.RoutePath + "PetDevice/SaveGPSDevice", o).then(function(data) {
                     if (data.data.success == true) {
                         $mdToast.show(
@@ -490,6 +510,7 @@
             $scope.model.Version = o.Version;
             $scope.model.IMEI = o.IMEI
             $scope.model.Type = o.Type;
+            $scope.model.Company = o.Company;
             $scope.model.CountryId = o.CountryId;
             // $scope.model.TelCoId = o.TelCoId;
             $scope.model.SimNum = parseInt(o.SimNum);
@@ -621,6 +642,7 @@
                 DeviceId: '',
                 IMEI: '',
                 Type: '',
+                Company: 'Maark',
                 Version: '',
                 CountryId: null,
                 TelCoId: null,

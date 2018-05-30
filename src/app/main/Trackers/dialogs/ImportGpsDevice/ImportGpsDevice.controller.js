@@ -13,6 +13,7 @@
         $scope.init = function() {
             $scope.model = {
                 Type: 'MT05',
+                Company: 'Maark',
                 IsOldDevice: 0,
                 CountryId: null,
                 CreatedBy: $rootScope.UserName,
@@ -45,6 +46,7 @@
             angular.forEach($scope.Productfiles, function(obj) {
                 formData.append('files[]', obj.lfFile);
                 formData.append('Type', o.Type);
+                formData.append('Company', o.Company);
                 formData.append('IsOldDevice', o.IsOldDevice);
                 formData.append('CreatedBy', o.CreatedBy);
                 formData.append('CountryId', o.CountryId);

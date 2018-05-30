@@ -118,7 +118,10 @@
             $scope.ShowDtl = false;
         }
         $scope.getAllVehicleType = function() {
-            $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype").then(function(data) {
+            var params = {
+                idApp: localStorage.getItem('appId')
+            }
+            $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype", { params: params }).then(function(data) {
                 $scope.lstVehicleType = data.data
             })
         }

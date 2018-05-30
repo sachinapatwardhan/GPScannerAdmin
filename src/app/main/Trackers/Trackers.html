@@ -54,6 +54,11 @@
                             </th>
                             <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class="table-header">
+                                    <span class="column-title">Company</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
+                                <div class="table-header">
                                     <span class="column-title">Type</span>
                                 </div>
                             </th>
@@ -141,6 +146,11 @@
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Device Id</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text" ng-if="AppName == 'DoTracks' || AppName == 'Trackox' || AppName == 'Trackox'">
+                                <div class="table-header">
+                                    <span class="column-title">Company</span>
                                 </div>
                             </th>
                             <th class="secondary-text" ng-if="AppName != 'Tracking'">
@@ -269,6 +279,14 @@
                                     </div>
                                 </div>
                             </md-input-container>-->
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName == 'DoTracks' || AppName == 'Trackox' || UserRoles == 'Super Admin'">
+                                <label>Company</label>
+                                <md-select ng-model="model.Company" name="Company" required>
+                                    <md-option name="Company1" value="Maark" selected="true">Maark</md-option>
+                                    <md-option name="Company2" value="Concox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">Concox</md-option>
+                                    <md-option name="Company3" value="Toplovo" ng-if="AppName == 'Trackox' || UserRoles == 'Super Admin'">Toplovo</md-option>
+                                </md-select>
+                            </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName != 'Tracking'">
                                 <label>Type</label>
                                 <md-select ng-model="model.Type" name="Type" required>
@@ -277,7 +295,10 @@
                                     <md-option name="Type3" value="TK228">TK228</md-option>
                                     <md-option name="Type4" value="GT08">GT08</md-option>
                                     <md-option name="Type5" value="MT05">MT05</md-option>
-                                    <md-option name="Type5" value="Mob">Mob</md-option>
+                                    <md-option name="Type6" value="Concox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">Concox</md-option>
+                                    <md-option name="Type8" value="TL109" ng-if="AppName == 'Trackox' || UserRoles == 'Super Admin'">TL109</md-option>
+                                    <md-option name="Type7" value="Mob">Mob</md-option>
+
                                 </md-select>
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
@@ -303,7 +324,7 @@
                                     </div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName != 'Tracking'">
+                            <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName != 'Tracking'">
                                 <label>Sales Agent</label>
                                 <md-select Name="idSalesAgent" ng-model="model.idSalesAgent" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
                                     <md-select-header class="demo-select-header">
@@ -317,7 +338,7 @@
                                         <span>Sales Agent is required.</span>
                                     </div>
                                 </div>
-                            </md-input-container>
+                            </md-input-container> -->
                             <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Telephone Company</label>
                                 <md-select Name="TelCoId" ng-model="model.TelCoId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
