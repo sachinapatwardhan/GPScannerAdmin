@@ -119,70 +119,68 @@
                                             infowindow.open(map, SimpleMarker);
                                         };
                                     })(SimpleMarker, content, infowindow));
-
-
+                                    $scope.ManageDashBoardCount();
                                 }
-
                             }
-                            $scope.ManageDashBoardCount();
+
                         }
                         // }
                     });
                 });
 
-                socket.on($scope.lstActiveVehicle[t].deviceid + 'BikeRoute', function(msg) {
-                    var obj = JSON.parse(msg);
-                    $scope.$apply(function() {
-                        if ($scope.lstActiveVehicle) {
-                            var lstVehicle = _.filter($scope.lstActiveVehicle, { deviceid: obj.Deviceid });
-                            if (lstVehicle != null && lstVehicle != undefined && lstVehicle != '' && lstVehicle.length > 0) {
-                                var objVehicle = lstVehicle[0];
-                                objVehicle.Date = obj.Date;
-                                objVehicle.IsEngine = obj.IsEngine;
-                                objVehicle.Speed = parseFloat(obj.Speed).toFixed(2);
-                                objVehicle.Direction = obj.Direction;
-                                objVehicle.Latitude = obj.Latitude;
-                                objVehicle.Longitude = obj.Longitude;
-                                var VehicleID = objVehicle.Name;
-                                // new CustomMarker(new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude), map, VehicleID, objVehicle)
-                                SimpleMarker = new google.maps.Marker({
-                                    map: map,
-                                    position: new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude),
-                                    icon: $scope.SimpleMarkerIcon
-                                });
-                                var infowindow = new google.maps.InfoWindow();
-                                var EngineStatus = objVehicle.IsEngine == true ? "Engine On" : "Engine Off";
-                                var DeviceDatetime = moment(moment.utc(new Date(objVehicle.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
-                                // var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + objVehicle.deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + objVehicle.deviceid + '">' + parseFloat(objVehicle.Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + objVehicle.deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
-                                var content = '<div class="CustomInfoWindow">' +
-                                    '    <h3>' + VehicleID + '</h3>' +
-                                    '    <ul>' +
-                                    '        <li>' +
-                                    '            <i class="ion-ios-clock" style="color:green;"></i>' +
-                                    '            <span>' + DeviceDatetime + '</span>' +
-                                    '        </li>' +
-                                    '        <li>' +
-                                    '            <i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i>' +
-                                    '            <span>' + objVehicle.Speed + ' km/h </span>' +
-                                    '        </li>' +
-                                    '        <li>' +
-                                    '            <i class="ion-gear-b localEngineSymbol" style="color:green;"></i>' +
-                                    '            <span> ' + EngineStatus + ' </span>' +
-                                    '        </li>' +
-                                    '    </ul>' +
-                                    '</div>';
-                                google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
-                                    return function() {
-                                        infowindow.setContent(content);
-                                        infowindow.open(map, SimpleMarker);
-                                    };
-                                })(SimpleMarker, content, infowindow));
+                // socket.on($scope.lstActiveVehicle[t].deviceid + 'BikeRoute', function(msg) {
+                //     var obj = JSON.parse(msg);
+                //     $scope.$apply(function() {
+                //         if ($scope.lstActiveVehicle) {
+                //             var lstVehicle = _.filter($scope.lstActiveVehicle, { deviceid: obj.Deviceid });
+                //             if (lstVehicle != null && lstVehicle != undefined && lstVehicle != '' && lstVehicle.length > 0) {
+                //                 var objVehicle = lstVehicle[0];
+                //                 objVehicle.Date = obj.Date;
+                //                 objVehicle.IsEngine = obj.IsEngine;
+                //                 objVehicle.Speed = parseFloat(obj.Speed).toFixed(2);
+                //                 objVehicle.Direction = obj.Direction;
+                //                 objVehicle.Latitude = obj.Latitude;
+                //                 objVehicle.Longitude = obj.Longitude;
+                //                 var VehicleID = objVehicle.Name;
+                //                 // new CustomMarker(new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude), map, VehicleID, objVehicle)
+                //                 SimpleMarker = new google.maps.Marker({
+                //                     map: map,
+                //                     position: new google.maps.LatLng(objVehicle.Latitude, objVehicle.Longitude),
+                //                     icon: $scope.SimpleMarkerIcon
+                //                 });
+                //                 var infowindow = new google.maps.InfoWindow();
+                //                 var EngineStatus = objVehicle.IsEngine == true ? "Engine On" : "Engine Off";
+                //                 var DeviceDatetime = moment(moment.utc(new Date(objVehicle.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
+                //                 // var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + objVehicle.deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + objVehicle.deviceid + '">' + parseFloat(objVehicle.Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + objVehicle.deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                //                 var content = '<div class="CustomInfoWindow">' +
+                //                     '    <h3>' + VehicleID + '</h3>' +
+                //                     '    <ul>' +
+                //                     '        <li>' +
+                //                     '            <i class="ion-ios-clock" style="color:green;"></i>' +
+                //                     '            <span>' + DeviceDatetime + '</span>' +
+                //                     '        </li>' +
+                //                     '        <li>' +
+                //                     '            <i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i>' +
+                //                     '            <span>' + objVehicle.Speed + ' km/h </span>' +
+                //                     '        </li>' +
+                //                     '        <li>' +
+                //                     '            <i class="ion-gear-b localEngineSymbol" style="color:green;"></i>' +
+                //                     '            <span> ' + EngineStatus + ' </span>' +
+                //                     '        </li>' +
+                //                     '    </ul>' +
+                //                     '</div>';
+                //                 google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
+                //                     return function() {
+                //                         infowindow.setContent(content);
+                //                         infowindow.open(map, SimpleMarker);
+                //                     };
+                //                 })(SimpleMarker, content, infowindow));
 
 
-                            };
-                        }
-                    });
-                });
+                //             };
+                //         }
+                //     });
+                // });
             }
         }
 
