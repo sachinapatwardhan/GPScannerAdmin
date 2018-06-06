@@ -77,6 +77,7 @@
                                 .position('top right')
                                 .hideDelay(3000)
                             );
+                            $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
@@ -111,6 +112,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -136,6 +138,7 @@
                                 .position('top right')
                                 .hideDelay(3000)
                             );
+                            $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
@@ -164,6 +167,7 @@
                                 .position('top right')
                                 .hideDelay(3000)
                             );
+                            $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
@@ -191,6 +195,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -216,6 +221,7 @@
                                 .position('top right')
                                 .hideDelay(3000)
                             );
+                            $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
@@ -244,6 +250,7 @@
                                 .position('top right')
                                 .hideDelay(3000)
                             );
+                            $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
@@ -271,6 +278,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -295,6 +303,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -319,6 +328,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.reload();
                     } else {
                         $scope.reload();
                     }
@@ -337,6 +347,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -361,6 +372,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -387,6 +399,7 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
+                        $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
