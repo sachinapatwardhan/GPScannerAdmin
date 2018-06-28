@@ -19,6 +19,7 @@
         //     $scope.model.IsACC = false;
         // }
         $scope.Name = objVehicle.Name;
+        $scope.DeviceCompany = objVehicle.DeviceCompany;
         $scope.closeModel = function() {
             $mdDialog.hide();
         }
@@ -69,7 +70,14 @@
                         DeviceId: objVehicle.deviceid,
                         Speed: objModel
                     }
-                    $http.get($rootScope.RoutePath + "socketapi/SendSpeedData", { params: params }).then(function(data) {
+                    if ($scope.DeviceCompany == 'Toplovo') {
+                        var SpeedApiUrl = $rootScope.RoutePath + 'socketapi_toplovo/SendSpeedToplovoData';
+                    } else if ($scope.DeviceCompany == 'Concox') {
+                        var SpeedApiUrl = $rootScope.RoutePath + 'socketapi_concox/SendSpeedData';
+                    } else {
+                        var SpeedApiUrl = $rootScope.RoutePath + 'socketapi/SendSpeedData';
+                    }
+                    $http.get(SpeedApiUrl, { params: params }).then(function(data) {
                         if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
