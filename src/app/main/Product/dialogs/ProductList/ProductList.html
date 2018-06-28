@@ -53,7 +53,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="o in lstProductPanelSearch">
-                        <td>{{$index+1}}</td>
+                        <td style="width: 4%; text-align: center;">{{$index+1}}</td>
                         <td>
                             <md-checkbox ng-model="o.checked" value="{{o.Id}}" aria-label="Checkbox {{$index+1}}" class="md-primary">
                             </md-checkbox>
@@ -64,7 +64,7 @@
                         <td>
                             {{o.Name}}
                         </td>
-                        <td>
+                        <td style="width: 4%; text-align: center;">
                             <span ng-if="o.Published" style="font-size: 20px;color: green"> &#x2714;</span>
                             <span ng-if="!o.Published" style="font-size: 20px;color: red">&#x2716;</span>
                         </td>

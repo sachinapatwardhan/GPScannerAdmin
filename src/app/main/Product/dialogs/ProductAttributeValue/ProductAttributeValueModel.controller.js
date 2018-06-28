@@ -220,14 +220,14 @@
         }
 
         vm.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
             DTColumnDefBuilder.newColumnDef(3),
             DTColumnDefBuilder.newColumnDef(4),
             DTColumnDefBuilder.newColumnDef(5),
             DTColumnDefBuilder.newColumnDef(6),
-            DTColumnDefBuilder.newColumnDef(7),
+            DTColumnDefBuilder.newColumnDef(7).notSortable().withOption('class', 'text-center'),
         ];
 
         $scope.init();

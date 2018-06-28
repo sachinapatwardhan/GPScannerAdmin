@@ -80,15 +80,17 @@
                             <td>{{o.IOSURL}} </td>
                             <td>{{o.UpdateAppText}} </td>
                             <td>
-                                <md-button class="edit-button md-icon-button" ng-click="editAppVersionById(o)">
-                                    <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
-                                    <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
-                                </md-button>
+                                <div layout='row' layout-align="center">
+                                    <md-button class="edit-button md-icon-button" ng-click="editAppVersionById(o)">
+                                        <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
+                                        <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                    </md-button>
 
-                                <md-button class="edit-button md-icon-button" ng-click="DeleteAppVersion(o.id)">
-                                    <md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>
-                                    <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
-                                </md-button>
+                                    <md-button class="edit-button md-icon-button" ng-click="DeleteAppVersion(o.id)">
+                                        <md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>
+                                        <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                                    </md-button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

@@ -138,7 +138,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">DeviceId</span>
+                                    <span class="column-title">Device ID</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -254,16 +254,16 @@
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="50">
-                        <label>DeviceId</label>
+                        <label>Device ID</label>
                         <md-select Name="DeviceId" ng-model="model.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="model.Type == 'Debit'">
                             <md-select-header class="demo-select-header">
-                                <input ng-model="searchdropdown.searchDeviceId" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                <input ng-model="searchdropdown.searchDeviceId" type="search" placeholder="Search for a Device ID.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
                             <md-option value="{{o.DeviceId}}" ng-repeat="o in lstDeviceId |filter:searchdropdown.searchDeviceId| orderBy: 'DeviceId'">{{o.DeviceId}}</md-option>
                         </md-select>
                         <div ng-messages="formWalletTransaction.DeviceId.$error" ng-if="formWalletTransaction.DeviceId.$touched">
                             <div ng-message="required">
-                                <span>DeviceId is required</span>
+                                <span>Device ID is required</span>
                             </div>
                         </div>
                     </md-input-container>

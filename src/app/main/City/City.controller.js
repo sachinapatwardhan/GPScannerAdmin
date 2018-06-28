@@ -74,11 +74,11 @@
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.lst = [];
             $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml).withOption('width', '4%'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml).withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('tblcountrystatemgmt.tblcountrymgmt.Country').withOption('width', '10%'),
                     DTColumnBuilder.newColumn('tblcountrystatemgmt.Name').withOption('width', '10%'),
                     DTColumnBuilder.newColumn('Name').withOption('width', '10%'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%')
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%').withOption('class', 'text-center'),
                 ]
                 // ShowTrackNumberModal
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -301,11 +301,11 @@
         //    .withOption('dom', '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
         // .withDOM('<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
         vm.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
             DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4),
+            DTColumnDefBuilder.newColumnDef(4).notSortable().withOption('class', 'text-center'),
             // DTColumnDefBuilder.newColumnDef(5)
         ];
 

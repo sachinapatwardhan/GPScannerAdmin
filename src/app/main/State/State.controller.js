@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -9,7 +9,7 @@
     function StateController($http, $scope, $state, $rootScope, $mdToast, $document, $mdDialog, $stateParams, DTOptionsBuilder, DTColumnDefBuilder) {
         var vm = this;
 
-        $scope.init = function () {
+        $scope.init = function() {
             $scope.model = {
                 id: '',
                 Name: '',
@@ -24,30 +24,29 @@
         }
 
 
-        $scope.GetCountryState = function () {
-            $http.get($rootScope.RoutePath + "state/GetAllState").then(function (data) {
+        $scope.GetCountryState = function() {
+            $http.get($rootScope.RoutePath + "state/GetAllState").then(function(data) {
                 console.log(data.data);
                 $scope.lstCountryState = data.data;
             });
         }
 
-        $scope.GetAllCountry = function () {
-            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function (data) {
+        $scope.GetAllCountry = function() {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
                 console.log(data.data);
                 $scope.lstCountry = data.data;
             });
         }
 
 
-        $scope.CreateState = function (o) {
+        $scope.CreateState = function(o) {
             if (o.id == null || o.id == '') {
                 o.CreatedDate = new Date();
-            }
-            else {
+            } else {
                 o.ModifyDate = new Date();
             }
             o.CreatedBy = 'Admin';
-            $http.post($rootScope.RoutePath + "state/SaveState", o).then(function (data) {
+            $http.post($rootScope.RoutePath + "state/SaveState", o).then(function(data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
@@ -57,8 +56,7 @@
                     );
                     $scope.init();
                     $scope.ResetModel();
-                }
-                else {
+                } else {
                     $mdToast.show(
                         $mdToast.simple()
                         .textContent(data.data.message)
@@ -69,7 +67,7 @@
             });
         }
 
-        $scope.FetchStateById = function (o) {
+        $scope.FetchStateById = function(o) {
             $scope.tab.selectedIndex = 1;
             $scope.model.id = o.id;
             $scope.model.Name = o.Name;
@@ -78,38 +76,37 @@
             $scope.model.CreatedDate = o.CreatedDate;
         }
 
-        $scope.DeleteState = function (id) {
+        $scope.DeleteState = function(id) {
             var confirm = $mdDialog.confirm()
-                  .title('Are you sure to Delete this Record ?')
-                  .ok('Ok')
-                  .cancel('Cancel')
-            $mdDialog.show(confirm).then(function () {
+                .title('Are you sure to Delete this Record ?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function() {
                 var params = {
                     StateId: id
                 };
-                $http.get($rootScope.RoutePath + "state/DeleteState", { params: params }).success(function (data) {
+                $http.get($rootScope.RoutePath + "state/DeleteState", { params: params }).success(function(data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
                             .textContent(data.message)
                             .position('top right')
                             .hideDelay(3000)
-                            );
+                        );
                         $scope.init();
-                    }
-                    else {
+                    } else {
                         $mdToast.show(
-                           $mdToast.simple()
-                           .textContent(data.message)
-                           .position('top right')
-                           .hideDelay(3000)
-                          );
+                            $mdToast.simple()
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
                     }
                 });
             });
         };
 
-        $scope.Reset = function () {
+        $scope.Reset = function() {
             $scope.init();
         }
 
@@ -126,15 +123,15 @@
         //    .withOption('dom', '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
         // .withDOM('<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>');
         vm.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
             DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4),
-           // DTColumnDefBuilder.newColumnDef(5)
+            DTColumnDefBuilder.newColumnDef(4).notSortable().withOption('class', 'text-center'),
+            // DTColumnDefBuilder.newColumnDef(5)
         ];
 
-        $scope.ResetModel = function () {
+        $scope.ResetModel = function() {
             $scope.model = {
                 id: '',
                 Name: '',

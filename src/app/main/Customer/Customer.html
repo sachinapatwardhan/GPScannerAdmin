@@ -188,11 +188,11 @@
             <form name="AddCustomerForm" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
                 <div layout="row" layout-wrap>
                     <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33">
-                        <label>User name</label>
+                        <label>User Name</label>
                         <input type="text" name="username" md-maxlength="250" ng-model="model.username" required>
                         <div ng-messages="AddCustomerForm.username.$error" ng-if="AddCustomerForm.username.$touched">
                             <div ng-message="required">
-                                <span>User name is required</span>
+                                <span>User Name is required</span>
                             </div>
                             <div ng-message="md-maxlength">
                                 <span>User name can't be greater than 250 character</span>
@@ -200,7 +200,7 @@
                         </div>
                     </md-input-container>
                     <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33">
-                        <label>Email address</label>
+                        <label>Email Address</label>
                         <input type="Email" name="email" ng-model="model.email" md-maxlength="250" ng-pattern="/^.+@.+\..+$/" required>
                         <div ng-messages="AddCustomerForm.email.$error" ng-if="AddCustomerForm.email.$touched">
                             <div ng-message="required">
@@ -227,22 +227,22 @@
                         </div>
                     </md-input-container>
                     <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33" ng-if="model.id == ''">
-                        <label>Confirm password </label>
+                        <label>Confirm Password </label>
                         <input name="confirmpassword" type="password" ng-model="model.confirmpassword" ng-required="true" md-maxlength="100">
                         <div ng-messages="AddCustomerForm.confirmpassword.$error" ng-if="AddCustomerForm.confirmpassword.$touched">
                             <div ng-message="required">
-                                <span>Confirm password is required</span>
+                                <span>Confirm Password is required</span>
                             </div>
                             <div ng-message="md-maxlength">
-                                <span>Confirm password is 100 char long</span>
+                                <span>Confirm Password is 100 char long</span>
                             </div>
                         </div>
                     </md-input-container>
                     <md-input-container flex="100" flex-gt-sm="100" flex-gt-md="33">
-                        <label>Phone number</label>
+                        <label>Phone Number</label>
                         <input type="text" name="Phone" ng-model="model.phone" placeholder="1234567890" ng-pattern='/^[+]*\d{2,4}[-]*\d{3,}[\s{1}]*\d{3,}$/' ng-maxlength="15">
                         <div ng-messages="AddCustomerForm.Phone.$error">
-                            <div ng-message="maxlength" class="my-message">Phone number can't be longer than 15 number</div>
+                            <div ng-message="maxlength" class="my-message">Phone Number can't be longer than 15 number</div>
                             <div ng-message="pattern" class="my-message">Please Enter Vaild number</div>
                         </div>
                     </md-input-container>

@@ -15,7 +15,7 @@
 
         $scope.FilterStatus = 1;
         $scope.dtColumns1 = [
-            DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+            DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('deviceid'),
             DTColumnBuilder.newColumn('IsOnline').renderWith(StatusHtml)
         ]

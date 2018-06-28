@@ -29,7 +29,7 @@
             $scope.FilterStatus = 1;
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
                     DTColumnBuilder.newColumn('email'),
                     // DTColumnBuilder.newColumn('OwnerName'),
@@ -40,11 +40,11 @@
                     DTColumnBuilder.newColumn('TotalDevice'),
                     DTColumnBuilder.newColumn('AppName'),
                     DTColumnBuilder.newColumn('LastLogin').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
                 ]
             } else {
                 $scope.dtColumns1 = [
-                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
                     DTColumnBuilder.newColumn('email'),
                     // DTColumnBuilder.newColumn('OwnerName'),
@@ -54,7 +54,7 @@
                     // DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
                     DTColumnBuilder.newColumn('TotalDevice'),
                     DTColumnBuilder.newColumn('LastLogin').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             }
 

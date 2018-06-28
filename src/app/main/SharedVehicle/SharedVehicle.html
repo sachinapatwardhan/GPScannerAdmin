@@ -39,7 +39,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Device Id</span>
+                                    <span class="column-title">Device ID</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -89,7 +89,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Device Id</span>
+                                    <span class="column-title">Device ID</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -160,10 +160,10 @@
                         </div>
                         <div layout="row" layout-wrap>
                             <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                                <label>Device Id</label>
+                                <label>Device ID</label>
                                 <md-select Name="DeviceId" ng-model="model.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="AddUserEmail(model.DeviceId)" required>
                                     <md-select-header class="demo-select-header">
-                                        <input ng-model="searchDevice" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                        <input ng-model="searchDevice" type="search" placeholder="Search for a Device ID.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                                     </md-select-header>
                                     <md-option ng-value="{{o.deviceId}}" ng-repeat="o in lstDevice| filter: searchDevice | orderBy : 'CreatedDate':true">{{o.deviceId}}</md-option>
                                 </md-select>

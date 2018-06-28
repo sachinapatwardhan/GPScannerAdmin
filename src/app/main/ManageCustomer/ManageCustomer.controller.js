@@ -59,7 +59,7 @@
             $scope.FilterStatus = 1;
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('username'),
                     DTColumnBuilder.newColumn('email'),
                     // DTColumnBuilder.newColumn('OwnerName'),
@@ -68,11 +68,11 @@
                     // DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
                     DTColumnBuilder.newColumn('TotalDevice'),
                     DTColumnBuilder.newColumn('AppName'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             } else {
                 $scope.dtColumns1 = [
-                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('username'),
                     DTColumnBuilder.newColumn('email'),
                     // DTColumnBuilder.newColumn('OwnerName'),
@@ -81,7 +81,7 @@
                     // DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
                     DTColumnBuilder.newColumn('TotalDevice'),
                     // DTColumnBuilder.newColumn('AppName'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             }
 
@@ -204,7 +204,7 @@
         }
 
         function actionsHtml(data, type, full, meta) {
-            var btns = '<div layout="row">';
+            var btns = '<div layout="row" layout="center">';
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="EditCustomer(' + data.id + ')" aria-label="Edit Location">' +
                     '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
@@ -212,7 +212,7 @@
                     '</md-button>';
             }
             if ($rootScope.FlgDeletedAccess) {
-                btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteCustomer(' + data.id + ')" aria-label="Add SubLocation">' +
+                btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteCustomer(' + data.id + ')" aria-label="Add Sub-Location">' +
                     '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
                     '<md-tooltip md-visible=""  md-direction="">Delete</md-tooltip>' +
                     '</md-button>';

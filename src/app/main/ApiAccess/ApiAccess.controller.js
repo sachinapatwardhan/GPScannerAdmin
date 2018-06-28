@@ -34,16 +34,16 @@
         }
 
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(numberHtml).notSortable().withOption('class', 'text-center').withOption('width', '3%'),
-            DTColumnBuilder.newColumn('Name').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('Phone').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('Email').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('AppName').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('Token').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('Key').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('IsActive').renderWith(IsActiveHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn(null).renderWith(actionHtml).notSortable().withOption('class', 'text-center').withOption('width', '10%'),
+            DTColumnBuilder.newColumn('CreatedDate').renderWith(numberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+            DTColumnBuilder.newColumn('Name'),
+            DTColumnBuilder.newColumn('Phone'),
+            DTColumnBuilder.newColumn('Email'),
+            DTColumnBuilder.newColumn('AppName'),
+            DTColumnBuilder.newColumn('Token'),
+            DTColumnBuilder.newColumn('Key'),
+            DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+            DTColumnBuilder.newColumn('IsActive').renderWith(IsActiveHtml),
+            DTColumnBuilder.newColumn(null).renderWith(actionHtml).notSortable().withOption('width', '10%').notSortable().withOption('class', 'text-center'),
         ]
 
 
@@ -125,7 +125,7 @@
         }
 
         function actionHtml(data, type, full, meta) {
-            var btns = '<div layout="row">';
+            var btns = '<div layout="row" layout-align="center">';
 
             if ($rootScope.FlgModifiedAccess) {
 

@@ -40,14 +40,14 @@
                         <input name="End" mdc-datetime-picker date="true" time="true" type="text" id="time" min-date="minDate" format="DD-MM-YYYY hh:mm A" ng-model="ModelSearch.EndDate">
                     </md-input-container>
                     <!-- <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-  <label>DeviceId</label>
+  <labelDd</label>
   <md-select name="DeviceId" ng-model="ModelSearch.DeviceId">
     <md-option ng-repeat="o in lstdevice" value="{{o.DeviceId}}">{{o.DeviceId}}</md-option>
   </md-select>
 </md-input-container>
  -->
                     <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                        <label>DeviceId</label>
+                        <label>Device ID</label>
                         <md-select Name="DeviceId" ng-model="ModelSearch.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllAlarm(true)">
                             <md-select-header class="demo-select-header">
                                 <input ng-model="searchDevice" type="search" placeholder="Search for a DeviceId.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
@@ -93,9 +93,9 @@
                                     <span class="column-title">No</span>
                                 </div>
                             </th>
-                            <th class="all">
+                            <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Date Time</span>
+                                    <span class="column-title">Date & Time</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -105,7 +105,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Device Id</span>
+                                    <span class="column-title">Device ID</span>
                                 </div>
                             </th>
                             <th class="secondary-text">

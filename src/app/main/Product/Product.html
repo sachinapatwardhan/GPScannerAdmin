@@ -14,8 +14,7 @@
             </div>
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search"
-                    translate translate-attr-placeholder="SEARCH" flex>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
             <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center" ng-if="productFlg==0 && FlgAddedEditlocal">
                 <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
@@ -41,7 +40,7 @@
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="30">
-                        <label>Product name</label>
+                        <label>Product Name</label>
                         <input ng-model="modelSearch.Name" ng-change="GetAllProductPanel(true)">
                     </md-input-container>
 
@@ -90,8 +89,7 @@
                 <br>
             </div>
             <div class="content fullpage-datatable" layout="column" flex>
-                <table id="Producttable" class="dataTable row-border cell-border hover" dt-instance="dtInstance" datatable="" dt-columns="vm.dtColumnDefs"
-                    dt-options="vm.dtOptions1" width="100%">
+                <table id="Producttable" class="dataTable row-border cell-border hover" dt-instance="dtInstance" datatable="" dt-columns="vm.dtColumnDefs" dt-options="vm.dtOptions1" width="100%">
                     <thead>
                         <tr>
                             <th class="all">
@@ -174,14 +172,14 @@
                             <md-content class="md-padding">
                                 <div layout="row" layout-wrap>
                                     <md-input-container class="md-block" flex="100" flex-gt-xs="50">
-                                        <label>Product name</label>
+                                        <label>Product Name</label>
                                         <input ng-model="model.Name" name="ProductName" ng-required="true" md-maxlength="255">
                                         <div ng-messages="formproduct.ProductName.$error" ng-show="formproduct.ProductName.$touched" multiple md-auto-hide="false">
                                             <div ng-message="required">
-                                                Product name is required
+                                                Product Name is required
                                             </div>
                                             <div ng-message="md-maxlength">
-                                                Product name has to be less than 255 characters long
+                                                Product Name has to be less than 255 characters long
                                             </div>
                                         </div>
                                     </md-input-container>
@@ -200,7 +198,7 @@
 
                                 <div layout-gt-sm="row">
                                     <md-input-container class="md-block" flex>
-                                        <label>Short description</label>
+                                        <label>Short Description</label>
                                         <textarea ng-model="model.ShortDescription" md-maxlength="300" md-select-on-focus></textarea>
                                     </md-input-container>
                                     <md-input-container class="md-block " flex="100" flex-gt-xs="50">
@@ -210,7 +208,7 @@
                                 </div>
 
                                 <md-input-container class="md-block" flex>
-                                    <label>Full description</label>
+                                    <label>Full Description</label>
                                     <textarea ckeditor="editorOptions" name="PageContent" ng-model="model.FullDescription" placeholder="Page Content"></textarea>
                                 </md-input-container>
                                 <div layout="row" layout-wrap>
@@ -235,11 +233,11 @@
                                     <input ng-model="model.Price " type="number " step="1.00 ">
                                 </md-input-container>
                                 <md-input-container class="md-block " flex>
-                                    <label>Old price</label>
+                                    <label>Old Price</label>
                                     <input ng-model="model.OldPrice " type="number " step="1.00 ">
                                 </md-input-container>
                                 <md-input-container class="md-block " flex>
-                                    <label>Product cost</label>
+                                    <label>Product Cost</label>
                                     <input ng-model="model.ProductCost " type="number " step="1.00 ">
                                 </md-input-container>
                             </div>
@@ -267,14 +265,12 @@
                             </md-input-container>
                             <div layout-gt-sm="row " ng-if="model.Id !=0 ">
                                 <md-input-container class="md-block " flex>
-                                    <label>Created on</label>
-                                    <input mdc-datetime-picker date="true " time="false " type="text " id="time " format="MM-DD-YYYY " ng-model="model.CreatedOnUtc "
-                                        disabled>
+                                    <label>Created On</label>
+                                    <input mdc-datetime-picker date="true " time="false " type="text " id="time " format="MM-DD-YYYY " ng-model="model.CreatedOnUtc " disabled>
                                 </md-input-container>
                                 <md-input-container class="md-block " flex>
-                                    <label>Updated on</label>
-                                    <input mdc-datetime-picker date="true " time="false " type="text " id="time " format="MM-DD-YYYY " ng-model="model.UpdatedOnUtc "
-                                        disabled>
+                                    <label>Updated On</label>
+                                    <input mdc-datetime-picker date="true " time="false " type="text " id="time " format="MM-DD-YYYY " ng-model="model.UpdatedOnUtc " disabled>
                                 </md-input-container>
                             </div>
                         </md-content>
@@ -295,8 +291,7 @@
                                 <div layout="row ">
                                     <label>Image</label>
                                     <md-input-container class="md-block " flex>
-                                        <lf-ng-md-file-input name="files00 " lf-files="Mediafiles " lf-api="apiMedia " onchange="angular.element(this).scope().setFiles(this) "
-                                            lf-mimetype="image/* " preview></lf-ng-md-file-input>
+                                        <lf-ng-md-file-input name="files00 " lf-files="Mediafiles " lf-api="apiMedia " onchange="angular.element(this).scope().setFiles(this) " lf-mimetype="image/* " preview></lf-ng-md-file-input>
                                         <div ng-messages="form1.files00.$error " style="color:red; ">
                                             <div ng-message="mimetype ">Only image file supported</div>
                                         </div>
@@ -313,7 +308,7 @@
                                     </md-input-container> -->
                                 </div>
                                 <md-input-container class="md-block " flex>
-                                    <label>Display order</label>
+                                    <label>Display Order</label>
                                     <input ng-model="modelPicture.DisplayOrder " type="number " step="1.00 ">
                                 </md-input-container>
                                 <div layout="row " align="left">
@@ -350,8 +345,7 @@
                                     <tr ng-repeat="o in ListProductPicture ">
                                         <td> {{$index +1}}</td>
                                         <td>
-                                            <img ng-src="{{RoutePath}}MediaUploads/{{o.tblmediamgmt.FileName}} " err-src="assets/images/prod-no-img-new.png" height="50px "
-                                                width="50px ">
+                                            <img ng-src="{{RoutePath}}MediaUploads/{{o.tblmediamgmt.FileName}} " err-src="assets/images/prod-no-img-new.png" height="50px " width="50px ">
                                         </td>
                                         <td>
                                             {{o.DisplayOrder}}
@@ -411,7 +405,7 @@
                                 </th> -->
                                 <th class="secondary-text">
                                     <div class="table-header">
-                                        <span class="column-title text-center">Display order</span>
+                                        <span class="column-title text-center">Display Order</span>
                                     </div>
                                 </th>
                                 <th class="secondary-text">
@@ -421,7 +415,7 @@
                                 </th>
                                 <th class="secondary-text">
                                     <div class="table-header">
-                                        <span class="column-title">Validation rules</span>
+                                        <span class="column-title">Validation Rrules</span>
                                     </div>
                                 </th>
                                 <th class="all">
@@ -433,7 +427,7 @@
                         </thead>
                         <tbody>
                             <tr ng-if="ProductAttributeFlg==1">
-                                <td>{{$index+1}}</td>
+                                <td style="width: 4%; text-align: center;">{{$index+1}}</td>
                                 <td>
                                     <md-input-container class="md-block" flex>
                                         <md-select ng-model="modelProductAttribute.ProductAttributeId">
@@ -484,7 +478,7 @@
                                 </td>
                             </tr>
                             <tr ng-repeat="o in listProductAttribute">
-                                <td>{{$index+1}}</td>
+                                <td style="width: 4%; text-align: center;">{{$index+1}}</td>
                                 <td>{{o.productattribute.Name}}</td>
                                 <!-- <td>{{o.TextPrompt}}</td> -->
                                 <td align="center">
@@ -501,7 +495,7 @@
                                     <md-button class="md-primary" ng-click="ViewEditValue($event,o)">View/Edit values (Count : {{o.productattributevalues.length}})</md-button>
                                 </td>
                                 <td></td>
-                                <td align="center">
+                                <td align="center" style="width: 4%; text-align: center;">
                                     <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="FetchProductAttributeById(o)">
                                         <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
                                         <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
@@ -524,7 +518,7 @@
         padding: 24px;
         margin-bottom: 24px;
     }
-
+    
     .dataTables_wrapper .dataTables_scroll .dataTables_scrollHead {
         min-height: 55px!important;
     }

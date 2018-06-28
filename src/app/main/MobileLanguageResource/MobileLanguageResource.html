@@ -38,7 +38,7 @@
                                     <span class="column-title">{{o.Name}}</span>
                                 </div>
                             </th>
-                            <th class="all" ng-repeat="o in obj" ng-if="o.Name=='Code'">
+                            <th class="secondary-text" ng-repeat="o in obj" ng-if="o.Name=='Code'">
                                 <div class="table-header" align="left">
                                     <span class="column-title">{{o.Name}}</span>
                                 </div>
@@ -57,10 +57,10 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="o in lstLanguage">
-                            <td>{{ $index+1 }}</td>
+                            <td style="width: 4%; text-align: center;">{{ $index+1 }}</td>
                             <td>{{o.Code}}</td>
                             <td ng-repeat="o1 in objName">{{o[o1.Name]}}</td>
-                            <td>
+                            <td style="text-align:center">
                                 <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="FetchLanguageResourceById(o)" aria-label="Edit Location">
                                     <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
                                     <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>

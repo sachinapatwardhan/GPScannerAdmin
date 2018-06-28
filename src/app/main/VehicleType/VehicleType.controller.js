@@ -728,13 +728,13 @@
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
             $scope.FilterStatus = 1;
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('Type'),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('CreatedBy'),
                 DTColumnBuilder.newColumn('tblappinfo.AppName').renderWith(AppNameHtml),
                 DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable(),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -822,7 +822,7 @@
         }
 
         function actionsHtml(data, type, full, meta) {
-            var btns = '<div layout="row">'
+            var btns = '<div layout="row" layout-align="center">'
 
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="editVehicleTypeId(' + data.id + ')" aria-label="">' +

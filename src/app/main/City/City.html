@@ -85,7 +85,7 @@
                     <md-input-container class="md-block" flex>
                         <div layout="row">
                             <md-input-container flex>
-                                <label>Country name</label>
+                                <label>Country Name</label>
                                 <md-select Name="idCountry" ng-model="model.idCountry" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true" ng-change="vm.GetAllStateByCountry(model.idCountry)">
                                     <md-select-header class="demo-select-header">
                                         <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
@@ -119,7 +119,7 @@
                     <md-input-container class="md-block" flex>
                         <div layout="row">
                             <md-input-container class="md-block" flex>
-                                <label>State name</label>
+                                <label>State Name</label>
                                 <md-select Name="idState" ng-model="model.idState" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-disabled="model.idCountry==''" ng-required="true">
                                     <md-select-header class="demo-select-header">
                                         <input ng-model="vm.searchTermState" type="search" placeholder="Search for a state.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
@@ -151,7 +151,7 @@
                 </div>
                 <div layout="row" layout-wrap>
                     <md-input-container class="md-block" flex-gt-sm="50">
-                        <label>City name</label>
+                        <label>City Name</label>
                         <input name="Name" ng-model="model.Name" maxlength="25" ng-required="true" ng-disabled="model.idState==''" maxlength="50" md-maxlength="50">
                         <div ng-messages="form.Name.$error" ng-if="form.Name.$touched">
                             <div ng-message="required">
@@ -162,7 +162,7 @@
                 </div>
                 <div layout="row" layout-wrap>
                     <md-input-container class="md-block" flex-gt-sm="50">
-                        <label>Short name </label>
+                        <label>Short Name </label>
                         <input name="ShortName" type="text" ng-model="model.ShortName" maxlength="10" md-maxlength="10">
                     </md-input-container>
                 </div>

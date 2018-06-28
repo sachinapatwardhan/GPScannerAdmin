@@ -75,27 +75,27 @@
                                     <input ng-model="model.id">
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm="50">
-                                    <label>Country name
+                                    <label>Country Name
                   </label>
                                     <md-select name="CountryName" ng-model="model.idCountry" ng-required="true">
                                         <md-option ng-repeat="o in lstCountry" value="{{o.id}}">{{o.Country}}</md-option>
                                     </md-select>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm="50">
-                                    <label>State name </label>
+                                    <label>State Name </label>
                                     <input name="StateName" ng-model="model.Name" maxlength="30" ng-required="true" maxlength="50" md-maxlength="50">
                                     <div ng-messages="formState.StateName.$error" ng-if="formState.StateName.$touched">
                                         <div ng-message="required">
-                                            <span>State name is required</span>
+                                            <span>State Name is required</span>
                                         </div>
                                     </div>
                                 </md-input-container>
                                 <md-input-container class="md-block" flex-gt-sm="50">
-                                    <label>Short name </label>
+                                    <label>Short Name </label>
                                     <input name="ShortName" ng-model="model.ShortName" maxlength="10" ng-required="true" maxlength="10" md-maxlength="10">
                                     <div ng-messages="formState.ShortName.$error" ng-if="formState.ShortName.$touched">
                                         <div ng-message="required">
-                                            <span>Short name is required</span>
+                                            <span>Short Name is required</span>
                                         </div>
                                     </div>
                                 </md-input-container>

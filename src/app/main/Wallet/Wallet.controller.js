@@ -99,13 +99,13 @@
                 function ForwardProced() {
 
                     $scope.dtColumns = [
-                        DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center').withOption('width', '2%'),
-                        DTColumnBuilder.newColumn('OrderNo').renderWith(OrderNoHtml).withOption('class', 'text-center').withOption('width', '15%'),
-                        DTColumnBuilder.newColumn('AppName').renderWith(AppNameHtml).withOption('class', 'text-center'),
-                        DTColumnBuilder.newColumn('Amount').withOption('class', 'text-center'),
-                        DTColumnBuilder.newColumn('Type').renderWith(TypeHtml).withOption('class', 'text-center'),
-                        DTColumnBuilder.newColumn('Country').renderWith(CountryHtml).withOption('class', 'text-center'),
-                        DTColumnBuilder.newColumn('CreatedDate').renderWith(DateFormateHtml).withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                        DTColumnBuilder.newColumn('OrderNo').renderWith(OrderNoHtml).withOption('width', '15%'),
+                        DTColumnBuilder.newColumn('AppName').renderWith(AppNameHtml),
+                        DTColumnBuilder.newColumn('Amount'),
+                        DTColumnBuilder.newColumn('Type').renderWith(TypeHtml),
+                        DTColumnBuilder.newColumn('Country').renderWith(CountryHtml),
+                        DTColumnBuilder.newColumn('CreatedDate').renderWith(DateFormateHtml),
                         DTColumnBuilder.newColumn('Remark').withOption('class', 'text-center'),
                     ]
 

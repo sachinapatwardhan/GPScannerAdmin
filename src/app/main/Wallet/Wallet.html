@@ -66,7 +66,7 @@
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="33" ng-if="UserRoles == 'Super Admin'">
-                        <label>AppName</label>
+                        <label>App Name</label>
                         <md-select ng-model="modelSearch.idApp" ng-change="GetAllWalletes(true)" ng-disabled="!IsMark" ng-change="GetAllWalletes(true)">
                             <md-option value="0">ALL</md-option>
                             <md-option value="{{o.id}}" ng-repeat="o in lstProductTypes | orderBy:'AppName'">{{o.AppName}}</md-option>

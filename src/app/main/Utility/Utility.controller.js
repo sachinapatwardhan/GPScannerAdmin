@@ -49,13 +49,13 @@
             $scope.FilterStatus = '';
 
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('Name'),
                 // DTColumnBuilder.newColumn('username'),
                 DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
                 DTColumnBuilder.newColumn('DeviceType'),
 
-                DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
+                DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml).withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
             ]
 
@@ -133,7 +133,7 @@
         function actionsHtml(data, type, full, meta) {
             var device = data.deviceid;
             var event = '$event';
-            var btns = '<div layout="row">';
+            var btns = '<div layout="row" layout-align="center">';
             btns = '<md-checkbox ng-checked="exists(' + device + ', selected)" ng-click="toggle1(' + device + ', selected)"></md-checkbox>';
             // if ($rootScope.FlgModifiedAccess) {
             //     btns += '<md-button class="edit-button md-icon-button"  ng-click="FetchVehicleById(' + data.id + ')">' +

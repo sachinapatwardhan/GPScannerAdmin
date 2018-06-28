@@ -59,7 +59,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="o in lstProductAttribute">
-                            <td>{{ $index+1 }}</td>
+                            <td style="width: 4%;text-align: center">{{ $index+1 }}</td>
                             <td>{{ o.Name }}</td>
                             <td>{{ o.Description }}</td>
                             <td class="dt-body-center">
@@ -110,11 +110,11 @@
                             <input ng-model="model.Id">
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm="50">
-                            <label>Product attribute name</label>
+                            <label>Product Attribute Name</label>
                             <input name="Name" ng-model="model.Name" ng-required="true" maxlength="50" md-maxlength="50">
                             <div ng-messages="formProductAttribute.Name.$error" ng-if="formProductAttribute.Name.$touched">
                                 <div ng-message="required">
-                                    <span>Product attribute name is required</span>
+                                    <span>Product Attribute Name is required</span>
                                 </div>
                             </div>
                         </md-input-container>

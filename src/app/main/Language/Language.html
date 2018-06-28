@@ -126,11 +126,11 @@
                                 <input ng-model="model.Id">
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-xs="33">
-                                <label>Languages name</label>
+                                <label>Languages Name</label>
                                 <input name="Name" ng-model="model.Name" ng-required="true">
                                 <div ng-messages="formLanguages.Name.$error" ng-if="formLanguages.Name.$touched">
                                     <div ng-message="required">
-                                        <span>Languages name is required</span>
+                                        <span>Languages Name is required</span>
                                     </div>
                                 </div>
                             </md-input-container>
@@ -146,7 +146,7 @@
                                 </div>
                             </md-input-container> -->
                             <md-input-container class="md-block" flex="100" flex-gt-xs="33">
-                                <label>Language culture   {{model.LanguageCulture}}</label>
+                                <label>Language Culture   {{model.LanguageCulture}}</label>
                                 <md-select Name="LanguageCulture" ng-model="model.LanguageCulture" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-required="true">
                                     <md-select-header class="demo-select-header">
                                         <input ng-model="langCl" type="search" placeholder="Search for a Language culture.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
@@ -174,7 +174,7 @@
                                 </div>
                             </md-input-container> -->
                             <md-input-container class="md-block" flex="100" flex-gt-xs="33">
-                                <label>Unique SEO code</label>
+                                <label>Unique SEO Code</label>
                                 <input name="UniqueSeoCode" ng-model="model.UniqueSeoCode" required>
                                 <div ng-messages="formLanguages.UniqueSeoCode.$error" ng-if="formLanguages.UniqueSeoCode.$touched">
                                     <div ng-message="required">
@@ -183,7 +183,7 @@
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-xs="25">
-                                Right-to-left &nbsp&nbsp&nbsp
+                                Right-To-Left &nbsp&nbsp&nbsp
                                 <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="model.Rtl" class="md-primary"></md-checkbox>
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-xs="25">
@@ -191,7 +191,7 @@
                                 <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="model.Published" class="md-primary"></md-checkbox>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm="50">
-                                <label>Display order</label>
+                                <label>Display Order</label>
                                 <input name="DisplayOrder" ng-model="model.DisplayOrder" placeholder="12345" type="number" max="99999" min='0' required>
                                 <div ng-messages="formLanguages.DisplayOrder.$error" ng-if="formLanguages.DisplayOrder.$touched">
                                     <div ng-message="max" class="my-message">Display order can't be longer than 5 number</div>

@@ -69,23 +69,23 @@
             $scope.FilterStatus = 1;
             if ($rootScope.UserRoles == "Super Admin") {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('SerialNum'),
                     DTColumnBuilder.newColumn('PhoneNum'),
                     DTColumnBuilder.newColumn('TelName').renderWith(Valuefun),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('AppName').renderWith(Valuefun),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             } else {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('SerialNum'),
                     DTColumnBuilder.newColumn('PhoneNum'),
                     DTColumnBuilder.newColumn('TelName').renderWith(Valuefun),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     // DTColumnBuilder.newColumn('AppName').renderWith(Valuefun),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             }
 
@@ -169,7 +169,7 @@
 
 
         function actionsHtml(data, type, full, meta) {
-            var btns = '<div layout="row">'
+            var btns = '<div layout="row" layout-align="center">'
 
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="editSIMById(' + data.id + ')" aria-label="">' +

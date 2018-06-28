@@ -82,7 +82,7 @@
         $scope.FilterStatus = 1;
         if ($rootScope.AppName == 'Tracking') {
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('DeviceId'),
                 DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
                 DTColumnBuilder.newColumn('Latitude'),
@@ -107,7 +107,7 @@
             ]
         } else {
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('DeviceId'),
                 DTColumnBuilder.newColumn('Date').renderWith(Datetimefun),
                 DTColumnBuilder.newColumn('Latitude'),

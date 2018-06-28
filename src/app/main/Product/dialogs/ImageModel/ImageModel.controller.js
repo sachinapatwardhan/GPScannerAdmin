@@ -34,10 +34,10 @@
 
         $scope.lstMedia = [];
         vm.dtColumns = [
-            DTColumnBuilder.newColumn('id').renderWith(NumberHtml),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
+            DTColumnBuilder.newColumn('id').renderWith(NumberHtml).withOption('width', '4%').withOption('class', 'text-center'),
+            DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('Name'),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+            DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
         ]
         vm.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "media/GetAllDynamicMedia",

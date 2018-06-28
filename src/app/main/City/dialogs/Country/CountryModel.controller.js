@@ -36,11 +36,11 @@
         //Dynamic Pagging
         $scope.lstCountry = [];
         $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml).withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('Code'),
                 DTColumnBuilder.newColumn('Country'),
                 DTColumnBuilder.newColumn('ShortName'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
             ]
             // ShowTrackNumberModal
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {

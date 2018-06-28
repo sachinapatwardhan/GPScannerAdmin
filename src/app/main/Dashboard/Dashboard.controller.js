@@ -2040,14 +2040,14 @@
             DTColumnDefBuilder.newColumnDef(0).notSortable(),
             DTColumnDefBuilder.newColumnDef(1).notSortable(),
             DTColumnDefBuilder.newColumnDef(2).notSortable(),
-            DTColumnDefBuilder.newColumnDef(3).notSortable(),
+            DTColumnDefBuilder.newColumnDef(3).notSortable().notSortable().withOption('class', 'text-center'),
         ];
 
         $scope.dtColumnDefsA = [
             DTColumnDefBuilder.newColumnDef(0).notSortable(),
             DTColumnDefBuilder.newColumnDef(1).notSortable(),
             DTColumnDefBuilder.newColumnDef(2).notSortable(),
-            DTColumnDefBuilder.newColumnDef(3).notSortable(),
+            DTColumnDefBuilder.newColumnDef(3).notSortable().notSortable().withOption('class', 'text-center'),
         ];
 
 
@@ -2091,7 +2091,7 @@
         $scope.dtColumnDefsC = [
             DTColumnDefBuilder.newColumnDef(0).notSortable(),
             DTColumnDefBuilder.newColumnDef(1).notSortable(),
-            DTColumnDefBuilder.newColumnDef(2).notSortable(),
+            DTColumnDefBuilder.newColumnDef(2).notSortable().notSortable().withOption('class', 'text-center'),
             /*DTColumnDefBuilder.newColumnDef(3).notSortable(),*/
         ];
 
@@ -2192,7 +2192,7 @@
             DTColumnDefBuilder.newColumnDef(0).notSortable(),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
-            DTColumnDefBuilder.newColumnDef(3),
+            DTColumnDefBuilder.newColumnDef(3).notSortable().withOption('class', 'text-center'),
         ];
 
         // function timeDifference(Start) {

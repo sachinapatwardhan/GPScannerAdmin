@@ -13,7 +13,7 @@
         }
 
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
+            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('email'),
             DTColumnBuilder.newColumn('phone'),
             DTColumnBuilder.newColumn('AppsUserFriendly'),

@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -8,7 +8,7 @@
     /** @ngInject */
     function AuditLogController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
 
-        $scope.init = function () {
+        $scope.init = function() {
 
             var StartDate = new Date();
             StartDate.setHours(0);
@@ -27,7 +27,7 @@
         }
 
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
+            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('type'),
             DTColumnBuilder.newColumn('createdby'),
             DTColumnBuilder.newColumn('createddate').renderWith(Datefun), ,
@@ -35,38 +35,38 @@
         ]
 
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-            url: $rootScope.RoutePath + "auditlog/GetAllAditlog",
-            data: function (d) {
-                if ($scope.Search != "") {
-                    d.search = $scope.Search;
-                } else {
-                    d.search = "";
-                }
-                if ($scope.ModelSearch.StartDate != '') {
-                    d.StartDate = $scope.ModelSearch.StartDate.toUTCString();
-                } else {
-                    d.StartDate = ''
-                }
-                if ($scope.ModelSearch.EndDate != '') {
-                    d.EndDate = $scope.ModelSearch.EndDate.toUTCString();
-                } else {
-                    d.EndDate = ''
-                }
-                return d;
-            },
-            type: "get",
-            dataSrc: function (json) {
-                if (json.success != false) {
-                    $scope.$apply(function () {
-                        $scope.lstdata = json.data;
-                        $scope.Totallog = json.recordsTotal;
-                    })
-                    return json.data;
-                } else {
-                    return [];
-                }
-            },
-        })
+                url: $rootScope.RoutePath + "auditlog/GetAllAditlog",
+                data: function(d) {
+                    if ($scope.Search != "") {
+                        d.search = $scope.Search;
+                    } else {
+                        d.search = "";
+                    }
+                    if ($scope.ModelSearch.StartDate != '') {
+                        d.StartDate = $scope.ModelSearch.StartDate.toUTCString();
+                    } else {
+                        d.StartDate = ''
+                    }
+                    if ($scope.ModelSearch.EndDate != '') {
+                        d.EndDate = $scope.ModelSearch.EndDate.toUTCString();
+                    } else {
+                        d.EndDate = ''
+                    }
+                    return d;
+                },
+                type: "get",
+                dataSrc: function(json) {
+                    if (json.success != false) {
+                        $scope.$apply(function() {
+                            $scope.lstdata = json.data;
+                            $scope.Totallog = json.recordsTotal;
+                        })
+                        return json.data;
+                    } else {
+                        return [];
+                    }
+                },
+            })
             .withOption('processing', true) //for show progress bar
             .withOption('serverSide', true) // for server side processing
             .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
@@ -81,7 +81,7 @@
 
 
         //Reload Datatable
-        $scope.GetAllAuditLog = function (IsUpdate) {
+        $scope.GetAllAuditLog = function(IsUpdate) {
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
@@ -89,9 +89,9 @@
             $scope.dtInstance.reloadData(callback, resetPaging);
         }
 
-        $scope.reloadData = function () { }
+        $scope.reloadData = function() {}
 
-        function callback(json) { }
+        function callback(json) {}
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -122,11 +122,11 @@
             }
         }
 
-        $scope.GetSerch = function (Search) {
+        $scope.GetSerch = function(Search) {
             $scope.Search = Search;
             $scope.GetAllAuditLog(true);
         }
-        $scope.SearchReset = function () {
+        $scope.SearchReset = function() {
             $scope.ModelSearch = {
                 DeviceId: 'All',
                 StartDate: '',
@@ -137,19 +137,19 @@
             $scope.GetAllGpsData(true);
         }
 
-        $scope.toggle = function () {
+        $scope.toggle = function() {
             if (!$scope.flgforIcon) {
                 $scope.flgforIcon = true;
             } else {
                 $scope.flgforIcon = false;
             }
-            $(function () {
+            $(function() {
                 $(".showBtn").toggleClass("active");
                 $(".ShowContentBox").slideToggle();
             })
         }
 
-        $scope.SearchReset = function () {
+        $scope.SearchReset = function() {
             var StartDate = new Date();
             StartDate.setHours(0);
             StartDate.setMinutes(0);

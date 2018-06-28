@@ -155,7 +155,7 @@
             $scope.FilterStatus = 1;
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('LicenceNo'),
                     DTColumnBuilder.newColumn('DeviceId'),
                     // DTColumnBuilder.newColumn('username'),
@@ -168,11 +168,11 @@
                     DTColumnBuilder.newColumn('AppName'),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
                 ]
             } else {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('LicenceNo'),
                     DTColumnBuilder.newColumn('DeviceId'),
                     // DTColumnBuilder.newColumn('username'),
@@ -185,7 +185,7 @@
                     // DTColumnBuilder.newColumn('AppName'),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
                 ]
             }
 
@@ -305,7 +305,7 @@
         }
 
         function actionsHtml(data, type, full, meta) {
-            var btns = '<div layout="row">'
+            var btns = '<div layout="row" layout-align="center">'
             if ($rootScope.UserRoles == 'Super Admin') {
                 if ($rootScope.FlgModifiedAccess) {
                     btns += '<md-button class="edit-button md-icon-button"  ng-click="EditLicence(' + data.Id + ')" aria-label="">' +

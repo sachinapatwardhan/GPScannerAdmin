@@ -132,7 +132,7 @@
             $scope.FilterStatus = '';
 
             $scope.dtColumnsHandShake = [
-                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '5%'),
+                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('Datetime').renderWith(dateFormat),
                 DTColumnBuilder.newColumn('DeviceId').renderWith(DeviceIdHtml),
                 // DTColumnBuilder.newColumn('Power'),

@@ -108,7 +108,7 @@
 
         $scope.FilterStatus = 1;
         $scope.dtColumns = [
-                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('DeviceId'),
                 DTColumnBuilder.newColumn('Type'),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
@@ -172,19 +172,19 @@
         //Dynamic Pagging End
 
         $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
             DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4).notSortable(),
+            DTColumnDefBuilder.newColumnDef(4).notSortable().withOption('class', 'text-center'),
 
         ];
 
         $scope.dtColumnDefsModal = [
-            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
-            DTColumnDefBuilder.newColumnDef(3).notSortable()
+            DTColumnDefBuilder.newColumnDef(3).notSortable().withOption('class', 'text-center'),
         ];
 
         $scope.resetForm = function() {

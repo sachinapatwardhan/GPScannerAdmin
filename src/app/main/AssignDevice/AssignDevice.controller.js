@@ -82,7 +82,7 @@
 
         // For super admin
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn('id').renderWith(function(data, type, row, meta) {
+            DTColumnBuilder.newColumn('id').withOption('class', 'text-center').withOption('width', '4%').renderWith(function(data, type, row, meta) {
                 return meta.row + 1;
             }),
             DTColumnBuilder.newColumn('DeviceId'),
@@ -126,17 +126,17 @@
             //         '<span style="font-size: 20px; color: green;">&#x2714;</span>' :
             //         '<span style="font-size: 20px; color: red;">&#x2716;</span>';
             // }),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
+            DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').renderWith(function(data, type, row, meta) {
                 var template =
-                    '<md-checkbox aria-label="assign" ng-disabled="devices[' + meta.row + '].isDisabled" ng-model="devices[' + meta.row + '].isChecked" ng-change="assignDevice(' + meta.row + ')"></md-checkbox>';
+                    '<div layout="row" layout-align="center"><md-checkbox aria-label="assign" ng-disabled="devices[' + meta.row + '].isDisabled" ng-model="devices[' + meta.row + '].isChecked" ng-change="assignDevice(' + meta.row + ')"></md-checkbox></div>';
 
                 return template;
-            }).withOption('responsivePriority', 1)
+            }).withOption('responsivePriority', 1),
         ];
 
         // For normal admin
         $scope.dtColumns2 = [
-            DTColumnBuilder.newColumn('id').renderWith(function(data, type, row, meta) {
+            DTColumnBuilder.newColumn('id').withOption('class', 'text-center').withOption('width', '4%').renderWith(function(data, type, row, meta) {
                 return meta.row + 1;
             }),
             DTColumnBuilder.newColumn('DeviceId'),
@@ -179,12 +179,12 @@
             //         '<span style="font-size: 20px; color: green;">&#x2714;</span>' :
             //         '<span style="font-size: 20px; color: red;">&#x2716;</span>';
             // }),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(function(data, type, row, meta) {
+            DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').renderWith(function(data, type, row, meta) {
                 var template =
-                    '<md-checkbox aria-label="assign" ng-disabled="devices[' + meta.row + '].isDisabled" ng-model="devices[' + meta.row + '].isChecked" ng-change="assignDevice(' + meta.row + ')"></md-checkbox>';
+                    '<div layout-align="center"><md-checkbox aria-label="assign" ng-disabled="devices[' + meta.row + '].isDisabled" ng-model="devices[' + meta.row + '].isChecked" ng-change="assignDevice(' + meta.row + ')"></md-checkbox></div>';
 
                 return template;
-            }).withOption('responsivePriority', 1)
+            }).withOption('responsivePriority', 1),
         ];
 
         $scope.dtInstance = function(dtInstance) {

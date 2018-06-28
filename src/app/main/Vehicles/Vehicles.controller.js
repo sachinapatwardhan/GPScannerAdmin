@@ -238,19 +238,19 @@
 
             if ($rootScope.AppName == 'Tracking') {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('username'),
                     DTColumnBuilder.newColumn('Name'),
                     DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
                     DTColumnBuilder.newColumn('Type'),
                     DTColumnBuilder.newColumn('Displyrenewaldate').renderWith(ExpirydateFormat),
                     DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                    DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml).withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             } else {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('username'),
                     DTColumnBuilder.newColumn('Name'),
                     DTColumnBuilder.newColumn('deviceid').renderWith(DeviceIdHtml),
@@ -258,8 +258,8 @@
                     DTColumnBuilder.newColumn('Type'),
                     DTColumnBuilder.newColumn('Displyrenewaldate').renderWith(ExpirydateFormat),
                     DTColumnBuilder.newColumn('DisplyHandshakDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                    DTColumnBuilder.newColumn('IsOnline').notSortable().renderWith(StatusHtml).withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             }
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -352,7 +352,7 @@
         function actionsHtml(data, type, full, meta) {
             var device = data.deviceid;
             var event = '$event';
-            var btns = '<div layout="row">';
+            var btns = '<div layout="row" layout-align="center center">';
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="FetchVehicleById(' + data.id + ')">' +
                     '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +

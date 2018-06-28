@@ -121,7 +121,7 @@
             $scope.FilterStatus = '';
             if ($rootScope.AppName == "Tracking") {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('AppName'),
                     DTColumnBuilder.newColumn('BundleId'),
                     // DTColumnBuilder.newColumn('LicenceRenewalType'),
@@ -132,11 +132,11 @@
                     DTColumnBuilder.newColumn('AndroidSenderId'),
                     DTColumnBuilder.newColumn('DisplyCreatedDate').renderWith(Datefun),
                     DTColumnBuilder.newColumn('CreatedBy'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             } else {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable(),
+                    DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('AppName'),
                     DTColumnBuilder.newColumn('BundleId'),
                     DTColumnBuilder.newColumn('LicenceRenewalType'),
@@ -147,7 +147,7 @@
                     DTColumnBuilder.newColumn('AndroidSenderId'),
                     DTColumnBuilder.newColumn('DisplyCreatedDate').renderWith(Datefun),
                     DTColumnBuilder.newColumn('CreatedBy'),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             }
 
@@ -197,7 +197,7 @@
         function callback(json) {}
 
         function actionsHtml(data, type, full, meta) {
-            var btns = '<div layout="row">';
+            var btns = '<div layout="row" layout-align="center">';
 
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="EditAppinfo(' + data.Id + ')" aria-label="Edit Location">' +
@@ -206,7 +206,7 @@
                     '</md-button>';
             }
             if ($rootScope.FlgDeletedAccess) {
-                btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteAppInfo(' + data.Id + ')" aria-label="Add SubLocation">' +
+                btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteAppInfo(' + data.Id + ')" aria-label="Add Sub-Location">' +
                     '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +
                     '<md-tooltip md-visible=""  md-direction="">Delete</md-tooltip>' +
                     '</md-button>';

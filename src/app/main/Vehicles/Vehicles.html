@@ -104,7 +104,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Tracker Id</span>
+                                    <span class="column-title">Tracker ID</span>
                                 </div>
                             </th>
                             <!-- <th class="secondary-text">
@@ -161,7 +161,7 @@
                             </th>
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Tracker Id</span>
+                                    <span class="column-title">Tracker ID</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -249,14 +249,14 @@
                     <div class="content">
                         <div layout="row" layout-wrap>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>Select user</label>
+                                <label>Select User</label>
                                 <md-autocomplete ng-required="true" md-input-name="iduser" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.username"
                                     placeholder="Select User">
                                     <md-item-template>
                                         <span md-highlight-text="query" md-highlight-flags="^i">{{item.username}}</span>
                                     </md-item-template>
                                     <md-not-found>
-                                        No user matching "{{query}}" were found
+                                        No User matching "{{query}}" were found
                                     </md-not-found>
                                 </md-autocomplete>
                                 <div ng-messages="formVehicledetails.iduser.$error" ng-if="formVehicledetails.iduser.$touched">
@@ -314,7 +314,7 @@
                                 </div>
                             </md-input-container>-->
                             <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>HandShake Date Time </label>
+                                <label>HandShake Date & Time </label>
                                 <input mdc-datetime-picker date="true" time="true" type="text" id="HandshakDatetime" format="DD-MM-YYYY hh:mm A" ng-model="model.HandshakDatetime">
                                 <div ng-messages="formVehicledetails.HandshakDatetime.$error" ng-if="formVehicledetails.HandshakDatetime.$touched" role="alert">
                                     <div ng-message="required">

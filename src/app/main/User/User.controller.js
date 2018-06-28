@@ -309,7 +309,7 @@
             $scope.FilterStatus = 1;
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%'),
+                    DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
                     DTColumnBuilder.newColumn('username').withOption('width', '12%'),
                     DTColumnBuilder.newColumn('email').withOption('width', '13%'),
@@ -327,7 +327,7 @@
                 ]
             } else {
                 $scope.dtColumns1 = [
-                    DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%'),
+                    DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
                     DTColumnBuilder.newColumn('username').withOption('width', '12%'),
                     DTColumnBuilder.newColumn('email').withOption('width', '13%'),
@@ -495,7 +495,7 @@
 
 
         function actionsHtml(data, type, full, meta) {
-            var btns = '<div layout="row">'
+            var btns = '<div layout="row" layout-align="center">'
                 // btns += '<md-button  class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="FetchRoleById(' + data.id + ')" aria-label="">' +
                 //     '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon> <md-tooltip md-visible="" md-direction="">Edit User </md-tooltip>' +
                 //     '</md-button>';
@@ -532,7 +532,7 @@
 
             // btns += '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')"><md-icon md-svg-icon="assets/icons/icon-pass-reset.svg"></md-icon> <md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip></md-button></div>';
             // btns += '<md-button class="md-raised md-primary"  ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')">Reset Password</md-button>'
-
+            btns += '<div>';
             return btns;
         };
 

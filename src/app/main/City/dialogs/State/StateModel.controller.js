@@ -43,11 +43,11 @@
         //Dynamic Pagging
         $scope.lstCountryState = [];
         $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(NumberHtml).withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('tblcountrymgmt.Country'),
                 DTColumnBuilder.newColumn('Name'),
                 DTColumnBuilder.newColumn('ShortName'),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
             ]
             // ShowTrackNumberModal
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -258,10 +258,10 @@
         }
 
         vm.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2),
-            DTColumnDefBuilder.newColumnDef(3),
+            DTColumnDefBuilder.newColumnDef(3).notSortable().withOption('class', 'text-center'),
             //DTColumnDefBuilder.newColumnDef(4),
             // DTColumnDefBuilder.newColumnDef(5)
         ];

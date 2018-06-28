@@ -39,7 +39,7 @@
                             <input type="number" name="MaxSpeed" ng-model="model.MaxSpeed" required>
                             <div ng-messages="formSetting.MaxSpeed.$error" ng-if="formSetting.MaxSpeed.$touched" role="alert">
                                 <div ng-message="required">
-                                    <span>MaxSpeed field is required</span>
+                                    <span>Max Speed field is required</span>
                                 </div>
                             </div>
                         </md-input-container>
@@ -118,14 +118,14 @@
                         </md-button>
                     </md-input-container> -->
                         <md-input-container class="md-block" flex="100" flex-gt-sm="50">
-                            <label>Odo Meter </label>
+                            <label>OdoMeter </label>
                             <input type="number" name="OdoMeter" ng-model="model.OdoMeter" max="9999" required>
                             <div ng-messages="formSetting.OdoMeter.$error" ng-if="formSetting.OdoMeter.$touched" role="alert">
                                 <div ng-message="max">
-                                    <span>Odo Meter should not greater than 9999</span>
+                                    <span>OdoMeter should not greater than 9999</span>
                                 </div>
                                 <div ng-message="required">
-                                    <span>Odo Meter field is required</span>
+                                    <span>OdoMeter field is required</span>
                                 </div>
                             </div>
                         </md-input-container>

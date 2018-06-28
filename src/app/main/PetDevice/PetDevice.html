@@ -31,7 +31,7 @@
                                                 </th>
                                                 <th class="secondary-text">
                                                     <div class="table-header">
-                                                        <span class="column-title">Device Id</span>
+                                                        <span class="column-title">Device ID</span>
                                                     </div>
                                                 </th>
                                                 <th class="secondary-text">
@@ -41,7 +41,7 @@
                                                 </th>
                                                 <th class="secondary-text">
                                                     <div class="table-header">
-                                                        <span class="column-title">DATE</span>
+                                                        <span class="column-title">Date</span>
                                                     </div>
                                                 </th>
                                                 <th class="secondary-text">
@@ -62,11 +62,11 @@
                                 <form name="FormManageTrackers" novalidate class="ms-stepper" aria-invalid="false">
                                     <div layout-gt-sm="row">
                                         <md-input-container flex="100" flex-gt-xs="50">
-                                            <label>Device Id</label>
+                                            <label>Device ID</label>
                                             <input type="text" name="DeviceId" ng-model="model.DeviceId" required md-maxlength="100">
                                             <div ng-messages="FormManageTrackers.DeviceId.$error" ng-if="FormManageTrackers.DeviceId.$touched" role="alert">
                                                 <div ng-message="required">
-                                                    <span>DeviceId is required.</span>
+                                                    <span>Device ID is required.</span>
                                                 </div>
                                                 <div ng-message="md-maxlength">
                                                     Trackers has to be less than 100 characters long.

@@ -284,12 +284,12 @@
             .withOption('scrollY', 'auto');
 
         $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnDefBuilder.newColumnDef(1),
             DTColumnDefBuilder.newColumnDef(2).notSortable(),
             DTColumnDefBuilder.newColumnDef(3).notSortable(),
             DTColumnDefBuilder.newColumnDef(4).notSortable(),
-            DTColumnDefBuilder.newColumnDef(5).notSortable(),
+            DTColumnDefBuilder.newColumnDef(5).notSortable().withOption('class', 'text-center'),
         ];
         $scope.dtInstance = {};
 

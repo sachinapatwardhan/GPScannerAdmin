@@ -95,18 +95,18 @@
         $scope.toggle();
 
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('PurchaseOrderNumber').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('AppName').renderWith(TypeHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('Email').renderWith(EmailHtml).withOption('class', 'text-center'),
+            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+            DTColumnBuilder.newColumn('PurchaseOrderNumber'),
+            DTColumnBuilder.newColumn('AppName').renderWith(TypeHtml),
+            DTColumnBuilder.newColumn('Email').renderWith(EmailHtml),
             // DTColumnBuilder.newColumn('UserName').renderWith(UserNameHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('CreatedOnUtc').renderWith(DateFormateHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateFormateHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('OrderTotal').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('OrderNotes').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('ShippAddress1').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(StatusHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
+            DTColumnBuilder.newColumn('CreatedOnUtc').renderWith(DateFormateHtml),
+            DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateFormateHtml),
+            DTColumnBuilder.newColumn('OrderTotal'),
+            DTColumnBuilder.newColumn('OrderNotes'),
+            DTColumnBuilder.newColumn('ShippAddress1'),
+            DTColumnBuilder.newColumn(null).notSortable().renderWith(StatusHtml),
+            DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
         ]
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
@@ -266,7 +266,7 @@
 
         function actionsHtml(data, type, full, meta) {
 
-            var btns = '<div layout="row">'
+            var btns = '<div layout="row" layout-align="center">'
 
             if (full.tblorderservicestatus != null && full.tblorderservicestatus != undefined && full.tblorderservicestatus != '') {
                 var statusname = full.tblorderservicestatus.OrderStatus;

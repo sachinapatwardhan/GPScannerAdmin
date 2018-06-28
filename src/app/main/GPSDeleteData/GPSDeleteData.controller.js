@@ -13,12 +13,12 @@
         }
 
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
+            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('username').renderWith(Displayfun),
             DTColumnBuilder.newColumn('Name').renderWith(Displayfun),
             DTColumnBuilder.newColumn('DeviceId').renderWith(Displayfun),
             DTColumnBuilder.newColumn('RequestType'),
-            DTColumnBuilder.newColumn('Status').renderWith(Statusfan),
+            DTColumnBuilder.newColumn('Status').renderWith(Statusfan).withOption('class', 'text-center'), ,
             DTColumnBuilder.newColumn('CreatedBy'),
             DTColumnBuilder.newColumn('DisplayCreatedDate').renderWith(Datefun),
             DTColumnBuilder.newColumn('DisplayModifiedDate').renderWith(Datefun),

@@ -12,9 +12,9 @@
         $scope.init = function() {}
 
         $scope.dtColumns = [
-            DTColumnBuilder.newColumn(null).renderWith(numberHtml).notSortable().withOption('class', 'text-center').withOption('width', '3%'),
-            DTColumnBuilder.newColumn(null).renderWith(CheckboxHtml).notSortable().withOption('class', 'text-center').withOption('width', '1%'),
-            DTColumnBuilder.newColumn('DeviceId').notSortable().withOption('class', 'text-center').withOption('width', '3%'),
+            DTColumnBuilder.newColumn(null).renderWith(numberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+            DTColumnBuilder.newColumn(null).renderWith(CheckboxHtml).notSortable().withOption('width', '1%'),
+            DTColumnBuilder.newColumn('DeviceId').notSortable().withOption('width', '3%'),
         ]
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(req, res) {
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {

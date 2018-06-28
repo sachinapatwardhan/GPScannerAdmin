@@ -80,24 +80,24 @@
         }
         if ($rootScope.UserRoles == 'Super Admin') {
             $scope.dtColumns = [
-                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('Name'),
                 DTColumnBuilder.newColumn('DeviceId'),
                 DTColumnBuilder.newColumn('sharedUser'),
                 DTColumnBuilder.newColumn('email'),
                 DTColumnBuilder.newColumn('AppName'),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
             ]
         } else {
             $scope.dtColumns1 = [
-                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable(),
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('Name'),
                 DTColumnBuilder.newColumn('DeviceId'),
                 DTColumnBuilder.newColumn('sharedUser'),
                 DTColumnBuilder.newColumn('email'),
                 DTColumnBuilder.newColumn('CreatedDate').renderWith(Datefun),
-                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml)
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
             ]
         }
         $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -188,7 +188,7 @@
 
         function actionsHtml(data, type, full, meta) {
             var event = '$event';
-            var btns = '<div layout="row">';
+            var btns = '<div layout="row" layout-align="center">';
             // if ($rootScope.FlgDeletedAccess) {
             btns += '<md-button class="edit-button md-icon-button" ng-click="DeleteShareVehicle(' + data.id + ')">' +
                 '<md-icon md-font-icon="icon-trash"  class="s18 red-500-fg"></md-icon>' +

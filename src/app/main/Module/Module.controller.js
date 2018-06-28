@@ -195,10 +195,10 @@
             .withOption('scrollY', 'auto'),
 
             vm.dtColumnDefs = [
-                DTColumnDefBuilder.newColumnDef(0),
+                DTColumnDefBuilder.newColumnDef(0).notSortable(),
                 DTColumnDefBuilder.newColumnDef(1),
                 DTColumnDefBuilder.newColumnDef(2),
-                DTColumnDefBuilder.newColumnDef(3).notSortable(),
+                DTColumnDefBuilder.newColumnDef(3).notSortable().withOption('class', 'text-center'),
             ];
         $scope.dtInstance = {};
 

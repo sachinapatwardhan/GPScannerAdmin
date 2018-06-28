@@ -1,213 +1,213 @@
 <div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
-  <!-- TOP BACKGROUND -->
-  <div class="top-bg md-accent-bg"></div>
-  <!-- / TOP BACKGROUND -->
-  <!-- CENTER -->
-  <div class="center" layout="column" flex>
-    <!-- CONTENT HEADER -->
-    <div class="header" layout="row" layout-wrap layout-align="space-between center">
-      <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
-        <div class="h1" layout="row" layout-align="start center">
-          <md-icon md-font-icon="icon-cube-outline"></md-icon>
-          <span translate="Banner Management">Banner Management</span>
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg md-accent-bg"></div>
+    <!-- / TOP BACKGROUND -->
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+        <!-- CONTENT HEADER -->
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Banner Management">Banner Management</span>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="Temp" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-raised md-background" ng-click="Add()">
+                        <span translate="Add New Banner">Add New Banner</span>
+                    </md-button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
-        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-        <input id="Temp" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
-      </div>
-      <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-        <div ng-if="FlgAddedEditlocal">
-          <md-button class="md-raised md-background" ng-click="Add()">
-            <span translate="Add New Banner">Add New Banner</span>
-          </md-button>
-        </div>
-      </div>
-    </div>
-    <!-- / CONTENT HEADER -->
-    <!-- CONTENT CARD -->
-    <div class="content-card" layout="column" flex>
-      <div class="content fullpage-datatable" layout="column" flex>
-        <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
-          <thead>
-            <tr>
-              <th class="all">
-                <div class="table-header">
-                  <span class="column-title">No</span>
-                </div>
-              </th>
-              <th class="secondary-text">
-                <div class="table-header">
-                  <span class="column-title">Name</span>
-                </div>
-              </th>
-              <th class="all">
-                <div class="table-header">
-                  <span class="column-title">Action</span>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="item in lstBanner">
-              <td>{{ $index+1 }}</td>
-              <td>{{ item.Name }}</td>
-              <td>
-                <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="EditBanner(item)">
-                  <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
-                  <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
-                </md-button>
-                <md-button class="edit-button md-icon-button" ng-if="FlgDeletedAccess" ng-click="DeleteBanner(item.id)">
-                  <md-icon md-font-icon="icon-trash" class="s18 red-600-fg"></md-icon>
-                  <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
-                </md-button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- </md-tab>
+        <!-- / CONTENT HEADER -->
+        <!-- CONTENT CARD -->
+        <div class="content-card" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Name</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lstBanner">
+                            <td>{{ $index+1 }}</td>
+                            <td>{{ item.Name }}</td>
+                            <td>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgModifiedAccess" ng-click="EditBanner(item)">
+                                    <md-icon md-font-icon="icon-pencil" class="s18 green-500-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Edit</md-tooltip>
+                                </md-button>
+                                <md-button class="edit-button md-icon-button" ng-if="FlgDeletedAccess" ng-click="DeleteBanner(item.id)">
+                                    <md-icon md-font-icon="icon-trash" class="s18 red-600-fg"></md-icon>
+                                    <md-tooltip md-visible="" md-direction="">Delete</md-tooltip>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- </md-tab>
         </md-tabs> -->
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- / CENTER -->
+    <!-- / CENTER -->
 </div>
 <div class="page-layout simple tabbed" layout="column" ng-show="flag">
-  <div class="header md-accent-bg" layout="row" layout-align="start center">
-    <div class="white-fg" layout="row" layout-align="start center" flex>
-      <md-button class="goto-products-button md-icon-button" aria-label="Go to products" ng-click="GotoHome()">
-        <md-icon md-font-icon="icon-arrow-left"></md-icon>
-      </md-button>
-      <div layout="row" layout-align="start center">
-        <div layout="column" layout-align="start start">
-          <div class="subtitle secondary-text">
-            <span translate="Manage Banner">Manage Banner</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="content layout-margin">
-    <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
-      <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
-        <md-tab style="height: 100%;" label="Manage Banner" ng-click="ResetEdit()" ng-disabled="!FlgAddedEditlocal">
-          <md-content class="md-padding">
-            <div class="custom-content">
-              <form role="form" id="FormCreateBanner" name="FormCreateBanner" class="md-inline-form">
-                <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex>
-                    <label>Banner name</label>
-                    <input ng-model="model.Name" name="Name" type="text" required md-maxlength="255">
-                    <div ng-messages="FormCreateBanner.Name.$error" ng-if="FormCreateBanner.Name.$touched" role="alert" md-auto-hide="false">
-                      <div ng-message="required">
-                        <span>Banner name is required</span>
-                      </div>
-                      <div ng-message="md-maxlength">
-                        Banner name has to be less than 255 characters long
-                      </div>
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to products" ng-click="GotoHome()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="Manage Banner">Manage Banner</span>
                     </div>
-                  </md-input-container>
                 </div>
-                <div layout="row" layout-align="start center">
-                  <md-button class="md-raised md-primary" ng-click="CreateBanner(model)" ng-disabled="FormCreateBanner.$invalid">Save</md-button>
-                  <md-button class="md-accent md-raised" ng-click="ResetBanner()">Reset</md-button>
-                  <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
-                </div>
-              </form>
             </div>
-          </md-content>
-        </md-tab>
-        <md-tab style="height: 100%;" label="Edit Banner Image" ng-click="GetBannerMgmtById(model.id)" ng-if="model.id!=null && model.id!='' && model.id!=undefined && lstBannerMgmt.length>0">
-          <div class="custom-content">
-            <md-content class="md-padding">
-              <div ng-repeat="obj in lstBannerMgmt">
-                <br/>
-                <div class="white-bg md-whiteframe-4dp">
-                  <md-content class="md-padding">
-                    <div>
-                      <form name="FormEditBannerImage" class="md-inline-form">
-                        <div layout-gt-sm="row">
-                          <md-input-container class="md-block" flex>
-                            <label>Select banner</label>
-                            <md-select ng-model="obj.BannerId" name="BannerId" required ng-disabled="true">
-                              <md-option value="{{o.id}}" ng-repeat="o in lstBanner">{{o.Name}}</md-option>
-                            </md-select>
-                            <div ng-messages="FormEditBannerImage.BannerId.$error" ng-if="FormEditBannerImage.BannerId.$touched" role="alert">
-                              <div ng-message="required">
-                                <span>You must select banner</span>
-                              </div>
-                            </div>
-                          </md-input-container>
-                          <md-input-container class="md-block" flex>
-                            <label>Alt</label>
-                            <input ng-model="obj.alt" name="Alt" md-maxlength="250" type="text" required>
-                            <div ng-messages="FormEditBannerImage.Alt.$error" ng-if="FormEditBannerImage.Alt.$touched" role="alert">
-                              <div ng-message="required">
-                                <span>Alt field is required</span>
-                              </div>
-                              <div ng-message="md-maxlength">
-                                Alt has to be less than 250 characters long
-                              </div>
-                            </div>
-                          </md-input-container>
+        </div>
+    </div>
+    <div class="content layout-margin">
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-tabs md-selected="tab.selectedIndex" md-dynamic-height md-border-bottom>
+                <md-tab style="height: 100%;" label="Manage Banner" ng-click="ResetEdit()" ng-disabled="!FlgAddedEditlocal">
+                    <md-content class="md-padding">
+                        <div class="custom-content">
+                            <form role="form" id="FormCreateBanner" name="FormCreateBanner" class="md-inline-form">
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex>
+                                        <label>Banner Name</label>
+                                        <input ng-model="model.Name" name="Name" type="text" required md-maxlength="255">
+                                        <div ng-messages="FormCreateBanner.Name.$error" ng-if="FormCreateBanner.Name.$touched" role="alert" md-auto-hide="false">
+                                            <div ng-message="required">
+                                                <span>Banner Name is required</span>
+                                            </div>
+                                            <div ng-message="md-maxlength">
+                                                Banner Name has to be less than 255 characters long
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row" layout-align="start center">
+                                    <md-button class="md-raised md-primary" ng-click="CreateBanner(model)" ng-disabled="FormCreateBanner.$invalid">Save</md-button>
+                                    <md-button class="md-accent md-raised" ng-click="ResetBanner()">Reset</md-button>
+                                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                </div>
+                            </form>
                         </div>
-                        <div layout-gt-sm="row">
-                          <md-input-container class="md-block" flex>
-                            <label layout-gt-sm="row">Image</label>
-                            <br/>
-                            <br/>
-                            <img layout-gt-sm="row" ng-src="{{RoutePath}}MediaUploads/{{obj.ImageUrl}}" required style="width:150px;" err-src="assets/images/no-image.png" ng-show="FlgImage==1" />
-                            <br ng-show="FlgImage==0" />
-                            <div ng-if="FlgError==true" role="alert">
-                              <div style="color:red;">
-                                <span>Image is required</span>
-                              </div>
+                    </md-content>
+                </md-tab>
+                <md-tab style="height: 100%;" label="Edit Banner Image" ng-click="GetBannerMgmtById(model.id)" ng-if="model.id!=null && model.id!='' && model.id!=undefined && lstBannerMgmt.length>0">
+                    <div class="custom-content">
+                        <md-content class="md-padding">
+                            <div ng-repeat="obj in lstBannerMgmt">
+                                <br/>
+                                <div class="white-bg md-whiteframe-4dp">
+                                    <md-content class="md-padding">
+                                        <div>
+                                            <form name="FormEditBannerImage" class="md-inline-form">
+                                                <div layout-gt-sm="row">
+                                                    <md-input-container class="md-block" flex>
+                                                        <label>Select Banner</label>
+                                                        <md-select ng-model="obj.BannerId" name="BannerId" required ng-disabled="true">
+                                                            <md-option value="{{o.id}}" ng-repeat="o in lstBanner">{{o.Name}}</md-option>
+                                                        </md-select>
+                                                        <div ng-messages="FormEditBannerImage.BannerId.$error" ng-if="FormEditBannerImage.BannerId.$touched" role="alert">
+                                                            <div ng-message="required">
+                                                                <span>You must select banner</span>
+                                                            </div>
+                                                        </div>
+                                                    </md-input-container>
+                                                    <md-input-container class="md-block" flex>
+                                                        <label>Alt</label>
+                                                        <input ng-model="obj.alt" name="Alt" md-maxlength="250" type="text" required>
+                                                        <div ng-messages="FormEditBannerImage.Alt.$error" ng-if="FormEditBannerImage.Alt.$touched" role="alert">
+                                                            <div ng-message="required">
+                                                                <span>Alt field is required</span>
+                                                            </div>
+                                                            <div ng-message="md-maxlength">
+                                                                Alt has to be less than 250 characters long
+                                                            </div>
+                                                        </div>
+                                                    </md-input-container>
+                                                </div>
+                                                <div layout-gt-sm="row">
+                                                    <md-input-container class="md-block" flex>
+                                                        <label layout-gt-sm="row">Image</label>
+                                                        <br/>
+                                                        <br/>
+                                                        <img layout-gt-sm="row" ng-src="{{RoutePath}}MediaUploads/{{obj.ImageUrl}}" required style="width:150px;" err-src="assets/images/no-image.png" ng-show="FlgImage==1" />
+                                                        <br ng-show="FlgImage==0" />
+                                                        <div ng-if="FlgError==true" role="alert">
+                                                            <div style="color:red;">
+                                                                <span>Image is required</span>
+                                                            </div>
+                                                        </div>
+                                                        <br ng-show="FlgImage==1" />
+                                                        <br ng-show="FlgImage==1" />
+                                                        <md-button layout-gt-sm="row" class="md-raised md-accent" ng-click="ShowBannerModal($event,obj)">Select Image</md-button>
+                                                    </md-input-container>
+                                                    <md-input-container class="md-block" flex>
+                                                        <label>URl link</label>
+                                                        <input ng-model="obj.UrlLink" md-maxlength="250" name="URl" type="text" required>
+                                                        <div ng-messages="FormEditBannerImage.URl.$error" ng-if="FormEditBannerImage.URl.$touched" role="alert">
+                                                            <div ng-message="required">
+                                                                <span>URl link field is required</span>
+                                                            </div>
+                                                            <div ng-message="md-maxlength">
+                                                                URl link has to be less than 250 characters long
+                                                            </div>
+                                                        </div>
+                                                    </md-input-container>
+                                                </div>
+                                                <div layout-gt-sm="row">
+                                                    <md-input-container class="md-block" flex>
+                                                        <label>Description </label>
+                                                        <textarea ng-model="obj.Description"></textarea>
+                                                    </md-input-container>
+                                                </div>
+                                                <div layout="row" layout-align="start center">
+                                                    <md-button class="md-raised md-primary" ng-click="CreateBannerMgmt(obj)" ng-disabled="FormEditBannerImage.$invalid">Save</md-button>
+                                                    <md-button class="md-raised md-warn" ng-click="DeleteBannerMgmt(obj.id,obj.BannerId)">Delete</md-button>
+                                                </div>
+                                            </form>
+                                    </md-content>
+                                    </div>
+                                    <br/>
+                                </div>
                             </div>
-                            <br ng-show="FlgImage==1" />
-                            <br ng-show="FlgImage==1" />
-                            <md-button layout-gt-sm="row" class="md-raised md-accent" ng-click="ShowBannerModal($event,obj)">Select Image</md-button>
-                          </md-input-container>
-                          <md-input-container class="md-block" flex>
-                            <label>URl link</label>
-                            <input ng-model="obj.UrlLink" md-maxlength="250" name="URl" type="text" required>
-                            <div ng-messages="FormEditBannerImage.URl.$error" ng-if="FormEditBannerImage.URl.$touched" role="alert">
-                              <div ng-message="required">
-                                <span>URl link field is required</span>
-                              </div>
-                              <div ng-message="md-maxlength">
-                                URl link has to be less than 250 characters long
-                              </div>
+                            <div ng-if="lstBannerMgmt.length==0">
+                                No Banner Image Found
                             </div>
-                          </md-input-container>
-                        </div>
-                        <div layout-gt-sm="row">
-                          <md-input-container class="md-block" flex>
-                            <label>Description </label>
-                            <textarea ng-model="obj.Description"></textarea>
-                          </md-input-container>
-                        </div>
-                        <div layout="row" layout-align="start center">
-                          <md-button class="md-raised md-primary" ng-click="CreateBannerMgmt(obj)" ng-disabled="FormEditBannerImage.$invalid">Save</md-button>
-                          <md-button class="md-raised md-warn" ng-click="DeleteBannerMgmt(obj.id,obj.BannerId)">Delete</md-button>
-                        </div>
-                      </form>
-                  </md-content>
-                  </div>
-                  <br/>
-                </div>
-              </div>
-              <div ng-if="lstBannerMgmt.length==0">
-                No Banner Image Found
-              </div>
-            </md-content>
-          </div>
-        </md-tab>
-        <md-tab style="height: 100%;" label="Create New Banner Image" ng-disabled="!FlgAddedAccess" ng-click="ResetCreateBannerImage()" ng-show="model.id!=null && model.id!='' && model.id!=undefined">
-          <md-content class="md-padding">
-            <div class="custom-content">
-              <form name="FormBannerImage" role="form" class="md-inline-form">
-                <div layout-gt-sm="row">
-                  <!--              <md-input-container class="md-block" flex>
+                        </md-content>
+                    </div>
+                </md-tab>
+                <md-tab style="height: 100%;" label="Create New Banner Image" ng-disabled="!FlgAddedAccess" ng-click="ResetCreateBannerImage()" ng-show="model.id!=null && model.id!='' && model.id!=undefined">
+                    <md-content class="md-padding">
+                        <div class="custom-content">
+                            <form name="FormBannerImage" role="form" class="md-inline-form">
+                                <div layout-gt-sm="row">
+                                    <!--              <md-input-container class="md-block" flex>
                     <label>Select Banner </label>
                     <md-select ng-model="modelbanner.BannerId" name="BannerId" required>
                       <md-option value="{{o.id}}" ng-repeat="o in lstBanner">{{o.Name}}</md-option>
@@ -218,97 +218,97 @@
                       </div>
                     </div>
                   </md-input-container> -->
-                  <md-input-container class="md-block" flex>
-                    <label>Select Banner </label>
-                    <md-select Name="BannerId" ng-model="modelbanner.BannerId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                      <md-select-header class="demo-select-header">
-                        <input ng-model="searchBanner" type="search" placeholder="Search for a Banner.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                      </md-select-header>
-                      <md-option ng-value="{{o.id}}" ng-repeat="o in lstBanner | filter: searchBanner | orderBy : 'Name'">{{o.Name}}</md-option>
-                    </md-select>
-                    <div ng-messages="FormBannerImage.BannerId.$error" ng-if="FormBannerImage.BannerId.$touched" role="alert">
-                      <div ng-message="required">
-                        <span>You must select banner</span>
-                      </div>
-                    </div>
-                  </md-input-container>
-                  <md-input-container class="md-block" flex>
-                    <label>Alt</label>
-                    <input ng-model="modelbanner.alt" name="Alt" md-maxlength="250" type="text" required>
-                    <div ng-messages="FormBannerImage.Alt.$error" ng-if="FormBannerImage.Alt.$touched" role="alert">
-                      <div ng-message="required">
-                        <span>Alt field is required.</span>
-                      </div>
-                      <div ng-message="md-maxlength">
-                        Alt has to be less than 250 characters long.
-                      </div>
-                    </div>
-                  </md-input-container>
-                </div>
-                <label class="s18 blue-500-fg">Note: Mobile Banner upload 800x370 px size image.</label>
-                <br/>
-                <br/>
-                <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex="30">
-                    <label layout-gt-sm="row">Image</label>
-                    <br/>
-                    <br/>
-                    <img layout-gt-sm="row" ng-src="{{RoutePath}}MediaUploads/{{modelbanner.ImageUrl}}" required err-src="assets/images/no-image.png" style="width:150px;" ng-show="FlgImage==1 && modelbanner.ImageUrl!=null && modelbanner.ImageUrl!=''" />
-                    <br ng-show="FlgImage==0" />
-                    <div ng-if="FlgError==true" role="alert">
-                      <div style="color:red;">
-                        <span>Image is required.</span>
-                      </div>
-                    </div>
-                    <br ng-show="FlgImage==1" />
-                    <br ng-show="FlgImage==1" />
-                    <md-button layout-gt-sm="row" class="md-raised md-primary" ng-click="ShowModal($event)">Select Image</md-button>
-                    <md-button layout-gt-sm="row" class="md-raised md-dafault" ng-if="FlgImage==1 && modelbanner.ImageUrl!=null && modelbanner.ImageUrl!=''" ng-click="RemoveImage()">Remove Image</md-button>
-                  </md-input-container>
-                  <!-- Image Upload from PC -->
-                  <md-input-container class="md-block" flex="10" align="center">
-                    OR
-                  </md-input-container>
-                  <md-input-container class="md-block" flex="30">
-                    <lf-ng-md-file-input name="files00" lf-files="Mediafiles" lf-api="apiMedia" onchange="angular.element(this).scope().setFiles(this)" lf-mimetype="image/*" preview></lf-ng-md-file-input>
-                    <div ng-messages="form1.files00.$error" style="color:red;">
-                      <div ng-message="mimetype">Only image file supported</div>
-                    </div>
-                  </md-input-container>
-                  <!-- End of Image Upload from PC -->
-                </div>
-                <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex>
-                    <label>URl Link</label>
-                    <input ng-model="modelbanner.UrlLink" md-maxlength="250" name="URl" type="text" required>
-                    <div ng-messages="FormBannerImage.URl.$error" ng-if="FormBannerImage.URl.$touched" role="alert">
-                      <div ng-message="required">
-                        <span>URl Link field is required.</span>
-                      </div>
-                      <div ng-message="md-maxlength">
-                        URl has to be less than 250 characters long.
-                      </div>
-                    </div>
-                  </md-input-container>
-                </div>
-                <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex>
-                    <label>Description </label>
-                    <textarea ng-model="modelbanner.Description"></textarea>
-                  </md-input-container>
-                </div>
-                <div layout="row" layout-align="start center">
-                  <md-button class="md-raised md-accent" ng-click="CreateBannerMgmt(modelbanner)" ng-disabled="FormBannerImage.$invalid">Save</md-button>
-                  <md-button class="md-accent md-raised" ng-click="ResetBannerMgmt()">Reset</md-button>
-                  <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
-                </div>
-              </form>
-            </div>
-          </md-content>
-        </md-tab>
-      </md-tabs>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Select Banner </label>
+                                        <md-select Name="BannerId" ng-model="modelbanner.BannerId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                            <md-select-header class="demo-select-header">
+                                                <input ng-model="searchBanner" type="search" placeholder="Search for a Banner.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                            </md-select-header>
+                                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstBanner | filter: searchBanner | orderBy : 'Name'">{{o.Name}}</md-option>
+                                        </md-select>
+                                        <div ng-messages="FormBannerImage.BannerId.$error" ng-if="FormBannerImage.BannerId.$touched" role="alert">
+                                            <div ng-message="required">
+                                                <span>You must select banner</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Alt</label>
+                                        <input ng-model="modelbanner.alt" name="Alt" md-maxlength="250" type="text" required>
+                                        <div ng-messages="FormBannerImage.Alt.$error" ng-if="FormBannerImage.Alt.$touched" role="alert">
+                                            <div ng-message="required">
+                                                <span>Alt field is required.</span>
+                                            </div>
+                                            <div ng-message="md-maxlength">
+                                                Alt has to be less than 250 characters long.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <label class="s18 blue-500-fg">Note: Mobile Banner upload 800x370 px size image.</label>
+                                <br/>
+                                <br/>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex="30">
+                                        <label layout-gt-sm="row">Image</label>
+                                        <br/>
+                                        <br/>
+                                        <img layout-gt-sm="row" ng-src="{{RoutePath}}MediaUploads/{{modelbanner.ImageUrl}}" required err-src="assets/images/no-image.png" style="width:150px;" ng-show="FlgImage==1 && modelbanner.ImageUrl!=null && modelbanner.ImageUrl!=''" />
+                                        <br ng-show="FlgImage==0" />
+                                        <div ng-if="FlgError==true" role="alert">
+                                            <div style="color:red;">
+                                                <span>Image is required.</span>
+                                            </div>
+                                        </div>
+                                        <br ng-show="FlgImage==1" />
+                                        <br ng-show="FlgImage==1" />
+                                        <md-button layout-gt-sm="row" class="md-raised md-primary" ng-click="ShowModal($event)">Select Image</md-button>
+                                        <md-button layout-gt-sm="row" class="md-raised md-dafault" ng-if="FlgImage==1 && modelbanner.ImageUrl!=null && modelbanner.ImageUrl!=''" ng-click="RemoveImage()">Remove Image</md-button>
+                                    </md-input-container>
+                                    <!-- Image Upload from PC -->
+                                    <md-input-container class="md-block" flex="10" align="center">
+                                        OR
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex="30">
+                                        <lf-ng-md-file-input name="files00" lf-files="Mediafiles" lf-api="apiMedia" onchange="angular.element(this).scope().setFiles(this)" lf-mimetype="image/*" preview></lf-ng-md-file-input>
+                                        <div ng-messages="form1.files00.$error" style="color:red;">
+                                            <div ng-message="mimetype">Only image file supported</div>
+                                        </div>
+                                    </md-input-container>
+                                    <!-- End of Image Upload from PC -->
+                                </div>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex>
+                                        <label>URl Link</label>
+                                        <input ng-model="modelbanner.UrlLink" md-maxlength="250" name="URl" type="text" required>
+                                        <div ng-messages="FormBannerImage.URl.$error" ng-if="FormBannerImage.URl.$touched" role="alert">
+                                            <div ng-message="required">
+                                                <span>URl Link field is required.</span>
+                                            </div>
+                                            <div ng-message="md-maxlength">
+                                                URl has to be less than 250 characters long.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex>
+                                        <label>Description </label>
+                                        <textarea ng-model="modelbanner.Description"></textarea>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row" layout-align="start center">
+                                    <md-button class="md-raised md-accent" ng-click="CreateBannerMgmt(modelbanner)" ng-disabled="FormBannerImage.$invalid">Save</md-button>
+                                    <md-button class="md-accent md-raised" ng-click="ResetBannerMgmt()">Reset</md-button>
+                                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                                </div>
+                            </form>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </div>
     </div>
-  </div>
 </div>
 <!-- <md-content>
     <div id="simple-table" class="page-layout simple fullwidth doc-page element-doc-page">
