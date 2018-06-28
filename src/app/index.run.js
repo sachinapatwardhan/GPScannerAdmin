@@ -416,7 +416,7 @@
                                 var MenuName = $rootScope.AppName + '.Gps';
                                 msNavigationService.saveItem(MenuName, {
                                     // msNavigationService.saveItem('Maark.Gps', {
-                                    title: 'Gps',
+                                    title: 'GPS',
                                     state: 'app.gps',
                                     order: gps[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
@@ -829,7 +829,7 @@
                             if (lstGPSDelete.length > 0) {
                                 var MenuName = $rootScope.AppName + '.GPS Delete Data';
                                 msNavigationService.saveItem('Settings.GPS Delete Data', {
-                                    title: 'GPS Delete Data',
+                                    title: 'GPS Deleted Data',
                                     state: 'app.GPSDeleteData',
                                     order: lstGPSDelete[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1
@@ -894,7 +894,7 @@
                                 var MenuName = $rootScope.AppName + '.Device Acc';
                                 msNavigationService.saveItem(MenuName, {
                                     // msNavigationService.saveItem('Maark.Logs', {
-                                    title: 'Device Acc',
+                                    title: 'Device ACC',
                                     state: 'app.deviceaccvalue',
                                     order: DeviceAccValue[0].tblmodulemgmt.DisplayOrder,
                                     weight: 1

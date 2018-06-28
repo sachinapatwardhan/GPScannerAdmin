@@ -226,9 +226,19 @@
                             <div ng-message="pattern" class="my-message">Please Enter Vaild number</div>
                         </div>
                     </md-input-container>
-                    <md-input-container flex="100" flex-gt-xs="100" flex-gt-sm="50">
+                    <!-- <md-input-container flex="100" flex-gt-xs="100" flex-gt-sm="50">
                         <md-subheader class="no-padding" flex="100">Select role</md-subheader>
                         <md-checkbox class="md-secondary" ng-model="o.checked" ng-repeat="o in lstRoles" value="{{o.id}}">{{o.RoleName}}</md-checkbox>
+                    </md-input-container> -->
+                    <md-input-container flex="100">
+                        <label for="">Select role</label>
+                        <br>
+                        <ul class="selectRoleList" layout="row" layout-wrap layout-align="start center">
+                            <li ng-repeat="o in lstRoles" flex="100" flex-gt-sm="50" flex-gt-md="33" flex-gt-lg="25">
+                                <md-checkbox class="md-secondary" ng-model="o.checked" value="{{o.id}}" flex></md-checkbox>
+                                <span>{{o.RoleName}} &nbsp;</span>
+                            </li>
+                        </ul>
                     </md-input-container>
                     <md-input-container flex="100" flex-gt-xs="100" flex-gt-sm="50">
                         <md-subheader class="md-no-sticky" align="left">Gender</md-subheader>
