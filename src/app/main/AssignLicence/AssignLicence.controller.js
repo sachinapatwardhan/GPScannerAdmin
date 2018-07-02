@@ -488,7 +488,7 @@
 
         $scope.renewal = function(id) {
             var obj = _.findWhere($scope.lstLicence, { Id: id });
-            $scope.SaveOrderService(obj);
+            // $scope.SaveOrderService(obj);
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to Renew This Licence ?')
                 .ok('Ok')

@@ -15,8 +15,10 @@
             DTColumnBuilder.newColumn(null).renderWith(numberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn(null).renderWith(CheckboxHtml).notSortable().withOption('width', '1%'),
             DTColumnBuilder.newColumn('DeviceId').notSortable().withOption('width', '3%'),
-            DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').withOption('width', '10%').renderWith(Email),
-            DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').withOption('width', '10%').renderWith(User),
+            DTColumnBuilder.newColumn('email').notSortable().withOption('width', '10%'),
+            DTColumnBuilder.newColumn('username').notSortable().withOption('width', '10%'),
+            // DTColumnBuilder.newColumn('null').notSortable().withOption('class', 'text-center').withOption('width', '10%').renderWith(Email),
+            // DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').withOption('width', '10%').renderWith(User),
         ]
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(req, res) {
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -91,8 +93,9 @@
         $scope.devices = {};
 
         function CheckboxHtml(data, type, full, meta) {
-            if (full.tblapiaccessclient.DeviceId != null) {
-                var deviceID = full.tblapiaccessclient.DeviceId.split(',');
+            // full.tblapiaccessclient.DeviceId = full.apiaccDeviceId;
+            if (full.apiaccDeviceId != null) {
+                var deviceID = full.apiaccDeviceId.split(',');
                 var index = deviceID.indexOf(full.DeviceId)
                 if (index > -1) {
                     $scope.devices[full.DeviceId] = true;
@@ -112,10 +115,7 @@
                 id: apiaccessid,
                 DeviceId: DeviceId,
             }
-            console.log(params)
-            $http.get($rootScope.RoutePath + "apiaccess/giveAccess", { params: params }).then(function(data) {
-                console.log(data)
-            })
+            $http.get($rootScope.RoutePath + "apiaccess/giveAccess", { params: params }).then(function(data) {})
 
         }
 
