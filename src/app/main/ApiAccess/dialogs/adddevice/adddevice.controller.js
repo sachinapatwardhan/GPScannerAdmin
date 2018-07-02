@@ -15,6 +15,8 @@
             DTColumnBuilder.newColumn(null).renderWith(numberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnBuilder.newColumn(null).renderWith(CheckboxHtml).notSortable().withOption('width', '1%'),
             DTColumnBuilder.newColumn('DeviceId').notSortable().withOption('width', '3%'),
+            DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').withOption('width', '10%').renderWith(Email),
+            DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').withOption('width', '10%').renderWith(User),
         ]
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(req, res) {
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -24,7 +26,6 @@
                         d.deviceid = $scope.DeviceId;
                         d.AppName = AppName;
                         d.APIAccessId = apiaccessid;
-                        console.log(d)
                         return d
                     },
                     type: 'get',
@@ -71,6 +72,22 @@
             return (meta.row + 1)
         }
 
+        function Email(data) {
+            if (data.tblvehicle && data.tblvehicle.tbluserinformation) {
+                return data.tblvehicle.tbluserinformation.email;
+            } else {
+                return "";
+            }
+        }
+
+        function User(data) {
+            if (data.tblvehicle && data.tblvehicle.tbluserinformation) {
+                return data.tblvehicle.tbluserinformation.username;
+            } else {
+                return "";
+            }
+        }
+
         $scope.devices = {};
 
         function CheckboxHtml(data, type, full, meta) {
@@ -112,6 +129,7 @@
 
         $scope.closeModel = function() {
             $mdDialog.hide();
+            VM.Reload();
         }
 
         $scope.GetSerch = function(Search) {

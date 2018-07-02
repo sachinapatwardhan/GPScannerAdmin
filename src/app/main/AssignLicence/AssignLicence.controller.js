@@ -488,6 +488,7 @@
 
         $scope.renewal = function(id) {
             var obj = _.findWhere($scope.lstLicence, { Id: id });
+            $scope.SaveOrderService(obj);
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to Renew This Licence ?')
                 .ok('Ok')
@@ -524,6 +525,13 @@
             })
         }
 
+        $scope.SaveOrderService = function(obj) {
+            if (obj.IdUser != '' && obj.IdUser != null) {
+                $http.post($rootScope.RoutePath + "licence/SaveOrderService_LicenceRenewal", obj).then(function(data) {
+                    if (data.data.success == true) {}
+                })
+            }
+        }
         $scope.SaveLicence = function(o) {
             $http.get($rootScope.RoutePath + "licence/SaveLicenceDetail", { params: o }).then(function(data) {
                 if (data.data.success == true) {

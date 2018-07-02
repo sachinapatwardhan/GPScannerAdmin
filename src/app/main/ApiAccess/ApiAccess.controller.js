@@ -9,6 +9,11 @@
     function ApiAccessController($http, $scope, $rootScope, $mdDialog, $mdToast, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, $compile) {
 
         var vm = this;
+        vm.Reload = Reload;
+
+        function Reload() {
+            $scope.GetAllApiAccess(true);
+        }
 
         $scope.init = function() {
             $scope.initapiaccess();
@@ -42,6 +47,7 @@
             DTColumnBuilder.newColumn('Token'),
             DTColumnBuilder.newColumn('Key'),
             DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+            DTColumnBuilder.newColumn('DeviceId').renderWith(CountDevice).withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('IsActive').renderWith(IsActiveHtml),
             DTColumnBuilder.newColumn(null).renderWith(actionHtml).notSortable().withOption('width', '10%').notSortable().withOption('class', 'text-center'),
         ]
@@ -112,6 +118,15 @@
                 return '';
             }
         }
+
+        function CountDevice(data) {
+            var Count = 0;
+            if (data != null && data != '') {
+                Count = data.split(',').length;
+            }
+            return Count;
+        }
+
 
         function IsActiveHtml(data, type, full, meta) {
             var result = '';

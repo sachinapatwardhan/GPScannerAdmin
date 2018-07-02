@@ -44,6 +44,7 @@
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.GetAllInfoList();
             }
+            $scope.checked = {};
             GetAllCountry();
         }
 
@@ -300,6 +301,27 @@
 
         }
 
+        $scope.ChangeUserStatus = function(UserId) {
+            var Status = $scope.checked[UserId] == true ? 1 : 0;
+
+            var params = {
+                UserId: UserId,
+                IsActive: Status,
+                UserName: $cookieStore.get("UserName"),
+            }
+
+            $http.get($rootScope.RoutePath + "user/changeUserStatus", { params: params }).success(function(resData) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent(resData.message)
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+                if (resData.success) {
+                    $scope.GetAllUser();
+                }
+            })
+        }
 
         //Dynamic Pagging
         // console.log($rootScope.UserCountry);
@@ -319,12 +341,16 @@
                     DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
                     // DTColumnBuilder.newColumn('tblappinfo.AppName').renderWith(AppHtml),
                     DTColumnBuilder.newColumn('AppName'),
-
                     DTColumnBuilder.newColumn('AppVersion'),
                     DTColumnBuilder.newColumn('Platform'),
                     DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
-                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%').withOption('class', 'text-center')
+                    DTColumnBuilder.newColumn('id').renderWith(CheckboxHtml).notSortable().withOption('width', '5%').withOption('class', 'text-center').withOption('responsivePriority', 1),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '5%').withOption('class', 'text-center')
                 ]
+                if ($rootScope.AppName != "Trackox") {
+                    $scope.dtColumns.splice(10, 1);
+                    $("#isActiveflg").remove();
+                }
             } else {
                 $scope.dtColumns1 = [
                     DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().notSortable().withOption('width', '4%').withOption('class', 'text-center'),
@@ -339,8 +365,14 @@
                     DTColumnBuilder.newColumn('AppVersion'),
                     DTColumnBuilder.newColumn('Platform'),
                     DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('id').renderWith(CheckboxHtml).notSortable().withOption('width', '10%').withOption('class', 'text-center').withOption('responsivePriority', 1),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%').withOption('class', 'text-center')
                 ]
+
+                if ($rootScope.AppName != "Trackox") {
+                    $scope.dtColumns.splice(9, 1);
+                    $("#isActiveflg").remove();
+                }
             }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -365,7 +397,7 @@
                     },
                     type: "get",
                     dataSrc: function(json) {
-                        // console.log(json);
+
                         if (json.success != false) {
                             $scope.lstdata = json.data;
                             return json.data;
@@ -385,6 +417,8 @@
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });
+
+
 
         vm.dtInstance = {};
         vm.dtInstance1 = {};
@@ -493,6 +527,15 @@
             return img;
         }
 
+
+        function CheckboxHtml(data, type, full, meta) {
+            $scope.checked[data] = full.IsActive == 0 ? false : true;
+
+            var btn = "<div layout='row' class='text-center'>";
+            btn += '<md-checkbox ng-model="checked[' + data + ']" ng-change="ChangeUserStatus( ' + full.id + ')" aria-label="Checkbox 1" class="md-primary"></md-checkbox>';
+            btn += '</div>';
+            return btn;
+        }
 
         function actionsHtml(data, type, full, meta) {
             var btns = '<div layout="row" layout-align="center">'
@@ -888,6 +931,7 @@
             if ($rootScope.FlgAddedAccess == true) {
                 $rootScope.FlgAddedEditlocal = true;
             }
+            $scope.GetAllUser(true);
             $scope.init();
             $scope.myImage = '';
             $scope.myCroppedImage = '';
