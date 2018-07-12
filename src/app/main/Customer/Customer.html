@@ -52,7 +52,7 @@
 
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Email</span>
+                                    <span class="column-title">User Name</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -188,20 +188,8 @@
             <form name="AddCustomerForm" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
                 <div layout="row" layout-wrap>
                     <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33">
-                        <label>User Name</label>
-                        <input type="text" name="username" md-maxlength="250" ng-model="model.username" required>
-                        <div ng-messages="AddCustomerForm.username.$error" ng-if="AddCustomerForm.username.$touched">
-                            <div ng-message="required">
-                                <span>User Name is required</span>
-                            </div>
-                            <div ng-message="md-maxlength">
-                                <span>User name can't be greater than 250 character</span>
-                            </div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33">
                         <label>Email Address</label>
-                        <input type="Email" name="email" ng-model="model.email" md-maxlength="250" ng-pattern="/^.+@.+\..+$/" required>
+                        <input type="Email" name="email" ng-model="model.email" md-maxlength="250" ng-pattern="/^.+@.+\..+$/" ng-blur="setUsernameValue(model.email)" required>
                         <div ng-messages="AddCustomerForm.email.$error" ng-if="AddCustomerForm.email.$touched">
                             <div ng-message="required">
                                 <span>Email is required</span>
@@ -214,6 +202,20 @@
                             </div>
                         </div>
                     </md-input-container>
+
+                    <md-input-container flex="100" flex-gt-sm="50" flex-gt-md="33">
+                        <label>User Name</label>
+                        <input type="text" name="username" md-maxlength="250" ng-model="model.username" required ng-disabled="true">
+                        <div ng-messages="AddCustomerForm.username.$error" ng-if="AddCustomerForm.username.$touched">
+                            <div ng-message="required">
+                                <span>User Name is required</span>
+                            </div>
+                            <div ng-message="md-maxlength">
+                                <span>User name can't be greater than 250 character</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+
                     <md-input-container cflex="100" flex-gt-sm="50" flex-gt-md="33" ng-if="model.id == ''">
                         <label>Password </label>
                         <input name="password" type="password" ng-model="model.password" ng-required="true" md-maxlength="100">

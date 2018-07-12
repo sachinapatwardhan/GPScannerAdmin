@@ -57,7 +57,7 @@
                                                 <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
                                             </md-button>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-xs="40" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-xs="40" ng-if="DeviceCompany=='Maark' && canShow">
                                             <label>Sleep Mode </label>
                                             <md-select Name="SleepMode" ng-model="model.SleepMode">
                                                 <md-option value="0">Off</md-option>
@@ -65,13 +65,13 @@
                                                 <md-option value="2">Level 2</md-option>
                                             </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10" ng-if="DeviceCompany=='Maark' &&canShow">
                                             <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.SleepMode, 'SleepMode')">
                                                 <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
                                                 <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
                                             </md-button>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40" ng-if="DeviceCompany=='Maark' &&canShow">
                                             <label>GPRS Interval </label>
                                             <input type="text" name="GPRSInterval" ng-model="model.GPRSInterval">
                                             <div ng-messages="formVehicledetails1.GPRSInterval.$error" ng-if="formVehicledetails1.GPRSInterval.$touched" role="alert">
@@ -80,13 +80,13 @@
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10" ng-if="DeviceCompany=='Maark' &&canShow">
                                             <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.GPRSInterval, 'GPRSInterval')">
                                                 <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
                                                 <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
                                             </md-button>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40" ng-if="DeviceCompany=='Maark' && canShow">
                                             <label>GPRS Stop Interval </label>
                                             <input type="text" name="GPRSStopInterval" ng-model="model.GPRSStopInterval">
                                             <div ng-messages="formVehicledetails1.GPRSStopInterval.$error" ng-if="formVehicledetails1.GPRSStopInterval.$touched" role="alert">
@@ -95,7 +95,7 @@
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10" ng-if="DeviceCompany=='Maark' &&canShow">
                                             <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.GPRSStopInterval, 'GPRSStopInterval')">
                                                 <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
                                                 <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
@@ -130,7 +130,7 @@
                                                 <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
                                             </md-button>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40" ng-if="DeviceCompany=='Maark' && canShow">
                                             <label>Heart beat Interval </label>
                                             <input type="number" name="HeartbeatInterval" ng-model="model.HeartbeatInterval" max="65535">
                                             <div ng-messages="formVehicledetails1.HeartbeatInterval.$error" ng-if="formVehicledetails1.HeartbeatInterval.$touched" role="alert">
@@ -139,13 +139,13 @@
                                                 </div>
                                             </div>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="10" ng-if="DeviceCompany=='Maark' && canShow">
                                             <md-button class="edit-button md-icon-button" ng-click="SaveModule(model.HeartbeatInterval, 'HeartbeatInterval')">
                                                 <md-icon md-font-icon="icon-content-save" class="s18 green-500-fg"></md-icon>
                                                 <md-tooltip md-visible="" md-direction="">Save</md-tooltip>
                                             </md-button>
                                         </md-input-container>
-                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40" ng-if="DeviceCompany=='Maark'">
+                                        <md-input-container class="md-block" flex="100" flex-gt-sm="40" ng-if="DeviceCompany=='Maark' ">
                                             <label>ACC </label>
                                             <input type="number" name="ACC" ng-model="model.ACC" max="65535">
                                             <!-- <md-checkbox class="md-secondary" ng-model="model.ACC" ng-true-value="1" ng-false-value="0" flex></md-checkbox>&nbsp;&nbsp;Is ACC -->

@@ -48,6 +48,10 @@
             $scope.GetAllInfoList();
         }
 
+        $scope.setUsernameValue = function(email) {
+            $scope.model.username = $scope.model.email;
+        }
+
         $scope.GetAllInfoList = function() {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
                 $scope.lstAppInfo = data.data;
@@ -376,7 +380,7 @@
                     return;
                 }
             }
-            $http.post($rootScope.RoutePath + "User/SaveCustomer", o).then(function(data) {
+            $http.post($rootScope.RoutePath + "user/SaveCustomer", o).then(function(data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()

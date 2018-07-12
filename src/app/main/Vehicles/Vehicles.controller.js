@@ -132,12 +132,18 @@
             $event.stopPropagation();
         }
         $scope.GetUserByName = function(query) {
+            // var params = {
+            //         UserName: query,
+            //         appId: localStorage.getItem('appId'),
+            //     }
+            //     // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            // $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function(data) {
             var params = {
-                    UserName: query,
+                    email: query,
                     appId: localStorage.getItem('appId'),
                 }
                 // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
-            $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function(data) {
+            $http.get($rootScope.RoutePath + "user/GetUserByEmail", { params: params }).then(function(data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);

@@ -6,8 +6,14 @@
         .controller('ViewDetailCtrl', ViewDetailCtrl);
 
     /** @ngInject */
-    function ViewDetailCtrl($http, $mdDialog, $scope, ModalMethod, $rootScope, $mdToast, idVehicle, objVehicle) {
+    function ViewDetailCtrl($http, $mdDialog, $cookieStore, $scope, ModalMethod, $rootScope, $mdToast, idVehicle, objVehicle) {
         var vm = this;
+        $rootScope.UserRoles = $cookieStore.get('UserRoles');
+        if ($rootScope.UserRoles.indexOf('Super Admin') !== -1) {
+            $scope.canShow = true;
+        } else {
+            $scope.canShow = false;
+        }
         $scope.model = objVehicle;
         // vm.HideLoader = HideLoader;
         $scope.init = function() {
