@@ -251,7 +251,7 @@
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Select Email</label>
                                 <md-autocomplete ng-required="true" md-input-name="iduser" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.email"
-                                    placeholder="Select User">
+                                    placeholder="Select Email">
                                     <md-item-template>
                                         <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
                                     </md-item-template>
