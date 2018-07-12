@@ -570,7 +570,7 @@
         $scope.init();
 
         $scope.Export = function() {
-            var AppId = $rootScope.UserRoles == "Super Admin" ? '' : $rootScope.AppId;
+            var AppId = $rootScope.UserRoles == "Super Admin" ? '' : $rootScope.appId;
             var CurrentOffset = $rootScope.CurrentOffset.charAt(0) == '+' ? $rootScope.CurrentOffset.replace('+', 'p') : $rootScope.CurrentOffset.replace('-', 'm');
             window.location.href = $rootScope.RoutePath + "User/ExportOwnerCustomer?appId=" + AppId + "&UserRoles=" + $rootScope.UserRoles + "&CurrentOffset=" + CurrentOffset;
         }
