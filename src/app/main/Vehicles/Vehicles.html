@@ -256,13 +256,13 @@
                                         <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
                                     </md-item-template>
                                     <md-not-found>
-                                        No User matching "{{query}}" were found
+                                        No email matching "{{query}}" were found
                                     </md-not-found>
                                 </md-autocomplete>
                                 <div ng-messages="formVehicledetails.iduser.$error" ng-if="formVehicledetails.iduser.$touched">
-                                    <div ng-message="required">Please select user</div>
+                                    <div ng-message="required">Please select email</div>
                                     <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
-                                        No User matching {{query}} were found.
+                                        No email matching {{query}} were found.
                                     </md-not-found>
                                 </div>
                             </md-input-container>
