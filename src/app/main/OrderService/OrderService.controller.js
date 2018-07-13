@@ -246,19 +246,19 @@
             DTColumnBuilder.newColumn('Email').renderWith(EmailHtml),
             // DTColumnBuilder.newColumn('UserName').renderWith(UserNameHtml).withOption('class', 'text-center'),
             DTColumnBuilder.newColumn('CreatedOnUtc').renderWith(DateFormateHtml),
-            DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateFormateHtml),
+            // DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateFormateHtml),
             DTColumnBuilder.newColumn('OrderTotal'),
             DTColumnBuilder.newColumn('OrderNotes'),
             DTColumnBuilder.newColumn('ShippAddress1'),
             DTColumnBuilder.newColumn(null).notSortable().renderWith(StatusHtml),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
+            // DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
         ]
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
 
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "orderservice/GetAllOrderService",
+                    url: $rootScope.RoutePath + "orderservice/GetAllOrderServiceNew",
                     data: function(d) {
                         if ($scope.modelSearch.StartDate != '') {
                             d.StartDate = $scope.modelSearch.StartDate.toUTCString();
@@ -288,11 +288,13 @@
                     type: "get",
                     dataSrc: function(json) {
                         $scope.TotalOrderTotal = 0;
+                        $scope.TotalOrder = 0;
                         if (json.success != false) {
                             for (var i = 0; i < json.data.length; i++) {
                                 $scope.TotalOrderTotal += json.data[i].OrderTotal;
                             }
                             $scope.lstdata = json.data;
+                            $scope.TotalOrder = json.recordsTotal;
                             return json.data;
                         } else {
                             $scope.lstdata = [];
@@ -393,7 +395,7 @@
             var status = '';
             if (full.tblorderservicestatus != null && full.tblorderservicestatus != undefined && full.tblorderservicestatus != '') {
                 var statusname = full.tblorderservicestatus.OrderStatus;
-                if (statusname == "Approved") {
+                if (statusname == "Approved" || statusname == "Paid") {
                     status = '<b><span style="color:green;">' + statusname + '</span></b>';
                 } else if (statusname == "Pending") {
                     status = '<span>Pending</span>';
@@ -696,7 +698,7 @@
             if ($rootScope.UserRoles != 'Super Admin') {
                 idApp = $rootScope.idApp;
             }
-            window.location = $rootScope.RoutePath + "orderservice/ExportOrderService?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country;
+            window.location = $rootScope.RoutePath + "orderservice/ExportOrderServiceNew?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country;
         }
         $scope.GetAllInfoList = function() {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
@@ -745,6 +747,7 @@
             $scope.IsRenewFalgOpen = false;
             $scope.selectedItem = null;
             $scope.resetForm();
+            $scope.GetAllOrderService(true);
             $scope.flag = false;
         }
 
