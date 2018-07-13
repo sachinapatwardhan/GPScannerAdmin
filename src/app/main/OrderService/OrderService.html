@@ -191,25 +191,25 @@
                     </div>
                 </div>
             </div>
+
         </div>
-        <div>
+        <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+
         </div>
+
+        <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+            <md-button class="md-raised md-primary" ng-disabled="!formOrderService.$valid || !IsRenewFalgOpen" ng-click="CheckOut(model)">Save</md-button>
+            <md-button class="md-accent md-raised" ng-click="AddOrderService()">Reset</md-button>
+            <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+        </div>
+
     </div>
     <div class="content " layout-margin>
         <div class="product-detail-form-container md-background-bg md-whiteframe-1dp ">
             <md-content class="md-padding ">
-                <form name="formOrderService " novalidate class="md-inline-form " aria-invalid="false ">
+                <!-- <form name="formOrderService " novalidate class="md-inline-form " aria-invalid="false ">
                     <div class="content ">
                         <div layout="row " layout-wrap>
-                            <!-- <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
-                                <label>User Name</label>
-                                <input type="text " name="UserName " ng-model="model.UserName " required>
-                                <div ng-messages="formOrderService.UserName.$error " ng-if="formOrderService.UserName.$touched " role="alert ">
-                                    <div ng-message="required ">
-                                        <span>User Name field is required</span>
-                                    </div>
-                                </div>
-                            </md-input-container> -->
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Select User</label>
                                 <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.email"
@@ -277,8 +277,105 @@
                             <md-button class="md-raised md-warn " ng-click="ResetModel() ">Cancel</md-button>
                         </div>
                     </div>
+                </form> -->
+                <form name="formOrderService " novalidate class="md-inline-form " aria-invalid="false ">
+                    <div class="content ">
+                        <div layout="row " layout-wrap>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Select User</label>
+                                <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.email"
+                                    placeholder="Select User">
+                                    <md-item-template>
+                                        <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No User matching "{{query}}" were found
+                                    </md-not-found>
+                                </md-autocomplete>
+                                <div ng-messages="formOrderService.email.$error" ng-if="formOrderService.email.$touched">
+                                    <div ng-message="required">Please select user</div>
+                                    <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
+                                        No User matching {{query}} were found.
+                                    </md-not-found>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <br/>
+                        <!-- <div class="content-card" layout="column" flex> -->
+                        <div layout="row" layout-wrap style="align-content: right">
+                            <h3> <b>Total:</b> {{OrderTotal}}</h3>
+                        </div>
+                        <br/>
+                        <div class="content-card" layout="column" flex>
+                            <div class="content fullpage-datatable" layout="column" flex>
+                                <table class="dataTable row-border hover" width="100%" id="order" datatable="ng" dt-instance="vm.dtInstance" dt-column-defs="dtColumnDefs1" dt-options="dtOptions1">
+
+                                    <!-- <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
+                                    <thead>
+                                        <tr>
+                                            <th class="all">
+                                                <div class="table-header">
+                                                    <span class="column-title">No</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Vehicle Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Device ID</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Expiry Date</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">UOM</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Expiring</span>
+                                                </div>
+                                            </th>
+                                            <th class="all">
+                                                <div class="table-header">
+                                                    <span class="column-title">Action</span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="o in lstAllExpiryVehicle">
+                                            <td style="width: 4%; text-align: center;">{{$index+1}}</td>
+                                            <td>{{o.Name}}</td>
+                                            <td> {{o.deviceid}}</td>
+                                            <td> {{o.UOM}}</td>
+                                            <td> {{o.ExpireDate}}</td>
+                                            <td> {{o.Expiring}}</td>
+                                            <td style="width: 20%; text-align: center;">
+                                                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.Checked" ng-change="CheckRenewDevice()" class="md-primary"></md-checkbox>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr ng-if="lstAllExpiryVehicle.length<=0">
+                                            <td colspan="7">No Record Found</td>
+                                        </tr> -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
+
             </md-content>
+
         </div>
     </div>
 </div>

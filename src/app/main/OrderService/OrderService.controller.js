@@ -13,6 +13,7 @@
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
         $rootScope.AppName = localStorage.getItem('appName');
         $rootScope.idApp = localStorage.getItem('appId');
+        $scope.lstAllExpiryVehicle = [];
         $scope.GetAllProductType = function() {
             $scope.lstProductTypes = [];
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
@@ -22,7 +23,9 @@
         $scope.GetAllProductType();
 
         $scope.init = function() {
-
+            $scope.modelNew = {
+                idUser: '',
+            }
             $scope.model = {
                 DeviceId: '',
                 UserName: '',
@@ -31,7 +34,9 @@
                 idType: '',
 
             }
-
+            $scope.OrderTotal = 0;
+            $scope.IsRenewFalgOpen = false;
+            $scope.FinalRenewList = [];
             $scope.modelSearch = {
                 StartDate: new Date(),
                 EndDate: new Date(),
@@ -55,6 +60,146 @@
             $scope.GetAllCountry();
             $scope.getAllVehicleType();
         }
+
+        $scope.GetAllExpirePrice = function(iduser) {
+            $http.get($rootScope.RoutePath + 'billing/GetPriceByApp?idUser=' + iduser + '&idApp=' + $rootScope.idApp).then(function(data) {
+                $scope.lstExpiryPrice = data.data;
+                $scope.GetAllVehicleWithExpire(iduser);
+            });
+        }
+
+        $scope.GetAllVehicleWithExpire = function(iduser) {
+            $http.get($rootScope.RoutePath + 'billing/GetAllVehicleExpirebyUser?idUser=' + iduser).then(function(data) {
+                var data = data.data;
+                for (var i = 0; i < data.length; i++) {
+                    data[i].Checked = false;
+                    var objprice = _.findWhere($scope.lstExpiryPrice, { LicenceRenewalType: data[i].LicenceRenewalType, LicenceType: data[i].LicenceType });
+                    if (objprice != undefined) {
+                        data[i].RenewPrice = objprice.Price;
+                        data[i].CountryName = objprice.CountryName;
+                        data[i].ProductId = objprice.Id;
+                    } else {
+                        data[i].RenewPrice = 'N/A';
+                        data[i].CountryName = 'N/A';
+                        data[i].ProductId = null;
+                    }
+                    if (data[i].renewaldate != null && data[i].renewaldate != '') {
+                        var timeDiff = (new Date(data[i].renewaldate)).getTime() - (new Date()).getTime();
+                        var diffDays = Math.round(timeDiff / (1000 * 3600 * 24));
+                        if (diffDays < 0) {
+                            diffDays = 0;
+                        }
+                        data[i].Expiring = diffDays + ' days';
+                        data[i].ExpireDays = diffDays;
+                        data[i].ExpireDate = moment(data[i].renewaldate).format('DD-MM-YYYY');
+                    } else {
+                        data[i].Expiring = 'N/A';
+                        data[i].ExpireDate = 'N/A';
+                        data[i].ExpireDays = 0;
+                    }
+
+                    if (data[i].LicenceRenewalType != null && data[i].LicenceRenewalType != '') {
+                        var nextRenewalDate = new Date(data[i].renewaldate);
+                        if (data[i].LicenceRenewalType == 'Monthly') {
+                            data[i].UOM = '1M';
+                            nextRenewalDate = nextRenewalDate.setMonth(nextRenewalDate.getMonth() + 1);
+                        } else if (data[i].LicenceRenewalType == 'Quarterly') {
+                            data[i].UOM = '3M';
+                            nextRenewalDate = nextRenewalDate.setMonth(nextRenewalDate.getMonth() + 3);
+                        } else {
+                            data[i].UOM = '12M';
+                            nextRenewalDate = nextRenewalDate.setMonth(nextRenewalDate.getMonth() + 12);
+                        }
+                        data[i].NextExpireDate = moment(nextRenewalDate).format('DD-MM-YYYY');
+
+                    } else {
+                        data[i].UOM = 'N/A';
+                    }
+
+                }
+                $scope.lstAllExpiryVehicle = data;
+
+                $('#order .dataTables_empty').attr("colspan", 7);
+
+            });
+
+        }
+
+        $scope.CheckRenewDevice = function() {
+            var renewLengthCOunt = _.filter($scope.lstAllExpiryVehicle, { Checked: true }).length;
+            $scope.FinalRenewList = _.filter($scope.lstAllExpiryVehicle, { Checked: true });
+            $scope.OrderTotal = 0;
+            _.filter($scope.lstAllExpiryVehicle, function(item) {
+                if (item.RenewPrice != 'N/A' && item.Checked == true) {
+                    $scope.OrderTotal = $scope.OrderTotal + item.RenewPrice;
+                }
+            })
+            if (renewLengthCOunt > 0) {
+                $scope.IsRenewFalgOpen = true;
+            } else {
+                $scope.IsRenewFalgOpen = false;
+            }
+        }
+
+        $scope.CheckOut = function() {
+
+            var objorder = {
+                idUser: $scope.modelNew.idUser,
+                idApp: $rootScope.appId,
+                lstProduct: $scope.FinalRenewList,
+                OrderTotal: $scope.OrderTotal
+            }
+            $http.post($rootScope.RoutePath + 'billing/SaveOrderServiceNew', objorder).success(function(data) {
+                if (data.success == true) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                    $scope.OrderTotal = 0;
+                    $scope.IsRenewFalgOpen = false;
+                    $scope.BillingSTep = 1;
+                    $scope.GetAllVehicleWithExpire($scope.modelNew.idUser);
+
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+
+                }
+
+            });
+        }
+        $scope.dtColumnDefs1 = [
+            DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+            DTColumnDefBuilder.newColumnDef(3),
+            DTColumnDefBuilder.newColumnDef(4),
+            DTColumnDefBuilder.newColumnDef(5),
+            DTColumnDefBuilder.newColumnDef(6).notSortable().withOption('class', 'text-center'),
+
+        ];
+        vm.dtInstance = {};
+
+        $scope.dtOptions1 = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers')
+            .withDisplayLength(10)
+            .withOption('responsive', true)
+            //.withOption('autoWidth', true)
+            .withOption('searching', true)
+            .withOption('paging', true)
+            .withOption('info', true)
+            .withOption('deferRender', false)
+            // .withOption('language', {
+            //     'zeroRecords': "No Record Found",
+            //     'emptyTable': "No Record Found"
+            // })
+
 
         $scope.getAllVehicleType = function() {
             $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype").then(function(data) {
@@ -565,6 +710,9 @@
             $scope.formOrderService.$setPristine();
         }
         $scope.AddOrderService = function() {
+            $scope.modelNew = {
+                idUser: '',
+            }
             $scope.model = {
                 DeviceId: '',
                 UserName: '',
@@ -572,12 +720,19 @@
                 Name: '',
                 idType: '',
             }
+            $scope.OrderTotal = 0;
+            $scope.FinalRenewList = [];
+            $scope.IsRenewFalgOpen = false;
             $scope.selectedItem = null;
             $scope.flag = true;
             $scope.resetForm();
+            $('#order .dataTables_empty').attr("colspan", 7);
         }
 
         $scope.ResetModel = function() {
+            $scope.modelNew = {
+                idUser: '',
+            }
             $scope.model = {
                 DeviceId: '',
                 UserName: '',
@@ -585,6 +740,9 @@
                 Name: '',
                 idType: '',
             }
+            $scope.OrderTotal = 0;
+            $scope.FinalRenewList = [];
+            $scope.IsRenewFalgOpen = false;
             $scope.selectedItem = null;
             $scope.resetForm();
             $scope.flag = false;
@@ -625,10 +783,14 @@
         $scope.selectedItemChange = function(q) {
             if (q != null && q != undefined) {
                 $scope.model.iduser = q.id;
+                $scope.modelNew.idUser = q.id;
+                $scope.GetAllExpirePrice(q.id);
                 $scope.model.UserName = q.email;
                 $scope.flgErrorNotFound = 0;
             } else {
                 $scope.model.iduser = '';
+                $scope.modelNew.idUser = '';
+                $scope.GetAllExpirePrice('');
                 $scope.model.UserName = '';
                 $scope.flgErrorNotFound = 1;
             };
