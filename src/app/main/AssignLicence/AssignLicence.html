@@ -13,10 +13,10 @@
                 <input id="search" ng-model="modelSearch.Search" ng-change="GetSerch(modelSearch.Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
             <div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="AssignLicence()" aria-label="Assign Licence" ng-if="UserRoles=='Super Admin'">
+                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="AssignLicence()" aria-label="Assign Licence" ng-if="UserRoles=='Super Admin'">
                     <md-icon md-font-icon="icon-plus"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Assign Licence</md-tooltip>
-                </md-button>
+                </md-button> -->
                 <md-button class="md-icon-button  md-raised md-hue-2" ng-click="GenerateLicence($event)" aria-label="Generate Licence" ng-if="UserRoles=='Super Admin'">
                     <md-icon md-font-icon="icon-import"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Generate Licence Number</md-tooltip>
