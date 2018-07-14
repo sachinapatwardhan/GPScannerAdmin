@@ -304,7 +304,10 @@
                         <br/>
                         <!-- <div class="content-card" layout="column" flex> -->
                         <div layout="row" layout-wrap style="align-content: right">
-                            <h3> <b>Total:</b> {{OrderTotal}}</h3>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Total:</label>
+                                <input type="number" name="OrderTotal" ng-model="OrderTotal" required>
+                            </md-input-container>
                         </div>
                         <br/>
                         <div class="content-card" layout="column" flex>
