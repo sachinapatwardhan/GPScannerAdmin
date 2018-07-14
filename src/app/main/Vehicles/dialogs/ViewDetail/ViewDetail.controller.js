@@ -9,7 +9,7 @@
     function ViewDetailCtrl($http, $mdDialog, $cookieStore, $scope, ModalMethod, $rootScope, $mdToast, idVehicle, objVehicle) {
         var vm = this;
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
-        if ($rootScope.UserRoles.indexOf('Super Admin') !== -1) {
+        if ($rootScope.UserRoles.indexOf('Super Admin') != -1) {
             $scope.canShow = true;
         } else {
             $scope.canShow = false;
