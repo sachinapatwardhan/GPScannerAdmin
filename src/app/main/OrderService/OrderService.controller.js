@@ -21,7 +21,9 @@
             });
         }
         $scope.GetAllProductType();
-
+        vm.searchcountry = '';
+        vm.searchCustomer = '';
+        vm.searchDeviceId = '';
         $scope.init = function() {
             $scope.modelNew = {
                 idUser: '',
@@ -44,11 +46,17 @@
                 Type: 0,
                 Country: 'All',
                 Search: '',
+                DeviceId: 'All',
+                IdUser: 'All'
             }
             $scope.selectedItem = null;
 
-            $scope.searchcountry = '';
-
+            // $scope.searchcountry = '';
+            // $scope.searchCustomer = '';
+            // $scope.searchDeviceId = '';
+            vm.searchcountry = '';
+            vm.searchCustomer = '';
+            vm.searchDeviceId = '';
             $scope.modelUpdateDate = {
                 id: 0,
                 CreatedOnUtc: null
@@ -59,6 +67,36 @@
             $scope.GetAllInfoList();
             $scope.GetAllCountry();
             $scope.getAllVehicleType();
+            $scope.getAllCustomer();
+            $scope.getAllDevice();
+        }
+
+        $scope.getAllCustomer = function() {
+            var idApp = '';
+            if ($rootScope.UserRoles != 'Super Admin') {
+                idApp = $rootScope.idApp
+            } else {
+                if ($scope.modelSearch.Type != null && $scope.modelSearch.Type != undefined && $scope.modelSearch.Type != "" && $scope.modelSearch.Type != 0) {
+                    idApp = $scope.modelSearch.Type
+                }
+            }
+            $http.get($rootScope.RoutePath + 'orderservice/GetAllCustomer?idApp=' + idApp).then(function(data) {
+                $scope.lstCustomer = data.data;
+            });
+        }
+
+        $scope.getAllDevice = function() {
+            var idApp = '';
+            if ($rootScope.UserRoles != 'Super Admin') {
+                idApp = $rootScope.idApp
+            } {
+                if ($scope.modelSearch.Type != null && $scope.modelSearch.Type != undefined && $scope.modelSearch.Type != "" && $scope.modelSearch.Type != 0) {
+                    idApp = $scope.modelSearch.Type
+                }
+            }
+            $http.get($rootScope.RoutePath + 'orderservice/GetAllDeviceId?idApp=' + idApp).then(function(data) {
+                $scope.lstDeviceId = data.data;
+            });
         }
 
         $scope.GetAllExpirePrice = function(iduser) {
@@ -208,7 +246,12 @@
         }
 
         $scope.clearSearchTerm = function() {
-            $scope.searchcountry = '';
+            // $scope.searchcountry = '';
+            // $scope.searchCustomer = '';
+            // $scope.searchDeviceId = '';
+            vm.searchcountry = '';
+            vm.searchCustomer = '';
+            vm.searchDeviceId = '';
         };
 
         $scope.onSearchChange = function($event) {
@@ -280,9 +323,9 @@
                         } else {
                             d.Country = '';
                         }
-
+                        d.DeviceId = $scope.modelSearch.DeviceId;
+                        d.IdUser = $scope.modelSearch.IdUser;
                         d.search = $scope.modelSearch.Search;
-
                         return d;
                     },
                     type: "get",
@@ -315,10 +358,18 @@
         });
         $scope.dtInstance = {};
 
-
+        $scope.ChangeType = function() {
+            $scope.modelSearch.DeviceId = 'All';
+            $scope.modelSearch.IdUser = 'All';
+            $scope.getAllCustomer();
+            $scope.getAllDevice();
+            $scope.GetAllOrderService(true);
+        }
 
         //Reload Datatable
         $scope.GetAllOrderService = function(IsUpdate) {
+
+
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
@@ -331,6 +382,7 @@
 
         function GetAllOrderServiceFromModal() {
             $scope.GetAllOrderService(true);
+
         }
 
         $scope.reloadData = function() {}
@@ -587,6 +639,8 @@
                 Type: 0,
                 Country: 'All',
                 Search: '',
+                DeviceId: 'All',
+                IdUser: 'All'
             }
             $scope.Search = "";
             $('#modelsearch').val("");
@@ -601,6 +655,8 @@
                 Type: 0,
                 Country: 'All',
                 Search: '',
+                DeviceId: 'All',
+                IdUser: 'All'
             }
             $scope.Search = "";
             $('#modelsearch').val("");
@@ -698,7 +754,7 @@
             if ($rootScope.UserRoles != 'Super Admin') {
                 idApp = $rootScope.idApp;
             }
-            window.location = $rootScope.RoutePath + "orderservice/ExportOrderServiceNew?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country;
+            window.location = $rootScope.RoutePath + "orderservice/ExportOrderServiceNew?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country + "&IdUser=" + $scope.modelSearch.IdUser + "&DeviceId=" + $scope.modelSearch.DeviceId;
         }
         $scope.GetAllInfoList = function() {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
