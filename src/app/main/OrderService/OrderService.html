@@ -282,20 +282,20 @@
                     <div class="content ">
                         <div layout="row " layout-wrap>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>Select User</label>
+                                <label>Select Email</label>
                                 <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.email"
-                                    placeholder="Select User">
+                                    placeholder="Select Email">
                                     <md-item-template>
                                         <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
                                     </md-item-template>
                                     <md-not-found>
-                                        No User matching "{{query}}" were found
+                                        No email matching "{{query}}" were found
                                     </md-not-found>
                                 </md-autocomplete>
                                 <div ng-messages="formOrderService.email.$error" ng-if="formOrderService.email.$touched">
-                                    <div ng-message="required">Please select user</div>
+                                    <div ng-message="required">Please select email</div>
                                     <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
-                                        No User matching {{query}} were found.
+                                        No email matching {{query}} were found.
                                     </md-not-found>
                                 </div>
                             </md-input-container>
