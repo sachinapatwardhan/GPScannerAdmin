@@ -76,10 +76,10 @@
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
-                        <label>Customer</label>
+                        <label>Email</label>
                         <md-select Name="Country" ng-model="modelSearch.IdUser" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllOrderService(true)">
                             <md-select-header class="demo-select-header">
-                                <input ng-model="vm.searchCustomer" type="search" placeholder="Search for a Customer .." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                <input ng-model="vm.searchCustomer" type="search" placeholder="Search for a Email .." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
                             <md-option value="All">ALL</md-option>
                             <md-option ng-value="{{o.id}}" ng-repeat="o in lstCustomer | filter:vm.searchCustomer | orderBy: 'email'">{{o.email}}</md-option>
