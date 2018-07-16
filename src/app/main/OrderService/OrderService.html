@@ -1,384 +1,309 @@
 <div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
-    <div class="top-bg md-accent-bg"></div>
-    <div class="center" layout="column" flex>
-        <div class="header" layout="row" layout-wrap layout-align="space-between center">
-            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
-                <div class="h1" layout="row" layout-align="start center">
-                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
-                    <span translate="Order Service">Order Service</span>
-                </div>
-                <div class="product-count secondary-text" hide-xs>
-                    <span>Order Service :</span>
-                    <b>{{TotalOrder}}</b>
-                </div>
-                <div class="product-count secondary-text" hide-xs>
-                    <span>Order Total :</span>
-                    <b>{{TotalOrderTotal}}</b>
-                </div>
-            </div>
-            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
-                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="modelsearch" ng-model="modelSearch.Search" ng-change="GetAllOrderService(true)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
-            </div>
-            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
+  <div class="top-bg md-accent-bg"></div>
+  <div class="center" layout="column" flex>
+    <div class="header" layout="row" layout-wrap layout-align="space-between center">
+      <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <md-icon md-font-icon="icon-cube-outline"></md-icon>
+          <span translate="Order Service">Order Service</span>
+        </div>
+        <div class="product-count secondary-text" hide-xs>
+          <span>Order Service :</span>
+          <b>{{TotalOrder}}</b>
+        </div>
+        <div class="product-count secondary-text" hide-xs>
+          <span>Order Total :</span>
+          <b>{{TotalOrderTotal}}</b>
+        </div>
+      </div>
+      <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+        <input id="modelsearch" ng-model="modelSearch.Search" ng-change="GetAllOrderService(true)" class="search-input" type="text"
+          placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+      </div>
+      <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+        <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button> -->
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportOrderService()" aria-label="Search">
-                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+        <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportOrderService()" aria-label="Search">
+          <md-icon md-font-icon="icon-file-excel"></md-icon>
 
-                    <md-tooltip md-visible="" md-direction="">Export Order Service</md-tooltip>
-                </md-button>
+          <md-tooltip md-visible="" md-direction="">Export Order Service</md-tooltip>
+        </md-button>
 
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="AddOrderService()">
-                    <md-icon md-font-icon="icon-plus"></md-icon>
-                    <md-tooltip md-visible=" " md-direction=" ">Add New Order Service</md-tooltip>
-                </md-button>
+        <md-button class="md-icon-button  md-raised md-hue-2" ng-click="AddOrderService()">
+          <md-icon md-font-icon="icon-plus"></md-icon>
+          <md-tooltip md-visible=" " md-direction=" ">Add New Order Service</md-tooltip>
+        </md-button>
 
-            </div>
+      </div>
+    </div>
+    <div class="content-card" layout="column" flex>
+      <div class="ShowContentBox">
+        <!-- <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i> -->
+        <div layout="row" layout-wrap>
+          <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-if="UserRoles == 'Super Admin'">
+            <label>Type</label>
+            <md-select ng-model="modelSearch.Type" ng-change="GetAllOrderService(true)">
+              <md-option value="0">ALL</md-option>
+              <md-option value="{{o.id}}" ng-repeat="o in lstProductTypes | orderBy:'AppName'">{{o.AppName}}</md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+            <label>Start Date</label>
+            <input name="Start" mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="modelSearch.EndDate" format="DD-MM-YYYY"
+              ng-model="modelSearch.StartDate">
+          </md-input-container>
+          <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+            <label>End Date</label>
+            <input name="End" mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="modelSearch.StartDate" format="DD-MM-YYYY"
+              ng-model="modelSearch.EndDate">
+          </md-input-container>
+
+          <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+            <label>Status</label>
+            <md-select ng-model="modelSearch.Status" ng-change="GetAllOrderService(true)">
+              <md-option value="0">ALL</md-option>
+              <md-option value="{{o.id}}" ng-repeat="o in LstAllStatus | orderBy:'OrderStatus'">{{o.OrderStatus}}</md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+            <label>Country</label>
+            <md-select Name="Country" ng-model="modelSearch.Country" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
+              ng-change="GetAllOrderService(true)">
+              <md-select-header class="demo-select-header">
+                <input ng-model="vm.searchcountry" type="search" placeholder="Search for a Country .." class="demo-header-searchbox md-text"
+                  ng-keydown="onSearchChange($event)">
+              </md-select-header>
+              <md-option value="All">ALL</md-option>
+              <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry | filter:vm.searchcountry | orderBy: 'Country'">{{o.Country}}</md-option>
+            </md-select>
+          </md-input-container>
+          <div align="left">
+            <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetAllOrderService(true)" aria-label="Search">
+              <md-icon md-font-icon="icon-magnify"></md-icon>
+              <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()" aria-label="Reset Search">
+              <md-icon md-font-icon="icon-refresh"></md-icon>
+              <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
+            </md-button>
+            <md-button class="md-icon-button md-primary md-raised md-hue-2" ng-click="ShowALL()" aria-label="Show All">
+              <md-icon md-font-icon="icon-arrow-expand"></md-icon>
+              <md-tooltip md-visible="" md-direction="">Show All </md-tooltip>
+            </md-button>
+          </div>
+
         </div>
-        <div class="content-card" layout="column" flex>
-            <div class="ShowContentBox">
-                <!-- <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i> -->
-                <div layout="row" layout-wrap>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" ng-if="UserRoles == 'Super Admin'">
-                        <label>Type</label>
-                        <md-select ng-model="modelSearch.Type" ng-change="GetAllOrderService(true)">
-                            <md-option value="0">ALL</md-option>
-                            <md-option value="{{o.id}}" ng-repeat="o in lstProductTypes | orderBy:'AppName'">{{o.AppName}}</md-option>
-                        </md-select>
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                        <label>Start Date</label>
-                        <input name="Start" mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="modelSearch.EndDate" format="DD-MM-YYYY" ng-model="modelSearch.StartDate">
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-                        <label>End Date</label>
-                        <input name="End" mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="modelSearch.StartDate" format="DD-MM-YYYY" ng-model="modelSearch.EndDate">
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
-                        <label>Status</label>
-                        <md-select ng-model="modelSearch.Status" ng-change="GetAllOrderService(true)">
-                            <md-option value="0">ALL</md-option>
-                            <md-option value="{{o.id}}" ng-repeat="o in LstAllStatus | orderBy:'OrderStatus'">{{o.OrderStatus}}</md-option>
-                        </md-select>
-                    </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
-                        <label>Country</label>
-                        <md-select Name="Country" ng-model="modelSearch.Country" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllOrderService(true)">
-                            <md-select-header class="demo-select-header">
-                                <input ng-model="vm.searchcountry" type="search" placeholder="Search for a Country .." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                            </md-select-header>
-                            <md-option value="All">ALL</md-option>
-                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry | filter:vm.searchcountry | orderBy: 'Country'">{{o.Country}}</md-option>
-                        </md-select>
-                    </md-input-container>
-                    <div align="left">
-                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetAllOrderService(true)" aria-label="Search">
-                            <md-icon md-font-icon="icon-magnify"></md-icon>
-                            <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
-                        </md-button>
-                        <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()" aria-label="Reset Search">
-                            <md-icon md-font-icon="icon-refresh"></md-icon>
-                            <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
-                        </md-button>
-                        <md-button class="md-icon-button md-primary md-raised md-hue-2" ng-click="ShowALL()" aria-label="Show All">
-                            <md-icon md-font-icon="icon-arrow-expand"></md-icon>
-                            <md-tooltip md-visible="" md-direction="">Show All </md-tooltip>
-                        </md-button>
-                    </div>
-
+      </div>
+      <div class="content fullpage-datatable" layout="column" flex ng-show="ShowDtl==false">
+        <table id="OrderServicetable" class="dataTable cell-border row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns"
+          dt-options="dtOptions" width="100%">
+          <thead>
+            <tr>
+              <th class="all">
+                <div class="table-header">
+                  <span class="column-title">No</span>
                 </div>
-            </div>
-            <div class="content fullpage-datatable" layout="column" flex ng-show="ShowDtl==false">
-                <table id="OrderServicetable" class="dataTable cell-border row-border hover" datatable="" dt-instance="dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
-                    <thead>
-                        <tr>
-                            <th class="all">
-                                <div class="table-header">
-                                    <span class="column-title">No</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Order No</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Type</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Email</span>
-                                </div>
-                            </th>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Order No</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Type</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Email</span>
+                </div>
+              </th>
 
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Created Date</span>
-                                </div>
-                            </th>
-                            <!-- <th class="secondary-text">
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Created Date</span>
+                </div>
+              </th>
+              <!-- <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Expiry Date</span>
                                 </div>
                             </th> -->
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Order Total</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Device</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Country</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Status</span>
-                                </div>
-                            </th>
-                            <!-- <th class="all">
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Order Total</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Device</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Country</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Status</span>
+                </div>
+              </th>
+              <!-- <th class="all">
                                 <div class="table-header">
                                     <span class="column-title">Action</span>
                                 </div>
                             </th> -->
-                        </tr>
-                    </thead>
-                </table>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="content" layout-margin ng-show="ShowDtl==true">
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+          <form name="FormManageDate" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
+            <h2 style="color:green;">Order No : {{objOrderData.PurchaseOrderNumber}}</h2>
+            <br/>
+            <md-input-container class="md-block" flex="50">
+              <label> Date</label>
+              <input name="dStart" mdc-datetime-picker date="true" time="false" ng-required="true" type="text" id="time" format="DD-MM-YYYY"
+                ng-model="modelUpdateDate.CreatedOnUtc">
+            </md-input-container>
+            <div>
+              <md-button class="md-raised md-primary" ng-click="UpdateOrderServiceDates(modelUpdateDate)" ng-disabled="FormManageDate.$invalid">
+                Update Date</md-button>
+              <md-button class="md-raised md-warn" ng-click="ResetUpdateDates()">
+                cancel</md-button>
             </div>
-            <div class="content" layout-margin ng-show="ShowDtl==true">
-                <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
-                    <form name="FormManageDate" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
-                        <h2 style="color:green;">Order No : {{objOrderData.PurchaseOrderNumber}}</h2>
-                        <br/>
-                        <md-input-container class="md-block" flex="50">
-                            <label> Date</label>
-                            <input name="dStart" mdc-datetime-picker date="true" time="false" ng-required="true" type="text" id="time" format="DD-MM-YYYY" ng-model="modelUpdateDate.CreatedOnUtc">
-                        </md-input-container>
-                        <div>
-                            <md-button class="md-raised md-primary" ng-click="UpdateOrderServiceDates(modelUpdateDate)" ng-disabled="FormManageDate.$invalid">
-                                Update Date</md-button>
-                            <md-button class="md-raised md-warn" ng-click="ResetUpdateDates()">
-                                cancel</md-button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="page-layout simple tabbed " layout="column " ng-show="flag">
-    <div class="header md-accent-bg " layout="row " layout-align="start center ">
-        <div class="white-fg " layout="row " layout-align="start center " flex>
-            <md-button class="goto-products-button md-icon-button " aria-label="Go to Vehicle " ng-click="ResetModel() ">
-                <md-icon md-font-icon="icon-arrow-left "></md-icon>
-            </md-button>
-            <div layout="row " layout-align="start center ">
-                <div layout="column " layout-align="start start ">
-                    <div class="subtitle secondary-text ">
-                        <span translate="Order Service">Order Service</span>
-                    </div>
+
+
+  <div class="header md-accent-bg " layout="row " layout-align="start center ">
+    <div class="white-fg " layout="row " layout-align="start center " flex>
+      <md-button class="goto-products-button md-icon-button " aria-label="Go to Vehicle " ng-click="ResetModel() ">
+        <md-icon md-font-icon="icon-arrow-left "></md-icon>
+      </md-button>
+      <div layout="row " layout-align="start center ">
+        <div layout="column " layout-align="start start ">
+          <div class="subtitle secondary-text ">
+            <span translate="Order Service">Order Service</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+
+    </div>
+
+    <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+      <md-button class="md-raised md-primary" ng-disabled="!formOrderService.$valid || !IsRenewFalgOpen" ng-click="CheckOut(model)">Save</md-button>
+      <md-button class="md-accent md-raised" ng-click="AddOrderService()">Reset</md-button>
+      <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+    </div>
+
+  </div>
+  <form name="formOrderService " novalidate class="md-inline-form " aria-invalid="false">
+    <div class="m-16 p-16  md-whiteframe-4dp">
+      <div layout="row" layout-wrap>
+        <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+          <label>Select Email</label>
+          <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query"
+            md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)"
+            md-item-text="item.email" placeholder="Select Email">
+            <md-item-template>
+              <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
+            </md-item-template>
+            <md-not-found>
+              No email matching "{{query}}" were found
+            </md-not-found>
+          </md-autocomplete>
+          <div ng-messages="formOrderService.email.$error" ng-if="formOrderService.email.$touched">
+            <div ng-message="required">Please select email</div>
+            <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
+              No email matching {{query}} were found.
+            </md-not-found>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex="100" flex-gt-sm="25" flex-offset="5">
+          <label>Total:</label>
+          <input type="number" name="OrderTotal" ng-model="OrderTotal" required>
+        </md-input-container>
+      </div>
+    </div>
+    <div class="m-16 p-16  md-whiteframe-4dp">
+      <div class="content fullpage-datatable" layout="column" flex>
+        <table class="dataTable  row-border hover" width="100%" id="order" datatable="ng" dt-instance="vm.dtInstance" dt-column-defs="dtColumnDefs1"
+          dt-options="dtOptions1">
+
+          <!-- <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
+          <thead>
+            <tr>
+              <th class="all">
+                <div class="table-header">
+                  <span class="column-title">No</span>
                 </div>
-            </div>
-
-        </div>
-        <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
-
-        </div>
-
-        <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-            <md-button class="md-raised md-primary" ng-disabled="!formOrderService.$valid || !IsRenewFalgOpen" ng-click="CheckOut(model)">Save</md-button>
-            <md-button class="md-accent md-raised" ng-click="AddOrderService()">Reset</md-button>
-            <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
-        </div>
-
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Vehicle Name</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Device ID</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Expiry Date</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">UOM</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Expiring</span>
+                </div>
+              </th>
+              <th class="all">
+                <div class="table-header">
+                  <span class="column-title">Action</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="o in lstAllExpiryVehicle">
+              <td style="width: 4%; text-align: center;">{{$index+1}}</td>
+              <td>{{o.Name}}</td>
+              <td> {{o.deviceid}}</td>
+              <td> {{o.UOM}}</td>
+              <td> {{o.ExpireDate}}</td>
+              <td> {{o.Expiring}}</td>
+              <td style="width: 20%; text-align: center;">
+                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.Checked" ng-change="CheckRenewDevice()" class="md-primary"></md-checkbox>
+              </td>
+            </tr>
+            <!-- <tr ng-if="lstAllExpiryVehicle.length<=0">
+                                                  <td colspan="7">No Record Found</td>
+                                              </tr> -->
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="content " layout-margin>
-        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp ">
-            <md-content class="md-padding ">
-                <!-- <form name="formOrderService " novalidate class="md-inline-form " aria-invalid="false ">
-                    <div class="content ">
-                        <div layout="row " layout-wrap>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>Select User</label>
-                                <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.email"
-                                    placeholder="Select User">
-                                    <md-item-template>
-                                        <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
-                                    </md-item-template>
-                                    <md-not-found>
-                                        No User matching "{{query}}" were found
-                                    </md-not-found>
-                                </md-autocomplete>
-                                <div ng-messages="formOrderService.email.$error" ng-if="formOrderService.email.$touched">
-                                    <div ng-message="required">Please select user</div>
-                                    <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
-                                        No User matching {{query}} were found.
-                                    </md-not-found>
-                                </div>
-                            </md-input-container>
-                            <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
-                                <label>Device ID</label>
-                                <input type="number" name="DeviceId " ng-model="model.DeviceId " required>
-                                <div ng-messages="formOrderService.DeviceId.$error " ng-if="formOrderService.DeviceId.$touched " role="alert ">
-                                    <div ng-message="required ">
-                                        <span>Device Id field is required</span>
-                                    </div>
-                                </div>
-                            </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>Vehicle Name</label>
-                                <input type="text" name="Name" ng-model="model.Name" required maxlength="150" md-maxlength="150">
-                                <div ng-messages="formOrderService.Name.$error" ng-if="formOrderService.Name.$touched" role="alert">
-                                    <div ng-message="required">
-                                        <span>Vehicle Name field is required</span>
-                                    </div>
-                                </div>
-                            </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>Vehicle Type</label>
-                                <md-select Name="idType" ng-model="model.idType" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
-                                    <md-select-header class="demo-select-header">
-                                        <input ng-model="vm.searchTermVehicleType" type="search" placeholder="Search for a Vehicle Type.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                                    </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
-                                </md-select>
+  </form>
 
-                            </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
-                                <label>App Name</label>
-                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
-                                    <md-select-header class="demo-select-header">
-                                        <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                                    </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
-                                </md-select>
-                                <div ng-messages="formOrderService.AppName.$error" ng-if="formOrderService.AppName.$touched" role="alert">
-                                    <div ng-message="required">
-                                        <span>App Name is required.</span>
-                                    </div>
-                                </div>
-                            </md-input-container>
-                        </div>
-                        <div align="left ">
-                            <md-button class="md-raised md-primary " ng-disabled="!formOrderService.$valid " ng-click="SaveOrderService(model) ">Save</md-button>
-                            <md-button class="md-accent md-raised " ng-click="AddOrderService() ">Reset</md-button>
-                            <md-button class="md-raised md-warn " ng-click="ResetModel() ">Cancel</md-button>
-                        </div>
-                    </div>
-                </form> -->
-                <form name="formOrderService " novalidate class="md-inline-form " aria-invalid="false ">
-                    <div class="content ">
-                        <div layout="row " layout-wrap>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>Select Email</label>
-                                <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.email"
-                                    placeholder="Select Email">
-                                    <md-item-template>
-                                        <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
-                                    </md-item-template>
-                                    <md-not-found>
-                                        No email matching "{{query}}" were found
-                                    </md-not-found>
-                                </md-autocomplete>
-                                <div ng-messages="formOrderService.email.$error" ng-if="formOrderService.email.$touched">
-                                    <div ng-message="required">Please select email</div>
-                                    <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
-                                        No email matching {{query}} were found.
-                                    </md-not-found>
-                                </div>
-                            </md-input-container>
-                        </div>
-
-                        <br/>
-                        <!-- <div class="content-card" layout="column" flex> -->
-                        <div layout="row" layout-wrap style="align-content: right">
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
-                                <label>Total:</label>
-                                <input type="number" name="OrderTotal" ng-model="OrderTotal" required>
-                            </md-input-container>
-                        </div>
-                        <br/>
-                        <div class="content-card" layout="column" flex>
-                            <div class="content fullpage-datatable" layout="column" flex>
-                                <table class="dataTable row-border hover" width="100%" id="order" datatable="ng" dt-instance="vm.dtInstance" dt-column-defs="dtColumnDefs1" dt-options="dtOptions1">
-
-                                    <!-- <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
-                                    <thead>
-                                        <tr>
-                                            <th class="all">
-                                                <div class="table-header">
-                                                    <span class="column-title">No</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Vehicle Name</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Device ID</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Expiry Date</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">UOM</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Expiring</span>
-                                                </div>
-                                            </th>
-                                            <th class="all">
-                                                <div class="table-header">
-                                                    <span class="column-title">Action</span>
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="o in lstAllExpiryVehicle">
-                                            <td style="width: 4%; text-align: center;">{{$index+1}}</td>
-                                            <td>{{o.Name}}</td>
-                                            <td> {{o.deviceid}}</td>
-                                            <td> {{o.UOM}}</td>
-                                            <td> {{o.ExpireDate}}</td>
-                                            <td> {{o.Expiring}}</td>
-                                            <td style="width: 20%; text-align: center;">
-                                                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.Checked" ng-change="CheckRenewDevice()" class="md-primary"></md-checkbox>
-                                            </td>
-                                        </tr>
-                                        <!-- <tr ng-if="lstAllExpiryVehicle.length<=0">
-                                            <td colspan="7">No Record Found</td>
-                                        </tr> -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-
-            </md-content>
-
-        </div>
-    </div>
 </div>
