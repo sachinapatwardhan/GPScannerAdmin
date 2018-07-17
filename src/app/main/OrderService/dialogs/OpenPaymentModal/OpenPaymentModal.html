@@ -1,0 +1,27 @@
+<md-dialog class="flex-50">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Payment</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <ms-form-wizard flex>
+            <form name="formUpdateDevice" novalidate class="ms-stepper" aria-invalid="false">
+                <md-content class="md-block">
+                    <div>Order No. : </div>
+                    <div>{{model.PurchaseOrderNumber}}</div>
+                    <div>Order Total : </div>
+                    <div>{{model.OrderTotal}}</div>
+                </md-content>
+                <div align="left">
+                    <md-button class="md-raised md-primary" ng-click="SendPaymentLink(model)">Send Payment Link</md-button>
+                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                </div>
+            </form>
+        </ms-form-wizard>
+    </md-dialog-content>
+</md-dialog>
