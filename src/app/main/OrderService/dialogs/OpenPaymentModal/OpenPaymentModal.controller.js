@@ -13,6 +13,7 @@
             id: obj.id,
             PurchaseOrderNumber: obj.PurchaseOrderNumber,
             OrderTotal: parseFloat(obj.OrderTotal),
+            DisplayOrderTotal: 'MYR ' + parseFloat(obj.OrderTotal).toFixed(2),
             Email: obj.tbluserinformation.email,
             idUser: obj.tbluserinformation.id,
             idApp: obj.tbluserinformation.idApp,

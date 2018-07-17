@@ -477,8 +477,8 @@
                                 '<md-icon md-font-icon="icon-cash"  class="s18 green-500-fg"></md-icon>' +
                                 '<md-tooltip md-visible="" md-direction="">Payment</md-tooltip>' +
                                 '</md-button>';
-                            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus(' + data.id + ',2)" aria-label="">' +
-                                '<md-icon md-font-icon="icon-calendar-check-multiple" ></md-icon>' +
+                            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus($event,' + data.id + ',2)" aria-label="">' +
+                                '<md-icon md-font-icon="icon-checkbox-marked-circle-outline" class="s18 blue-500-fg" ></md-icon>' +
                                 '<md-tooltip md-visible="" md-direction="">Make Status Paid</md-tooltip>' +
                                 '</md-button>';
 
@@ -492,6 +492,11 @@
                             //     '<md-tooltip md-visible="" md-direction="">Void Order Service</md-tooltip>' +
                             //     '</md-button>';
 
+                        } else if (statusname == "Paid" && full.Terms != null && full.Terms != '') {
+                            btns += '<md-button class="edit-button md-icon-button"  ng-click="OpenRemark($event,' + data.id + ')" aria-label="">' +
+                                '<md-icon md-font-icon="icon-comment-outline"  class="green-500-fg"></md-icon>' +
+                                '<md-tooltip md-visible="" md-direction="">Approve Order Service</md-tooltip>' +
+                                '</md-button>';
                         }
 
                         // if (statusname == "Expire") {
@@ -541,6 +546,26 @@
                 controller: 'OpenPaymentModalController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/OrderService/dialogs/OpenPaymentModal/OpenPaymentModal.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    obj: objData,
+                    Tasks: [],
+                    event: ev,
+                    MainVM: vm,
+                }
+            })
+        }
+
+        $scope.OpenRemark = function(ev, id) {
+            var objData = _.findWhere($scope.lstdata, {
+                id: id
+            });
+            $mdDialog.show({
+                controller: 'OpenRemarkController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/OrderService/dialogs/OpenRemark/OpenRemark.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -611,43 +636,92 @@
         }
 
 
-        $scope.ChangeStatus = function(id, status) {
-            if (status == 2) {
-                var msg = "paid";
-            } else {
-                var msg = "change status for";
-            }
-            var confirm = $mdDialog.confirm()
-                .title('Are you sure you want to ' + msg + ' this order service?')
-                .ok('Ok')
-                .cancel('Cancel')
-            $mdDialog.show(confirm).then(function(ISConfirm) {
+        $scope.ChangeStatus = function(ev, id, status) {
 
-                var params = {
-                    id: id,
-                    status: status
-                }
-                $http.get($rootScope.RoutePath + "billing/MakeStatusPaid", {
-                    params: params
-                }).then(function(data) {
-                    if (data.data.success == true) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
-                        $scope.GetAllOrderService(true);
-                    } else {
-                        $mdToast.show(
-                            $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
-                        );
+            var confirm = $mdDialog.prompt()
+                .title('Change Status to Paid')
+                .textContent('Please Enter Remarks.')
+                .placeholder('Remarks')
+                .ariaLabel('Remarks')
+                .initialValue('')
+                .targetEvent(ev)
+                .ok('Save')
+                .cancel('Cancel');
+            $mdDialog.show(confirm).then(function(result) {
+                if (result == undefined) {
+
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Please enter remarks.')
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                    $scope.ChangeStatus(ev, id, status);
+                } else {
+                    var params = {
+                        id: id,
+                        status: status,
+                        Remark: result
                     }
-                });
-            });
+                    $http.get($rootScope.RoutePath + "billing/MakeStatusPaid", {
+                        params: params
+                    }).then(function(data) {
+                        if (data.data.success == true) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                            $scope.GetAllOrderService(true);
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        }
+                    });
+                }
+            }, function() {});
+
+            // if (status == 2) {
+            //     var msg = "paid";
+            // } else {
+            //     var msg = "change status for";
+            // }
+            // var confirm = $mdDialog.confirm()
+            //     .title('Are you sure you want to ' + msg + ' this order service?')
+            //     .ok('Ok')
+            //     .cancel('Cancel')
+            // $mdDialog.show(confirm).then(function(ISConfirm) {
+
+            //     var params = {
+            //         id: id,
+            //         status: status
+            //     }
+            //     $http.get($rootScope.RoutePath + "billing/MakeStatusPaid", {
+            //         params: params
+            //     }).then(function(data) {
+            //         if (data.data.success == true) {
+            //             $mdToast.show(
+            //                 $mdToast.simple()
+            //                 .textContent(data.data.message)
+            //                 .position('top right')
+            //                 .hideDelay(3000)
+            //             );
+            //             $scope.GetAllOrderService(true);
+            //         } else {
+            //             $mdToast.show(
+            //                 $mdToast.simple()
+            //                 .textContent(data.data.message)
+            //                 .position('top right')
+            //                 .hideDelay(3000)
+            //             );
+            //         }
+            //     });
+            // });
 
         }
 
