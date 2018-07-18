@@ -15,6 +15,7 @@
             OrderTotal: parseFloat(obj.OrderTotal),
             DisplayOrderTotal: 'MYR ' + parseFloat(obj.OrderTotal).toFixed(2),
             Email: obj.tbluserinformation.email,
+            username: obj.tbluserinformation.username,
             idUser: obj.tbluserinformation.id,
             idApp: obj.tbluserinformation.idApp,
             AppName: obj.tblappinfo.AppName,
@@ -29,6 +30,7 @@
                 idUser: o.idUser,
                 idApp: o.idApp,
                 AppName: o.AppName,
+                username: o.username,
             }
             $http.get($rootScope.RoutePath + "billing/SendPaymentLink", { params: params }).then(function(data) {
                 if (data.data.success == true) {
