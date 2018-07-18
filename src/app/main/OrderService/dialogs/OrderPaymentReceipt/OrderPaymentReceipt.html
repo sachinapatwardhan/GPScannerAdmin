@@ -1,0 +1,37 @@
+<!--<div role="dialog" layout="column" layout-align="center center">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Deposite Receipt</h2>
+        </div>
+    </md-toolbar>
+    <div class="demo-dialog-content">
+        <div layout="row">
+            <img flex src="{{ImageUrl}}" style="height: 500px;width: 500px">
+        </div>
+    </div>
+    <div layout="row" class="demo-dialog-button">
+        <md-button md-autofocus flex class="md-primary" ng-click="closeModel()">
+            Close
+        </md-button>
+    </div>
+</div>-->
+
+<div role="dialog" aria-label="Eat me!" layout="column" layout-align="center center">
+    <md-toolbar class="md-accent md-hue-2 pop-custom">
+        <div class="md-toolbar-tools">
+            <h2>Order Payment Receipt</h2>
+        </div>
+        <md-icon md-font-icon="icon-close-circle" class="s25 white-500-fg iconClose" ng-click="closeModel()"></md-icon>
+    </md-toolbar>
+    <div layout="row" class="demo-dialog-content">
+        <div layout="row">
+            <canvas width="800" id="myCanvas" height="600" style="cursor: move"></canvas>
+            <img flex src="{{ImageUrl}}" id="PaymentRecipt" sb-load="CallImageload()" style="height: 500px;width: auto;visibility: hidden;position: absolute;">
+        </div>
+    </div>
+    <md-dialog-actions layout="row" layout-align="space-between center">
+        <div layout="row" layout-align="start center">
+            <md-button class="md-raised md-primary" ng-click="DeleteOrderReceipt()">Delete</md-button>
+        </div>
+    </md-dialog-actions>
+</div>

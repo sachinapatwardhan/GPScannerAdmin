@@ -199,7 +199,6 @@
                     $scope.IsRenewFalgOpen = false;
                     $scope.BillingSTep = 1;
                     $scope.GetAllVehicleWithExpire($scope.modelNew.idUser);
-
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
@@ -212,6 +211,8 @@
 
             });
         }
+
+
         $scope.dtColumnDefs1 = [
             DTColumnDefBuilder.newColumnDef(0).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
             DTColumnDefBuilder.newColumnDef(1),
@@ -524,6 +525,21 @@
                         // }
 
                     }
+                }
+
+                if (full.ImageUrl != '' && full.ImageUrl != null) {
+                    btns += '<md-button class="edit-button md-icon-button" ng-click="OrderPaymentReceipt(' + full.id + ',$event)">' +
+                        '<md-icon md-font-icon="icon-file-image" class="s18 brown-500-fg"></md-icon>' +
+                        '<md-tooltip md-visible="" md-direction="">View Receipt</md-tooltip>' +
+                        '</md-button>';
+                }
+
+                if (full.ImageUrl == '' || (full.ImageUrl == null)) {
+                    console.log("Upload Receipt")
+                    btns += '<md-button class="edit-button md-icon-button" ng-click="UploadOrderPaymentReceipt(' + full.id + ',$event)">' +
+                        '<md-icon md-font-icon="icon-receipt"  class="orange-500-fg"></md-icon>' +
+                        '<md-tooltip md-visible="" md-direction="">Upload Receipt</md-tooltip>' +
+                        '</md-button>';
                 }
             }
             btns += '</div>'
@@ -972,6 +988,44 @@
                 }
             })
         }
+
+        //Image Popup
+        $scope.OrderPaymentReceipt = function(id, ev) {
+            var obj = _.filter($scope.lstdata, { id: id });
+            $mdDialog.show({
+                controller: 'OrderPaymentReceiptController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/OrderService/dialogs/OrderPaymentReceipt/OrderPaymentReceipt.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                locals: {
+                    event: ev,
+                    OrderVM: vm,
+                    image: obj[0].ImageUrl,
+                    objOrder: obj
+                }
+            })
+        }
+
+        //Image Upload
+        $scope.UploadOrderPaymentReceipt = function(id, ev) {
+            $mdDialog.show({
+                controller: 'UploadOrderPaymentReceiptController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/OrderService/dialogs/UploadOrderPaymentReceipt/UploadOrderPaymentReceipt.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                multiple: true,
+                clickOutsideToClose: true,
+                locals: {
+                    idOrder: id,
+                    OrderVM: vm,
+                    event: ev,
+                }
+            })
+        }
+
         $scope.init();
     }
 

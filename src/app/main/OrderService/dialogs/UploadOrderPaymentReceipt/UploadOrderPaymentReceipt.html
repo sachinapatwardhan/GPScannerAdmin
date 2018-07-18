@@ -1,0 +1,24 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <span class="title">Upload Order Payment Receipt</span>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ms-scroll>
+        <lf-ng-md-file-input name="files00" lf-files="Mediafiles" lf-api="apiMedia" lf-filesize="10MB" lf-mimetype="image/*"></lf-ng-md-file-input>
+        <div ng-messages="formOrderService.files00.$error" style="color:red;">
+            <div ng-message="filesize">File size too large</div>
+            <div ng-message="mimetype">Only image file supported</div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between center">
+        <div layout="row" layout-align="start center">
+            <md-button class="md-raised md-primary" ng-disabled="Mediafiles.length == 0" ng-click="SaveOrderReceipt()">Save</md-button>
+            <md-button class="md-raised md-warn" ng-click="closeModel()">Cancel</md-button>
+        </div>
+    </md-dialog-actions>
+</md-dialog>
