@@ -15,24 +15,27 @@
                 $http.defaults.headers.common['Authorization'] = token;
             };
         }
-        $rootScope.VersionNumber = "18.02.0417.511";
+        $rootScope.VersionNumber = "18.02.0628.524";
         // $rootScope.RoutePath = "http://localhost:7212/";
         // $rootScope.Socket_URL = "http://localhost:7212";
+
+        // $rootScope.RoutePath = "http://api.dotracks.in/";
+        // $rootScope.Socket_URL = "http://api.dotracks.in:80";
 
         // $rootScope.RoutePath = "http://localhost:7312/";
         // $rootScope.Socket_URL = "http://localhost:7312";
 
-        // $rootScope.RoutePath = "http://192.168.1.53:7212/";
-        // $rootScope.Socket_URL = "http://192.168.1.53:7212";
+        // $rootScope.RoutePath = "http://192.168.1.50:7212/";
+        // $rootScope.Socket_URL = "http://192.168.1.50:7212";
 
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
         // $rootScope.RoutePath = "http://bugzstudio.com:7212/";
         // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
-        // $rootScope.RoutePath = "http://api.maark.my:7212/";
-        // $rootScope.Socket_URL = "http://api.maark.my:7212";
+        $rootScope.RoutePath = "http://api.maark.my:7212/";
+        $rootScope.Socket_URL = "http://api.maark.my:7212";
         // $rootScope.RoutePath = "http://uatapi.maark.my/";
-        // $rootScope.Socket_URL = "http://uatapi.maark.my";
+        // $rootScope.Socket_URL = "http://uatapi.maark.my:7212";
         // $rootScope.RoutePath = "http://api.itcdtracking.com/";
         // $rootScope.Socket_URL = "http://api.itcdtracking.com:7212";
         // $rootScope.RoutePath = "http://103.232.124.170:7212/";
@@ -40,10 +43,11 @@
         // $rootScope.RoutePath = "http://trackoxapi.themaark.in/";
         // $rootScope.Socket_URL = "http://13.126.112.254:7212";
 
-        $rootScope.RoutePath = $location.protocol() + '://' + $location.host() + '/api/';
-        $rootScope.Socket_URL = $location.protocol() + '://' + $location.host();
+        // $rootScope.RoutePath = $location.protocol() + '://' + $location.host() + '/api/';
+        // $rootScope.Socket_URL = $location.protocol() + '://' + $location.host();
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
+        $rootScope.MapTile_URL = "http://178.128.18.61:8080/";
         var x = new Date();
         var offset = -x.getTimezoneOffset();
         $rootScope.CurrentOffset = (('00' + offset).slice(-2) >= 0 ? "+" : "-") + ('00' + parseInt(offset / 60).toString()).slice(-2) + ":" + offset % 60;
@@ -52,11 +56,14 @@
 
         // var url = $window.location.protocol + "//" + $window.location.host + "/";
         var url = $location.protocol() + '://' + $location.host() + '/';
-        // var url = "http://192.168.1.50:3000/"
-        // var url = "http://admin.itcdtracking.com/"
+        // var url = "http://localhost:3000/";
+        // var url = "http://admin.itcdtracking.com/";
+        // var url = "http://admin.maark.my/";
         // var url = "http://admin.hc-cargo.com.my/"
         // var url = "http://admin.trackox.com/";
+        // var url = "http://admin.dotracks.in/";
         // var url = "http://uatapi.maark.my:7214/";
+        // var url = "http://uatapi.maark.my:7248/";
 
         var params = {
             AdminUrl: url,

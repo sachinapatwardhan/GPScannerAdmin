@@ -85,17 +85,22 @@
                                     // $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
 
                                     var VehicleID = $scope.lstActiveVehicle[t].Name;
+                                    if (VehicleID == null || VehicleID == undefined || VehicleID == '') {
+                                        VehicleID = $scope.lstActiveVehicle[t].deviceid;
+                                    }
                                     //new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude), map, VehicleID, $scope.lstActiveVehicle[t])
-                                    SimpleMarker = new google.maps.Marker({
-                                        map: map,
-                                        position: new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude),
-                                        icon: $scope.SimpleMarkerIcon
-                                    });
-                                    var infowindow = new google.maps.InfoWindow();
+                                    // SimpleMarker = new google.maps.Marker({
+                                    //     map: map,
+                                    //     position: new google.maps.LatLng($scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude),
+                                    //     icon: $scope.SimpleMarkerIcon
+                                    // });
+                                    // var infowindow = new google.maps.InfoWindow();
+                                    if ($scope.lstActiveVehicle[t].marker) {
+                                        $scope.lstActiveVehicle[t].marker.setLatLng([$scope.lstActiveVehicle[t].Latitude, $scope.lstActiveVehicle[t].Longitude]);
+                                    }
                                     var EngineStatus = $scope.lstActiveVehicle[t].IsEngine == true ? "Engine On" : "Engine Off";
                                     var DeviceDatetime = moment(moment.utc(new Date($scope.lstActiveVehicle[t].Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
                                     // var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[t].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[t].deviceid + '">' + parseFloat($scope.lstActiveVehicle[t].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[t].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
-
                                     var content = '<div class="CustomInfoWindow">' +
                                         '    <h3>' + VehicleID + '</h3>' +
                                         '    <ul>' +
@@ -113,12 +118,13 @@
                                         '        </li>' +
                                         '    </ul>' +
                                         '</div>';
-                                    google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
-                                        return function() {
-                                            infowindow.setContent(content);
-                                            infowindow.open(map, SimpleMarker);
-                                        };
-                                    })(SimpleMarker, content, infowindow));
+                                    // google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
+                                    //     return function() {
+                                    //         infowindow.setContent(content);
+                                    //         infowindow.open(map, SimpleMarker);
+                                    //     };
+                                    // })(SimpleMarker, content, infowindow));
+                                    $scope.lstActiveVehicle[t].popup = content;
                                     $scope.ManageDashBoardCount();
                                 }
                             }
@@ -251,17 +257,33 @@
 
             var CurrentLat = 0;
             var CurrentLang = 0;
+            // myOptions = {
+            //     center: new google.maps.LatLng(CurrentLat, CurrentLang),
+            //     zoom: 3,
+            //     mapTypeId: google.maps.MapTypeId.TERRAIN
+            // };
+
             myOptions = {
-                center: new google.maps.LatLng(CurrentLat, CurrentLang),
-                zoom: 3,
-                mapTypeId: google.maps.MapTypeId.TERRAIN
+                center: [CurrentLat, CurrentLang],
+                zoom: 5,
+                fullscreenControl: false,
+                zoomControl: false,
+                streetViewControl: false,
+                mapTypeControl: false,
+                preferCanvas: true
             };
 
-            var CurrentLatLang = new google.maps.LatLng(CurrentLat, CurrentLang);
+
+            // var CurrentLatLang = new google.maps.LatLng(CurrentLat, CurrentLang);
 
             setTimeout(function() {
-                map = new google.maps.Map(document.getElementById("map123"),
-                    myOptions);
+                // map = new google.maps.Map(document.getElementById("map123"),
+                //     myOptions);
+                if (map) {
+                    map.remove();
+                }
+                map = L.map(document.getElementById("map123"), myOptions);
+                L.tileLayer($rootScope.MapTile_URL + 'styles/klokantech-basic/{z}/{x}/{y}.png').addTo(map);
                 // var MethodCallFlag = true;
 
                 var FoundLocation = 0;
@@ -274,24 +296,28 @@
                         }
                     }
                     $scope.ManageDashBoardCount();
+                    var bounds = [];
 
                     function setActiveVehicle(i) {
                         if (i < $scope.lstActiveVehicle.length) {
                             var ImageURL = '';
                             // var IsWireCut = $scope.lstActiveVehicle[i].IsWireCut;
                             var VehicleID = $scope.lstActiveVehicle[i].Name;
+                            if (VehicleID == null || VehicleID == undefined || VehicleID == '') {
+                                VehicleID = $scope.lstActiveVehicle[i].deviceid;
+                            }
                             var objVehicle = $scope.lstActiveVehicle[i];
                             if ($scope.lstActiveVehicle[i].Latitude != null && $scope.lstActiveVehicle[i].Longitude != null) {
                                 // new CustomMarker(new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude), map, VehicleID, objVehicle)
-                                SimpleMarker = new google.maps.Marker({
-                                    map: map,
-                                    position: new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude),
-                                    icon: $scope.SimpleMarkerIcon
-                                });
-                                var infowindow = new google.maps.InfoWindow();
+                                // SimpleMarker = new google.maps.Marker({
+                                //     map: map,
+                                //     position: new google.maps.LatLng($scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude),
+                                //     icon: $scope.SimpleMarkerIcon
+                                // });
+                                // var infowindow = new google.maps.InfoWindow();
                                 var EngineStatus = $scope.lstActiveVehicle[i].IsEngine == true ? "Engine On" : "Engine Off";
                                 var DeviceDatetime = moment(moment.utc(new Date($scope.lstActiveVehicle[i].Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
-                                // var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[i].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[i].deviceid + '">' + parseFloat($scope.lstActiveVehicle[i].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[i].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+                                // // var content = '<div class="SimpleMarker MapMarkerLable"><h3>' + VehicleID + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + $scope.lstActiveVehicle[i].deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + $scope.lstActiveVehicle[i].deviceid + '">' + parseFloat($scope.lstActiveVehicle[i].Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + $scope.lstActiveVehicle[i].deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
 
                                 var content = '<div class="CustomInfoWindow">' +
                                     '    <h3>' + VehicleID + '</h3>' +
@@ -310,14 +336,32 @@
                                     '        </li>' +
                                     '    </ul>' +
                                     '</div>';
-                                google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
-                                    return function() {
-                                        infowindow.setContent(content);
-                                        infowindow.open(map, SimpleMarker);
-                                    };
-                                })(SimpleMarker, content, infowindow));
+                                // google.maps.event.addListener(SimpleMarker, 'click', (function(SimpleMarker, content, infowindow) {
+                                //     return function() {
+                                //         infowindow.setContent(content);
+                                //         infowindow.open(map, SimpleMarker);
+                                //     };
+                                // })(SimpleMarker, content, infowindow));
+
+                                var MapIcon = L.icon({
+                                    iconUrl: $scope.SimpleMarkerIcon,
+                                    iconAnchor: [28, 48], // point of the icon which will correspond to marker's location
+                                    popupAnchor: [-3, -45] // point from which the popup should open relative to the iconAnchor
+                                });
+                                $scope.lstActiveVehicle[i].marker = L.marker([$scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude], { icon: MapIcon, title: $scope.lstActiveVehicle[i].Name }).addTo(map);
+                                $scope.lstActiveVehicle[i].popup = content;
+                                $scope.lstActiveVehicle[i].marker.on('mouseover', function() {
+                                    $scope.lstActiveVehicle[i].marker.bindPopup($scope.lstActiveVehicle[i].popup).openPopup();
+                                });
+                                $scope.lstActiveVehicle[i].marker.on('mouseout ', function() {
+                                    $scope.lstActiveVehicle[i].marker.bindPopup($scope.lstActiveVehicle[i].popup).closePopup()
+                                });
+                                bounds.push([$scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude])
+
                             }
                             setActiveVehicle(i + 1);
+                        } else {
+                            map.fitBounds(bounds, { maxZoom: 13 });
                         }
                     }
                     setActiveVehicle(0);
@@ -364,208 +408,208 @@
         $scope.getCurrentLocation(false);
 
 
-        function CustomMarker(latlng, map, VehicleID, objVehicle) {
-            this.latlng_ = latlng;
-            // this.imageSrc = imageSrc;
-            this.VehicleID = VehicleID;
-            this.objVehicle = objVehicle;
-            // this.IsOnline = objVehicle.IsOnline;
-            // this.IsEngine = objVehicle.IsEngine;
-            // this.Authorised = Authorised;
+        // function CustomMarker(latlng, map, VehicleID, objVehicle) {
+        //     this.latlng_ = latlng;
+        //     // this.imageSrc = imageSrc;
+        //     this.VehicleID = VehicleID;
+        //     this.objVehicle = objVehicle;
+        //     // this.IsOnline = objVehicle.IsOnline;
+        //     // this.IsEngine = objVehicle.IsEngine;
+        //     // this.Authorised = Authorised;
 
-            // Once the LatLng and text are set, add the overlay to the map.  This will
-            // trigger a call to panes_changed which should in turn call draw.
-            this.setMap(map);
-        }
-
-
+        //     // Once the LatLng and text are set, add the overlay to the map.  This will
+        //     // trigger a call to panes_changed which should in turn call draw.
+        //     this.setMap(map);
+        // }
 
 
-        CustomMarker.prototype = new google.maps.OverlayView();
-        CustomMarker.prototype.draw = function() {
-            var div = null;
-            var animatediv = null;
-
-            var CustomeInfoWindowdiv = null;
-            var animatCustomeInfoWindowdiv = null;
-
-            var EngineStatus = 'Engine OFF';
-
-            if (this.objVehicle.IsEngine == true) {
-                EngineStatus = 'Engine ON';
-            }
-
-            var DeviceDatetime = moment(moment.utc(new Date(this.objVehicle.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
 
 
-            div = this.div_ = $('.customMarkercar.' + this.objVehicle.deviceid)[0];
-            animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
+        // CustomMarker.prototype = new google.maps.OverlayView();
+        // CustomMarker.prototype.draw = function() {
+        //     var div = null;
+        //     var animatediv = null;
 
-            CustomeInfoWindowdiv = this.CustomeInfoWindowdiv_ = $('.custom-infowinow.' + this.objVehicle.deviceid)[0];
-            animatCustomeInfoWindowdiv = $('.custom-infowinow.' + this.objVehicle.deviceid);
+        //     var CustomeInfoWindowdiv = null;
+        //     var animatCustomeInfoWindowdiv = null;
 
-            if (!div) {
-                div = this.div_ = document.createElement('div');
-                // var TextDiv = document.createElement("div");
-                // TextDiv.innerHTML = this.objVehicle.Name;
+        //     var EngineStatus = 'Engine OFF';
 
+        //     if (this.objVehicle.IsEngine == true) {
+        //         EngineStatus = 'Engine ON';
+        //     }
 
-                CustomeInfoWindowdiv = this.CustomeInfoWindowdiv_ = document.createElement('div');
-
-                CustomeInfoWindowdiv.className = 'custom-infowinow ' + this.objVehicle.deviceid;
-
-                if (this.objVehicle.IsOnline == false) {
-                    div.className = "customMarkercar offline " + this.objVehicle.deviceid;
-                    // $(TextDiv).addClass('my-text-shadow offline');
-                } else {
-                    if (this.objVehicle.IsEngine == false) {
-                        div.className = "customMarkercar active " + this.objVehicle.deviceid;
-                        // $(TextDiv).addClass('my-text-shadow active');
-                    } else {
-                        div.className = "customMarkercar online " + this.objVehicle.deviceid;
-                        // $(TextDiv).addClass('my-text-shadow online');
-                    }
-                }
-
-                var BikeNameP = document.createElement("div");
-                var leftDiv = document.createElement("div");
-                var RightDiv = document.createElement("div");
-                var closeBtn = document.createElement("div");
-
-                BikeNameP.innerHTML = '<div class="MapMarkerLable"><h3>' + this.objVehicle.Name + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + this.objVehicle.deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + this.objVehicle.deviceid + '">' + parseFloat(this.objVehicle.Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + this.objVehicle.deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
-
-                $(leftDiv).addClass('leftside');
-                leftDiv.innerHTML = '<span> </span>';
-                $(RightDiv).addClass('rightside');
-                RightDiv.innerHTML = '<span> </span>';
-                $(closeBtn).addClass('closeBtn ' + this.objVehicle.deviceid);
-
-                CustomeInfoWindowdiv.appendChild(BikeNameP);
-                CustomeInfoWindowdiv.appendChild(leftDiv);
-                CustomeInfoWindowdiv.appendChild(RightDiv);
-                CustomeInfoWindowdiv.appendChild(closeBtn);
-
-                CustomeInfoWindowdiv.style.visibility = "hidden";
-
-                // $(TextDiv).addClass('my-text-shadow');
-                // div.appendChild(TextDiv);
-
-                google.maps.event.addDomListener(div, "click", function(event) {
-
-                    var lstclassName = event.srcElement.className.split(' ')
-                    var DeviceID = "";
-                    for (var t = 0; t < lstclassName.length; t++) {
-                        if (lstclassName[t] != "customMarkercar" && lstclassName[t] != "active" && lstclassName[t] != "online" && lstclassName[t] != "offline") {
-                            DeviceID = lstclassName[t];
-                        }
-                    }
-                    $(".custom-infowinow." + DeviceID).css("visibility", "visible");
-
-                });
-
-                var panes = this.getPanes();
-                panes.overlayImage.appendChild(div);
-                panes.overlayImage.appendChild(CustomeInfoWindowdiv);
-                // panes.overlayImage.appendChild(DrivingDataDiv);
-
-                // $(".custom-driving-infowinow").css("visibility", "hidden");
-
-                $(".closeBtn." + this.objVehicle.deviceid).click(function(event) {
-
-                    var lstclassName = event.currentTarget.className.split(' ');
-                    var DeviceID = "";
-                    for (var t = 0; t < lstclassName.length; t++) {
-                        if (lstclassName[t] != "customMarkercar" && lstclassName[t] != "active" && lstclassName[t] != "online" && lstclassName[t] != "offline") {
-                            DeviceID = lstclassName[t];
-                        }
-                    }
-                    $(".custom-infowinow." + DeviceID).css("visibility", "hidden");
-                });
-
-                if (this.objVehicle.IsOnline == false) {
-                    animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
-                } else {
-                    if (this.objVehicle.IsEngine == false) {
-                        animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
-                    } else {
-                        animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
-                    }
-                }
-            } else {
-                if (this.objVehicle.IsOnline == false) {
-                    $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("online");
-                    $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("active");
-                    $('.customMarkercar.' + this.objVehicle.deviceid).addClass("offline");
-
-                    // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("online");
-                    // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("active");
-                    // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("offline");
-
-                } else {
-                    if (this.objVehicle.IsEngine == false) {
-                        $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("online");
-                        $('.customMarkercar.' + this.objVehicle.deviceid).addClass("active");
-                        $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("offline");
-
-                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("online");
-                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("active");
-                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("offline");
-                    } else {
-                        $('.customMarkercar.' + this.objVehicle.deviceid).addClass("online");
-                        $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("active");
-                        $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("offline");
-
-                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("online");
-                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("active");
-                        // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("offline");
-                    }
-                }
-            }
-
-            $(".localDate." + this.objVehicle.deviceid).text(DeviceDatetime);
-            $(".localEngin." + this.objVehicle.deviceid).text(EngineStatus);
-            $(".localSpeed." + this.objVehicle.deviceid).text(parseFloat(this.objVehicle.Speed).toFixed(2) + " km/h");
+        //     var DeviceDatetime = moment(moment.utc(new Date(this.objVehicle.Date * 1000)).toDate()).format('DD-MM-YYYY hh:mm:ss a');
 
 
-            var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+        //     div = this.div_ = $('.customMarkercar.' + this.objVehicle.deviceid)[0];
+        //     animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
 
-            if (point) {
-                div.style.left = point.x + 'px';
-                div.style.top = point.y + 'px';
+        //     CustomeInfoWindowdiv = this.CustomeInfoWindowdiv_ = $('.custom-infowinow.' + this.objVehicle.deviceid)[0];
+        //     animatCustomeInfoWindowdiv = $('.custom-infowinow.' + this.objVehicle.deviceid);
 
-                CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
-                CustomeInfoWindowdiv.style.top = (point.y - 180) + 'px';
+        //     if (!div) {
+        //         div = this.div_ = document.createElement('div');
+        //         // var TextDiv = document.createElement("div");
+        //         // TextDiv.innerHTML = this.objVehicle.Name;
 
 
-                if ($scope.AppName == "Tracking") {
+        //         CustomeInfoWindowdiv = this.CustomeInfoWindowdiv_ = document.createElement('div');
 
-                    if (this.objVehicle.IsOnline == 1 && this.objVehicle.IsEngine == true) {
+        //         CustomeInfoWindowdiv.className = 'custom-infowinow ' + this.objVehicle.deviceid;
 
-                        var heading = parseFloat(this.objVehicle.Direction) + 90;
-                        div.style.transform = 'rotate(' + heading + 'deg)';
-                        animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
-                    } else {
-                        div.style.transform = 'rotate(0deg)';
-                        animatediv.css('-webkit-transform', 'rotate(0deg)');
-                    }
-                } else {
-                    var heading = parseFloat(this.objVehicle.Direction) + 90;
-                    div.style.transform = 'rotate(' + heading + 'deg)';
-                    animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
-                }
-            }
-        };
+        //         if (this.objVehicle.IsOnline == false) {
+        //             div.className = "customMarkercar offline " + this.objVehicle.deviceid;
+        //             // $(TextDiv).addClass('my-text-shadow offline');
+        //         } else {
+        //             if (this.objVehicle.IsEngine == false) {
+        //                 div.className = "customMarkercar active " + this.objVehicle.deviceid;
+        //                 // $(TextDiv).addClass('my-text-shadow active');
+        //             } else {
+        //                 div.className = "customMarkercar online " + this.objVehicle.deviceid;
+        //                 // $(TextDiv).addClass('my-text-shadow online');
+        //             }
+        //         }
 
-        CustomMarker.prototype.remove = function() {
-            if (this.div_) {
-                this.div_.parentNode.removeChild(this.div_);
-                this.div_ = null;
-            }
-        };
+        //         var BikeNameP = document.createElement("div");
+        //         var leftDiv = document.createElement("div");
+        //         var RightDiv = document.createElement("div");
+        //         var closeBtn = document.createElement("div");
 
-        CustomMarker.prototype.getPosition = function() {
-            return this.latlng_;
-        };
+        //         BikeNameP.innerHTML = '<div class="MapMarkerLable"><h3>' + this.objVehicle.Name + '</h3><div class="content"><div class="col2"><i class="ion-ios-clock" style="color:green;"></i><span class="localDate ' + this.objVehicle.deviceid + '">' + DeviceDatetime + '</span></div><div class="col2"><i class="ion-ios-speedometer localSpeedSymbol" style="color:green;"></i><span class="localSpeed ' + this.objVehicle.deviceid + '">' + parseFloat(this.objVehicle.Speed).toFixed(2) + ' km/h</span></div><div class="col2"><i class="ion-gear-b localEngineSymbol" style="color:green;"></i><span class="localEngine ' + this.objVehicle.deviceid + '"> ' + EngineStatus + ' </span></div></div></div>';
+
+        //         $(leftDiv).addClass('leftside');
+        //         leftDiv.innerHTML = '<span> </span>';
+        //         $(RightDiv).addClass('rightside');
+        //         RightDiv.innerHTML = '<span> </span>';
+        //         $(closeBtn).addClass('closeBtn ' + this.objVehicle.deviceid);
+
+        //         CustomeInfoWindowdiv.appendChild(BikeNameP);
+        //         CustomeInfoWindowdiv.appendChild(leftDiv);
+        //         CustomeInfoWindowdiv.appendChild(RightDiv);
+        //         CustomeInfoWindowdiv.appendChild(closeBtn);
+
+        //         CustomeInfoWindowdiv.style.visibility = "hidden";
+
+        //         // $(TextDiv).addClass('my-text-shadow');
+        //         // div.appendChild(TextDiv);
+
+        //         google.maps.event.addDomListener(div, "click", function(event) {
+
+        //             var lstclassName = event.srcElement.className.split(' ')
+        //             var DeviceID = "";
+        //             for (var t = 0; t < lstclassName.length; t++) {
+        //                 if (lstclassName[t] != "customMarkercar" && lstclassName[t] != "active" && lstclassName[t] != "online" && lstclassName[t] != "offline") {
+        //                     DeviceID = lstclassName[t];
+        //                 }
+        //             }
+        //             $(".custom-infowinow." + DeviceID).css("visibility", "visible");
+
+        //         });
+
+        //         var panes = this.getPanes();
+        //         panes.overlayImage.appendChild(div);
+        //         panes.overlayImage.appendChild(CustomeInfoWindowdiv);
+        //         // panes.overlayImage.appendChild(DrivingDataDiv);
+
+        //         // $(".custom-driving-infowinow").css("visibility", "hidden");
+
+        //         $(".closeBtn." + this.objVehicle.deviceid).click(function(event) {
+
+        //             var lstclassName = event.currentTarget.className.split(' ');
+        //             var DeviceID = "";
+        //             for (var t = 0; t < lstclassName.length; t++) {
+        //                 if (lstclassName[t] != "customMarkercar" && lstclassName[t] != "active" && lstclassName[t] != "online" && lstclassName[t] != "offline") {
+        //                     DeviceID = lstclassName[t];
+        //                 }
+        //             }
+        //             $(".custom-infowinow." + DeviceID).css("visibility", "hidden");
+        //         });
+
+        //         if (this.objVehicle.IsOnline == false) {
+        //             animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
+        //         } else {
+        //             if (this.objVehicle.IsEngine == false) {
+        //                 animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
+        //             } else {
+        //                 animatediv = $('.customMarkercar.' + this.objVehicle.deviceid);
+        //             }
+        //         }
+        //     } else {
+        //         if (this.objVehicle.IsOnline == false) {
+        //             $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("online");
+        //             $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("active");
+        //             $('.customMarkercar.' + this.objVehicle.deviceid).addClass("offline");
+
+        //             // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("online");
+        //             // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("active");
+        //             // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("offline");
+
+        //         } else {
+        //             if (this.objVehicle.IsEngine == false) {
+        //                 $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("online");
+        //                 $('.customMarkercar.' + this.objVehicle.deviceid).addClass("active");
+        //                 $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("offline");
+
+        //                 // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("online");
+        //                 // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("active");
+        //                 // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("offline");
+        //             } else {
+        //                 $('.customMarkercar.' + this.objVehicle.deviceid).addClass("online");
+        //                 $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("active");
+        //                 $('.customMarkercar.' + this.objVehicle.deviceid).removeClass("offline");
+
+        //                 // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').addClass("online");
+        //                 // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("active");
+        //                 // $('.customMarkercar.' + this.objVehicle.deviceid + ' .my-text-shadow').removeClass("offline");
+        //             }
+        //         }
+        //     }
+
+        //     $(".localDate." + this.objVehicle.deviceid).text(DeviceDatetime);
+        //     $(".localEngin." + this.objVehicle.deviceid).text(EngineStatus);
+        //     $(".localSpeed." + this.objVehicle.deviceid).text(parseFloat(this.objVehicle.Speed).toFixed(2) + " km/h");
+
+
+        //     var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+
+        //     if (point) {
+        //         div.style.left = point.x + 'px';
+        //         div.style.top = point.y + 'px';
+
+        //         CustomeInfoWindowdiv.style.left = (point.x - 125) + 'px';
+        //         CustomeInfoWindowdiv.style.top = (point.y - 180) + 'px';
+
+
+        //         if ($scope.AppName == "Tracking") {
+
+        //             if (this.objVehicle.IsOnline == 1 && this.objVehicle.IsEngine == true) {
+
+        //                 var heading = parseFloat(this.objVehicle.Direction) + 90;
+        //                 div.style.transform = 'rotate(' + heading + 'deg)';
+        //                 animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+        //             } else {
+        //                 div.style.transform = 'rotate(0deg)';
+        //                 animatediv.css('-webkit-transform', 'rotate(0deg)');
+        //             }
+        //         } else {
+        //             var heading = parseFloat(this.objVehicle.Direction) + 90;
+        //             div.style.transform = 'rotate(' + heading + 'deg)';
+        //             animatediv.css('-webkit-transform', 'rotate(' + heading + 'deg)');
+        //         }
+        //     }
+        // };
+
+        // CustomMarker.prototype.remove = function() {
+        //     if (this.div_) {
+        //         this.div_.parentNode.removeChild(this.div_);
+        //         this.div_ = null;
+        //     }
+        // };
+
+        // CustomMarker.prototype.getPosition = function() {
+        //     return this.latlng_;
+        // };
 
         $scope.ManageCustomerGraph = function() {
             var params = {
@@ -810,6 +854,7 @@
             ];
             CallGraphData();
         }
+
         $scope.SearchData = function(o) {
             if (o.Year != 0 && o.MonthId == 0) {
                 $mdToast.show(
