@@ -474,10 +474,10 @@
                     if ($rootScope.FlgModifiedAccess) {
 
                         if (statusname == "Pending") {
-                            btns += '<md-button class="edit-button md-icon-button" ng-click="OpenPaymentModal($event,' + data.id + ')" aria-label="">' +
-                                '<md-icon md-font-icon="icon-cash"  class="s18 green-500-fg"></md-icon>' +
-                                '<md-tooltip md-visible="" md-direction="">Payment</md-tooltip>' +
-                                '</md-button>';
+                            // btns += '<md-button class="edit-button md-icon-button" ng-click="OpenPaymentModal($event,' + data.id + ')" aria-label="">' +
+                            //     '<md-icon md-font-icon="icon-cash"  class="s18 green-500-fg"></md-icon>' +
+                            //     '<md-tooltip md-visible="" md-direction="">Payment</md-tooltip>' +
+                            //     '</md-button>';
                             btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangeStatus($event,' + data.id + ',2)" aria-label="">' +
                                 '<md-icon md-font-icon="icon-checkbox-marked-circle-outline" class="s18 blue-500-fg" ></md-icon>' +
                                 '<md-tooltip md-visible="" md-direction="">Make Status Paid</md-tooltip>' +

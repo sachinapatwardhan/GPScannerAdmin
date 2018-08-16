@@ -13,26 +13,12 @@
                 </div>
             </div>
             <!-- <div class="search"> -->
-            <form name="formGPS" novalidate class="search" aria-invalid="false" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+            <!-- <form name="formGPS" novalidate class="search" aria-invalid="false" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <!-- <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex> -->
                 <input type="text" name="DeviceId" class="search-input" ng-model="ModelSearch.DeviceId" placeholder="Enter Device ID*" required flex>
-                <!-- <div ng-messages="formGPS.DeviceId.$error" ng-if="formGPS.DeviceId.$touched" role="alert">
-                    <div ng-message="required">
-                        <span>Device ID is required</span>
-                    </div>
-                </div> -->
-            </form>
+            </form> -->
             <!-- </div> -->
-            <div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
-                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
-                    <md-icon md-font-icon="icon-filter-variant"></md-icon>
-                    <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
-                </md-button> -->
-                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length>0 && Search == ''">
-                    <md-icon md-font-icon="icon-file-excel"></md-icon>
-                    <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
-                </md-button> -->
+            <!-- <div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
                 <md-button class="md-icon-button md-raised md-hue-2" ng-disabled="!formGPS.$valid" ng-click="GetAllGpsData(true)" aria-label="Search">
                     <md-icon md-font-icon="icon-magnify"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
@@ -41,10 +27,10 @@
                     <md-icon md-font-icon="icon-refresh"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
                 </md-button>
-            </div>
+            </div> -->
         </div>
         <div class="content-card" layout="column" flex>
-            <!-- <div class="ShowContentBox">
+            <div class="ShowContentBox">
                 <form name="formGPS" novalidate class="md-inline-form" aria-invalid="false">
                     <div layout="row" layout-wrap>
                         <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
@@ -53,7 +39,7 @@
                         </md-input-container>
                         <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                             <label>End Date</label>
-                            <input name="End" mdc-datetime-picker date="true" time="true" type="text" id="time" min-date="minDate" format="DD-MM-YYYY hh:mm A" ng-model="ModelSearch.EndDate">
+                            <input name="End" mdc-datetime-picker date="true" time="true" type="text" id="time2" min-date="minDate" format="DD-MM-YYYY hh:mm A" ng-model="ModelSearch.EndDate">
                         </md-input-container>
                         <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                             <label>Device ID</label>
@@ -76,7 +62,7 @@
                         </div>
                     </div>
                 </form>
-            </div> -->
+            </div>
             <div class="content fullpage-datatable" layout="column" flex ng-if="AppName != 'Tracking'">
                 <table id="gps" class="dataTable cell-border row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
                     <thead>

@@ -189,11 +189,21 @@
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            if ($rootScope.AppName == 'Tracking') {
-                vm.dtInstance1.reloadData(callback, resetPaging);
+            if (($scope.ModelSearch.EndDate - $scope.ModelSearch.StartDate) <= 86400000) {
+                if ($rootScope.AppName == 'Tracking') {
+                    vm.dtInstance1.reloadData(callback, resetPaging);
+                } else {
+                    vm.dtInstance.reloadData(callback, resetPaging);
+                }
             } else {
-                vm.dtInstance.reloadData(callback, resetPaging);
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('You can only search data for 1 days')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
             }
+
         }
 
         $scope.reloadData = function() {}
