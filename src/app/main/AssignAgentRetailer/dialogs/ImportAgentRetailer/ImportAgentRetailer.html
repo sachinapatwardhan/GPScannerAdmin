@@ -1,0 +1,79 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Import Agent Device From Excel</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ms-scroll>
+        <form Name="formImport" class="md-inline-form">
+            <div layout="row " layout-wrap>
+
+                <md-input-container class="md-block" flex="45" flex-gt-sm="45" ng-if="vm.UserRoles =='Super Admin'">
+                    <label>App Name</label>
+                    <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllAgent()" required>
+                        <md-select-header class="demo-select-header">
+                            <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                        </md-select-header>
+                        <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                    </md-select>
+                    <div ng-messages="formImport.AppName.$error" ng-if="formImport.AppName.$touched" role="alert">
+                        <div ng-message="required">
+                            <span>App Name is required.</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex="45" flex-gt-sm="45">
+                    <label>Agent</label>
+                    <md-select Name="agentId" ng-model="model.agentId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllRetailer(model.agentId)" required>
+                        <md-select-header class="demo-select-header">
+                            <input ng-model="vm.searchagent" type="search" placeholder="Search for a Agent.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                        </md-select-header>
+                        <md-option ng-value="{{o.id}}" ng-repeat="o in lstAgent | filter:vm.searchagent | orderBy: 'email'">{{o.email}}</md-option>
+                    </md-select>
+                    <div ng-messages="formImport.agentId.$error" ng-if="formImport.agentId.$touched" role="alert">
+                        <div ng-message="required">
+                            <span>Agent is required.</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex="100" flex-gt-sm="45">
+                    <label>Retailer</label>
+                    <md-select name="retailerId" ng-model="model.retailerId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-disabled="model.agentId==''" required>
+                        <md-select-header class="demo-select-header">
+                            <input ng-model="vm.searchReatiler" type="search" placeholder="Search for a Retailer.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                        </md-select-header>
+                        <md-option ng-value="{{o.retailerId}}" ng-repeat="o in lstAllRetailer |filter:vm.searchReatiler| orderBy: 'email'">{{o.email}}</md-option>
+                    </md-select>
+                    <div ng-messages="formImport.retailerId.$error" ng-if="formImport.retailerId.$touched" role="alert">
+                        <div ng-message="required">
+                            <span>Retailer field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+            <md-content class="md-padding">
+
+                <p>You must upload file same as excel template for Import Assign Aevice Retailer .
+                    <br/>
+                    <!-- <small>you can download excel template for import excel file.</small> -->
+                </p>
+                <lf-ng-md-file-input name="files1" lf-files="Productfiles" lf-mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" lf-required lf-maxcount="1" lf-api="apiReset" lf-filesize="10MB" ng-click="Reset()"></lf-ng-md-file-input>
+                <div ng-messages="formImport.files1.$error" style="color:red;">
+                    <div ng-message="required">You must Select file.</div>
+                    <div ng-message="maxcount">Too much files.</div>
+                    <div ng-message="filesize">File size too large.</div>
+                    <div ng-message="mimetype">Only Excel File Supported.</div>
+                </div>
+            </md-content>
+            <div align="left">
+                <md-button class="md-raised md-primary" ng-disabled="!formImport.$valid" ng-click="Import(model)">Import</md-button>
+                <md-button class="md-raised md-warn" ng-click="closeModel()">Close Model</md-button>
+            </div>
+        </form>
+        </md-content>
+    </md-dialog-content>
+</md-dialog>

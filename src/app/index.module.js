@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -76,5 +76,7 @@
             'app.apiaccess',
             'app.VehicleGroup',
             'app.AuditLoglicense',
+            'app.RenewManagement',
+            'app.AssignAgentRetailer'
         ]);
 })();
