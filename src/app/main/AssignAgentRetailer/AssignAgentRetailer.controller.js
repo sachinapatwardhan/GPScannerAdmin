@@ -262,8 +262,8 @@
                             .position('top right')
                             .hideDelay(3000)
                         );
-                        $scope.resetForm();
-                        $scope.init();
+                        $scope.ResetModel();
+                        $scope.GetAllData(true);
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
@@ -341,11 +341,7 @@
                 deviceId: '',
                 AppName: '',
             }
-            $scope.modelSearch = {
-                idApp: '',
-                agentId: '',
-                retailerId: ''
-            }
+
             $scope.resetForm();
             $scope.flag = false
         }
@@ -380,7 +376,7 @@
 
         $scope.SearchReset = function() {
             $scope.modelSearch = {
-                idApp: $rootScope.UserId == 'Super Admin' ? '' : $rootScope.appId,
+                idApp: $rootScope.UserRoles == 'Super Admin' ? '' : $rootScope.appId,
                 agentId: '',
                 retailerId: ''
             }

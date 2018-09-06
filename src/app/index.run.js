@@ -15,7 +15,7 @@
                 $http.defaults.headers.common['Authorization'] = token;
             };
         }
-        $rootScope.VersionNumber = "18.03.0829.7171e78";
+        $rootScope.VersionNumber = "18.03.0906.d4ffc3a";
         // $rootScope.RoutePath = "http://localhost:7212/";
         // $rootScope.Socket_URL = "http://localhost:7212";
 
