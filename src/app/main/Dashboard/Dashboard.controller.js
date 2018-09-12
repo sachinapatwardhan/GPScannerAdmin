@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -33,13 +33,13 @@
         //endicon
         $scope.selectAppName = $scope.AppName;
 
-        $scope.GetAllInfoList = function() {
-            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+        $scope.GetAllInfoList = function () {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
                 $scope.lstAppInfo = data.data;
             })
         }
         $scope.GetAllInfoList();
-        $scope.selectedAppName = function(o) {
+        $scope.selectedAppName = function (o) {
             if (o != 'All') {
                 $scope.selectAppName = o.AppName;
                 $rootScope.appId = o.id;
@@ -56,9 +56,9 @@
 
         function callDeviceStatus() {
             for (var t = 0; t < $scope.lstActiveVehicle.length; t++) {
-                socket.on($scope.lstActiveVehicle[t].deviceid + 'BikeDeviceStatus', function(msg) {
+                socket.on($scope.lstActiveVehicle[t].deviceid + 'BikeDeviceStatus', function (msg) {
                     var obj = JSON.parse(msg);
-                    $scope.$apply(function() {
+                    $scope.$apply(function () {
                         // if ($scope.lstDevices != undefined) {
                         if ($scope.lstActiveVehicle != null && $scope.lstActiveVehicle != undefined) {
                             for (var t = 0; t < $scope.lstActiveVehicle.length; t++) {
@@ -190,11 +190,11 @@
             }
         }
 
-        $scope.$on('$stateChangeStart', function(e, to) {
+        $scope.$on('$stateChangeStart', function (e, to) {
             socket.disconnect();
         });
 
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.model = {
                 Year: '',
                 MonthId: '',
@@ -225,7 +225,7 @@
             $scope.TotalOwnerCustomer = 0;
             $scope.GetAllExpiredDevice();
         }
-        $scope.GetAllMontName = function() {
+        $scope.GetAllMontName = function () {
             $scope.listMonthName = [
                 { id: 1, name: "Jan" },
                 { id: 2, name: "Feb" },
@@ -241,7 +241,7 @@
                 { id: 12, name: "Dec" }
             ];
         }
-        $scope.GetAllYearName = function() {
+        $scope.GetAllYearName = function () {
             $scope.listYear = [];
             for (var j = 2015; j <= new Date().getFullYear(); j++) {
                 var obj = new Object();
@@ -251,7 +251,7 @@
         }
 
         //google map start
-        $scope.IntializeGoogleMap = function(Redirectflag) {
+        $scope.IntializeGoogleMap = function (Redirectflag) {
 
             var myOptions;
 
@@ -276,7 +276,7 @@
 
             // var CurrentLatLang = new google.maps.LatLng(CurrentLat, CurrentLang);
 
-            setTimeout(function() {
+            setTimeout(function () {
                 // map = new google.maps.Map(document.getElementById("map123"),
                 //     myOptions);
                 if (map) {
@@ -287,7 +287,7 @@
                 // var MethodCallFlag = true;
 
                 var FoundLocation = 0;
-                $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBikeNew?AppName=' + $scope.AppName).success(function(data) {
+                $http.get($rootScope.RoutePath + 'dashboard/GetAllWorkingBikeNew?AppName=' + $scope.AppName).success(function (data) {
                     $scope.lstActiveVehicle = data.data;
                     callDeviceStatus();
                     for (var i = 0; i < $scope.lstActiveVehicle.length; i++) {
@@ -350,10 +350,10 @@
                                 });
                                 $scope.lstActiveVehicle[i].marker = L.marker([$scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude], { icon: MapIcon, title: $scope.lstActiveVehicle[i].Name }).addTo(map);
                                 $scope.lstActiveVehicle[i].popup = content;
-                                $scope.lstActiveVehicle[i].marker.on('mouseover', function() {
+                                $scope.lstActiveVehicle[i].marker.on('mouseover', function () {
                                     $scope.lstActiveVehicle[i].marker.bindPopup($scope.lstActiveVehicle[i].popup).openPopup();
                                 });
-                                $scope.lstActiveVehicle[i].marker.on('mouseout ', function() {
+                                $scope.lstActiveVehicle[i].marker.on('mouseout ', function () {
                                     $scope.lstActiveVehicle[i].marker.bindPopup($scope.lstActiveVehicle[i].popup).closePopup()
                                 });
                                 bounds.push([$scope.lstActiveVehicle[i].Latitude, $scope.lstActiveVehicle[i].Longitude])
@@ -361,7 +361,9 @@
                             }
                             setActiveVehicle(i + 1);
                         } else {
-                            map.fitBounds(bounds, { maxZoom: 13 });
+                            if (bounds.length > 0) {
+                                map.fitBounds(bounds, { maxZoom: 13 });
+                            }
                         }
                     }
                     setActiveVehicle(0);
@@ -369,7 +371,7 @@
                 //     };
                 // });
 
-                if ($scope.CurrentLatitude != '' && $scope.CurrentLongitude != '') {} else {
+                if ($scope.CurrentLatitude != '' && $scope.CurrentLongitude != '') { } else {
                     if (Redirectflag) {
                         MethodCallFlag = true;
                     } else {
@@ -379,10 +381,10 @@
             })
         }
 
-        $scope.ManageDashBoardCount = function() {
+        $scope.ManageDashBoardCount = function () {
             $scope.ActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 1 });
             // $scope.NotActiveDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0 });
-            $scope.NotActiveDevice = _.filter($scope.lstActiveVehicle, function(item) {
+            $scope.NotActiveDevice = _.filter($scope.lstActiveVehicle, function (item) {
                 if (item.id != null && item.IsOnline == 0) {
                     return item;
                 }
@@ -390,14 +392,14 @@
             $scope.NotSaleDevice = _.where($scope.lstActiveVehicle, { IsOnline: 0, id: null });
         }
 
-        $scope.getCurrentLocation = function(flag) {
+        $scope.getCurrentLocation = function (flag) {
             var posOptions = { timeout: 7000, enableHighAccuracy: false };
             try {
-                $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+                $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
                     $scope.CurrentLatitude = position.coords.latitude;
                     $scope.CurrentLongitude = position.coords.longitude;
                     $scope.IntializeGoogleMap(flag);
-                }, function(err) {
+                }, function (err) {
                     $scope.IntializeGoogleMap(flag);
                 });
             } catch (ex) {
@@ -611,14 +613,14 @@
         //     return this.latlng_;
         // };
 
-        $scope.ManageCustomerGraph = function() {
+        $scope.ManageCustomerGraph = function () {
             var params = {
                 // countryName: null,
                 // CountryList: $rootScope.CountryList,
                 // IsSuperAdmin: $scope.FlgSuperAdmin,
                 idApp: $rootScope.appId,
             }
-            $http.get($rootScope.RoutePath + "dashboard/GetGraphCustomer", { params: params }).then(function(data) {
+            $http.get($rootScope.RoutePath + "dashboard/GetGraphCustomer", { params: params }).then(function (data) {
                 $scope.lstCustomerGraph = data.data.UserData;
 
                 $scope.lstCountry = [];
@@ -642,7 +644,7 @@
                     }
                 }
 
-                $timeout(function() {
+                $timeout(function () {
                     $scope.CustomerAndUser(false);
                     $scope.CustomerAndUserAcc(false);
                     $scope.CustomerGraph();
@@ -650,7 +652,7 @@
 
             });
         }
-        $scope.CustomerAndUser = function(flag) {
+        $scope.CustomerAndUser = function (flag) {
             $scope.weekDays = '';
             $scope.weekMonths = '';
             var currentDate = moment();
@@ -684,7 +686,7 @@
                 objCustomer.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
 
                 if ($scope.model.CountryName == 'All') {
-                    var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                    var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay)) {
                             return item;
                         }
@@ -695,7 +697,7 @@
                     //     }
                     // });
                 } else if ($scope.model.CountryName == '' || $scope.model.CountryName == null) {
-                    var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                    var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay) && (item.country == '' || item.country == null)) {
                             return item;
                         }
@@ -706,7 +708,7 @@
                     //     }
                     // });
                 } else {
-                    var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                    var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay) && (item.country == $scope.model.CountryName)) {
                             return item;
                         }
@@ -750,7 +752,7 @@
                 var objUser = new Object();
                 objUser.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
                 if ($scope.model.CountryName == 'All') {
-                    var User = _.filter($scope.userslist, function(item) {
+                    var User = _.filter($scope.userslist, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay)) {
                             return item;
                         }
@@ -761,7 +763,7 @@
                     //     }
                     // });
                 } else if ($scope.model.CountryName == '' || $scope.model.CountryName == null) {
-                    var User = _.filter($scope.userslist, function(item) {
+                    var User = _.filter($scope.userslist, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay) && (item.country == '' || item.country == null)) {
                             return item;
                         }
@@ -772,7 +774,7 @@
                     //     }
                     // });
                 } else {
-                    var User = _.filter($scope.userslist, function(item) {
+                    var User = _.filter($scope.userslist, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay) && (item.country == $scope.model.CountryName)) {
                             return item;
                         }
@@ -786,7 +788,7 @@
 
                 if (User.length > 0) {
                     var sum = 0;
-                    angular.forEach(User, function(value, key) {
+                    angular.forEach(User, function (value, key) {
                         sum = sum + parseInt(value.Total);
                     })
                     objUser.y = sum;
@@ -844,24 +846,24 @@
                 }
             }
             $scope.dashboardData = [{
-                    "key": "User",
-                    "values": $scope.lstUser.reverse()
-                },
-                {
-                    "key": "Customer",
-                    "values": $scope.lstCustomer.reverse()
-                }
+                "key": "User",
+                "values": $scope.lstUser.reverse()
+            },
+            {
+                "key": "Customer",
+                "values": $scope.lstCustomer.reverse()
+            }
             ];
             CallGraphData();
         }
 
-        $scope.SearchData = function(o) {
+        $scope.SearchData = function (o) {
             if (o.Year != 0 && o.MonthId == 0) {
                 $mdToast.show(
                     $mdToast.simple()
-                    .textContent("Please Select Month..")
-                    .position('top right')
-                    .hideDelay(3000)
+                        .textContent("Please Select Month..")
+                        .position('top right')
+                        .hideDelay(3000)
                 );
                 // o.MonthId = 1;
             } else {
@@ -890,19 +892,19 @@
                         var objCustomer = new Object();
                         objCustomer.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
                         if (o.CountryName == 'All') {
-                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                            var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
                                     return item;
                                 }
                             });
                         } else if (o.CountryName == '' || o.CountryName == null) {
-                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                            var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
                                     return item;
                                 }
                             });
                         } else {
-                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                            var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryName)) {
                                     return item;
                                 }
@@ -938,19 +940,19 @@
                         var objUser = new Object();
                         objUser.x = moment($filter('date')(new Date(date1), "MM/dd/yyyy")).valueOf();
                         if (o.CountryName == 'All') {
-                            var User = _.filter($scope.userslist, function(item) {
+                            var User = _.filter($scope.userslist, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
                                     return item;
                                 }
                             });
                         } else if (o.CountryName == '' || o.CountryName == null) {
-                            var User = _.filter($scope.userslist, function(item) {
+                            var User = _.filter($scope.userslist, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
                                     return item;
                                 }
                             });
                         } else {
-                            var User = _.filter($scope.userslist, function(item) {
+                            var User = _.filter($scope.userslist, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryName)) {
                                     return item;
                                 }
@@ -958,7 +960,7 @@
                         }
                         if (User.length > 0) {
                             var sum = 0;
-                            angular.forEach(User, function(value, key) {
+                            angular.forEach(User, function (value, key) {
                                 sum = sum + parseInt(value.Total);
                             })
                             objUser.y = sum;
@@ -1000,13 +1002,13 @@
                         // $scope.lstOwnerUserSearch.push(objOwnerUser);
                     }
                     $scope.dashboardData = [{
-                            "key": "User",
-                            "values": $scope.lstUserSearch
-                        },
-                        {
-                            "key": "Customer",
-                            "values": $scope.lstCustomerSearch
-                        }
+                        "key": "User",
+                        "values": $scope.lstUserSearch
+                    },
+                    {
+                        "key": "Customer",
+                        "values": $scope.lstCustomerSearch
+                    }
                     ];
                     CallGraphData();
                 } else {
@@ -1033,21 +1035,21 @@
                             useInteractiveGuideline: true,
                             clipVoronoi: false,
                             interpolate: 'monotone',
-                            x: function(d) {
+                            x: function (d) {
                                 return d.x;
                             },
-                            y: function(d) {
+                            y: function (d) {
                                 return d.y;
                             },
                             //xScale = d3.time.scale();
                             xAxis: {
-                                tickFormat: function(d) {
+                                tickFormat: function (d) {
                                     return moment(d).format("D-MMM-YYYY");
                                 },
                                 showMaxMin: false
                             },
                             yAxis: {
-                                tickFormat: function(d) {
+                                tickFormat: function (d) {
                                     return d;
                                 }
                             },
@@ -1073,7 +1075,7 @@
             };
         }
 
-        $scope.CustomerAndUserAcc = function(flag) {
+        $scope.CustomerAndUserAcc = function (flag) {
             $scope.weekDays = '';
             $scope.weekMonths = '';
             var currentDate = moment();
@@ -1108,21 +1110,21 @@
 
             var lstInitialCustomerdata = [];
             if ($scope.model.CountryNameAcc == 'All') {
-                lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function (obj) {
                     var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                     if ((objdate < objcurrentDate)) {
                         return obj;
                     };
                 })
             } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function (obj) {
                     var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                     if ((objdate < objcurrentDate && obj.country == null)) {
                         return obj;
                     };
                 })
             } else {
-                lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function (obj) {
                     var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                     if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc)) {
                         return obj;
@@ -1158,21 +1160,21 @@
 
             var lstInitialUserdata = [];
             if ($scope.model.CountryNameAcc == 'All') {
-                lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                lstInitialUserdata = _.filter($scope.userslist, function (obj) {
                     var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                     if ((objdate < objcurrentDate)) {
                         return obj;
                     };
                 })
             } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                lstInitialUserdata = _.filter($scope.userslist, function (obj) {
                     var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                     if ((objdate < objcurrentDate && obj.country == null)) {
                         return obj;
                     };
                 })
             } else {
-                lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                lstInitialUserdata = _.filter($scope.userslist, function (obj) {
                     var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                     if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc)) {
                         return obj;
@@ -1180,7 +1182,7 @@
                 })
             }
             var TempUsersum = 0;
-            angular.forEach(lstInitialUserdata, function(value, key) {
+            angular.forEach(lstInitialUserdata, function (value, key) {
                 TempUsersum = TempUsersum + parseInt(value.Total);
             })
             sum3 = TempUsersum;
@@ -1220,19 +1222,19 @@
                 var objCustomer = new Object();
                 objCustomer.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
                 if ($scope.model.CountryNameAcc == 'All') {
-                    var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                    var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay)) {
                             return item;
                         }
                     });
                 } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                    var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                    var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay) && (item.country == '' || item.country == null)) {
                             return item;
                         }
                     });
                 } else {
-                    var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                    var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay) && (item.country == $scope.model.CountryNameAcc)) {
                             return item;
                         }
@@ -1270,19 +1272,19 @@
                 var objUser = new Object();
                 objUser.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
                 if ($scope.model.CountryNameAcc == 'All') {
-                    var User = _.filter($scope.userslist, function(item) {
+                    var User = _.filter($scope.userslist, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay)) {
                             return item;
                         }
                     });
                 } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                    var User = _.filter($scope.userslist, function(item) {
+                    var User = _.filter($scope.userslist, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay) && (item.country == '' || item.country == null)) {
                             return item;
                         }
                     });
                 } else {
-                    var User = _.filter($scope.userslist, function(item) {
+                    var User = _.filter($scope.userslist, function (item) {
                         if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == $scope.custCurrentDay) && (item.country == $scope.model.CountryNameAcc)) {
                             return item;
                         }
@@ -1290,7 +1292,7 @@
                 }
                 if (User.length > 0) {
                     var sum = 0;
-                    angular.forEach(User, function(value, key) {
+                    angular.forEach(User, function (value, key) {
                         sum = sum + parseInt(value.Total);
                     })
                     sum3 = sum3 + sum;
@@ -1351,24 +1353,24 @@
                 }
             }
             $scope.dashboardData1 = [{
-                    "key": "User",
-                    "values": $scope.lstUserAcc
-                },
-                {
-                    "key": "Customer",
-                    "values": $scope.lstCustomerAcc
-                }
+                "key": "User",
+                "values": $scope.lstUserAcc
+            },
+            {
+                "key": "Customer",
+                "values": $scope.lstCustomerAcc
+            }
             ];
             CallGraphDataAcc();
         }
 
-        $scope.SearchDataAcc = function(o) {
+        $scope.SearchDataAcc = function (o) {
             if (o.YearAcc != 0 && o.MonthIdAcc == 0) {
                 $mdToast.show(
                     $mdToast.simple()
-                    .textContent("Please Select Month..")
-                    .position('top right')
-                    .hideDelay(3000)
+                        .textContent("Please Select Month..")
+                        .position('top right')
+                        .hideDelay(3000)
                 );
             } else {
                 if (o.YearAcc != "0" && o.MonthIdAcc != "0") {
@@ -1397,21 +1399,21 @@
 
                     var lstInitialCustomerdata = [];
                     if ($scope.model.CountryNameAcc == 'All') {
-                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function (obj) {
                             var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                             if ((objdate < objcurrentDate)) {
                                 return obj;
                             };
                         })
                     } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function (obj) {
                             var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                             if ((objdate < objcurrentDate && obj.country == null)) {
                                 return obj;
                             };
                         })
                     } else {
-                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function(obj) {
+                        lstInitialCustomerdata = _.filter($scope.lstCustomerGraph, function (obj) {
                             var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                             if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc)) {
                                 return obj;
@@ -1447,21 +1449,21 @@
 
                     var lstInitialUserdata = [];
                     if ($scope.model.CountryNameAcc == 'All') {
-                        lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                        lstInitialUserdata = _.filter($scope.userslist, function (obj) {
                             var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                             if ((objdate < objcurrentDate)) {
                                 return obj;
                             };
                         })
                     } else if ($scope.model.CountryNameAcc == '' || $scope.model.CountryNameAcc == null) {
-                        lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                        lstInitialUserdata = _.filter($scope.userslist, function (obj) {
                             var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                             if ((objdate < objcurrentDate && obj.country == null)) {
                                 return obj;
                             };
                         })
                     } else {
-                        lstInitialUserdata = _.filter($scope.userslist, function(obj) {
+                        lstInitialUserdata = _.filter($scope.userslist, function (obj) {
                             var objdate = new Date(obj.year.toString() + "-" + obj.month.toString() + "-" + obj.day.toString());
                             if ((objdate < objcurrentDate && obj.country == $scope.model.CountryNameAcc)) {
                                 return obj;
@@ -1469,7 +1471,7 @@
                         })
                     }
                     var TempUsersum = 0;
-                    angular.forEach(lstInitialUserdata, function(value, key) {
+                    angular.forEach(lstInitialUserdata, function (value, key) {
                         TempUsersum = TempUsersum + parseInt(value.Total);
                     })
                     sum3Acc = TempUsersum;
@@ -1512,19 +1514,19 @@
                         var objCustomer = new Object();
                         objCustomer.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
                         if (o.CountryName == 'All') {
-                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                            var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
                                     return item;
                                 }
                             });
                         } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
-                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                            var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
                                     return item;
                                 }
                             });
                         } else {
-                            var Customer = _.filter($scope.lstCustomerGraph, function(item) {
+                            var Customer = _.filter($scope.lstCustomerGraph, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryNameAcc)) {
                                     return item;
                                 }
@@ -1561,19 +1563,19 @@
                         //3
                         var objUser = new Object();
                         if (o.CountryName == 'All') {
-                            var User = _.filter($scope.userslist, function(item) {
+                            var User = _.filter($scope.userslist, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1)) {
                                     return item;
                                 }
                             });
                         } else if (o.CountryNameAcc == '' || o.CountryNameAcc == null) {
-                            var User = _.filter($scope.userslist, function(item) {
+                            var User = _.filter($scope.userslist, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == '' || item.country == null)) {
                                     return item;
                                 }
                             });
                         } else {
-                            var User = _.filter($scope.userslist, function(item) {
+                            var User = _.filter($scope.userslist, function (item) {
                                 if ((item.year == $scope.custCurrentYear && item.month == $scope.custCurrentMonth && item.day == k + 1) && (item.country == o.CountryNameAcc)) {
                                     return item;
                                 }
@@ -1582,7 +1584,7 @@
                         objUser.x = moment($filter('date')(new Date(date), "MM/dd/yyyy")).valueOf();
                         if (User.length > 0) {
                             var sum = 0;
-                            angular.forEach(User, function(value, key) {
+                            angular.forEach(User, function (value, key) {
                                 sum = sum + parseInt(value.Total);
                             })
                             sum3Acc = sum3Acc + sum;
@@ -1626,13 +1628,13 @@
                         // $scope.lstOwnerUserAccSearch.push(objOwnerUser);
                     }
                     $scope.dashboardData1 = [{
-                            "key": "User",
-                            "values": $scope.lstUserAccSearch
-                        },
-                        {
-                            "key": "Customer",
-                            "values": $scope.lstCustomerAccSearch
-                        }
+                        "key": "User",
+                        "values": $scope.lstUserAccSearch
+                    },
+                    {
+                        "key": "Customer",
+                        "values": $scope.lstCustomerAccSearch
+                    }
                     ];
                     CallGraphDataAcc();
                 } else {
@@ -1659,23 +1661,23 @@
                             useInteractiveGuideline: true,
                             clipVoronoi: false,
                             interpolate: 'linear',
-                            x: function(d) {
+                            x: function (d) {
                                 return d.x;
                             },
-                            y: function(d) {
+                            y: function (d) {
 
                                 return d.y;
                             },
                             //xScale = d3.time.scale();
                             xAxis: {
-                                tickFormat: function(d) {
+                                tickFormat: function (d) {
 
                                     return moment(d).format("D-MMM-YYYY");;
                                 },
                                 showMaxMin: false
                             },
                             yAxis: {
-                                tickFormat: function(d) {
+                                tickFormat: function (d) {
                                     return d;
                                 }
                             },
@@ -1703,7 +1705,7 @@
 
 
 
-        $scope.CustomerGraph = function() {
+        $scope.CustomerGraph = function () {
             $scope.weekDays = '';
             $scope.weekMonths = '';
             var currentDate = moment();
@@ -1757,7 +1759,7 @@
         }
 
 
-        $scope.GetDashboardCount = function() {
+        $scope.GetDashboardCount = function () {
             if (!$scope.FlgSuperAdmin) {
                 var params = {
                     // countryName: $rootScope.UserCountry,
@@ -1774,7 +1776,7 @@
                 }
             }
 
-            $http.get($rootScope.RoutePath + "dashboard/GetDashboardData", { params: params }).then(function(data) {
+            $http.get($rootScope.RoutePath + "dashboard/GetDashboardData", { params: params }).then(function (data) {
 
                 $scope.lstDashBoardInfo = data.data;
                 //Today
@@ -1882,13 +1884,13 @@
                 } else {
                     $scope.lstDashBoardInfo.sumAllTimeProcessing = data.data.sumAllTimeProcessing;
                 }
-                $timeout(function() {
+                $timeout(function () {
                     $scope.ManageGraphOrderTotalByDuration('All');
                 }, 600);
             });
         }
 
-        $scope.ManageGraph = function() {
+        $scope.ManageGraph = function () {
 
             if (!$scope.FlgSuperAdmin) {
                 var params = {
@@ -1906,7 +1908,7 @@
                 }
             }
 
-            $http.get($rootScope.RoutePath + "dashboard/GetGraphData", { params: params }).then(function(data) {
+            $http.get($rootScope.RoutePath + "dashboard/GetGraphData", { params: params }).then(function (data) {
 
                 $scope.userslist = data.data.UserData;
                 $scope.uploader();
@@ -1914,7 +1916,7 @@
             });
         }
 
-        $scope.GetCustomer = function() {
+        $scope.GetCustomer = function () {
             var params = {
                 // countryName: $rootScope.UserCountry,
                 // CountryList: $rootScope.CountryList,
@@ -1923,12 +1925,12 @@
             }
 
 
-            $http.get($rootScope.RoutePath + "dashboard/GetTotalCustomer", { params: params }).then(function(data) {
+            $http.get($rootScope.RoutePath + "dashboard/GetTotalCustomer", { params: params }).then(function (data) {
                 $scope.lstTotalCustomer = data.data[0].Count;
             });
         }
 
-        $scope.uploader = function() {
+        $scope.uploader = function () {
             var objDate = new Date(),
                 locale = "en-us",
                 stingmonth = objDate.toLocaleString(locale, { month: "long" });
@@ -1954,9 +1956,9 @@
                 var objUser = _.where($scope.userslist, { month: $scope.CurrentMonth, year: $scope.CurrentYear });
                 if (objUser.length > 0) {
 
-                    var newobjUser = _.each(objUser, function(item) {
-                        $scope.sum = function(items, prop) {
-                            return items.reduce(function(a, b) {
+                    var newobjUser = _.each(objUser, function (item) {
+                        $scope.sum = function (items, prop) {
+                            return items.reduce(function (a, b) {
                                 return a + b[prop];
                             }, 0);
                         };
@@ -2000,20 +2002,20 @@
                 "values": $scope.Bardata.reverse(),
             }];
             DrowChart();
-            $scope.lstTotalUser = monthwiselist.reduce(function(total, item) {
+            $scope.lstTotalUser = monthwiselist.reduce(function (total, item) {
                 return total + item;
             }, 0);
             $scope.ManageCustomerGraph();
-            $timeout(function() {
+            $timeout(function () {
                 $scope.CustomerAndUser(false);
                 $scope.CustomerAndUserAcc(false);
                 // $scope.CustomerGraph();
             }, 300);
         }
 
-        $scope.ManageGraphOrderTotalByDuration = function(Duration) {
+        $scope.ManageGraphOrderTotalByDuration = function (Duration) {
             $scope.OrderDuration = Duration;
-            $scope.labels = ["Processing", "Pending", "Cancelled", "Complete", ];
+            $scope.labels = ["Processing", "Pending", "Cancelled", "Complete",];
             if (Duration == "Today") {
 
                 if ($scope.lstDashBoardInfo.sumTodayProcessing == 0 && $scope.lstDashBoardInfo.sumTodayPending == 0 && $scope.lstDashBoardInfo.sumTodayCancelled == 0 && $scope.lstDashBoardInfo.sumTodayCompleted == 0) {
@@ -2096,12 +2098,12 @@
         ];
 
 
-        $scope.TotalCustomerbyCountry = function() {
-            $http.get($rootScope.RoutePath + "dashboard/GetTotalCustomerByCountry?idApp=" + $rootScope.appId).then(function(data) {
+        $scope.TotalCustomerbyCountry = function () {
+            $http.get($rootScope.RoutePath + "dashboard/GetTotalCustomerByCountry?idApp=" + $rootScope.appId).then(function (data) {
                 if (data.data.success == true) {
                     $scope.lstTotalCustomerbyCountry = data.data.data;
                     $scope.lst = [];
-                    $timeout(function() {
+                    $timeout(function () {
                         for (var i = 0; i < $scope.lstTotalCustomerbyCountry.length; i++) {
                             $scope.lst.push($scope.lstTotalCustomerbyCountry[i].tbluserinformation);
                         }
@@ -2141,7 +2143,7 @@
         ];
 
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.init();
         });
 
@@ -2171,20 +2173,20 @@
                             // stacked: true,
                             duration: 250,
                             showControls: false,
-                            x: function(d) {
+                            x: function (d) {
                                 return d.x;
                             },
-                            y: function(d) {
+                            y: function (d) {
                                 return d.y;
                             },
                             xAxis: {
-                                tickFormat: function(d) {
+                                tickFormat: function (d) {
                                     return d;
                                 },
                                 showMaxMin: true
                             },
                             yAxis: {
-                                tickFormat: function(d) {
+                                tickFormat: function (d) {
                                     return d;
                                 }
                             },
@@ -2211,15 +2213,15 @@
 
             };
         }
-        $scope.GetAllExpiredDevice = function() {
+        $scope.GetAllExpiredDevice = function () {
             $scope.ExpiryDevicelist = [];
             var params = {
-                    AppName: $scope.AppName
-                }
-                // if ($scope.selectAppName != null && $scope.selectAppName != '' && $scope.selectAppName != undefined) {
-                //     params.AppName = $scope.selectAppName;
-                // }
-            $http.get($rootScope.RoutePath + "bike/GetAllExpireDevice", { params: params }).then(function(data) {
+                AppName: $scope.AppName
+            }
+            // if ($scope.selectAppName != null && $scope.selectAppName != '' && $scope.selectAppName != undefined) {
+            //     params.AppName = $scope.selectAppName;
+            // }
+            $http.get($rootScope.RoutePath + "bike/GetAllExpireDevice", { params: params }).then(function (data) {
                 for (var i = 0; i < data.data.length; i++) {
                     if (data.data[i].renewaldate != null && data.data[i].renewaldate != '' && data.data[i].renewaldate != undefined) {
                         data.data[i].diff = timeDifference(moment(data.data[i].renewaldate).format('MM-DD-YYYY hh:mm:ss a'));
@@ -2228,7 +2230,7 @@
                         // }
                     }
                 }
-                $timeout(function() {
+                $timeout(function () {
                     $scope.ExpiryDevicelist = data.data;
                 }, 600);
             });
