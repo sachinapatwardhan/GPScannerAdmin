@@ -8,11 +8,14 @@
                     <span translate="Renew Management">Renew Management</span>
                 </div>
             </div>
-            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33"
+                align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="search" ng-model="ModelSearch.Search" ng-change="GetSerch(ModelSearch.Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+                <input id="search" ng-model="ModelSearch.Search" ng-change="GetSerch(ModelSearch.Search)" class="search-input"
+                    type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
-            <div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center" layout-align-gt-sm="end center">
+            <div flex="100" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align-gt-xs="start center"
+                layout-align-gt-sm="end center">
                 <md-button class="md-icon-button  md-raised md-hue-2" ng-click="SendEmail()" aria-label="Search">
                     <md-icon md-font-icon="icon-email"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Send Email</md-tooltip>
@@ -44,7 +47,8 @@
                         <label>End ExpiryDate</label>
                         <input mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="ModelSearch.StartDate" format="DD-MM-YYYY" ng-model="ModelSearch.EndDate">
                     </md-input-container>-->
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15" flex ng-if="UserRoles=='Super Admin'">
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15"
+                        flex ng-if="UserRoles=='Super Admin'">
                         <label>App Name</label>
                         <md-select name="idApp" ng-model="ModelSearch.idApp">
                             <md-option ng-value="-1">All</md-option>
@@ -54,11 +58,13 @@
                         </md-select>
                     </md-input-container>
                     <div align="left">
-                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="vm.GetAllRenewDetail(true)" aria-label="Search">
+                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="vm.GetAllRenewDetail(true)"
+                            aria-label="Search">
                             <md-icon md-font-icon="icon-magnify"></md-icon>
                             <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()" aria-label="Reset Search">
+                        <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()"
+                            aria-label="Reset Search">
                             <md-icon md-font-icon="icon-refresh"></md-icon>
                             <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
                         </md-button>
@@ -68,7 +74,8 @@
             <div class="content-card " layout="column " flex>
                 <div class="content fullpage-datatable " layout="column " flex ng-if="UserRoles=='Super Admin'">
                     <!-- <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%"> -->
-                    <table id="RenewDetail" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <table id="RenewDetail" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance"
+                        dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                         <thead>
                             <tr>
                                 <th class="all ">
@@ -124,12 +131,22 @@
                                 </th>
                                 <th class="secondary-text ">
                                     <div class="table-header ">
-                                        <span class="column-title ">Licence Renewal Type</span>
+                                        <span class="column-title ">Renewal Type</span>
                                     </div>
                                 </th>
                                 <th class="secondary-text ">
                                     <div class="table-header ">
                                         <span class="column-title ">App Name</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Last Login Date</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Last GPS Date</span>
                                     </div>
                                 </th>
                                 <!-- <th class="secondary-text ">
@@ -154,7 +171,8 @@
                 </div>
                 <div class="content fullpage-datatable " layout="column " flex ng-if="UserRoles!='Super Admin'">
                     <!-- <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%"> -->
-                    <table id="RenewDetail1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance1" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <table id="RenewDetail1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance1"
+                        dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                         <thead>
                             <tr>
                                 <th class="all ">
@@ -211,6 +229,16 @@
                                 <th class="secondary-text ">
                                     <div class="table-header ">
                                         <span class="column-title ">Licence Renewal Type</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Last Login Date</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text ">
+                                    <div class="table-header ">
+                                        <span class="column-title ">Last GPS Date</span>
                                     </div>
                                 </th>
 
@@ -260,7 +288,12 @@
             <md-content class="md-padding ">
                 <form name="formRenew " novalidate class="md-inline-form " aria-invalid="false ">
                     <div layout="row " layout-wrap>
-                        <div style="color:green;font-size: 2rem;font-weight: normal;" flex="100" flex-gt-sm="100">User Email : {{ModelRenewMultiple.UserName}}
+                        <div style="color:green;font-size: 2rem;font-weight: normal;" flex="100" flex-gt-sm="65">User
+                            Email : {{ModelRenewMultiple.UserName}}
+                        </div>
+                        <div style="color:green;font-size: 1.3rem;font-weight: normal;text-align: right;" flex="100"
+                            flex-gt-sm="35">Last
+                            Login Date : {{ModelRenewMultiple.LastloginDate}}
                         </div>
                     </div>
                     <div layout="row " layout-wrap>
@@ -274,13 +307,15 @@
                             </div>
                         </md-input-container>
                         <div align="right" flex="100" flex-gt-sm="50">
-                            <md-button class="md-raised md-primary " ng-disabled="!formRenew.$valid || IsRenewFalgOpen==false" ng-click="RenewMultipleDevice(ModelRenewMultiple) ">Renew</md-button>
+                            <md-button class="md-raised md-primary " ng-disabled="!formRenew.$valid || IsRenewFalgOpen==false"
+                                ng-click="RenewMultipleDevice(ModelRenewMultiple) ">Renew</md-button>
                             <md-button class="md-raised md-warn " ng-click="GoToBack() ">Cancel</md-button>
                         </div>
                     </div>
                     <div class="content">
                         <div class="content fullpage-datatable RenewalMultipledatatable" layout="column" flex>
-                            <table class="dataTable  row-border hover" width="100%" id="RenewalMultiple" datatable="ng" dt-instance="vm.dtInstance" dt-column-defs="dtColumnDefs1" dt-options="dtOptions1">
+                            <table class="dataTable  row-border hover" width="100%" id="RenewalMultiple" datatable="ng"
+                                dt-instance="vm.dtInstance" dt-options="dtOptions1">
 
                                 <!-- <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
                                 <thead>
@@ -315,6 +350,11 @@
                                                 <span class="column-title">Expiring</span>
                                             </div>
                                         </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Last GPS Date</span>
+                                            </div>
+                                        </th>
                                         <th class="all">
                                             <div class="table-header text-center">
                                                 <span class="column-title">Action</span>
@@ -324,14 +364,16 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="o in lstAllExpiryVehicle">
-                                        <td style="width: 4%; text-align: center;">{{$index+1}}</td>
+                                        <td style="width: 5%; text-align: center;">{{$index+1}}</td>
                                         <td>{{o.Name}}</td>
                                         <td> {{o.deviceid}}</td>
                                         <td> {{o.ExpireDate}}</td>
                                         <td> {{o.UOM}}</td>
                                         <td> {{o.Expiring}}</td>
-                                        <td style="width: 20%; text-align: center;">
-                                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.Checked" ng-change="CheckRenewDevice()" class="md-primary customecheckboxtable"></md-checkbox>
+                                        <td> {{o.LastGpsDate}}</td>
+                                        <td style="width: 5%; text-align: center;">
+                                            <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.Checked"
+                                                ng-change="CheckRenewDevice()" class="md-primary customecheckboxtable"></md-checkbox>
                                         </td>
                                     </tr>
                                     <!-- <tr ng-if="lstAllExpiryVehicle.length<=0">
@@ -348,7 +390,7 @@
                 #RenewalMultiple md-checkbox.customecheckboxtable {
                     margin: 5px 0 5px;
                 }
-                
+
                 .RenewalMultipledatatable {
                     font-size: 1.2rem;
                 }

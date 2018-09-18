@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -19,7 +19,7 @@
             vm.GetAllRenewDetail(true)
         }
         // vm.GetAllRenewDetail = GetAllRenewDetail;
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.SelectedRenew = [];
             $scope.ModelSearch = {
                 StartDate: '',
@@ -31,6 +31,7 @@
                 iduser: '',
                 UserName: '',
                 Remark: '',
+                LastloginDate: 'N/A'
             }
             $scope.ChangeSearchDate();
             $scope.selectedItem = null;
@@ -40,7 +41,7 @@
             $scope.flaglink = 0;
         }
 
-        $scope.ResetTabExpiringSoon = function() {
+        $scope.ResetTabExpiringSoon = function () {
             $scope.ModelSearch.StartDate = new Date();
             var EndDate = new Date();
             EndDate.setMonth(EndDate.getMonth() + 1);
@@ -48,7 +49,7 @@
             $scope.flaglink = 0;
             vm.GetAllRenewDetail(true)
         }
-        $scope.ResetTabActive = function() {
+        $scope.ResetTabActive = function () {
             var StartDate = new Date();
             StartDate.setMonth(StartDate.getMonth() + 1);
             $scope.ModelSearch.StartDate = StartDate;
@@ -56,24 +57,24 @@
             $scope.flaglink = 1;
             vm.GetAllRenewDetail(true)
         }
-        $scope.ResetTabExpired = function() {
+        $scope.ResetTabExpired = function () {
             $scope.ModelSearch.StartDate = '';
             $scope.ModelSearch.EndDate = new Date();
             $scope.flaglink = 2;
             vm.GetAllRenewDetail(true)
         }
 
-        $scope.getAllApps = function() {
-            $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo").then(function(res) {
+        $scope.getAllApps = function () {
+            $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo").then(function (res) {
                 $scope.appNames = res.data;
             });
         };
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.FilterStatus = 1;
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '2%').withOption('class', 'text-center'),
                     // DTColumnBuilder.newColumn('LicenceNo'),
                     DTColumnBuilder.newColumn('DeviceId'),
                     // DTColumnBuilder.newColumn('username'),
@@ -84,13 +85,15 @@
                     DTColumnBuilder.newColumn('LicenceType'),
                     DTColumnBuilder.newColumn('LicenceRenewalType'),
                     DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn('LastLoginDate').notSortable().renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('GpsDate').notSortable().renderWith(gpsdateFormat),
                     // DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     // DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
                 ]
             } else {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '2%').withOption('class', 'text-center'),
                     // DTColumnBuilder.newColumn('LicenceNo'),
                     DTColumnBuilder.newColumn('DeviceId'),
                     // DTColumnBuilder.newColumn('username'),
@@ -100,6 +103,8 @@
                     DTColumnBuilder.newColumn('ExpiryDate').renderWith(daysHtml),
                     DTColumnBuilder.newColumn('LicenceType'),
                     DTColumnBuilder.newColumn('LicenceRenewalType'),
+                    DTColumnBuilder.newColumn('LastLoginDate').notSortable().renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('GpsDate').notSortable().renderWith(gpsdateFormat),
                     // DTColumnBuilder.newColumn('AppName'),
                     // DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     // DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
@@ -108,52 +113,52 @@
             }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "billing/GetAllRenewData",
-                    data: function(d) {
-                        if ($scope.ModelSearch.Search == '') {
-                            d.search = '';
-                        } else {
-                            d.search = $scope.ModelSearch.Search;
-                        }
-                        d.StartDate = $scope.ModelSearch.StartDate;
+                url: $rootScope.RoutePath + "billing/GetAllRenewData",
+                data: function (d) {
+                    if ($scope.ModelSearch.Search == '') {
+                        d.search = '';
+                    } else {
+                        d.search = $scope.ModelSearch.Search;
+                    }
+                    d.StartDate = $scope.ModelSearch.StartDate;
 
-                        if (d.StartDate != null && d.StartDate != undefined && d.StartDate != '') {
-                            d.StartDate.setHours(0);
-                            d.StartDate.setMinutes(0);
-                            d.StartDate.setSeconds(0);
+                    if (d.StartDate != null && d.StartDate != undefined && d.StartDate != '') {
+                        d.StartDate.setHours(0);
+                        d.StartDate.setMinutes(0);
+                        d.StartDate.setSeconds(0);
+                    }
+                    d.EndDate = $scope.ModelSearch.EndDate;
+                    if (d.EndDate != null && d.EndDate != undefined && d.EndDate != '') {
+                        d.EndDate.setHours(0);
+                        d.EndDate.setMinutes(0);
+                        d.EndDate.setSeconds(0);
+                    }
+                    if ($rootScope.UserRoles != 'Super Admin') {
+                        d.idApp = $rootScope.appId;
+                    } else {
+                        if ($scope.ModelSearch.idApp != null && $scope.ModelSearch.idApp != undefined && $scope.ModelSearch.idApp != '' && $scope.ModelSearch.idApp != '-1') {
+                            d.idApp = $scope.ModelSearch.idApp;
                         }
-                        d.EndDate = $scope.ModelSearch.EndDate;
-                        if (d.EndDate != null && d.EndDate != undefined && d.EndDate != '') {
-                            d.EndDate.setHours(0);
-                            d.EndDate.setMinutes(0);
-                            d.EndDate.setSeconds(0);
-                        }
-                        if ($rootScope.UserRoles != 'Super Admin') {
-                            d.idApp = $rootScope.appId;
-                        } else {
-                            if ($scope.ModelSearch.idApp != null && $scope.ModelSearch.idApp != undefined && $scope.ModelSearch.idApp != '' && $scope.ModelSearch.idApp != '-1') {
-                                d.idApp = $scope.ModelSearch.idApp;
+                    }
+                    return d;
+                },
+                type: "get",
+                dataSrc: function (json) {
+                    if (json.success != false) {
+                        $scope.lstRenew = json.data;
+                        for (var i = 0; i < $scope.lstRenew.length; i++) {
+                            var IsChecked = false;
+                            if ($scope.checked[$scope.lstRenew[i].DeviceId] != undefined) {
+                                IsChecked = $scope.checked[$scope.lstRenew[i].DeviceId];
                             }
+                            $scope.lstRenew[i].Checked = IsChecked;
                         }
-                        return d;
-                    },
-                    type: "get",
-                    dataSrc: function(json) {
-                        if (json.success != false) {
-                            $scope.lstRenew = json.data;
-                            for (var i = 0; i < $scope.lstRenew.length; i++) {
-                                var IsChecked = false;
-                                if ($scope.checked[$scope.lstRenew[i].DeviceId] != undefined) {
-                                    IsChecked = $scope.checked[$scope.lstRenew[i].DeviceId];
-                                }
-                                $scope.lstRenew[i].Checked = IsChecked;
-                            }
-                            return json.data;
-                        } else {
-                            return [];
-                        }
-                    },
-                })
+                        return json.data;
+                    } else {
+                        return [];
+                    }
+                },
+            })
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
@@ -169,9 +174,9 @@
         vm.dtInstance = {};
         vm.dtInstance1 = {};
 
-        $scope.reloadData = function() {}
+        $scope.reloadData = function () { }
 
-        function callback(json) {}
+        function callback(json) { }
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -215,7 +220,15 @@
             if (date != null) {
                 return moment(date).format('DD-MM-YYYY hh:mm:ss a')
             } else {
-                return '';
+                return 'N/A';
+            }
+        }
+
+        function gpsdateFormat(date) {
+            if (date != null) {
+                return moment(moment.utc(date * 1000).toDate()).format("DD-MM-YYYY hh:mm:ss A")
+            } else {
+                return 'N/A';
             }
         }
 
@@ -223,7 +236,7 @@
             if (date != null) {
                 return moment(date).format('DD-MM-YYYY')
             } else {
-                return '';
+                return 'N/A';
             }
         }
 
@@ -235,7 +248,11 @@
                 // var btn = "<div layout='row'>";
                 // btn += '<md-checkbox ng-model="checked[' + data + ']" ng-change="Select( ' + full.IsActive + ',' + full.id + ')" aria-label="Checkbox 1" class="md-primary"></md-checkbox>';
                 // btn += '</div>';
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="renewMultiple(' + full.iduser + ',\'' + full.email + '\',\'' + full.DeviceId + '\')" aria-label="">' +
+                var LastLoginDate = 'N/A';
+                if (full.LastLoginDate != null && full.LastLoginDate != '') {
+                    LastLoginDate = moment(full.LastLoginDate).format('DD-MM-YYYY hh:mm:ss a');
+                }
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="renewMultiple(' + full.iduser + ',\'' + full.email + '\',\'' + full.DeviceId + '\',\'' + LastLoginDate + '\')" aria-label="">' +
                     '<md-icon md-font-icon="icon-forward"  class="s18 blue-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Renew</md-tooltip>' +
                     '</md-button>';
@@ -245,13 +262,13 @@
             return btns;
         };
 
-        vm.GetAllRenewDetail = function(IsUpdate) {
+        vm.GetAllRenewDetail = function (IsUpdate) {
             if (($scope.ModelSearch.StartDate == null || $scope.ModelSearch.EndDate == null)) {
                 $mdToast.show(
                     $mdToast.simple()
-                    .textContent("Please select Date.")
-                    .position('top right')
-                    .hideDelay(3000)
+                        .textContent("Please select Date.")
+                        .position('top right')
+                        .hideDelay(3000)
                 );
             } else {
 
@@ -271,7 +288,7 @@
             }
         }
 
-        $scope.SelectVehicle = function(DeviceId) {
+        $scope.SelectVehicle = function (DeviceId) {
             if ($scope.checked[DeviceId] == true) {
                 var objdata = _.findWhere($scope.lstRenew, { DeviceId: DeviceId });
                 if (objdata) {
@@ -291,19 +308,19 @@
             }
         }
 
-        $scope.SendEmail = function() {
+        $scope.SendEmail = function () {
             if ($scope.SelectedRenew.length > 0) {
                 var objRenew = {
                     idApp: $rootScope.appId,
                     lstRenewalList: $scope.SelectedRenew
                 }
-                $http.post($rootScope.RoutePath + 'billing/SendEmailNotification', objRenew).success(function(data) {
+                $http.post($rootScope.RoutePath + 'billing/SendEmailNotification', objRenew).success(function (data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.SelectedRenew = [];
                         $scope.checked = {};
@@ -311,9 +328,9 @@
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
 
                     }
@@ -321,22 +338,22 @@
             } else {
                 $mdToast.show(
                     $mdToast.simple()
-                    .textContent("Please select at least one Device.")
-                    .position('top right')
-                    .hideDelay(3000)
+                        .textContent("Please select at least one Device.")
+                        .position('top right')
+                        .hideDelay(3000)
                 );
             }
         }
 
-        $scope.GetSerch = function(Search) {
+        $scope.GetSerch = function (Search) {
             vm.GetAllRenewDetail(true)
         };
 
-        $rootScope.reloadRenew = function() {
+        $rootScope.reloadRenew = function () {
             vm.GetAllRenewDetail(true)
         }
 
-        $scope.ChangeSearchDate = function(days) {
+        $scope.ChangeSearchDate = function (days) {
             var StartDate = new Date();
             var EndDate = new Date();
             EndDate.setMonth(EndDate.getMonth() + 1);
@@ -344,17 +361,18 @@
             $scope.ModelSearch.EndDate = EndDate;
         }
 
-        $scope.renewMultiple = function(idUser, Email, DeviceId) {
+        $scope.renewMultiple = function (idUser, Email, DeviceId, LastLoginDate) {
             $scope.flag = true;
             $scope.ModelRenewMultiple.iduser = idUser;
             $scope.ModelRenewMultiple.UserName = Email;
             $scope.ModelRenewMultiple.Remark = '';
+            $scope.ModelRenewMultiple.LastloginDate = LastLoginDate;
             $scope.IsRenewFalgOpen = false;
-            $scope.GetAllVehicleWithExpire(idUser, DeviceId);
+            $scope.GetAllVehicleWithExpire(idUser, DeviceId, LastLoginDate);
         }
 
-        $scope.GetAllVehicleWithExpire = function(iduser, DeviceId) {
-            $http.get($rootScope.RoutePath + 'billing/GetAllVehicleExpirebyUser?idUser=' + iduser).then(function(data) {
+        $scope.GetAllVehicleWithExpire = function (iduser, DeviceId) {
+            $http.get($rootScope.RoutePath + 'billing/GetAllVehicleExpirebyUser?idUser=' + iduser).then(function (data) {
                 var data = data.data;
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].deviceid == DeviceId) {
@@ -363,6 +381,12 @@
                         data[i].Checked = false;
                     }
                     data[i].RenewPrice = 0;
+                    if (data[i].GpsDate != null) {
+                        var newdate = data[i].GpsDate * 1000;
+                        data[i].LastGpsDate = moment(moment.utc(newdate).toDate()).format("DD-MM-YYYY hh:mm:ss A");
+                    } else {
+                        data[i].LastGpsDate = 'N/A';
+                    }
                     if (data[i].renewaldate != null && data[i].renewaldate != '') {
                         var timeDiff = (new Date(data[i].renewaldate)).getTime() - (new Date()).getTime();
                         var diffDays = Math.round(timeDiff / (1000 * 3600 * 24));
@@ -398,14 +422,14 @@
 
                 }
                 $scope.lstAllExpiryVehicle = data;
-                $('#RenewalMultiple .dataTables_empty').attr("colspan", 7);
+                $('#RenewalMultiple .dataTables_empty').attr("colspan", 8);
                 $scope.CheckRenewDevice();
 
             });
 
         }
 
-        $scope.CheckRenewDevice = function() {
+        $scope.CheckRenewDevice = function () {
             var renewLengthCOunt = _.filter($scope.lstAllExpiryVehicle, { Checked: true }).length;
             $scope.FinalRenewList = _.filter($scope.lstAllExpiryVehicle, { Checked: true });
             if (renewLengthCOunt > 0) {
@@ -422,7 +446,8 @@
             DTColumnDefBuilder.newColumnDef(3),
             DTColumnDefBuilder.newColumnDef(4),
             DTColumnDefBuilder.newColumnDef(5),
-            DTColumnDefBuilder.newColumnDef(6).notSortable().withOption('class', 'text-center'),
+            DTColumnDefBuilder.newColumnDef(6),
+            DTColumnDefBuilder.newColumnDef(7).notSortable().withOption('class', 'text-center'),
 
         ];
         vm.dtInstance = {};
@@ -437,7 +462,7 @@
             .withOption('info', true)
             .withOption('deferRender', false);
 
-        $scope.RenewMultipleDevice = function(o) {
+        $scope.RenewMultipleDevice = function (o) {
 
             var objorder = {
                 idUser: o.iduser,
@@ -446,22 +471,22 @@
                 Remark: $scope.ModelRenewMultiple.Remark,
                 OrderTotal: 0
             }
-            $http.post($rootScope.RoutePath + 'billing/SaveOrderServiceRenew', objorder).success(function(data) {
+            $http.post($rootScope.RoutePath + 'billing/SaveOrderServiceRenew', objorder).success(function (data) {
                 if (data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.IsRenewFalgOpen = false;
                     $scope.ResetModel();
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
 
                 }
@@ -469,29 +494,29 @@
             });
         }
 
-        $scope.toggle = function() {
+        $scope.toggle = function () {
             if (!$scope.flgforIcon) {
                 $scope.flgforIcon = true;
             } else {
                 $scope.flgforIcon = false;
             }
-            $(function() {
+            $(function () {
                 $(".showBtn").toggleClass("active");
                 $(".ShowContentBox").slideToggle();
             })
         }
 
-        $(function() {
+        $(function () {
             $(".showBtn").toggleClass("active");
             $(".ShowContentBox").slideToggle();
         });
         $scope.flgforIcon = true;
 
-        $scope.ResetModel = function() {
+        $scope.ResetModel = function () {
             $scope.Reset();
             $scope.flag = false;
         }
-        $scope.Reset = function() {
+        $scope.Reset = function () {
             $scope.ModelSearch = {
                 StartDate: '',
                 EndDate: '',
@@ -506,7 +531,7 @@
             $scope.formRenew.$setPristine();
         }
 
-        $scope.SearchReset = function() {
+        $scope.SearchReset = function () {
             // $scope.ModelSearch = {
             //     StartDate: '',
             //     EndDate: '',
@@ -519,7 +544,7 @@
             vm.GetAllRenewDetail(true);
         }
 
-        $scope.GoToBack = function() {
+        $scope.GoToBack = function () {
             vm.GetAllRenewDetail(false);
             $scope.flag = false;
         }
