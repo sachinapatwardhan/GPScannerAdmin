@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -14,9 +14,9 @@
         $rootScope.AppName = localStorage.getItem('appName');
         $rootScope.idApp = localStorage.getItem('appId');
         $scope.lstAllExpiryVehicle = [];
-        $scope.GetAllProductType = function() {
+        $scope.GetAllProductType = function () {
             $scope.lstProductTypes = [];
-            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
                 $scope.lstProductTypes = data.data;
             });
         }
@@ -24,7 +24,7 @@
         vm.searchcountry = '';
         vm.searchCustomer = '';
         vm.searchDeviceId = '';
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.modelNew = {
                 idUser: '',
             }
@@ -43,7 +43,7 @@
                 StartDate: new Date(),
                 EndDate: new Date(),
                 Status: 0,
-                Type: 0,
+                Type: $rootScope.idApp,
                 Country: 'All',
                 Search: '',
                 DeviceId: 'All',
@@ -71,7 +71,7 @@
             $scope.getAllDevice();
         }
 
-        $scope.getAllCustomer = function() {
+        $scope.getAllCustomer = function () {
             var idApp = '';
             if ($rootScope.UserRoles != 'Super Admin') {
                 idApp = $rootScope.idApp
@@ -80,12 +80,12 @@
                     idApp = $scope.modelSearch.Type
                 }
             }
-            $http.get($rootScope.RoutePath + 'orderservice/GetAllCustomer?idApp=' + idApp).then(function(data) {
+            $http.get($rootScope.RoutePath + 'orderservice/GetAllCustomer?idApp=' + idApp).then(function (data) {
                 $scope.lstCustomer = data.data;
             });
         }
 
-        $scope.getAllDevice = function() {
+        $scope.getAllDevice = function () {
             var idApp = '';
             if ($rootScope.UserRoles != 'Super Admin') {
                 idApp = $rootScope.idApp
@@ -94,20 +94,20 @@
                     idApp = $scope.modelSearch.Type
                 }
             }
-            $http.get($rootScope.RoutePath + 'orderservice/GetAllDeviceId?idApp=' + idApp).then(function(data) {
+            $http.get($rootScope.RoutePath + 'orderservice/GetAllDeviceId?idApp=' + idApp).then(function (data) {
                 $scope.lstDeviceId = data.data;
             });
         }
 
-        $scope.GetAllExpirePrice = function(iduser) {
-            $http.get($rootScope.RoutePath + 'billing/GetPriceByApp?idUser=' + iduser + '&idApp=' + $rootScope.idApp).then(function(data) {
+        $scope.GetAllExpirePrice = function (iduser) {
+            $http.get($rootScope.RoutePath + 'billing/GetPriceByApp?idUser=' + iduser + '&idApp=' + $rootScope.idApp).then(function (data) {
                 $scope.lstExpiryPrice = data.data;
                 $scope.GetAllVehicleWithExpire(iduser);
             });
         }
 
-        $scope.GetAllVehicleWithExpire = function(iduser) {
-            $http.get($rootScope.RoutePath + 'billing/GetAllVehicleExpirebyUser?idUser=' + iduser).then(function(data) {
+        $scope.GetAllVehicleWithExpire = function (iduser) {
+            $http.get($rootScope.RoutePath + 'billing/GetAllVehicleExpirebyUser?idUser=' + iduser).then(function (data) {
                 var data = data.data;
                 for (var i = 0; i < data.length; i++) {
                     data[i].Checked = false;
@@ -163,11 +163,11 @@
 
         }
 
-        $scope.CheckRenewDevice = function() {
+        $scope.CheckRenewDevice = function () {
             var renewLengthCOunt = _.filter($scope.lstAllExpiryVehicle, { Checked: true }).length;
             $scope.FinalRenewList = _.filter($scope.lstAllExpiryVehicle, { Checked: true });
             $scope.OrderTotal = 0;
-            _.filter($scope.lstAllExpiryVehicle, function(item) {
+            _.filter($scope.lstAllExpiryVehicle, function (item) {
                 if (item.RenewPrice != 'N/A' && item.Checked == true) {
                     $scope.OrderTotal = $scope.OrderTotal + item.RenewPrice;
                 }
@@ -179,7 +179,7 @@
             }
         }
 
-        $scope.CheckOut = function() {
+        $scope.CheckOut = function () {
 
             var objorder = {
                 idUser: $scope.modelNew.idUser,
@@ -187,13 +187,13 @@
                 lstProduct: $scope.FinalRenewList,
                 OrderTotal: $scope.OrderTotal
             }
-            $http.post($rootScope.RoutePath + 'billing/SaveOrderServiceNew', objorder).success(function(data) {
+            $http.post($rootScope.RoutePath + 'billing/SaveOrderServiceNew', objorder).success(function (data) {
                 if (data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.OrderTotal = 0;
                     $scope.IsRenewFalgOpen = false;
@@ -202,9 +202,9 @@
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
 
                 }
@@ -234,19 +234,19 @@
             .withOption('paging', true)
             .withOption('info', true)
             .withOption('deferRender', false)
-            // .withOption('language', {
-            //     'zeroRecords': "No Record Found",
-            //     'emptyTable': "No Record Found"
-            // })
+        // .withOption('language', {
+        //     'zeroRecords': "No Record Found",
+        //     'emptyTable': "No Record Found"
+        // })
 
 
-        $scope.getAllVehicleType = function() {
-            $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype").then(function(data) {
+        $scope.getAllVehicleType = function () {
+            $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype").then(function (data) {
                 $scope.lstVehicleType = data.data
             })
         }
 
-        $scope.clearSearchTerm = function() {
+        $scope.clearSearchTerm = function () {
             // $scope.searchcountry = '';
             // $scope.searchCustomer = '';
             // $scope.searchDeviceId = '';
@@ -255,28 +255,28 @@
             vm.searchDeviceId = '';
         };
 
-        $scope.onSearchChange = function($event) {
+        $scope.onSearchChange = function ($event) {
 
             $event.stopPropagation();
         }
 
 
 
-        $scope.GetAllCountry = function() {
-            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
+        $scope.GetAllCountry = function () {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function (data) {
                 $scope.lstCountry = data.data;
 
             });
         }
 
-        $scope.toggle = function() {
+        $scope.toggle = function () {
             if (!$scope.flgforIcon) {
                 $scope.flgforIcon = true;
             } else {
                 $scope.flgforIcon = false;
             }
 
-            $(function() {
+            $(function () {
                 $(".showBtn").toggleClass("active");
                 $(".ShowContentBox").slideToggle();
             });
@@ -298,54 +298,52 @@
             DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
         ]
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
-
-
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "orderservice/GetAllOrderServiceNew",
-                    data: function(d) {
-                        if ($scope.modelSearch.StartDate != '') {
-                            d.StartDate = $scope.modelSearch.StartDate.toUTCString();
-                        } else {
-                            d.StartDate = '';
+                url: $rootScope.RoutePath + "orderservice/GetAllOrderServiceNew",
+                data: function (d) {
+                    if ($scope.modelSearch.StartDate != '') {
+                        d.StartDate = $scope.modelSearch.StartDate.toUTCString();
+                    } else {
+                        d.StartDate = '';
+                    }
+                    if ($scope.modelSearch.EndDate != '') {
+                        d.EndDate = $scope.modelSearch.EndDate.toUTCString();
+                    } else {
+                        d.EndDate = '';
+                    }
+                    if ($rootScope.UserRoles != 'Super Admin') {
+                        d.idApp = $rootScope.idApp;
+                    }
+                    d.Status = $scope.modelSearch.Status;
+                    d.Type = $scope.modelSearch.Type;
+                    if ($scope.modelSearch.Country != 'All') {
+                        d.Country = _.findWhere($scope.lstCountry, { id: parseInt($scope.modelSearch.Country) }).Country;
+                    } else {
+                        d.Country = '';
+                    }
+                    d.DeviceId = $scope.modelSearch.DeviceId;
+                    d.IdUser = $scope.modelSearch.IdUser;
+                    d.search = $scope.modelSearch.Search;
+                    return d;
+                },
+                type: "get",
+                dataSrc: function (json) {
+                    $scope.TotalOrderTotal = 0;
+                    $scope.TotalOrder = 0;
+                    if (json.success != false) {
+                        for (var i = 0; i < json.data.length; i++) {
+                            $scope.TotalOrderTotal += json.data[i].OrderTotal;
                         }
-                        if ($scope.modelSearch.EndDate != '') {
-                            d.EndDate = $scope.modelSearch.EndDate.toUTCString();
-                        } else {
-                            d.EndDate = '';
-                        }
-                        if ($rootScope.UserRoles != 'Super Admin') {
-                            d.idApp = $rootScope.idApp;
-                        }
-                        d.Status = $scope.modelSearch.Status;
-                        d.Type = $scope.modelSearch.Type;
-                        if ($scope.modelSearch.Country != 'All') {
-                            d.Country = _.findWhere($scope.lstCountry, { id: parseInt($scope.modelSearch.Country) }).Country;
-                        } else {
-                            d.Country = '';
-                        }
-                        d.DeviceId = $scope.modelSearch.DeviceId;
-                        d.IdUser = $scope.modelSearch.IdUser;
-                        d.search = $scope.modelSearch.Search;
-                        return d;
-                    },
-                    type: "get",
-                    dataSrc: function(json) {
-                        $scope.TotalOrderTotal = 0;
-                        $scope.TotalOrder = 0;
-                        if (json.success != false) {
-                            for (var i = 0; i < json.data.length; i++) {
-                                $scope.TotalOrderTotal += json.data[i].OrderTotal;
-                            }
-                            $scope.lstdata = json.data;
-                            $scope.TotalOrder = json.recordsTotal;
-                            return json.data;
-                        } else {
-                            $scope.lstdata = [];
-                            return [];
-                        }
-                    },
-                })
+                        $scope.lstdata = json.data;
+                        $scope.TotalOrder = json.recordsTotal;
+                        return json.data;
+                    } else {
+                        $scope.lstdata = [];
+                        return [];
+                    }
+                },
+            })
                 .withOption('processing', true)
                 .withOption('serverSide', true)
                 .withPaginationType('full_numbers')
@@ -359,7 +357,7 @@
         });
         $scope.dtInstance = {};
 
-        $scope.ChangeType = function() {
+        $scope.ChangeType = function () {
             $scope.modelSearch.DeviceId = 'All';
             $scope.modelSearch.IdUser = 'All';
             $scope.getAllCustomer();
@@ -368,7 +366,7 @@
         }
 
         //Reload Datatable
-        $scope.GetAllOrderService = function(IsUpdate) {
+        $scope.GetAllOrderService = function (IsUpdate) {
 
 
             var resetPaging = false;
@@ -386,9 +384,9 @@
 
         }
 
-        $scope.reloadData = function() {}
+        $scope.reloadData = function () { }
 
-        function callback(json) {}
+        function callback(json) { }
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -546,15 +544,15 @@
             return btns;
         };
 
-        $scope.GetOrderServiceStatus = function() {
+        $scope.GetOrderServiceStatus = function () {
             $scope.LstAllStatus = [];
-            $http.get($rootScope.RoutePath + "orderservice/GetOrderServiceStatus").then(function(resStatus) {
+            $http.get($rootScope.RoutePath + "orderservice/GetOrderServiceStatus").then(function (resStatus) {
                 $scope.LstAllStatus = resStatus.data;
             });
         }
 
 
-        $scope.OpenPaymentModal = function(ev, id) {
+        $scope.OpenPaymentModal = function (ev, id) {
             var objData = _.findWhere($scope.lstdata, {
                 id: id
             });
@@ -574,7 +572,7 @@
             })
         }
 
-        $scope.OpenRemark = function(ev, id) {
+        $scope.OpenRemark = function (ev, id) {
             var objData = _.findWhere($scope.lstdata, {
                 id: id
             });
@@ -594,7 +592,7 @@
             })
         }
 
-        $scope.OpenUpdateDeviceModal = function(ev, id) {
+        $scope.OpenUpdateDeviceModal = function (ev, id) {
             var objData = _.findWhere($scope.lstdata, {
                 id: id
             });
@@ -615,12 +613,12 @@
             })
         }
 
-        $scope.RenewOrderService = function(id) {
+        $scope.RenewOrderService = function (id) {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure you want to renew this order service?')
                 .ok('Ok')
                 .cancel('Cancel')
-            $mdDialog.show(confirm).then(function(ISConfirm) {
+            $mdDialog.show(confirm).then(function (ISConfirm) {
                 var objData = _.findWhere($scope.lstdata, {
                     id: id
                 });
@@ -629,22 +627,22 @@
                 }
                 $http.get($rootScope.RoutePath + "orderservice/RenewOrderService", {
                     params: params
-                }).then(function(resRenew) {
+                }).then(function (resRenew) {
                     if (resRenew.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(resRenew.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(resRenew.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.GetAllOrderService(true);
                         $mdDialog.hide();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(resRenew.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(resRenew.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     }
                 });
@@ -652,7 +650,7 @@
         }
 
 
-        $scope.ChangeStatus = function(ev, id, status) {
+        $scope.ChangeStatus = function (ev, id, status) {
 
             var confirm = $mdDialog.prompt()
                 .title('Change Status to Paid')
@@ -663,14 +661,14 @@
                 .targetEvent(ev)
                 .ok('Save')
                 .cancel('Cancel');
-            $mdDialog.show(confirm).then(function(result) {
+            $mdDialog.show(confirm).then(function (result) {
                 if (result == undefined) {
 
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent('Please enter remarks.')
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent('Please enter remarks.')
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.ChangeStatus(ev, id, status);
                 } else {
@@ -681,26 +679,26 @@
                     }
                     $http.get($rootScope.RoutePath + "billing/MakeStatusPaid", {
                         params: params
-                    }).then(function(data) {
+                    }).then(function (data) {
                         if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.GetAllOrderService(true);
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                         }
                     });
                 }
-            }, function() {});
+            }, function () { });
 
             // if (status == 2) {
             //     var msg = "paid";
@@ -741,12 +739,12 @@
 
         }
 
-        $scope.SearchReset = function() {
+        $scope.SearchReset = function () {
             $scope.modelSearch = {
                 StartDate: new Date(),
                 EndDate: new Date(),
                 Status: 0,
-                Type: 0,
+                Type: $rootScope.idApp,
                 Country: 'All',
                 Search: '',
                 DeviceId: 'All',
@@ -757,12 +755,12 @@
             $scope.GetAllOrderService(true);
         }
 
-        $scope.ShowALL = function() {
+        $scope.ShowALL = function () {
             $scope.modelSearch = {
                 StartDate: '',
                 EndDate: '',
                 Status: 0,
-                Type: 0,
+                Type: $rootScope.idApp,
                 Country: 'All',
                 Search: '',
                 DeviceId: 'All',
@@ -774,7 +772,7 @@
         }
 
 
-        $scope.EditDates = function(id) {
+        $scope.EditDates = function (id) {
             $scope.objOrderData = _.findWhere($scope.lstdata, {
                 id: id
             });
@@ -785,20 +783,20 @@
                 CreatedOnUtc: new Date($scope.objOrderData.CreatedOnUtc)
             }
         }
-        $scope.UpdateOrderServiceDates = function(o) {
+        $scope.UpdateOrderServiceDates = function (o) {
             var params = {
                 id: o.id,
                 CreatedOnUtc: o.CreatedOnUtc,
             }
             $http.get($rootScope.RoutePath + "orderservice/UpdateOrderServiceDates", {
                 params: params
-            }).then(function(data) {
+            }).then(function (data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.ResetUpdateDates();
                     $scope.GetAllOrderService(true);
@@ -806,15 +804,15 @@
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                 }
             });
         }
 
-        $scope.ResetUpdateDates = function() {
+        $scope.ResetUpdateDates = function () {
             $scope.ShowDtl = false;
 
             $scope.modelUpdateDate = {
@@ -824,21 +822,21 @@
 
         }
 
-        $scope.CreateOrder = function() {
-                var obj = {
-                    UserId: 1,
-                    DeviceId: "5418549849648",
-                    UserName: "XXX",
-                    Country: "Malaysia",
-                    ProductTypeId: 1,
-                }
-                $http.post($rootScope.RoutePath + "orderservice/CreateOrderService", obj).then(function(resRenew) {
-                    // console.log(resRenew)
-                });
+        $scope.CreateOrder = function () {
+            var obj = {
+                UserId: 1,
+                DeviceId: "5418549849648",
+                UserName: "XXX",
+                Country: "Malaysia",
+                ProductTypeId: 1,
             }
-            // $scope.CreateOrder();
+            $http.post($rootScope.RoutePath + "orderservice/CreateOrderService", obj).then(function (resRenew) {
+                // console.log(resRenew)
+            });
+        }
+        // $scope.CreateOrder();
 
-        $scope.ExportOrderService = function() {
+        $scope.ExportOrderService = function () {
             var search = $scope.modelSearch.Search;
 
             var StartDate = '';
@@ -866,18 +864,18 @@
             }
             window.location = $rootScope.RoutePath + "orderservice/ExportOrderServiceNew?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country + "&IdUser=" + $scope.modelSearch.IdUser + "&DeviceId=" + $scope.modelSearch.DeviceId;
         }
-        $scope.GetAllInfoList = function() {
-            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+        $scope.GetAllInfoList = function () {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
                 $scope.lstAppInfo = data.data;
             });
         }
 
 
-        $scope.resetForm = function() {
+        $scope.resetForm = function () {
             $scope.formOrderService.$setUntouched();
             $scope.formOrderService.$setPristine();
         }
-        $scope.AddOrderService = function() {
+        $scope.AddOrderService = function () {
             $scope.modelNew = {
                 idUser: '',
             }
@@ -897,7 +895,7 @@
             $('#order .dataTables_empty').attr("colspan", 7);
         }
 
-        $scope.ResetModel = function() {
+        $scope.ResetModel = function () {
             $scope.modelNew = {
                 idUser: '',
             }
@@ -917,39 +915,39 @@
             $scope.flag = false;
         }
 
-        $scope.SaveOrderService = function(o) {
+        $scope.SaveOrderService = function (o) {
 
             if (o.idApp == '') {
                 o.idApp = $rootScope.idApp;
             }
-            _.filter($scope.lstAppInfo, function(item) {
+            _.filter($scope.lstAppInfo, function (item) {
                 if (item.id == o.idApp) {
                     o.AppName = item.AppName;
                 }
             })
-            $http.post($rootScope.RoutePath + "orderservice/SaveOrderService", o).then(function(data) {
+            $http.post($rootScope.RoutePath + "orderservice/SaveOrderService", o).then(function (data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.ResetModel();
                     $scope.GetAllOrderService(true);
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                 }
             })
         }
 
         $scope.flgErrorNotFound = 1;
-        $scope.selectedItemChange = function(q) {
+        $scope.selectedItemChange = function (q) {
             if (q != null && q != undefined) {
                 $scope.model.iduser = q.id;
                 $scope.modelNew.idUser = q.id;
@@ -964,13 +962,13 @@
                 $scope.flgErrorNotFound = 1;
             };
         }
-        $scope.GetUserByName = function(query) {
+        $scope.GetUserByName = function (query) {
             var params = {
-                    email: query,
-                    appId: $rootScope.idApp,
-                }
-                // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
-            $http.get($rootScope.RoutePath + "user/GetUserByEmail", { params: params }).then(function(data) {
+                email: query,
+                appId: $rootScope.idApp,
+            }
+            // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            $http.get($rootScope.RoutePath + "user/GetUserByEmail", { params: params }).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -980,8 +978,8 @@
 
             return pendingSearch;
         }
-        $scope.GetUserById = function(id) {
-            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function(data) {
+        $scope.GetUserById = function (id) {
+            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function (data) {
                 if (data.data.success == true) {
                     $scope.objUser = data.data.data;
                     $scope.selectedItem = $scope.objUser;
@@ -990,7 +988,7 @@
         }
 
         //Image Popup
-        $scope.OrderPaymentReceipt = function(id, ev) {
+        $scope.OrderPaymentReceipt = function (id, ev) {
             var obj = _.filter($scope.lstdata, { id: id });
             $mdDialog.show({
                 controller: 'OrderPaymentReceiptController',
@@ -1009,7 +1007,7 @@
         }
 
         //Image Upload
-        $scope.UploadOrderPaymentReceipt = function(id, ev) {
+        $scope.UploadOrderPaymentReceipt = function (id, ev) {
             $mdDialog.show({
                 controller: 'UploadOrderPaymentReceiptController',
                 controllerAs: 'vm',
