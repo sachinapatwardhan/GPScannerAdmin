@@ -77,6 +77,7 @@
             'app.VehicleGroup',
             'app.AuditLoglicense',
             'app.RenewManagement',
-            'app.AssignAgentRetailer'
+            'app.AssignAgentRetailer',
+            'app.DeviceRenewPrice'
         ]);
 })();

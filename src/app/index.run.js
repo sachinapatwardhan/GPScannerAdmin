@@ -15,7 +15,7 @@
                 $http.defaults.headers.common['Authorization'] = token;
             };
         }
-        $rootScope.VersionNumber = "18.03.0918.c3d627b";
+        $rootScope.VersionNumber = "18.03.1013.aaf6ac0";
         // $rootScope.RoutePath = "http://localhost:7212/";
         // $rootScope.Socket_URL = "http://localhost:7212";
 
@@ -28,12 +28,15 @@
         // $rootScope.RoutePath = "http://192.168.1.50:7212/";
         // $rootScope.Socket_URL = "http://192.168.1.50:7212";
 
+        $rootScope.RoutePath = "http://103.232.124.170:17212/";
+        $rootScope.Socket_URL = "http://103.232.124.170:17212";
+
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
         // $rootScope.RoutePath = "http://bugzstudio.com:7212/";
         // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
-        $rootScope.RoutePath = "http://api.maark.my:7212/";
-        $rootScope.Socket_URL = "http://api.maark.my:7212";
+        // $rootScope.RoutePath = "http://api.maark.my:7212/";
+        // $rootScope.Socket_URL = "http://api.maark.my:7212";
         // $rootScope.RoutePath = "http://uatapi.maark.my/";
         // $rootScope.Socket_URL = "http://uatapi.maark.my:7212";
         // $rootScope.RoutePath = "http://api.itcdtracking.com/";
@@ -56,7 +59,7 @@
 
         // var url = $window.location.protocol + "//" + $window.location.host + "/";
         var url = $location.protocol() + '://' + $location.host() + '/';
-        // var url = "http://localhost:3000/";
+        var url = "http://localhost:3000/";
         // var url = "http://admin.itcdtracking.com/";
         // var url = "http://admin.maark.my/";
         // var url = "http://admin.hc-cargo.com.my/"
@@ -937,6 +940,19 @@
                                 weight: 1
                             });
                         }
+
+                        var lstDeviceRenewPrice = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Device Renew Price';
+                        });
+                        if (lstDeviceRenewPrice.length > 0) {
+                            msNavigationService.saveItem('Order Services.Device Renew Price', {
+                                title: 'Device Renew Price',
+                                state: 'app.DeviceRenewPrice',
+                                order: lstDeviceRenewPrice[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
                         // ------------------------------Main module----------------------------------
                         if (lstGPSDelete.length > 0 || lstManageCustomer.length > 0 || lstVehicleLastUse.length > 0 ||
                             lstVehicle.length > 0 || gps.length > 0 || Alarm.length > 0 || CanBusData.length > 0 ||
