@@ -138,10 +138,10 @@
                             <md-input-container class="md-block" flex="20" flex-gt-sm="20" ng-if="UserRoles =='Super Admin'">
                                 <label>App Name</label>
                                 <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllAgent()" required>
-                                    <md-select-header class="demo-select-header">
+                                    <!--<md-select-header class="demo-select-header">
                                         <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
-                                    </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                                    </md-select-header>-->
+                                    <md-option value="{{o.id}}" ng-repeat="o in lstAppInfo track by o.id">{{o.AppName}}</md-option>
                                 </md-select>
                                 <div ng-messages="formRenewPrice.idApp.$error" ng-if="formRenewPrice.idApp.$touched" role="alert">
                                     <div ng-message="required">
