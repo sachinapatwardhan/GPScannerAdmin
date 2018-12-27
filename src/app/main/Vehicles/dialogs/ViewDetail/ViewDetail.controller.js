@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -16,7 +16,7 @@
         }
         $scope.model = objVehicle;
         // vm.HideLoader = HideLoader;
-        $scope.init = function() {
+        $scope.init = function () {
             // HideLoader();
         };
         // if (objVehicle.IsACC == 1) {
@@ -26,25 +26,25 @@
         // }
         $scope.Name = objVehicle.Name;
         $scope.DeviceCompany = objVehicle.DeviceCompany;
-        $scope.closeModel = function() {
+        $scope.closeModel = function () {
             $mdDialog.hide();
         }
 
-        $scope.reload = function() {
-            $http.get($rootScope.RoutePath + "vehicles/GetAllVehicleById?id=" + idVehicle).then(function(data) {
+        $scope.reload = function () {
+            $http.get($rootScope.RoutePath + "vehicles/GetAllVehicleById?id=" + idVehicle).then(function (data) {
                 $scope.model = data.data;
                 ModalMethod.ListUpdate(data.data);
             })
         }
 
-        $scope.CreateVehicleDetails = function(o) {
-            $http.post($rootScope.RoutePath + "vehicles/SaveVehicle", o).then(function(data) {
+        $scope.CreateVehicleDetails = function (o) {
+            $http.post($rootScope.RoutePath + "vehicles/SaveVehicle", o).then(function (data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $rootScope.FlgAddedEditlocal = false;
                     if ($rootScope.FlgAddedAccess == true) {
@@ -57,9 +57,9 @@
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     };
 
@@ -67,7 +67,7 @@
             });
         };
 
-        $scope.SaveModule = function(objModel, name) {
+        $scope.SaveModule = function (objModel, name) {
             ShowLoader();
             if (name == 'MaxSpeed') {
 
@@ -83,21 +83,21 @@
                     } else {
                         var SpeedApiUrl = $rootScope.RoutePath + 'socketapi/SendSpeedData';
                     }
-                    $http.get(SpeedApiUrl, { params: params }).then(function(data) {
+                    $http.get(SpeedApiUrl, { params: params }).then(function (data) {
                         if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.reload();
 
@@ -107,9 +107,9 @@
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent("Please Enter Speed between 0 to 200 km/h")
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent("Please Enter Speed between 0 to 200 km/h")
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     return;
                 }
@@ -118,21 +118,21 @@
                     DeviceId: objVehicle.deviceid,
                     SleepMode: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetSleepMode", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "socketapi/SetSleepMode", { params: params }).then(function (data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     }
@@ -144,21 +144,21 @@
                         DeviceId: objVehicle.deviceid,
                         TimeInterval: objModel
                     }
-                    $http.get($rootScope.RoutePath + "socketapi/SetGPRSInterval", { params: params }).then(function(data) {
+                    $http.get($rootScope.RoutePath + "socketapi/SetGPRSInterval", { params: params }).then(function (data) {
                         if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.reload();
                         }
@@ -173,21 +173,21 @@
                         DeviceId: objVehicle.deviceid,
                         TimeInterval: objModel
                     }
-                    $http.get($rootScope.RoutePath + "socketapi/SetGPRSIntervalStopCar", { params: params }).then(function(data) {
+                    $http.get($rootScope.RoutePath + "socketapi/SetGPRSIntervalStopCar", { params: params }).then(function (data) {
                         if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.reload();
                         }
@@ -201,76 +201,76 @@
                     DeviceId: objVehicle.deviceid,
                     Arm: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetArmSettings", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "socketapi/SetArmSettings", { params: params }).then(function (data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     }
                     HideLoader();
                 })
             } else if (name == 'OdoMeter') {
-                if (objModel <= 9999) {
-                    var params = {
-                        DeviceId: objVehicle.deviceid,
-                        odometer: objModel
-                    }
-                    $http.get($rootScope.RoutePath + "socketapi/SetOdometerSetting", { params: params }).then(function(data) {
-                        if (data.success == true) {
-                            $mdToast.show(
-                                $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                            );
-                            $scope.reload();
-                        } else {
-                            $mdToast.show(
-                                $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                            );
-                            $scope.reload();
-                        }
-                        HideLoader();
-                    })
-                } else {
-                    return;
+                // if (objModel <= 9999) {
+                var params = {
+                    DeviceId: objVehicle.deviceid,
+                    odometer: objModel
                 }
+                $http.get($rootScope.RoutePath + "socketapi/SetOdometerSetting", { params: params }).then(function (data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                        );
+                        $scope.reload();
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                        );
+                        $scope.reload();
+                    }
+                    HideLoader();
+                })
+                // } else {
+                //     return;
+                // }
             } else if (name == 'HeartbeatInterval') {
                 if (objModel <= 65535) {
                     var params = {
                         DeviceId: objVehicle.deviceid,
                         TimeInterval: objModel
                     }
-                    $http.get($rootScope.RoutePath + "socketapi/SetHeartBeatInterval", { params: params }).then(function(data) {
+                    $http.get($rootScope.RoutePath + "socketapi/SetHeartBeatInterval", { params: params }).then(function (data) {
                         if (data.data.success == true) {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.reload();
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                             $scope.reload();
                         }
@@ -284,21 +284,21 @@
                     DeviceId: objVehicle.deviceid,
                     Relay: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function (data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     }
@@ -309,21 +309,21 @@
                     DeviceId: objVehicle.deviceid,
                     Siren: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function (data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     }
@@ -334,13 +334,13 @@
                     DeviceId: objVehicle.deviceid,
                     UserDefined: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function (data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     } else {
@@ -353,21 +353,21 @@
                     DeviceId: objVehicle.deviceid,
                     DoorLock: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function (data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     }
@@ -378,21 +378,21 @@
                     DeviceId: objVehicle.deviceid,
                     DoorUnLock: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function (data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     }
@@ -405,21 +405,21 @@
                     DeviceId: objVehicle.deviceid,
                     ACC: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetACCSetting", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "socketapi/SetACCSetting", { params: params }).then(function (data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.reload();
                     }
