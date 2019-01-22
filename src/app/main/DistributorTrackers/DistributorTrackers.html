@@ -1,0 +1,81 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="GPS Tracker">GPS Tracker</span>
+                </div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Trackers :</span>
+                    <b>{{TotalTrackers}}</b>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length > 0">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
+                </md-button>
+                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportGpsDeviceModal($event)" aria-label="Search">
+                    <md-icon md-font-icon="icon-import"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search">
+                    <md-icon md-font-icon="icon-download"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
+                </md-button>
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-icon-button  md-raised md-hue-2" ng-click="vm.Reset()" aria-label="Search">
+                        <md-icon md-font-icon="icon-plus"></md-icon>
+                        <md-tooltip md-visible="" md-direction="">Add New Tracker</md-tooltip>
+                    </md-button>
+                </div> -->
+            </div>
+        </div>
+        <div class="content-card" layout="column" flex>
+            <div class="content fullpage-datatable" layout="column" flex>
+                <table id="TRACKERDetail1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance1" dt-columns="dtColumns1" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device ID</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">IMEI</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Version</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Date</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,181 @@
+<md-dialog class="task-dialog" aria-label="New Task">
+    <form name="taskForm" class="md-inline-form" novalidate>
+        <!-- <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <h2 class="">Location</h2>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar> -->
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools">
+                <h2>{{model.Name}} Location</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="closeModel()">
+                    <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll style="padding:0">
+            <div layout-gt-sm="row">
+                <div style="width: 100%;">
+                    <div id="mapLocation" style="height: 500px;"></div>
+                    <div layout="row" layout-align="center center" class="md-hue-2 md-accent">
+                        <div layout="row" layout-align="start center">
+                            <md-icon md-font-icon="icon-speedometer green-900-fg" class="s16"></md-icon>
+                            <span class="pl-8">{{model.CurrentSpeed}} km/h</span>
+                        </div>
+
+                        <div class="pl-16" layout="row" layout-align="start center">
+                            <md-icon md-font-icon="icon-clock amber-600-fg" class="s16"></md-icon>
+                            <span class="pl-8">{{model.CurrentDate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+
+    </form>
+</md-dialog>
+
+<style>
+    .customMarkeroncar {
+        height: 30px;
+        background-image: url({{OnlineImage}});
+        width: 30px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -9px;
+        margin-top: -11px;
+        cursor: pointer;
+        animation: pulseNew 1s infinite;
+        border-radius: 50%;
+    }
+    
+    .customMarkeroncar .my-text-shadow {
+        color: white;
+        position: absolute;
+        left: 0px;
+        top: -15px;
+        text-shadow: -2px -2px 0 #0cad00, -2px -1px 0 #0cad00, -2px 0px 0 #0cad00, -2px 1px 0 #0cad00, -2px 2px 0 #0cad00, -1px -2px 0 #0cad00, -1px -1px 0 #0cad00, -1px 0px 0 #0cad00, -1px 1px 0 #0cad00, -1px 2px 0 #0cad00, 0px -2px 0 #0cad00, 0px -1px 0 #0cad00, 0px 0px 0 #0cad00, 0px 1px 0 #0cad00, 0px 2px 0 #0cad00, 1px -2px 0 #0cad00, 1px -1px 0 #0cad00, 1px 0px 0 #0cad00, 1px 1px 0 #0cad00, 1px 2px 0 #0cad00, 2px -2px 0 #0cad00, 2px -1px 0 #0cad00, 2px 0px 0 #0cad00, 2px 1px 0 #0cad00, 2px 2px 0 #0cad00;
+        font-size: 14px;
+        width: 100px;
+    }
+    
+    .amap-marker.customanimationchina,
+    .amap-info.customanimationchina {
+        -webkit-transition: all 0.8s ease;
+        -moz-transition: all 0.8s ease;
+        -o-transition: all 0.8s ease;
+        -ms-transition: all 0.8s ease;
+        transition: all 0.8s ease;
+    }
+    
+    .customMarkeroffcar {
+        height: 30px;
+        background-image: url({{OfflineImage}});
+        width: 30px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -9px;
+        margin-top: -11px;
+        cursor: pointer;
+        animation: pulseNew 1s infinite;
+        border-radius: 50%;
+    }
+    
+    .customMarkeroffcar .my-text-shadow {
+        color: white;
+        position: absolute;
+        left: 0px;
+        top: -15px;
+        text-shadow: -2px -2px 0 #717171, -2px -1px 0 #717171, -2px 0px 0 #717171, -2px 1px 0 #717171, -2px 2px 0 #717171, -1px -2px 0 #717171, -1px -1px 0 #717171, -1px 0px 0 #717171, -1px 1px 0 #717171, -1px 2px 0 #717171, 0px -2px 0 #717171, 0px -1px 0 #717171, 0px 0px 0 #717171, 0px 1px 0 #717171, 0px 2px 0 #717171, 1px -2px 0 #717171, 1px -1px 0 #717171, 1px 0px 0 #717171, 1px 1px 0 #717171, 1px 2px 0 #717171, 2px -2px 0 #717171, 2px -1px 0 #717171, 2px 0px 0 #717171, 2px 1px 0 #717171, 2px 2px 0 #717171;
+        font-size: 14px;
+        width: 100px;
+    }
+    
+    .customMarkeractivecar {
+        height: 30px;
+        background-image: url({{ActiveImage}});
+        width: 30px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -9px;
+        margin-top: -11px;
+        cursor: pointer;
+        animation: pulseNew 1s infinite;
+        border-radius: 50%;
+    }
+    
+    .customMarker1 {
+        height: 20px;
+        /* background-image: url(img/icon-map-car-on2.png); */
+        width: 46px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
+    }
+    
+    .customMarkercar {
+        height: 20px;
+        /* background-image: url(img/icon-map-car-on2.png); */
+        width: 46px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-left: -25px;
+        margin-top: -13px;
+        cursor: pointer;
+    }
+    
+    .customMarkercar.online {
+        background-image: url(/assets/images/icon-map-car-on2.png);
+    }
+    
+    .customMarkercar.offline {
+        background-image: url(/assets/images/icon-map-car--off2.png);
+    }
+    
+    .customMarkercar.active {
+        background-image: url(/assets/images/icon-map-car-active2.png);
+    }
+    
+    @-webkit-keyframes pulseNew {
+        0% {
+            -webkit-box-shadow: 0 0 0 0 rgba(41, 144, 241, 0.4);
+        }
+        70% {
+            -webkit-box-shadow: 0 0 0 10px rgba(41, 144, 241, 0);
+        }
+        100% {
+            -webkit-box-shadow: 0 0 0 0 rgba(41, 144, 241, 0);
+        }
+    }
+    
+    @keyframes pulseNew {
+        0% {
+            -moz-box-shadow: 0 0 0 0 rgba(41, 144, 241, 0.4);
+            box-shadow: 0 0 0 0 rgba(41, 144, 241, 0.4);
+        }
+        70% {
+            -moz-box-shadow: 0 0 0 10px rgba(41, 144, 241, 0);
+            box-shadow: 0 0 0 10px rgba(41, 144, 241, 0);
+        }
+        100% {
+            -moz-box-shadow: 0 0 0 0 rgba(41, 144, 241, 0);
+            box-shadow: 0 0 0 0 rgba(41, 144, 241, 0);
+        }
+    }
+    
+    .leaflet-div-icon {
+        background: transparent;
+        border: none;
+    }
+</style>

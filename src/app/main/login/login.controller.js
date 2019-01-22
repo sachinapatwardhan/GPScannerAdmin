@@ -116,7 +116,11 @@
                         msNavigationService.clearNavigation();
                         $http.defaults.headers.common['Authorization'] = data.data.token; // jshint ignore:line
                         $rootScope.MenuSet();
-                        $window.location.href = '/#/Dashboard';
+                        if (data.data.UserRoles.indexOf("Distributor") > -1 && data.data.UserRoles.indexOf("Super Admin") == -1) {
+                            $window.location.href = '/#/DistributorTrackers';
+                        } else {
+                            $window.location.href = '/#/Dashboard';
+                        }
 
                         // $timeout(function() {
                         //     $window.location.reload();

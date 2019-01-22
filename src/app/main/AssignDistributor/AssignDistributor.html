@@ -1,0 +1,224 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Assign Distributor"> Assign Distributor</span>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" class="search-input" ng-change="GetSerch(Search)" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
+                    <md-icon md-font-icon="icon-filter-variant"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportExcel()" aria-label="Search" ng-if="lstdata.length > 0">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportModal($event)" aria-label="Search">
+                    <md-icon md-font-icon="icon-import"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search">
+                    <md-icon md-font-icon="icon-download"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
+                </md-button>
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Reset()" aria-label="Search ">
+                        <md-icon md-font-icon="icon-plus "></md-icon>
+                        <md-tooltip md-visible=" " md-direction=" ">Add New</md-tooltip>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+        <div class="content-card" layout="column" flex>
+            <div class="ShowContentBox">
+                <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex="20" flex-gt-sm="20" ng-if="UserRoles =='Super Admin'">
+                        <label>App Name</label>
+                        <md-select Name="AppName" ng-model="modelSearch.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllDistributorForSearch()">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.search1TermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.search1TermidAppName track by o.id">{{o.AppName}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="20" flex-gt-sm="20">
+                        <label>Distributor</label>
+                        <md-select name="idDistributor" ng-model="modelSearch.idDistributor" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.search1Distributor" type="search" placeholder="Search for a Distributor.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstDistributor |filter:vm.search1Distributor| orderBy: 'email'">{{o.email}}</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <div align="left">
+                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetAllData(true)" aria-label="Search">
+                            <md-icon md-font-icon="icon-magnify"></md-icon>
+                            <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()" aria-label="Reset Search">
+                            <md-icon md-font-icon="icon-refresh"></md-icon>
+                            <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+            <div class="content fullpage-datatable" layout="column" flex ng-if="UserRoles == 'Super Admin'">
+                <table id="Dis" class="dataTable cell-border row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Distributor</span>
+                                </div>
+                            </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device ID</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">App Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="content fullpage-datatable" layout="column" flex ng-if="UserRoles != 'Super Admin'">
+                <table id="Dis1" class="dataTable cell-border row-border hover" datatable="" dt-instance="vm.dtInstance1" dt-columns="dtColumns1" dt-options="dtOptions">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Distributor</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device ID</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed" layout="column" ng-show="flag">
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to Vehicle" ng-click="ResetModel()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="Assign Distributor"> Assign Distributor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content" layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-content class="md-padding">
+                <form name="FormDistributor" novalidate class="md-inline-form" aria-invalid="false">
+                    <div class="content">
+                        <div layout="row" layout-wrap>
+                            <md-input-container class="md-block" class="md-block" flex="100" flex-gt-sm="25" ng-if="UserRoles =='Super Admin'">
+                                <label>App Name</label>
+                                <md-select Name="AppName" ng-model="model.idApp" required md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="ChangeAppName()">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model=" vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                                </md-select>
+                                <div ng-messages="FormDistributor.AppName.$error" ng-if="FormDistributor.AppName.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>AppName field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Device ID</label>
+                                <input type="text" name="deviceId" ng-model="model.deviceId" ng-required="true" maxlength="50">
+                                <div ng-messages="FormDistributor.deviceId.$error" ng-if="FormDistributor.deviceId.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Device ID field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Distributor</label>
+                                <md-select name="idDistributor" ng-model="model.idDistributor" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchDistributor" type="search" placeholder="Search for a Distributor.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstDistributor |filter:vm.searchDistributor| orderBy: 'email'">{{o.email}}</md-option>
+                                </md-select>
+                                <div ng-messages="FormDistributor.idDistributor.$error" ng-if="FormDistributor.idDistributor.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Distributor field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div align="left">
+                            <md-button class="md-raised md-primary" ng-disabled="!FormDistributor.$valid" ng-click="SaveDistributor(model)">Save</md-button>
+                            <md-button class="md-accent md-raised" ng-click="ResetData()" ng-if="model.id==0">Reset</md-button>
+                            <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+                        </div>
+                    </div>
+                </form>
+            </md-content>
+        </div>
+    </div>
+</div>

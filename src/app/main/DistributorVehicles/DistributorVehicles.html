@@ -1,0 +1,340 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row" ng-show="!flag">
+    <div class="top-bg md-accent-bg"></div>
+    <div class="center" layout="column" flex>
+        <div class="header" layout="row" layout-wrap layout-align="space-between center">
+            <div class="white-fg" layout="row" layout-gt-xs="row" layout-gt-sm="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <span translate="Vehicle Management">Vehicle Management</span>
+                </div>
+                <div class="product-count secondary-text" hide-xs>
+                    <span>Total Vehicle(s) :</span>
+                    <b>{{lstTotal}}</b>
+                </div>
+            </div>
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+            </div>
+            <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
+                    <md-icon md-font-icon="icon-filter-variant"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
+                </md-button>
+                <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportModal($event)" aria-label="Search" ng-if="modelApp.AppName=='Tracking'">
+                    <md-icon md-font-icon="icon-import"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search" ng-if="modelApp.AppName=='Tracking'">
+                    <md-icon md-font-icon="icon-download"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstVehicledata.length > 0 && modelApp.AppName=='Tracking'">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
+                </md-button>
+                <div ng-if="FlgAddedEditlocal">
+                    <md-button class="md-raised md-background" ng-click="vm.Reset()">
+                        <span translate="Add New Vehicle">Add New Vehicle</span>
+                    </md-button>
+                </div> -->
+            </div>
+        </div>
+        <div class="content-card" layout="column" flex>
+            <div class="ShowContentBox">
+                <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
+                <div layout="row" layout-wrap>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                        <label>Expiry Start Date</label>
+                        <input name="Start" mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="modelSearch.EndDate" format="DD-MM-YYYY" ng-model="modelSearch.StartDate">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
+                        <label>Expiry End Date</label>
+                        <input name="End" mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="modelSearch.StartDate" format="DD-MM-YYYY" ng-model="modelSearch.EndDate">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                        <label>Vehicle Type </label>
+                        <md-select Name="idType" ng-model="modelSearch.idType" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change=" vm.GetAllDynamicVehicles(true)">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTermVehicleType" type="search" placeholder="Search for a Vehicle Type.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value='null'>All</md-option>
+                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                        <label>Status </label>
+                        <md-select Name="IsOnline" ng-model="modelSearch.IsOnline" ng-change="vm.GetAllDynamicVehicles(true)">
+                            <md-option ng-value='null'>All</md-option>
+                            <md-option value='1'>Online</md-option>
+                            <md-option value='0'>Offline</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <div align="left">
+                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="vm.GetAllDynamicVehicles(true)" aria-label="Search">
+                            <md-icon md-font-icon="icon-magnify"></md-icon>
+                            <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button md-warn md-raised md-hue-2" ng-click="SearchReset()" aria-label="Reset Search">
+                            <md-icon md-font-icon="icon-refresh"></md-icon>
+                            <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+            <div class="content fullpage-datatable" layout="column" flex ng-show="ShowDtl==false">
+
+                <table id="VehicleDetail" class="dataTable row-border hover" ng-if="modelApp.AppName=='Tracking'" datatable="" dt-instance="vm.dtInstance1" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">User Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Vehicle</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Tracker ID</span>
+                                </div>
+                            </th>
+                            <!-- <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device Type</span>
+                                </div>
+                            </th> -->
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Expiry Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">HandShake Time</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Is Online</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <table id="VehicleDetail" class="dataTable row-border hover" ng-if="modelApp.AppName!='Tracking'" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Email</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Vehicle</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Tracker ID</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Type</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Expiry Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">HandShake Time</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Is Online</span>
+                                </div>
+                            </th>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+            <div class="content" layout-margin ng-show="ShowDtl==true">
+                <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                    <form name="FormManageDate" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
+                        <h2 style="color:green;">Vehicle : {{vehicleName}}</h2>
+                        <br/>
+                        <md-input-container class="md-block" flex="50">
+                            <label> Expiry Date</label>
+                            <input name="dStart" mdc-datetime-picker date="true" time="false" required type="text" id="time" format="DD-MM-YYYY" ng-model="modelUpdateDate.renewaldate">
+                            <div ng-messages="FormManageDate.dStart.$error" ng-if="FormManageDate.dStart.$touched" role="alert">
+                                <div ng-message="required">
+                                    <span>Expiry Date field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <div>
+                            <md-button class="md-raised md-primary" ng-click="UpdateExpiryDate()" ng-disabled="FormManageDate.$invalid">
+                                Update Date</md-button>
+                            <md-button class="md-raised md-warn" ng-click="ResetModel()">
+                                cancel</md-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-layout simple tabbed" layout="column" ng-show="flag">
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to Vehicle" ng-click="gotoVehicleList()">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <div layout="column" layout-align="start start">
+                    <div class="subtitle secondary-text">
+                        <span translate="Vehicle Detail">Vehicle Detail</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <div class="content" layout-margin>
+        <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-content class="md-padding">
+                <form name="formVehicledetails" novalidate class="md-inline-form" aria-invalid="false">
+                    <div class="content">
+                        <div layout="row" layout-wrap>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Select Email</label>
+                                <md-autocomplete ng-required="true" md-input-name="iduser" md-no-cache="true" md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)" md-item-text="item.email"
+                                    placeholder="Select Email">
+                                    <md-item-template>
+                                        <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
+                                    </md-item-template>
+                                    <md-not-found>
+                                        No email matching "{{query}}" were found
+                                    </md-not-found>
+                                </md-autocomplete>
+                                <div ng-messages="formVehicledetails.iduser.$error" ng-if="formVehicledetails.iduser.$touched">
+                                    <div ng-message="required">Please select email</div>
+                                    <md-not-found ng-show="flgErrorNotFound && query!=null && query!=''" style="font-size: 12px;">
+                                        No email matching {{query}} were found.
+                                    </md-not-found>
+                                </div>
+                            </md-input-container>
+                            <input type="hidden" name="iduser" ng-model="model.iduser" ng-required="true">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Name</label>
+                                <input type="text" name="Name" ng-model="model.Name" required maxlength="150" md-maxlength="150">
+                                <div ng-messages="formVehicledetails.Name.$error" ng-if="formVehicledetails.Name.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Vehicle Name field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Vehicle Type</label>
+                                <label>Vehicle Type</label>
+                                <md-select Name="idType" ng-model="model.idType" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="vm.searchTermVehicleType" type="search" placeholder="Search for a Vehicle Type.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                    </md-select-header>
+                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstVehicleType |filter:vm.searchTermVehicleType| orderBy: 'Type'">{{o.Type}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Tracker Number</label>
+                                <input type="text" name="deviceid" ng-model="model.deviceid" ng-required="true" maxlength="50" ng-blur="chkTrackerId(model.deviceid)">
+                                <div ng-messages="formVehicledetails.deviceid.$error" ng-if="formVehicledetails.deviceid.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Tracker Number field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>-->
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>IMEI Number</label>
+                                <input type="text" name="IMEI" ng-model="model.IMEI" ng-required="true" maxlength="50">
+                                <div ng-messages="formVehicledetails.IMEI.$error" ng-if="formVehicledetails.IMEI.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>IMEI Number field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <!--<md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Battery Percentage *</label>
+                                <input type="text" name="BatteryPercentage" ng-model="model.BatteryPercentage" ng-required="true" maxlength="50">
+                                <div ng-messages="formVehicledetails.BatteryPercentage.$error" ng-if="formVehicledetails.BatteryPercentage.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Battery Percentage field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>-->
+                            <!-- <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>HandShake Date & Time </label>
+                                <input mdc-datetime-picker date="true" time="true" type="text" id="HandshakDatetime" format="DD-MM-YYYY hh:mm A" ng-model="model.HandshakDatetime">
+                                <div ng-messages="formVehicledetails.HandshakDatetime.$error" ng-if="formVehicledetails.HandshakDatetime.$touched" role="alert">
+                                    <div ng-message="required">
+                                        <span>Max Speed field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <md-checkbox class="md-secondary" ng-model="model.IsOnline" value="{{model.IsOnline}}" flex></md-checkbox>&nbsp;&nbsp;Is Online
+                            </md-input-container> -->
+                        </div>
+                        <div align="left">
+                            <md-button class="md-raised md-primary" ng-disabled="!formVehicledetails.$valid" ng-click="CreateVehicleDetails(model)">Save</md-button>
+                            <md-button class="md-accent md-raised" ng-click="ResetData()" ng-if="model.id==0">Reset</md-button>
+                            <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
+                        </div>
+                    </div>
+                </form>
+            </md-content>
+        </div>
+    </div>
+</div>
