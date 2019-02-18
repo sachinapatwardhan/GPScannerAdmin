@@ -8,6 +8,7 @@
     /** @ngInject */
     function runBlock($rootScope, $timeout, $location, $state, $http, $cookieStore, msNavigationService, $window) {
         //Predefine data
+        //try {
         var token = $cookieStore.get('token');
         var datatoken = $http.defaults.headers.common['Authorization'];
         if (token != null && token != undefined) {
@@ -15,7 +16,10 @@
                 $http.defaults.headers.common['Authorization'] = token;
             };
         }
-        $rootScope.VersionNumber = "18.03.1013.aaf6ac0";
+        //} catch (ex) {
+
+        //}
+        $rootScope.VersionNumber = "19.01.0218.aaf6ac0";
         // $rootScope.RoutePath = "http://localhost:7212/";
         // $rootScope.Socket_URL = "http://localhost:7212";
 
@@ -28,15 +32,15 @@
         // $rootScope.RoutePath = "http://192.168.1.50:7212/";
         // $rootScope.Socket_URL = "http://192.168.1.50:7212";
 
-        $rootScope.RoutePath = "http://103.232.124.170:17212/";
-        $rootScope.Socket_URL = "http://103.232.124.170:17212";
+        //$rootScope.RoutePath = "http://103.232.124.170:17212/";
+        //$rootScope.Socket_URL = "http://103.232.124.170:17212";
 
         //$rootScope.RoutePath = "http://182.70.126.194:10026/";
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
         // $rootScope.RoutePath = "http://bugzstudio.com:7212/";
         // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
-        // $rootScope.RoutePath = "http://api.maark.my:7212/";
-        // $rootScope.Socket_URL = "http://api.maark.my:7212";
+        $rootScope.RoutePath = "http://api.maark.my:7212/";
+        $rootScope.Socket_URL = "http://api.maark.my:7212";
         // $rootScope.RoutePath = "http://uatapi.maark.my/";
         // $rootScope.Socket_URL = "http://uatapi.maark.my:7212";
         // $rootScope.RoutePath = "http://api.itcdtracking.com/";
@@ -59,14 +63,14 @@
 
         // var url = $window.location.protocol + "//" + $window.location.host + "/";
         var url = $location.protocol() + '://' + $location.host() + '/';
-        var url = "http://localhost:3000/";
+        // var url = "http://localhost:3000/";
         // var url = "http://admin.itcdtracking.com/";
-        // var url = "http://admin.maark.my/";
+        var url = "http://admin.maark.my/";
         // var url = "http://admin.hc-cargo.com.my/"
         // var url = "http://admin.trackox.com/";
         // var url = "http://admin.dotracks.in/";
         // var url = "http://uatapi.maark.my:7214/";
-        // var url = "http://uatapi.maark.my:7248/";
+        // var url = "http://fleet.maark.my/";
 
         var params = {
             AdminUrl: url,
@@ -152,7 +156,6 @@
             }).then(function (data) {
                 if (data.data.success == true) {
                     var objpermission = data.data.data;
-
                     $rootScope.FlgAddedAccess = objpermission.Added;
                     $rootScope.FlgAddedEditlocal = objpermission.Added;
                     $rootScope.FlgModifiedAccess = objpermission.Modified;
@@ -953,6 +956,75 @@
                             });
                         }
 
+                        // Assign Distributor 
+                        var lstAssignDistributor = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Assign Distributor';
+                        });
+                        if (lstAssignDistributor.length > 0) {
+                            msNavigationService.saveItem('Settings.Assign Distributor', {
+                                title: 'Assign Distributor',
+                                state: 'app.AssignDistributor',
+                                order: lstAssignDistributor[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
+                        //  Customer
+                        var lstDistributorCustomer = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Distributor Customer';
+                        });
+                        if (lstDistributorCustomer.length > 0) {
+                            var MenuName = 'Distributor.Customer';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.Customer', {
+                                title: 'Customer',
+                                state: 'app.DistributorCustomer',
+                                order: lstDistributorCustomer[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
+                        //  Vehicle
+                        var lstDistributorVehicle = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Distributor Vehicle';
+                        });
+                        if (lstDistributorVehicle.length > 0) {
+                            var MenuName = 'Distributor.Vehicle';
+                            msNavigationService.saveItem(MenuName, {
+                                // msNavigationService.saveItem('Maark.Vehicle', {
+                                title: 'Vehicle',
+                                state: 'app.DistributorVehicle',
+                                order: lstDistributorVehicle[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
+                        // Tracker
+                        var lstDistributorTrackers = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Distributor Trackers';
+                        });
+                        if (lstDistributorTrackers.length > 0) {
+                            msNavigationService.saveItem('Distributor.Trackers', {
+                                title: 'Trackers',
+                                state: 'app.DistributorTrackers',
+                                order: lstDistributorTrackers[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
+                        // Tracker
+                        var lstDistributorRenew = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Distributor Renew';
+                        });
+                        if (lstDistributorRenew.length > 0) {
+                            msNavigationService.saveItem('Distributor.Renew', {
+                                title: 'Renew Management',
+                                state: 'app.DistributorRenew',
+                                order: lstDistributorRenew[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
                         // ------------------------------Main module----------------------------------
                         if (lstGPSDelete.length > 0 || lstManageCustomer.length > 0 || lstVehicleLastUse.length > 0 ||
                             lstVehicle.length > 0 || gps.length > 0 || Alarm.length > 0 || CanBusData.length > 0 ||
@@ -990,7 +1062,7 @@
                             lstTransferDevice.length > 0 || lstAssignDevice.length > 0 || lstVehicleMonitor.length > 0 || lstEmailSetting.length > 0 ||
                             lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0 || lstUserFeedback.length ||
                             /* lstAssignRetailer.length > 0  ||*/
-                            lstAssignLicence.length > 0 || lstAssignAgentRetailer.length > 0) {
+                            lstAssignLicence.length > 0 || lstAssignAgentRetailer.length > 0 || lstAssignDistributor.length > 0) {
                             msNavigationService.saveItem('Settings', {
                                 title: 'Settings',
                                 icon: 'icon-cog',
@@ -1012,6 +1084,15 @@
                             msNavigationService.saveItem('Wallet', {
                                 title: 'Wallet',
                                 icon: 'icon-wallet',
+                                weight: 1
+                            });
+                        }
+
+                        if (lstDistributorTrackers.length > 0 || lstDistributorVehicle.length > 0 || lstDistributorCustomer.length > 0 || lstDistributorRenew.length > 0) {
+                            msNavigationService.saveItem('Distributor', {
+                                title: 'Distributor',
+                                icon: 'icon-account',
+                                // order: lstOrderServiceMain[0].tblmodulemgmt.DisplayOrder,
                                 weight: 1
                             });
                         }

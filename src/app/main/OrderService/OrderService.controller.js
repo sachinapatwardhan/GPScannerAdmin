@@ -494,7 +494,7 @@
                         } else if (statusname == "Paid" && full.Terms != null && full.Terms != '') {
                             btns += '<md-button class="edit-button md-icon-button"  ng-click="OpenRemark($event,' + data.id + ')" aria-label="">' +
                                 '<md-icon md-font-icon="icon-comment-outline"  class="green-500-fg"></md-icon>' +
-                                '<md-tooltip md-visible="" md-direction="">Approve Order Service</md-tooltip>' +
+                                '<md-tooltip md-visible="" md-direction="">Remark</md-tooltip>' +
                                 '</md-button>';
                         }
 

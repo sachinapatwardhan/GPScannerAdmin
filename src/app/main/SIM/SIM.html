@@ -8,20 +8,26 @@
                     <span translate="SIM Info">SIM Info</span>
                 </div>
             </div>
-            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33"
+                align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="search" ng-model="modelSearch.Search" ng-change="GetSerch(modelSearch.Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+                <input id="search" ng-model="modelSearch.Search" ng-change="GetSerch(modelSearch.Search)"
+                    class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH"
+                    flex>
             </div>
             <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportExcel()" aria-label="Search" ng-if="lstSIMInfo.length > 0">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportExcel()" aria-label="Search"
+                    ng-if="lstSIMInfo.length > 0">
                     <md-icon md-font-icon="icon-file-excel"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportSimModal($event)" aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportSimModal($event)"
+                    aria-label="Search">
                     <md-icon md-font-icon="icon-import"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()"
+                    aria-label="Search">
                     <md-icon md-font-icon="icon-download"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
                 </md-button>
@@ -36,7 +42,8 @@
         <div class="content-card " layout="column " flex>
             <div class="content fullpage-datatable " layout="column " flex ng-if="UserRoles == 'Super Admin'">
                 <!-- <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%"> -->
-                <table id="SIMDetail" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                <table id="SIMDetail" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance"
+                    dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
                             <th class="all ">
@@ -105,7 +112,8 @@
             </div>
             <div class="content fullpage-datatable " layout="column " flex ng-if="UserRoles != 'Super Admin'">
                 <!-- <table class="dataTable cell-border row-border hover" datatable="ng" dt-options="dtCustomOptions" dt-instance="dtInstance" dt-column-defs="vm.dtColumnDefs" width="100%"> -->
-                <table id="SIMDetail1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                <table id="SIMDetail1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance"
+                    dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
                             <th class="all ">
@@ -178,7 +186,8 @@
 <div class="page-layout simple tabbed " layout="column " ng-show="flag ">
     <div class="header md-accent-bg " layout="row " layout-align="start center ">
         <div class="white-fg " layout="row " layout-align="start center " flex>
-            <md-button class="goto-products-button md-icon-button " aria-label="Go to Vehicle " ng-click="ResetModel() ">
+            <md-button class="goto-products-button md-icon-button " aria-label="Go to Vehicle "
+                ng-click="ResetModel() ">
                 <md-icon md-font-icon="icon-arrow-left "></md-icon>
             </md-button>
             <div layout="row " layout-align="start center ">
@@ -210,7 +219,8 @@
                             <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
                                 <label>Serial Number</label>
                                 <input type="text " name="SerialNum " ng-model="model.SerialNum " required>
-                                <div ng-messages="formSIMInfo.SerialNum.$error " ng-if="formSIMInfo.SerialNum.$touched " role="alert ">
+                                <div ng-messages="formSIMInfo.SerialNum.$error " ng-if="formSIMInfo.SerialNum.$touched "
+                                    role="alert ">
                                     <div ng-message="required ">
                                         <span>Serial Number field is required</span>
                                     </div>
@@ -219,7 +229,8 @@
                             <md-input-container class="md-block " flex="100 " flex-gt-sm="25 ">
                                 <label>Phone Number</label>
                                 <input type="number " name="PhoneNum " ng-model="model.PhoneNum ">
-                                <div ng-messages="formSIMInfo.PhoneNum.$error " ng-if="formSIMInfo.PhoneNum.$touched " role="alert ">
+                                <div ng-messages="formSIMInfo.PhoneNum.$error " ng-if="formSIMInfo.PhoneNum.$touched "
+                                    role="alert ">
                                     <div ng-message="required ">
                                         <span>Phone Number field is required</span>
                                     </div>
@@ -227,27 +238,40 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Telephone Company</label>
-                                <md-select Name="idTelCo" ng-model="model.idTelCo" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                <md-select Name="idTelCo" ng-model="model.idTelCo" md-on-close="clearSearchTerm()"
+                                    data-md-container-class="selectdemoSelectHeader">
                                     <md-select-header class="demo-select-header">
-                                        <input ng-model="vm.searchTermidTelCo" type="search" placeholder="Search for a Company.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                        <input ng-model="vm.searchTermidTelCo" type="search"
+                                            placeholder="Search for a Company.." class="demo-header-searchbox md-text"
+                                            ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstCompany | filter:vm.searchTermidTelCo | orderBy: 'Name'">{{o.Name}}</md-option>
+                                    <md-option ng-value="{{o.id}}"
+                                        ng-repeat="o in lstCompany | filter:vm.searchTermidTelCo | orderBy: 'Name'">
+                                        {{o.Name}}</md-option>
                                 </md-select>
-                                <div ng-messages="formTrackingdetails.idTelCo.$error" ng-if="formTrackingdetails.idTelCo.$touched" role="alert">
+                                <div ng-messages="formTrackingdetails.idTelCo.$error"
+                                    ng-if="formTrackingdetails.idTelCo.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>Tel Company is required.</span>
                                     </div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="20" ng-if="UserRoles == 'Super Admin'">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="20"
+                                ng-if="UserRoles == 'Super Admin'">
                                 <label>App Name</label>
-                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" required>
+                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()"
+                                    data-md-container-class="selectdemoSelectHeader" required>
                                     <md-select-header class="demo-select-header">
-                                        <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                        <input ng-model="vm.searchTermidAppName" type="search"
+                                            placeholder="Search for a APP Name.." class="demo-header-searchbox md-text"
+                                            ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                                    <md-option ng-value="{{o.id}}"
+                                        ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">
+                                        {{o.AppName}}</md-option>
                                 </md-select>
-                                <div ng-messages="formTrackingdetails.AppName.$error" ng-if="formTrackingdetails.AppName.$touched" role="alert">
+                                <div ng-messages="formTrackingdetails.AppName.$error"
+                                    ng-if="formTrackingdetails.AppName.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>App Name is required.</span>
                                     </div>
@@ -255,7 +279,8 @@
                             </md-input-container>
                         </div>
                         <div align="left ">
-                            <md-button class="md-raised md-primary " ng-disabled="!formSIMInfo.$valid " ng-click="SaveSIMInfo(model) ">Save</md-button>
+                            <md-button class="md-raised md-primary " ng-disabled="!formSIMInfo.$valid "
+                                ng-click="SaveSIMInfo(model) ">Save</md-button>
                             <md-button class="md-accent md-raised " ng-click="Reset() ">Reset</md-button>
                             <md-button class="md-raised md-warn " ng-click="ResetModel() ">Cancel</md-button>
                         </div>
@@ -265,3 +290,30 @@
         </div>
     </div>
 </div>
+<div id="processingDashboard" style="display: none;">
+    <div layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate" value="..." md-diameter="100" class="page-loader">
+        </md-progress-circular>
+    </div>
+</div>
+
+<style>
+    #processingDashboard {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background-color: rgba(203, 203, 203, 0.6);
+    }
+
+    #processingDashboard .page-loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -100px;
+        margin-top: -100px;
+        z-index: 2;
+    }
+</style>

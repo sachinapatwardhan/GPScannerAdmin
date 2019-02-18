@@ -968,7 +968,8 @@ table.dataTable {
 
     .dataTables_scroll {
         display: flex;
-        flex: 1;
+        flex: 1 1 auto;
+        /* added by jGajera -  flex: 1 to --- */
         flex-direction: column;
         clear: both;
 

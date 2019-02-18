@@ -78,6 +78,11 @@
             'app.AuditLoglicense',
             'app.RenewManagement',
             'app.AssignAgentRetailer',
-            'app.DeviceRenewPrice'
+            'app.DeviceRenewPrice',
+            'app.DistributorTrackers',
+            'app.DistributorCustomer',
+            'app.DistributorVehicle',
+            'app.DistributorRenew',
+            'app.AssignDistributor'
         ]);
 })();
