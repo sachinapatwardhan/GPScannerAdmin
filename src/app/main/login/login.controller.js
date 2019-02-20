@@ -103,9 +103,14 @@
                                 }
                             }
                         }
+                        var UserId = data.data.UserId;
+                        if (data.data.UserRoles.indexOf("Distributor Sub User") > -1) {
+                            UserId = data.data.DistributorId != null && data.data.DistributorId != undefined && data.data.DistributorId != '' ? data.data.DistributorId : data.data.UserId;
+                        }
                         $scope.splitCountryList = CountryList.split(",")
                         $cookieStore.put('UserImage', data.data.UserImage);
-                        $cookieStore.put('UserId', data.data.UserId);
+                        $cookieStore.put('UserId', UserId);
+                        $cookieStore.put('DistributorId', data.data.UserId);
                         $cookieStore.put('UserCountry', data.data.UserCountry);
                         $cookieStore.put('UserRoles', data.data.UserRoles);
                         $rootScope.UserImage = $cookieStore.get('UserImage');
@@ -116,7 +121,7 @@
                         msNavigationService.clearNavigation();
                         $http.defaults.headers.common['Authorization'] = data.data.token; // jshint ignore:line
                         $rootScope.MenuSet();
-                        if (data.data.UserRoles.indexOf("Distributor") > -1 && data.data.UserRoles.indexOf("Super Admin") == -1) {
+                        if (data.data.UserRoles.indexOf("Distributor") > -1 || data.data.UserRoles.indexOf("Distributor Sub User") > -1 && data.data.UserRoles.indexOf("Super Admin") == -1) {
                             $window.location.href = '/#/DistributorTrackers';
                         } else {
                             $window.location.href = '/#/Dashboard';

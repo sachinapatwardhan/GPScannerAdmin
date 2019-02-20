@@ -2,24 +2,55 @@
     'use strict';
 
     angular
-        .module('app.ChangePassword')
-        .controller('ChangePasswordController', ChangePasswordController);
+        .module('app.user')
+        .controller('UserChangePasswordController', UserChangePasswordController);
 
     /** @ngInject */
-    function ChangePasswordController($http, $scope, $mdDialog, $document, $mdToast, $cookieStore, DTOptionsBuilder, DTColumnDefBuilder, $rootScope) {
+    function UserChangePasswordController($mdToast, $document, $http, $mdDialog, $scope, obj, Tasks, event, VM, $rootScope) {
+
         var vm = this;
-        var UserId = $cookieStore.get('UserId');
-        var DistributorId = $cookieStore.get('DistributorId');
+        $scope.RoutePath = $rootScope.RoutePath;
+        $scope.DisplayEmail = obj.email;
         $scope.init = function() {
             $scope.model = {
-                UserId: DistributorId ? UserId != DistributorId ? DistributorId : UserId : UserId,
+                username: obj.username,
                 oldpassword: '',
                 password: '',
                 confirmpassword: '',
+                UserId: obj.id,
+                AppName: obj.AppName,
             };
         }
 
-        $scope.ChangePassword = function(o) {
+        $scope.ChangePassword = function(ev, o) {
+            if (o.confirmpassword != o.password) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Password and Confirm Password does not match...')
+                    .position('top right')
+                    .hideDelay(3000)
+                );
+            } else {
+                $mdDialog.show({
+                    // skipHide: true,
+                    controller: 'UserPasswordConifrmationController',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/User/dialogs/PasswordConfirmation/PasswordConfirmation.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: false,
+                    locals: {
+                        obj: o,
+                        Tasks: [],
+                        event: ev,
+                        VM: vm,
+                        flg: 0
+                    }
+                })
+            }
+        }
+
+        $scope.ChangePassword1 = function(o) {
             $http.post($rootScope.RoutePath + "account/changepassword", o).then(function(response) {
 
                 if (response.data.success == true) {
@@ -31,7 +62,7 @@
                     );
                     // $scope.GetAllBanner();
                     $rootScope.FlgAddedEditlocal = false;
-                    $scope.Reset();
+                    $scope.closeModel1();
                 } else {
                     if (response.data.data == 'TOKEN') {
                         //$cookieStore.remove('UserName');
@@ -53,17 +84,21 @@
         $scope.Reset = function() {
             if ($rootScope.FlgAddedAccess == true) {
                 $scope.model = {
+                    username: obj.username,
                     oldpassword: '',
                     password: '',
                     confirmpassword: '',
+                    UserId: obj.id,
+                    AppName: obj.AppName,
                 };
                 $scope.FormChangePassword.$setUntouched();
                 $scope.FormChangePassword.$setPristine();
             }
         }
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
-            $scope.init();
-        })
+        $scope.closeModel1 = function() {
+            $mdDialog.hide();
+        }
+        $scope.init();
     }
 })();

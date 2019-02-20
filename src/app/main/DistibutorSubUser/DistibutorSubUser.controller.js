@@ -2,27 +2,11 @@
     'use strict';
 
     angular
-        .module('app.user')
-        .controller('UserController', UserController)
-        .directive('isNumber', function() {
-            return {
-                require: 'ngModel',
-                link: function(scope) {
-                    scope.$watch('model.Amount', function(newValue, oldValue) {
-                        var arr = String(newValue).split("");
-                        if (arr.length === 0) return;
-                        if (arr.length === 1 && (arr[0] == '-' || arr[0] === '.')) return;
-                        if (arr.length === 2 && newValue === '-.') return;
-                        if (isNaN(newValue)) {
-                            scope.model.Amount = oldValue;
-                        }
-                    });
-                }
-            };
-        });
+        .module('app.distributorsubuser')
+        .controller('DistributorSubUserController', DistributorSubUserController);
 
     /** @ngInject */
-    function UserController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
+    function DistributorSubUserController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
         var vm = this;
         $rootScope.appId = localStorage.getItem('appId');
         $rootScope.UserRoles = localStorage.getItem('UserRoles');
@@ -46,35 +30,37 @@
                 IsMobileVerify: false,
                 idApp: parseInt($rootScope.appId),
                 Amount: 0,
+                password: '',
+                confirmpassword: '',
+                LoginUserId: $rootScope.UserRoles != "Super Admin" ? $rootScope.UserId : '',
             };
             //$scope.GetAllUser();
-            $scope.GetAllRoles();
+            // $scope.GetAllRoles();
             $scope.tab = {
                 selectedIndex: 0
             };
-
-            $scope.FlgImage = 0;
-            $scope.FlgCropImage = 0;
-
             $scope.Search = '';
             $scope.flag = false;
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.GetAllInfoList();
+                $scope.GetAllOnlyDistributor();
             }
             $scope.checked = {};
-            GetAllCountry();
-        }
-
-        function GetAllCountry() {
-            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
-                $scope.lstCountry = data.data;
-            });
+            // GetAllCountry();
         }
         $scope.GetAllInfoList = function() {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
                 $scope.lstAppInfo = data.data;
             })
         }
+
+        $scope.GetAllOnlyDistributor = function() {
+            // Data
+            $http.get($rootScope.RoutePath + "user/GetAllOnlyDistributor", { params: { appId: $scope.model.idApp } }).then(function(data) {
+                $scope.lstUser = data.data;
+            });
+        }
+
         $scope.clearSearchTerm = function() {
             $scope.searchTermCountry = '';
             $scope.searchTermState = '';
@@ -87,6 +73,8 @@
             $scope.searchCity = '';
             $scope.searchLocation = '';
             $scope.searchSubLocation = '';
+            vm.searchTermidAppName = '';
+            vm.SearchUser = '';
             vm.searchTermCountry = '';
         };
 
@@ -118,6 +106,9 @@
             $scope.model.id = o.id;
             $scope.model.userId = o.id;
             $scope.model.idApp = o.idApp;
+            $scope.model.LoginUserId = o.MainUseId;
+            $scope.model.password = o.password;
+            $scope.model.confirmpassword = o.password;
 
             //$scope.model.password = o.password;
             $scope.model.country = o.country;
@@ -139,186 +130,119 @@
             //         obj.checked = true;
             //     }
             // }
-            if (o.Role != '' && o.Role != null && o.Role != undefined) {
-                var str = o.Role.split(",");
-                for (var i = 0; i < str.length; i++) {
-                    var obj = _.findWhere($scope.lstRoles, {
-                        RoleName: str[i]
-                    })
-                    obj.checked = true;
-                }
-            }
-            $scope.changeUserRole();
-            $scope.model.Amount = o.Amount != null && o.Amount != '' ? o.Amount : 0;
-            $scope.model.image = o.image;
-            $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
-            if ($scope.model.image != null && $scope.model.image != '' && $scope.model.image != undefined) {
-                $scope.FlgImage = 1;
-            } else {
-                $scope.FlgImage = 0;
-            }
+            // if (o.Role != '' && o.Role != null && o.Role != undefined) {
+            //     var str = o.Role.split(",");
+            //     for (var i = 0; i < str.length; i++) {
+            //         var obj = _.findWhere($scope.lstRoles, {
+            //             RoleName: str[i]
+            //         })
+            //         obj.checked = true;
+            //     }
+            // }
+            // $scope.changeUserRole();
+            // $scope.model.Amount = o.Amount != null && o.Amount != '' ? o.Amount : 0;
+            // $scope.model.image = o.image;
+            // $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
+            // if ($scope.model.image != null && $scope.model.image != '' && $scope.model.image != undefined) {
+            //     $scope.FlgImage = 1;
+            // } else {
+            //     $scope.FlgImage = 0;
+            // }
 
             $scope.flag = true;
 
         }
 
 
-        //Get All Country
-        $scope.GetAllCountry = function() {
-            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
-                $scope.lstCountry = data.data;
-                var obj = _.filter($scope.lstCountry, {
-                    Country: 'Malaysia'
-                });
-                $scope.idCountry = obj[0].Country;
-                // console.log($scope.idCountry);
-            });
-        }
 
-        //Get All State By Country Name
-        $scope.GetAllStateByCountry = function(Country) {
-            $scope.lstState = '';
-            $scope.lstCity = '';
-            $scope.model.state = "";
-            $scope.model.city = "";
-
-            // console.log(Country);
-            // if (Country != null && Country != '' && Country != undefined) {
-            //     var Countryid = _.filter($scope.lstCountry, {
-            //         Country: Country
-            //     });
-            //     $scope.lstState = '';
-            //     $scope.lstCity = '';
-            //     var params = {
-            //         CountryId: Countryid[0].id
-            //     };
-            //     $http.get($rootScope.RoutePath + "state/GetAllStateByCountryId", {
-            //         params: params
-            //     }).success(function(data) {
-            //         $scope.lstState = data.data;
-            //     });
-            // }
-
-        }
-
-        //Get All City By State Name
-        $scope.GetAllCityByStateId = function(State) {
-            if (State != null && State != '' && State != undefined) {
-                var Stateid = _.filter($scope.lstState, {
-                    Name: State
-                });
-                $scope.lstCity = '';
-                var params = {
-                    StateId: Stateid[0].id
-                };
-                $http.get($rootScope.RoutePath + "city/GetAllCityByStateId", {
-                    params: params
-                }).success(function(data) {
-                    $scope.lstCity = data.data;
-                });
-            }
-        }
 
         //Create New User With It's Role
         $scope.CreateUser = function(o) {
-            o.roleId = _.where($scope.lstRoles, {
-                checked: true
-            });
-            if (o.roleId.length > 0) {
-                if ($scope.Mediafiles.length == 0 && (o.id == 0 || o.id == '')) {
-                    o.image = null;
-                    $cookieStore.put('UserImage', null);
-                    $rootScope.UserImage = $cookieStore.get('UserImage');
-                }
-                // o.idApp = localStorage.getItem('appId');
-                $http.post($rootScope.RoutePath + "user/SaveUserNew", o).then(function(data) {
-                    //$scope.SaveUserInRole(o);
-                    if (data.data.success == true) {
-                        var id;
-                        if (o.id != 0) {
-                            id = o.id;
-                        } else {
-                            id = data.data.data.userId;
-                        }
-                        if ($scope.Mediafiles.length > 0) {
-                            var formData = new FormData();
-                            // angular.forEach($scope.Mediafiles, function(d) {
-                            formData.append(id, file);
-                            // });
-                            $http.post($rootScope.RoutePath + "user/uploadImage", formData, {
-                                transformRequest: angular.identity,
-                                headers: {
-                                    'Content-Type': undefined
-                                }
-                            }).then(function(data) {
-                                if ($rootScope.UserName == o.username) {
-                                    if (data.data.data != null) {
-                                        $cookieStore.put('UserImage', data.data.data);
-                                        $rootScope.UserImage = $cookieStore.get('UserImage');
-                                    }
-                                }
+            $http.post($rootScope.RoutePath + "user/SaveUseForDistributor", o).then(function(data) {
+                //$scope.SaveUserInRole(o);
+                if (data.data.success == true) {
+                    // var id;
+                    // if (o.id != 0) {
+                    //     id = o.id;
+                    // } else {
+                    //     id = data.data.data.userId;
+                    // }
+                    // if ($scope.Mediafiles.length > 0) {
+                    //     var formData = new FormData();
+                    //     // angular.forEach($scope.Mediafiles, function(d) {
+                    //     formData.append(id, file);
+                    //     // });
+                    //     $http.post($rootScope.RoutePath + "user/uploadImage", formData, {
+                    //         transformRequest: angular.identity,
+                    //         headers: {
+                    //             'Content-Type': undefined
+                    //         }
+                    //     }).then(function(data) {
+                    //         if ($rootScope.UserName == o.username) {
+                    //             if (data.data.data != null) {
+                    //                 $cookieStore.put('UserImage', data.data.data);
+                    //                 $rootScope.UserImage = $cookieStore.get('UserImage');
+                    //             }
+                    //         }
 
-                                $scope.myImage = '';
-                                $scope.myCroppedImage = '';
-                                $scope.apiMedia.removeAll();
-                                $scope.GetAllUser(true);
-                                $rootScope.FlgAddedEditlocal = false;
-                                if ($rootScope.FlgAddedAccess == true) {
-                                    $rootScope.FlgAddedEditlocal = true;
-                                }
+                    //         $scope.myImage = '';
+                    //         $scope.myCroppedImage = '';
+                    //         $scope.apiMedia.removeAll();
+                    //         $scope.GetAllUser(true);
+                    //         $rootScope.FlgAddedEditlocal = false;
+                    //         if ($rootScope.FlgAddedAccess == true) {
+                    //             $rootScope.FlgAddedEditlocal = true;
+                    //         }
 
-                                $scope.init();
-                            }, function(err) {
-                                $scope.myImage = '';
-                                $scope.myCroppedImage = '';
-                                $scope.apiMedia.removeAll();
-                                $mdToast.show(
-                                    $mdToast.simple()
-                                    .textContent(err)
-                                    .position('top right')
-                                    .hideDelay(3000)
-                                );
-                                // do sometingh
-                            });
+                    //         $scope.init();
+                    //     }, function(err) {
+                    //         $scope.myImage = '';
+                    //         $scope.myCroppedImage = '';
+                    //         $scope.apiMedia.removeAll();
+                    //         $mdToast.show(
+                    //             $mdToast.simple()
+                    //             .textContent(err)
+                    //             .position('top right')
+                    //             .hideDelay(3000)
+                    //         );
+                    //         // do sometingh
+                    //     });
 
-                        } else {
-                            $rootScope.FlgAddedEditlocal = false;
-                            if ($rootScope.FlgAddedAccess == true) {
-                                $rootScope.FlgAddedEditlocal = true;
-                            }
-                            $scope.GetAllUser(true);
-                            $scope.init();
-                        }
+                    // } else {
+                    //     $rootScope.FlgAddedEditlocal = false;
+                    //     if ($rootScope.FlgAddedAccess == true) {
+                    //         $rootScope.FlgAddedEditlocal = true;
+                    //     }
+                    //     $scope.GetAllUser(true);
+                    //     $scope.init();
+                    // }
+                    $rootScope.FlgAddedEditlocal = false;
+                    if ($rootScope.FlgAddedAccess == true) {
+                        $rootScope.FlgAddedEditlocal = true;
+                    }
+                    $scope.GetAllUser(true);
+                    $scope.init();
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent(data.data.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                    );
+                } else {
+                    if (data.data.data == 'TOKEN') {
+                        //$cookieStore.remove('UserName');
+                        //$cookieStore.remove('token');
+                        //window.location.href = '/app/login';
+                    } else {
                         $mdToast.show(
                             $mdToast.simple()
                             .textContent(data.data.message)
                             .position('top right')
                             .hideDelay(3000)
                         );
-                    } else {
-                        if (data.data.data == 'TOKEN') {
-                            //$cookieStore.remove('UserName');
-                            //$cookieStore.remove('token');
-                            //window.location.href = '/app/login';
-                        } else {
-                            $mdToast.show(
-                                $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                            );
-                        }
                     }
-                });
-            } else {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Please Select atleast One Role...')
-                    .position('top right')
-                    .hideDelay(3000)
-                );
-            }
-
+                }
+            });
         }
 
         $scope.ChangeUserStatus = function(UserId) {
@@ -357,18 +281,19 @@
                     DTColumnBuilder.newColumn('email').withOption('width', '13%'),
                     DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
                     // DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
-                    DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
-                    DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
-                    // DTColumnBuilder.newColumn('tblappinfo.AppName').renderWith(AppHtml),
+                    // DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
+                    // DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
+                    // // DTColumnBuilder.newColumn('tblappinfo.AppName').renderWith(AppHtml),
                     DTColumnBuilder.newColumn('AppName'),
-                    DTColumnBuilder.newColumn('AppVersion'),
-                    DTColumnBuilder.newColumn('Platform'),
-                    DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('MainUserName'),
+                    // DTColumnBuilder.newColumn('AppVersion'),
+                    // DTColumnBuilder.newColumn('Platform'),
+                    // DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('id').renderWith(CheckboxHtml).notSortable().withOption('width', '5%').withOption('class', 'text-center').withOption('responsivePriority', 1),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '5%').withOption('class', 'text-center')
                 ]
                 if ($rootScope.AppName != "Trackox") {
-                    $scope.dtColumns.splice(10, 1);
+                    $scope.dtColumns.splice(6, 1);
                     $("#isActiveflg").remove();
                 }
             } else {
@@ -379,24 +304,24 @@
                     DTColumnBuilder.newColumn('email').withOption('width', '13%'),
                     DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
                     // DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
-                    DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
-                    DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
+                    // DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
+                    // DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
 
-                    DTColumnBuilder.newColumn('AppVersion'),
-                    DTColumnBuilder.newColumn('Platform'),
-                    DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
+                    // DTColumnBuilder.newColumn('AppVersion'),
+                    // DTColumnBuilder.newColumn('Platform'),
+                    // DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('id').renderWith(CheckboxHtml).notSortable().withOption('width', '10%').withOption('class', 'text-center').withOption('responsivePriority', 1),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%').withOption('class', 'text-center')
                 ]
-
+                console.log($scope.dtColumns1)
                 if ($rootScope.AppName != "Trackox") {
-                    $scope.dtColumns.splice(9, 1);
+                    $scope.dtColumns1.splice(4, 1);
                     $("#isActiveflg").remove();
                 }
             }
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "user/GetAllDynamicUserNew",
+                    url: $rootScope.RoutePath + "user/GetAllDynamicDistributorSubUser",
                     data: function(d) {
                         if ($scope.Search == '') {
                             d.search = '';
@@ -409,10 +334,10 @@
                         } else {
                             d.appId = '';
                         }
-
-                        d.UserCountry = $rootScope.UserCountry;
-                        d.UserRoles = $rootScope.UserRoles;
-                        d.CountryList = $rootScope.CountryList;
+                        d.userId = $rootScope.UserRoles == "Super Admin" ? '' : $rootScope.UserId;
+                        // d.UserCountry = $rootScope.UserCountry;
+                        // d.UserRoles = $rootScope.UserRoles;
+                        // d.CountryList = $rootScope.CountryList;
                         return d;
                     },
                     type: "get",
@@ -582,6 +507,14 @@
                     '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
                     '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
                     '</md-button>';
+
+            }
+
+            if ($rootScope.FlgDeletedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="DeleteSubUser($event,' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
             }
             // if (data.IsSuspend) {
             //     btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',0)" aria-label="">' +
@@ -600,6 +533,47 @@
         };
 
         //Dynamic Pagging End
+
+        $scope.DeleteSubUser = function(ev, id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure to delete this record?')
+                .textContent('')
+                .ariaLabel('Lucky day')
+                .targetEvent(ev)
+                .ok('Yes')
+                .cancel('No');
+
+            $mdDialog.show(confirm).then(function() {
+                $http.get($rootScope.RoutePath + "user/DeleteDistributorSubUser?idUser=" + id).then(function(data) {
+                    if (data.data.success) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                        );
+                        $scope.GetAllUser(true);
+                        $rootScope.FlgAddedEditlocal = false;
+                        if ($rootScope.FlgAddedAccess == true) {
+                            $rootScope.FlgAddedEditlocal = true;
+                        }
+                        $scope.init();
+                    } else {
+                        if (data.data.data == 'TOKEN') {
+                            $rootScope.logout();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        }
+                    }
+                });
+            }, function() {});
+
+        }
 
         $scope.SetSuspendStatus = function(id, flg) {
             var title = "";
@@ -724,145 +698,6 @@
                 }
             });
         }
-        $scope.myImage = '';
-        $scope.myCroppedImage = '';
-
-        $scope.setFiles = function() {
-            $timeout(function() {
-
-                if ($scope.Mediafiles.length > 0) {
-                    $scope.FlgImage = 1;
-                    $scope.FlgCropImage = 1;
-
-                    $scope.myImage = $scope.Mediafiles[0].lfDataUrl;
-
-
-                } else {
-                    $scope.myImage = '';
-
-                    if ($scope.model.image != '' && $scope.model.image != null && $scope.model.image != undefined) {
-                        $scope.$apply(function() {
-                            $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
-                            $scope.FlgImage = 1;
-                        })
-
-                    } else {
-                        $scope.$apply(function() {
-                            $scope.myCroppedImage = '';
-                        })
-
-                        $scope.FlgImage = 0;
-                    };
-
-
-                    $scope.FlgCropImage = 0;
-                }
-                $scope.removeAllFiles();
-            }, 1000);
-
-        };
-
-        // $scope.$watch('Mediafiles', function(newVal) {
-        //     console.log(newVal);
-        //     console.log($scope.Mediafiles);
-        // })
-
-        $scope.removeAllFiles = function() {
-
-            function callMethod(i) {
-                if (i < 2) {
-                    $timeout(function() {
-                        if ($scope.Mediafiles.length > 0) {
-                            $scope.FlgImage = 1;
-                            $scope.FlgCropImage = 1;
-
-                            $scope.myImage = $scope.Mediafiles[0].lfDataUrl;
-
-                        } else {
-                            $scope.myImage = '';
-
-                            if ($scope.model.image != '' && $scope.model.image != null && $scope.model.image != undefined) {
-                                $scope.$apply(function() {
-                                    $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
-                                    $scope.FlgImage = 1;
-                                })
-
-                                // $('#UploadedImage').attr('src','');
-                                //$('#UploadedImage').remove();
-                                // $('#UploadedImage')[0].removeAttribute("src");
-                                // $('#UploadedImage')[0].src = $scope.myCroppedImage;
-                                // document.getElementById("UploadedImage").src = $scope.myCroppedImage;
-                                //document.getElementById("UploadedImage").innerHTML = "<img src\= " + $scope.myCroppedImage + " width='150px' />";
-                            } else {
-                                $scope.$apply(function() {
-                                    $scope.myCroppedImage = '';
-                                })
-
-                                $scope.FlgImage = 0;
-                            };
-                            $scope.FlgCropImage = 0;
-                            callMethod(i + 1);
-
-                        }
-                    });
-                };
-            }
-            callMethod(0);
-        }
-
-        function b64toBlob(b64Data, contentType, sliceSize) {
-            contentType = contentType || '';
-            sliceSize = sliceSize || 512;
-
-            var byteCharacters = atob(b64Data);
-            var byteArrays = [];
-
-            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-                var byteNumbers = new Array(slice.length);
-                for (var i = 0; i < slice.length; i++) {
-                    byteNumbers[i] = slice.charCodeAt(i);
-                }
-
-                var byteArray = new Uint8Array(byteNumbers);
-
-                byteArrays.push(byteArray);
-            }
-
-            var blob = new Blob(byteArrays, {
-                type: contentType
-            });
-            return blob;
-        }
-
-        $scope.$watch('myCroppedImage', function(newval) {
-            if ($scope.myCroppedImage != '' && $scope.myCroppedImage != $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image && $scope.Mediafiles.length > 0) {
-                var image = $scope.myCroppedImage;
-                var blob = b64toBlob(image.split(",")[1], $scope.Mediafiles[0].lfFile.type, 512);
-                file = new File([blob], $scope.Mediafiles[0].lfFileName, {
-                    type: $scope.Mediafiles[0].lfFile.type
-                });
-            }
-        })
-
-        var file;
-        $scope.CropImageToFile = function() {
-            if ($scope.myCroppedImage != '' && $scope.myCroppedImage != $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image) {
-                var image = $scope.myCroppedImage;
-                var blob = b64toBlob(image.split(",")[1], $scope.Mediafiles[0].lfFile.type, 512);
-                file = new File([blob], $scope.Mediafiles[0].lfFileName, {
-                    type: $scope.Mediafiles[0].lfFile.type
-                });
-            }
-        }
-
-        $scope.RemoveImage = function() {
-            $scope.myImage = '';
-            $scope.FlgImage = 0;
-            $scope.model.image = '';
-        }
-
 
         $scope.restForm = function() {
             $scope.AddUserForm.$setUntouched();
@@ -897,19 +732,18 @@
                     IsMobileVerify: false,
                     idApp: parseInt($rootScope.appId),
                     Amount: 0,
+                    LoginUserId: $rootScope.UserRoles != "Super Admin" ? $rootScope.UserId : '',
+                    password: '',
+                    confirmpassword: '',
                 };
                 $scope.tab = {
                     selectedIndex: 1
                 };
-                $scope.FlgImage = 0;
-                $scope.FlgCropImage = 0;
                 $scope.flag = true;
 
-                $scope.GetAllRoles();
+                // $scope.GetAllRoles();
                 $scope.restForm();
-                $scope.myImage = '';
-                $scope.myCroppedImage = '';
-                $scope.apiMedia.removeAll();
+
             }
         }
         $scope.ResetData = function() {
@@ -933,17 +767,12 @@
                 IsMobileVerify: false,
                 idApp: parseInt($rootScope.appId),
                 Amount: 0,
+                LoginUserId: $rootScope.UserRoles != "Super Admin" ? $rootScope.UserId : '',
+                password: '',
+                confirmpassword: '',
             };
-            $scope.FlgImage = 0;
-            $scope.FlgCropImage = 0;
+
             $scope.restForm();
-            $scope.myImage = '';
-            $scope.myCroppedImage = '';
-            $scope.apiMedia.removeAll();
-            for (var index = 0; index < $scope.lstRoles.length; index++) {
-                $scope.lstRoles[index].checked = false;
-            }
-            $scope.changeUserRole();
 
         }
         $scope.ResetTab = function() {
@@ -959,25 +788,10 @@
             }
             $scope.GetAllUser(true);
             $scope.init();
-            $scope.myImage = '';
-            $scope.myCroppedImage = '';
-            $scope.apiMedia.removeAll();
 
         }
 
-        $scope.changeUserRole = function() {
-            $scope.model.Amount = 0;
-            var CheckSalesAgent = _.filter($scope.lstRoles, function(data) {
-                if (data.RoleName == 'Sales Agent' && data.checked) {
-                    return data;
-                }
-            })
-            if (CheckSalesAgent.length && CheckSalesAgent.length > 0) {
-                $scope.IsDisplayAmount = true;
-            } else {
-                $scope.IsDisplayAmount = false;
-            }
-        }
+
         $scope.init();
     }
 

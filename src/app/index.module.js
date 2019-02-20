@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     /**
@@ -83,6 +83,7 @@
             'app.DistributorCustomer',
             'app.DistributorVehicle',
             'app.DistributorRenew',
-            'app.AssignDistributor'
+            'app.AssignDistributor',
+            'app.distributorsubuser',
         ]);
 })();

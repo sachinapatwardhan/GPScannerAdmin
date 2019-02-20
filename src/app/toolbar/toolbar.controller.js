@@ -21,6 +21,7 @@
             $cookieStore.remove('UserName');
             $cookieStore.remove('token');
             $cookieStore.remove('UserImage');
+            $cookieStore.remove('DistributorId');
             // $cookieStore.remove('AppName');
             // localStorage.setItem('AppName', '');
             // localStorage.setItem('appId', '');

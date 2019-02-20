@@ -245,7 +245,7 @@
                         <br>
                         <ul class="selectRoleList" layout="row" layout-wrap layout-align="start center">
                             <li ng-repeat="o in lstRoles" flex="100" flex-gt-sm="50" flex-gt-md="33" flex-gt-lg="25">
-                                <md-checkbox class="md-secondary" ng-model="o.checked" value="{{o.id}}" flex></md-checkbox>
+                                <md-checkbox class="md-secondary" ng-model="o.checked" value="{{o.id}}" flex ng-change="changeUserRole()"></md-checkbox>
                                 <span>{{o.RoleName}} &nbsp;</span>
                             </li>
                         </ul>
@@ -279,6 +279,10 @@
                             </md-select-header>
                             <md-option ng-value="o.Country" ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">{{o.Country}}</md-option>
                         </md-select>
+                    </md-input-container>
+                    <md-input-container flex="100" flex-gt-sm="100" flex-gt-md="33" ng-if="IsDisplayAmount">
+                        <label>Amount</label>
+                        <input type="text" name="Amount" ng-model="model.Amount" placeholder="Amount" is-number>
                     </md-input-container>
                 </div>
                 <div ng-show="FlgImage" class="row" flex="100" flex-gt-xs="100">
