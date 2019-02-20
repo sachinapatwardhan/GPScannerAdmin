@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -6,13 +6,13 @@
         .controller('LoginController', LoginController)
         .directive('autoFillableField', [
             '$timeout',
-            function($timeout) {
+            function ($timeout) {
                 return {
                     require: '?ngModel',
                     restrict: 'A',
-                    link: function(scope, element, attrs, ngModel) {
+                    link: function (scope, element, attrs, ngModel) {
 
-                        $timeout(function() {
+                        $timeout(function () {
                             if (ngModel.$viewValue !== element.val()) {
                                 ngModel.$setViewValue(element.val());
                             }
@@ -27,7 +27,7 @@
         var vm = this;
         $('.logo').css('background-image', 'url(' + localStorage.getItem('Logo') + ')');
         //  $('#forgot-password-form .logo').css('background-image', 'url(' + $rootScope.Logo + ')');
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.model = {
                 UserName: '',
                 Password: '',
@@ -58,7 +58,7 @@
 
         }
 
-        $scope.setUserName = function() {
+        $scope.setUserName = function () {
 
             if ($scope.model.UserName !== document.getElementsByName("email")[0].value) {
                 $scope.model.UserName = document.getElementsByName("email")[0].value;
@@ -66,7 +66,7 @@
             // alert("Call")
         }
 
-        $scope.setPassword = function() {
+        $scope.setPassword = function () {
 
             if ($scope.model.Password !== document.getElementsByName("password")[0].value) {
                 $scope.model.Password = document.getElementsByName("password")[0].value;
@@ -74,7 +74,7 @@
             // alert("Call")
         }
 
-        $scope.Login = function(o, form, isLogout) {
+        $scope.Login = function (o, form, isLogout) {
             if (form) {
                 $cookieStore.put('isAllowMultipleTabs', true);
                 sessionStorage.setItem('isLogin', true);
@@ -87,7 +87,7 @@
                     password: o.Password,
                     appId: localStorage.getItem('appId'),
                 }
-                $http.get($rootScope.RoutePath + "account/loginNew", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "account/loginNew", { params: params }).then(function (data) {
                     if (data.data.success == true) {
 
                         $scope.RoleWiseCountry = data.data.RolewiseCountryList;
@@ -116,6 +116,7 @@
                         $rootScope.UserImage = $cookieStore.get('UserImage');
                         $cookieStore.put('UserName', o.UserName);
                         $cookieStore.put('token', data.data.token);
+                        $cookieStore.put('RenewAmount', data.data.Amount);
                         $cookieStore.put('CountryList', _.uniq($scope.splitCountryList));
                         // $cookieStore.put('appId', data.data.appId);
                         msNavigationService.clearNavigation();
@@ -123,6 +124,8 @@
                         $rootScope.MenuSet();
                         if (data.data.UserRoles.indexOf("Distributor") > -1 || data.data.UserRoles.indexOf("Distributor Sub User") > -1 && data.data.UserRoles.indexOf("Super Admin") == -1) {
                             $window.location.href = '/#/DistributorTrackers';
+                        } else if (data.data.UserRoles.indexOf("Sales Agent") > -1) {
+                            $window.location.href = '/#/RenewManagement';
                         } else {
                             $window.location.href = '/#/Dashboard';
                         }
@@ -138,20 +141,20 @@
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     };
                 });
             }
         }
 
-        $scope.ShowForgotPassword = function(ev, o) {
+        $scope.ShowForgotPassword = function (ev, o) {
             $state.go('app.Forgotpassword');
         }
 
-        $scope.ShowRegister = function(ev, o) {
+        $scope.ShowRegister = function (ev, o) {
             $state.go('app.Register');
         }
         $scope.init();
