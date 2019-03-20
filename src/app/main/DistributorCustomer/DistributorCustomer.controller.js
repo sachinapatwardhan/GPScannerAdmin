@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -11,7 +11,7 @@
         var vm = this;
         $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
-        $scope.init = function() {
+        $scope.init = function () {
             $rootScope.appId = localStorage.getItem('appId');
             $rootScope.AppName = localStorage.getItem('appName');
             $scope.model = {
@@ -48,31 +48,31 @@
             $scope.GetAllInfoList();
         }
 
-        $scope.setUsernameValue = function(email) {
+        $scope.setUsernameValue = function (email) {
             $scope.model.username = $scope.model.email;
         }
 
-        $scope.GetAllInfoList = function() {
-            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function(data) {
+        $scope.GetAllInfoList = function () {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
                 $scope.lstAppInfo = data.data;
             })
         }
 
         function GetAllCountry() {
-            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function(data) {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function (data) {
                 $scope.lstCountry = data.data;
             });
         }
 
-        $scope.GetAllRoles = function() {
+        $scope.GetAllRoles = function () {
             // Data
-            $http.get($rootScope.RoutePath + "role/GetAllRole").then(function(data) {
+            $http.get($rootScope.RoutePath + "role/GetAllRole").then(function (data) {
                 $scope.lstRoles = data.data;
             });
         }
 
         //Dynamic Pagging
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.FilterStatus = 1;
 
             $scope.dtColumns1 = [
@@ -90,34 +90,34 @@
             ]
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
-                    url: $rootScope.RoutePath + "distributor/GetAllDynamicOwnerCustomerForDistributor",
-                    data: function(d) {
+                url: $rootScope.RoutePath + "distributor/GetAllDynamicOwnerCustomerForDistributor",
+                data: function (d) {
 
-                        if ($rootScope.UserRoles != 'Super Admin') {
-                            d.appId = $rootScope.appId;
-                        }
-                        if ($scope.Search != "") {
-                            d.search = $scope.Search;
-                        } else {
-                            d.search = "";
-                        }
-                        d.UserCountry = $rootScope.UserCountry;
-                        d.UserRoles = $rootScope.UserRoles;
-                        d.UserId = $rootScope.UserId;
-                        d.CountryList = $rootScope.CountryList;
-                        return d;
-                    },
-                    type: "get",
-                    dataSrc: function(json) {
-                        if (json.success != false) {
-                            $scope.lstdata = json.data;
-                            $scope.lstTotal = json.recordsTotal;
-                            return json.data;
-                        } else {
-                            return [];
-                        }
-                    },
-                })
+                    if ($rootScope.UserRoles != 'Super Admin') {
+                        d.appId = $rootScope.appId;
+                    }
+                    if ($scope.Search != "") {
+                        d.search = $scope.Search;
+                    } else {
+                        d.search = "";
+                    }
+                    d.UserCountry = $rootScope.UserCountry;
+                    d.UserRoles = $rootScope.UserRoles;
+                    d.UserId = $rootScope.UserId;
+                    d.CountryList = $rootScope.CountryList;
+                    return d;
+                },
+                type: "get",
+                dataSrc: function (json) {
+                    if (json.success != false) {
+                        $scope.lstdata = json.data;
+                        $scope.lstTotal = json.recordsTotal;
+                        return json.data;
+                    } else {
+                        return [];
+                    }
+                },
+            })
                 .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
@@ -135,7 +135,7 @@
 
         //Reload Datatable
 
-        $scope.GetAllUser = function(IsUpdate) {
+        $scope.GetAllUser = function (IsUpdate) {
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
@@ -152,9 +152,9 @@
 
         }
 
-        $scope.reloadData = function() {}
+        $scope.reloadData = function () { }
 
-        function callback(json) {}
+        function callback(json) { }
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -222,13 +222,13 @@
                 '<md-icon md-font-icon="icon-timer"  class="s18 purple-500-fg"></md-icon>' +
                 '<md-tooltip md-visible="" md-direction="">Show Devices</md-tooltip>' +
                 '</md-button>';
-            if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword($event,' + data.id + ')" aria-label="">' +
-                    '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
-                    '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
-                    '</md-button>';
+            //if ($rootScope.FlgModifiedAccess) {
+            btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword($event,' + data.id + ')" aria-label="">' +
+                '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
+                '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
+                '</md-button>';
 
-            }
+            //}
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
                     '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
@@ -251,40 +251,40 @@
             return btns;
         };
 
-        $scope.DeleteCustomer = function(id) {
+        $scope.DeleteCustomer = function (id) {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure to Delete this Customer ?')
                 .ok('Ok')
                 .cancel('Cancel')
-            $mdDialog.show(confirm).then(function() {
+            $mdDialog.show(confirm).then(function () {
                 var params = {
                     id: id
                 };
                 $http.get($rootScope.RoutePath + "user/DeleteCustomer", {
                     params: params
-                }).success(function(data) {
+                }).success(function (data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.GetAllUser(true);
 
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     }
                 });
             })
         }
 
-        $scope.ChangePassword = function(ev, id) {
+        $scope.ChangePassword = function (ev, id) {
             var obj = _.findWhere($scope.lstdata, { id: id })
             $mdDialog.show({
                 skipHide: true,
@@ -302,12 +302,12 @@
                 }
             });
         }
-        $scope.GetSerch = function(Search) {
+        $scope.GetSerch = function (Search) {
             $scope.Search = Search;
             $scope.GetAllUser(true);
         }
 
-        $scope.EditCustomer = function(id) {
+        $scope.EditCustomer = function (id) {
 
             var o = _.findWhere($scope.lstdata, { id: id });
             for (var prop in $scope.model) {
@@ -347,29 +347,29 @@
         //         }
         //     })
         // }
-        $scope.onSearchChange = function($event) {
+        $scope.onSearchChange = function ($event) {
             $event.stopPropagation();
         }
-        $scope.CreateCustomer = function(o) {
+        $scope.CreateCustomer = function (o) {
             o.roleId = _.where($scope.lstRoles, { RoleName: 'User' });
             if (o.id == '') {
                 if (o.confirmpassword != o.password) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent('Password and Confirm Password does not match...')
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent('Password and Confirm Password does not match...')
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     return;
                 }
             }
-            $http.post($rootScope.RoutePath + "user/SaveCustomer", o).then(function(data) {
+            $http.post($rootScope.RoutePath + "user/SaveCustomer", o).then(function (data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.resetForm();
                     $scope.init();
@@ -380,9 +380,9 @@
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     };
 
@@ -391,7 +391,7 @@
         };
 
 
-        $scope.ResetPassword = function(ev, id) {
+        $scope.ResetPassword = function (ev, id) {
             var obj = _.findWhere($scope.lstdata, { id: id })
             $mdDialog.show({
                 controller: 'DistributorPasswordConfirmationController',
@@ -411,27 +411,27 @@
         }
 
         //Reset Password User By Id
-        $scope.ResetPassword1 = function(id) {
+        $scope.ResetPassword1 = function (id) {
             $scope.obj = _.findWhere($scope.lstdata, { id: id });
 
             var confirm = $mdDialog.confirm()
                 .title('Are you sure to Reset Password of this Customer ?')
                 .ok('Ok')
                 .cancel('Cancel')
-            $mdDialog.show(confirm).then(function() {
+            $mdDialog.show(confirm).then(function () {
                 var params = {
                     // email: $scope.obj.email,
                     // idApp: $rootScope.appId,
                     id: id,
                     AppName: localStorage.getItem('appName') + ' Admin',
                 }
-                $http.get($rootScope.RoutePath + "account/forgotpasswordfromOwnerCustomer", { params: params }).then(function(data) {
+                $http.get($rootScope.RoutePath + "account/forgotpasswordfromOwnerCustomer", { params: params }).then(function (data) {
                     if (data.data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     } else {
                         if (data.data.data == 'TOKEN') {
@@ -443,9 +443,9 @@
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                         }
                     }
@@ -457,7 +457,7 @@
 
 
         //show User Devices
-        $scope.ShowDeviceModal = function(ev, id) {
+        $scope.ShowDeviceModal = function (ev, id) {
             $mdDialog.show({
                 controller: 'DistributorDeviceModelController',
                 controllerAs: 'vm',
@@ -476,7 +476,7 @@
 
         //Dynamic Pagging End
 
-        $scope.ResetData = function() {
+        $scope.ResetData = function () {
             $scope.model = {
                 id: '',
                 email: '',
@@ -501,10 +501,10 @@
             $scope.clearSearchTerm();
             $scope.resetForm();
         }
-        $scope.clearSearchTerm = function() {
+        $scope.clearSearchTerm = function () {
             vm.searchTermidAppName = '';
         }
-        $scope.Reset = function() {
+        $scope.Reset = function () {
             $rootScope.FlgAddedEditlocal = false;
             if ($rootScope.FlgAddedAccess == true) {
                 $rootScope.FlgAddedEditlocal = true;
@@ -536,17 +536,17 @@
 
         }
 
-        $scope.Cancel = function() {
+        $scope.Cancel = function () {
             $scope.ResetData();
             $scope.flag = false;
         }
 
-        $scope.resetForm = function() {
+        $scope.resetForm = function () {
             $scope.AddCustomerForm.$setUntouched();
             $scope.AddCustomerForm.$setPristine();
 
         }
-        $scope.SearchReset = function() {
+        $scope.SearchReset = function () {
             $scope.modelSearch = {
                 AppName: '',
                 country: '',
@@ -556,7 +556,7 @@
 
         $scope.init();
 
-        $scope.Export = function() {
+        $scope.Export = function () {
             var AppId = $rootScope.UserRoles == "Super Admin" ? '' : $rootScope.appId;
             var CurrentOffset = $rootScope.CurrentOffset.charAt(0) == '+' ? $rootScope.CurrentOffset.replace('+', 'p') : $rootScope.CurrentOffset.replace('-', 'm');
             window.location.href = $rootScope.RoutePath + "User/ExportOwnerCustomer?appId=" + AppId + "&UserRoles=" + $rootScope.UserRoles + "&CurrentOffset=" + CurrentOffset;

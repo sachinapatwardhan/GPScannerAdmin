@@ -239,13 +239,13 @@
                 '<md-icon md-font-icon="icon-timer"  class="s18 purple-500-fg"></md-icon>' +
                 '<md-tooltip md-visible="" md-direction="">Show Devices</md-tooltip>' +
                 '</md-button>';
-            // if ($rootScope.FlgModifiedAccess) {
-            btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword($event,' + data.id + ')" aria-label="">' +
-                '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
-                '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
-                '</md-button>';
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword($event,' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
+                    '</md-button>';
 
-            //}
+            }
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
                     '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
