@@ -229,12 +229,12 @@
                 '</md-button>';
 
             //}
-            if ($rootScope.FlgModifiedAccess) {
-                btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
-                    '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
-                    '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
-                    '</md-button>';
-            }
+            // if ($rootScope.FlgModifiedAccess) {
+            btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
+                '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
+                '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
+                '</md-button>';
+            //}
 
             if ($rootScope.FlgModifiedAccess) {
                 btns += '<md-button class="edit-button md-icon-button"  ng-click="EditCustomer(' + data.id + ')" aria-label="Edit Location">' +
