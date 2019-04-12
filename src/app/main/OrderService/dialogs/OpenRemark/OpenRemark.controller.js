@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -6,9 +6,10 @@
         .controller('OpenRemarkController', OpenRemarkController);
 
     /** @ngInject */
-    function OpenRemarkController($http, $mdDialog, $mdToast, $scope, $cookieStore, $rootScope, obj, Tasks, event, MainVM) {
+    function OpenRemarkController($http, $mdDialog, $mdToast, $scope, $cookieStore, $rootScope, obj, Role, event, MainVM) {
         var vm = this;
         // console.log(obj)
+        $scope.CurrentRole = Role;
         $scope.model = {
             id: obj.id,
             PurchaseOrderNumber: obj.PurchaseOrderNumber,
@@ -31,24 +32,24 @@
             $scope.model.MaarkAsManualBy = 'N/A';
         }
 
-        $scope.Reset = function() {
+        $scope.Reset = function () {
             $mdDialog.hide();
         }
 
 
 
-        $scope.UpdateRemarkById = function(o) {
+        $scope.UpdateRemarkById = function (o) {
             var params = {
                 id: o.id,
                 Remark: o.Remark,
             }
-            $http.get($rootScope.RoutePath + "orderservice/UpdateRemarkById", { params: params }).then(function(data) {
+            $http.get($rootScope.RoutePath + "orderservice/UpdateRemarkById", { params: params }).then(function (data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     MainVM.GetAllOrderServiceFromModal(true);
                     $mdDialog.hide();
@@ -58,16 +59,16 @@
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     }
                 }
             });
         }
 
-        $scope.closeModel = function() {
+        $scope.closeModel = function () {
             $mdDialog.hide();
         }
 

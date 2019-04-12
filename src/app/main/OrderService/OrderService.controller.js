@@ -293,7 +293,7 @@
             // DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateFormateHtml),
             DTColumnBuilder.newColumn('OrderTotal'),
             DTColumnBuilder.newColumn('OrderNotes'),
-            DTColumnBuilder.newColumn('ShippAddress1'),
+            DTColumnBuilder.newColumn('tbluserinformation.country'),
             DTColumnBuilder.newColumn(null).notSortable().renderWith(StatusHtml),
             DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
         ]
@@ -585,7 +585,7 @@
                 clickOutsideToClose: true,
                 locals: {
                     obj: objData,
-                    Tasks: [],
+                    Role: $rootScope.UserRoles,
                     event: ev,
                     MainVM: vm,
                 }
@@ -859,10 +859,12 @@
                 var Country = '';
             }
             var idApp = 0;
+            var IsAdmin = true;
             if ($rootScope.UserRoles != 'Super Admin') {
                 idApp = $rootScope.idApp;
+                IsAdmin = false;
             }
-            window.location = $rootScope.RoutePath + "orderservice/ExportOrderServiceNew?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country + "&IdUser=" + $scope.modelSearch.IdUser + "&DeviceId=" + $scope.modelSearch.DeviceId;
+            window.location = $rootScope.RoutePath + "orderservice/ExportOrderServiceNew?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country + "&IdUser=" + $scope.modelSearch.IdUser + "&DeviceId=" + $scope.modelSearch.DeviceId + "&TimeZone=" + $rootScope.CurrentTimeZone + "&IsAdmin=" + IsAdmin;
         }
         $scope.GetAllInfoList = function () {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {

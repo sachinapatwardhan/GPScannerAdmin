@@ -50,7 +50,7 @@
                             </h3>
                         </div>
 
-                        <div flex="100" flex-gt-sm="100">
+                        <div flex="100" flex-gt-sm="100" ng-if="CurrentRole=='Super Admin'">
                             <md-input-container class="md-block " flex="100 " flex-gt-sm="100">
                                 <label>Remark</label>
                                 <input type="text " name="Remark " ng-model="modelRemark.Remark">
@@ -58,8 +58,11 @@
                         </div>
 
                     </div>
-                    <md-button class="md-raised md-primary" ng-disabled="modelRemark.Remark==''||modelRemark.Remark==null" ng-click="UpdateRemarkById(modelRemark)">Save</md-button>
-                    <md-button class="md-raised md-warn" ng-click="Reset()">Cancel</md-button>
+                    <md-button class="md-raised md-primary" ng-if="CurrentRole=='Super Admin'"
+                        ng-disabled="modelRemark.Remark==''||modelRemark.Remark==null"
+                        ng-click="UpdateRemarkById(modelRemark)">Save</md-button>
+                    <md-button class="md-raised md-warn" ng-if="CurrentRole=='Super Admin'" ng-click="Reset()">Cancel
+                    </md-button>
                 </md-content>
 
             </form>
