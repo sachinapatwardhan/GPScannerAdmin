@@ -835,17 +835,20 @@ table.dataTable {
  */
 .dataTables_wrapper {
     display: flex;
+    flex: 1 0 auto;
     flex-direction: column;
-
+    min-height: 0;
     .top {
         padding: 16px 24px;
     }
 
     .bottom {
         display: flex;
-        flex: 1 1 auto;
+        // flex: 1 1 auto;
         justify-content: space-between;
         padding: 16px 8px;
+        margin-top: 10px;
+        margin-bottom: 10px;
 
         .left {
             display: flex;
@@ -968,11 +971,11 @@ table.dataTable {
 
     .dataTables_scroll {
         display: flex;
-        flex: 1 1 auto;
+        flex: 1 1 0;
         /* added by jGajera -  flex: 1 to --- */
         flex-direction: column;
         clear: both;
-
+        min-height: 0;
         /* Clear the table border & shadows */
         table.dataTable {
             box-shadow: none;
