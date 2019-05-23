@@ -12,20 +12,25 @@
                     <b>{{TotalTrackers}}</b>
                 </div>
             </div>
-            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+            <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33"
+                align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+                <input id="modelsearch" ng-model="Search" ng-change="GetSerch(Search)" class="search-input" type="text"
+                    placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
             </div>
             <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search" ng-if="lstdata.length > 0">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="Export()" aria-label="Search"
+                    ng-if="lstdata.length > 0">
                     <md-icon md-font-icon="icon-file-excel"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportGpsDeviceModal($event)" aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportGpsDeviceModal($event)"
+                    aria-label="Search">
                     <md-icon md-font-icon="icon-import"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()" aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()"
+                    aria-label="Search">
                     <md-icon md-font-icon="icon-download"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
                 </md-button>
@@ -39,7 +44,8 @@
         </div>
         <div class="content-card" layout="column" flex ng-if="UserRoles == 'Super Admin'">
             <div class="content fullpage-datatable" layout="column" flex>
-                <table id="TRACKERDetail" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                <table id="TRACKERDetail" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance"
+                    dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
                             <th class="all">
@@ -135,7 +141,8 @@
         </div>
         <div class="content-card" layout="column" flex ng-if="UserRoles != 'Super Admin'">
             <div class="content fullpage-datatable" layout="column" flex>
-                <table id="TRACKERDetail1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance1" dt-columns="dtColumns1" dt-options="dtOptions" width="100%">
+                <table id="TRACKERDetail1" class="dataTable row-border hover" datatable="" dt-instance="vm.dtInstance1"
+                    dt-columns="dtColumns1" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
                             <th class="all">
@@ -148,7 +155,8 @@
                                     <span class="column-title">Device ID</span>
                                 </div>
                             </th>
-                            <th class="secondary-text" ng-if="AppName == 'DoTracks' || AppName == 'Trackox' || AppName == 'Trackox'">
+                            <th class="secondary-text"
+                                ng-if="AppName == 'DoTracks' || AppName == 'Trackox' || AppName == 'Trackox'">
                                 <div class="table-header">
                                     <span class="column-title">Company</span>
                                 </div>
@@ -229,7 +237,8 @@
 <div class="page-layout simple tabbed" layout="column" ng-show="flag">
     <div class="header md-accent-bg" layout="row" layout-align="start center">
         <div class="white-fg" layout="row" layout-align="start center" flex>
-            <md-button class="goto-products-button md-icon-button" aria-label="Go to TRACKER" ng-click="gotoTRACKERList()">
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to TRACKER"
+                ng-click="gotoTRACKERList()">
                 <md-icon md-font-icon="icon-arrow-left"></md-icon>
             </md-button>
             <div layout="row" layout-align="start center">
@@ -251,8 +260,11 @@
                         <div layout="row" layout-wrap>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>IMEI</label>
-                                <input name="IMEI" type="text" ng-model="model.IMEI" ng-disabled="flagEdit" ng-required="true" ng-maxlength="15" ng-minlength="15" ng-blur="GetDeviceId(model.IMEI)">
-                                <div ng-messages="formTrackingdetails.IMEI.$error" ng-if="formTrackingdetails.IMEI.$touched" role="alert">
+                                <input name="IMEI" type="text" ng-model="model.IMEI" ng-disabled="flagEdit"
+                                    ng-required="true" ng-maxlength="15" ng-minlength="15"
+                                    ng-blur="GetDeviceId(model.IMEI)">
+                                <div ng-messages="formTrackingdetails.IMEI.$error"
+                                    ng-if="formTrackingdetails.IMEI.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>IMEI is required</span>
                                     </div>
@@ -279,16 +291,19 @@
                                     </div>
                                 </div>
                             </md-input-container>-->
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName == 'DoTracks' || AppName == 'Trackox' || UserRoles == 'Super Admin'">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25"
+                                ng-if="AppName == 'DoTracks' || AppName == 'Trackox' || UserRoles == 'Super Admin'">
                                 <label>Company</label>
                                 <md-select ng-model="model.Company" name="Company" required>
                                     <md-option name="Company1" value="Maark" selected="true">Maark</md-option>
+                                    <md-option name="Company2" value="ITCD">ITCD</md-option>
                                     <!-- <md-option name="Company2" value="Concox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">Concox</md-option>
                                     <md-option name="Company3" value="GPSBox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">GPSBox</md-option>
                                     <md-option name="Company4" value="Toplovo" ng-if="AppName == 'Trackox' || UserRoles == 'Super Admin'">Toplovo</md-option> -->
                                 </md-select>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="AppName != 'Tracking'">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25"
+                                ng-if="AppName != 'Tracking'">
                                 <label>Type</label>
                                 <md-select ng-model="model.Type" name="Type" required>
                                     <md-option name="Type1" value="TK510" selected="true">TK510</md-option>
@@ -296,6 +311,8 @@
                                     <md-option name="Type3" value="TK228">TK228</md-option>
                                     <md-option name="Type4" value="GT08">GT08</md-option>
                                     <md-option name="Type5" value="MT05">MT05</md-option>
+                                    <md-option name="Type6" value="ITCD" ng-if="UserRoles == 'Super Admin'">ITCD
+                                    </md-option>
                                     <!-- <md-option name="Type6" value="Concox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">Concox</md-option>
                                     <md-option name="Type9" value="GPSBox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">GPSBox</md-option>
                                     <md-option name="Type8" value="TL109" ng-if="AppName == 'Trackox' || UserRoles == 'Super Admin'">TL109</md-option> -->
@@ -306,7 +323,8 @@
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Version </label>
                                 <input name="Version" type="text" ng-model="model.Version">
-                                <div ng-messages="formTrackingdetails.Version.$error" ng-if="formTrackingdetails.Version.$touched">
+                                <div ng-messages="formTrackingdetails.Version.$error"
+                                    ng-if="formTrackingdetails.Version.$touched">
                                     <div ng-message="required">
                                         <span>Version is required</span>
                                     </div>
@@ -314,13 +332,19 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>Country</label>
-                                <md-select Name="CountryId" ng-model="model.CountryId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                <md-select Name="CountryId" ng-model="model.CountryId" md-on-close="clearSearchTerm()"
+                                    data-md-container-class="selectdemoSelectHeader">
                                     <md-select-header class="demo-select-header">
-                                        <input ng-model="vm.searchTermCountry" type="search" placeholder="Search for a country.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                        <input ng-model="vm.searchTermCountry" type="search"
+                                            placeholder="Search for a country.." class="demo-header-searchbox md-text"
+                                            ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">{{o.Country}}</md-option>
+                                    <md-option ng-value="{{o.id}}"
+                                        ng-repeat="o in lstCountry |filter:vm.searchTermCountry| orderBy: 'Country'">
+                                        {{o.Country}}</md-option>
                                 </md-select>
-                                <div ng-messages="formTrackingdetails.CountryId.$error" ng-if="formTrackingdetails.CountryId.$touched" role="alert">
+                                <div ng-messages="formTrackingdetails.CountryId.$error"
+                                    ng-if="formTrackingdetails.CountryId.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>Country is required.</span>
                                     </div>
@@ -366,25 +390,37 @@
                             </md-input-container>-->
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>SIM Serial Number</label>
-                                <md-select Name="idSim" ng-model="model.idSim" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                <md-select Name="idSim" ng-model="model.idSim" md-on-close="clearSearchTerm()"
+                                    data-md-container-class="selectdemoSelectHeader">
                                     <md-select-header class="demo-select-header">
-                                        <input ng-model="vm.searchTermidSim" type="search" placeholder="Search for a Serial Number.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                        <input ng-model="vm.searchTermidSim" type="search"
+                                            placeholder="Search for a Serial Number.."
+                                            class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstSIMInfo | filter:vm.searchTermidSim | orderBy: 'SerialNum'">{{o.SerialNum}}</md-option>
+                                    <md-option ng-value="{{o.id}}"
+                                        ng-repeat="o in lstSIMInfo | filter:vm.searchTermidSim | orderBy: 'SerialNum'">
+                                        {{o.SerialNum}}</md-option>
                                 </md-select>
-                                <div ng-messages="formTrackingdetails.idSim.$error" ng-if="formTrackingdetails.idSim.$touched" role="alert">
+                                <div ng-messages="formTrackingdetails.idSim.$error"
+                                    ng-if="formTrackingdetails.idSim.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>SIM Serial Number is required.</span>
                                     </div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25" ng-if="UserRoles == 'Super Admin'">
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25"
+                                ng-if="UserRoles == 'Super Admin'">
                                 <label>App Name</label>
-                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader">
+                                <md-select Name="AppName" ng-model="model.idApp" md-on-close="clearSearchTerm()"
+                                    data-md-container-class="selectdemoSelectHeader">
                                     <md-select-header class="demo-select-header">
-                                        <input ng-model="vm.searchTermidAppName" type="search" placeholder="Search for a APP Name.." class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                        <input ng-model="vm.searchTermidAppName" type="search"
+                                            placeholder="Search for a APP Name.." class="demo-header-searchbox md-text"
+                                            ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.id}}" ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">{{o.AppName}}</md-option>
+                                    <md-option ng-value="{{o.id}}"
+                                        ng-repeat="o in lstAppInfo | filter:vm.searchTermidAppName track by o.id">
+                                        {{o.AppName}}</md-option>
                                 </md-select>
                             </md-input-container>
                         </div>
@@ -394,7 +430,8 @@
                             </md-checkbox>
                         </div>-->
                         <div align="left">
-                            <md-button class="md-raised md-primary" ng-disabled="formTrackingdetails.$invalid" ng-click="CreateGpsDevice(model, formTrackingdetails)">Save</md-button>
+                            <md-button class="md-raised md-primary" ng-disabled="formTrackingdetails.$invalid"
+                                ng-click="CreateGpsDevice(model, formTrackingdetails)">Save</md-button>
                             <md-button class="md-accent md-raised" ng-click="ResetData()">Reset</md-button>
                             <md-button class="md-raised md-warn" ng-click="gotoTRACKERList()">Cancel</md-button>
                         </div>

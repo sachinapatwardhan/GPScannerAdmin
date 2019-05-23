@@ -19,7 +19,7 @@
         //} catch (ex) {
 
         //}
-        $rootScope.VersionNumber = "19.02.0412.c00c2ed";
+        $rootScope.VersionNumber = "19.02.0503.12ffd480";
         // $rootScope.RoutePath = "http://localhost:7212/";
         // $rootScope.Socket_URL = "http://localhost:7212";
 
