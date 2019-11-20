@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -16,8 +16,8 @@
         $scope.selectedItem = null;
 
 
-        $scope.GetUserByName = function(query) {
-            $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+        $scope.GetUserByName = function (query) {
+            return $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -25,10 +25,10 @@
                 return pendingSearch
             });
 
-            return pendingSearch;
+            // return pendingSearch;
         }
         $scope.flgErrorNotFound = 1;
-        $scope.selectedItemChange = function(q) {
+        $scope.selectedItemChange = function (q) {
 
             if (q != null && q != undefined && !isNaN(q.id)) {
                 $scope.modelProductAttributeCombinations.UserRoleId = q.id;
@@ -39,14 +39,14 @@
             };
         }
 
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.modelProductAttributeCombinations = {
                 UserRoleId: '',
                 Type: 'Role'
             }
         }
 
-        $scope.ClearProductAttributeCombinationUserRoleId = function(form) {
+        $scope.ClearProductAttributeCombinationUserRoleId = function (form) {
             $scope.query = null;
             $scope.selectedItem = null;
             $scope.modelProductAttributeCombinations.UserRoleId = "";
@@ -56,14 +56,14 @@
             $scope.formProductAttributeCombinationExport.FromUserRoleIdUser.$pristine = false;
         }
 
-        $scope.ExportProductAttributeCombinations = function(o) {
+        $scope.ExportProductAttributeCombinations = function (o) {
 
             o.UserRoleId = $scope.modelProductAttributeCombinations.UserRoleId;
             window.location = $rootScope.RoutePath + "productAttributeCombination/ExportProductAttributeCombinations?ProductId=" + $scope.ProductId + "&Type=" + o.Type + "&UserRoleId=" + o.UserRoleId;
             $scope.closeModel();
         }
 
-        $scope.closeModel = function() {
+        $scope.closeModel = function () {
             $mdDialog.hide();
         }
 

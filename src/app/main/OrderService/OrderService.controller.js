@@ -970,7 +970,7 @@
                 appId: $rootScope.idApp,
             }
             // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
-            $http.get($rootScope.RoutePath + "user/GetUserByEmail", { params: params }).then(function (data) {
+            return $http.get($rootScope.RoutePath + "user/GetUserByEmail", { params: params }).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -978,7 +978,7 @@
                 return pendingSearch
             });
 
-            return pendingSearch;
+            // return pendingSearch;
         }
         $scope.GetUserById = function (id) {
             $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function (data) {

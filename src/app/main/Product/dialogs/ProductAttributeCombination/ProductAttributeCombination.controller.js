@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -20,7 +20,7 @@
 
         $scope.selectedItem = null;
         //Clear ProductAttributeCombination UserRoleId
-        $scope.ClearProductAttributeCombinationUserRoleId = function() {
+        $scope.ClearProductAttributeCombinationUserRoleId = function () {
 
             $scope.modelProductAttributeCombinations.UserRoleId = "";
             $scope.selectedItem = null;
@@ -33,9 +33,9 @@
 
         }
 
-        $scope.GetUserByName = function(query) {
+        $scope.GetUserByName = function (query) {
 
-            $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            return $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -43,10 +43,10 @@
                 return pendingSearch
             });
 
-            return pendingSearch;
+            // return pendingSearch;
         }
         $scope.flgErrorNotFound = 1;
-        $scope.selectedItemChange = function(q) {
+        $scope.selectedItemChange = function (q) {
             if (q != null && q != undefined) {
                 $scope.modelProductAttributeCombinations.UserRoleId = q.id;
                 $scope.flgErrorNotFound = 0;
@@ -58,7 +58,7 @@
 
 
         //CreateProductAttributeCombinations
-        $scope.CreateProductAttributeCombinations = function(o, modelProductAttributeWithValue) {
+        $scope.CreateProductAttributeCombinations = function (o, modelProductAttributeWithValue) {
 
             //ProductVM.CreateProductAttributeCombinations(o,modelProductAttributeWithValue);
 
@@ -116,12 +116,12 @@
             obj.objProductAttributeCombination = o;
             obj.objTierPrice = objTierPrice;
 
-            $http.post($rootScope.RoutePath + "productAttributeCombination/CreateProductAttributeCombination", obj).success(function(data) {
+            $http.post($rootScope.RoutePath + "productAttributeCombination/CreateProductAttributeCombination", obj).success(function (data) {
                 $mdToast.show(
                     $mdToast.simple()
-                    .textContent(data.message)
-                    .position('top right')
-                    .hideDelay(3000)
+                        .textContent(data.message)
+                        .position('top right')
+                        .hideDelay(3000)
                 );
                 if (data.success) {
                     $scope.ProductAttributeCombinationsFlg = 0;
@@ -135,7 +135,7 @@
             });
         }
 
-        $scope.closeModel = function() {
+        $scope.closeModel = function () {
             $scope.modelProductAttributeCombinations.Type = "Role";
             $scope.modelProductAttributeCombinations.UserRoleId = "";
             $scope.modelProductAttributeCombinations.StockQuantity = 0;
@@ -145,7 +145,7 @@
 
             $mdDialog.hide();
         }
-        $scope.ResetModelData = function() {
+        $scope.ResetModelData = function () {
             $scope.formProductAttributeCombination.$setPristine();
             $scope.formProductAttributeCombination.$setUntouched();
 

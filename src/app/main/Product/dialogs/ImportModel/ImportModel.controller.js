@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -16,7 +16,7 @@
         $scope.ProductId = ProdAttrCombi_ProductId;
 
         //Clear ProductAttributeCombination UserRoleId
-        $scope.ClearProductAttributeCombinationUserRoleId = function() {
+        $scope.ClearProductAttributeCombinationUserRoleId = function () {
             $scope.model.UserRoleId = "";
             $scope.selectedItem = null;
             $scope.query = null;
@@ -24,18 +24,18 @@
             $scope.formImport.User.$pristine = false;
         }
 
-        $scope.GetUserByName = function(query) {
-            $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+        $scope.GetUserByName = function (query) {
+            return $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
                 pendingSearch = deferred.promise;
                 return pendingSearch
             });
-            return pendingSearch;
+            // return pendingSearch;
         }
         $scope.flgErrorNotFound = 1;
-        $scope.selectedItemChange = function(q) {
+        $scope.selectedItemChange = function (q) {
             if (q != null && q != undefined) {
                 $scope.model.UserRoleId = q.id;
                 $scope.flgErrorNotFound = 0;
@@ -45,37 +45,37 @@
             };
         }
 
-        $scope.Import = function(obj) {
+        $scope.Import = function (obj) {
             var formData = new FormData();
-            angular.forEach($scope.Mediafiles1, function(obj) {
+            angular.forEach($scope.Mediafiles1, function (obj) {
                 formData.append('files[]', obj.lfFile);
                 formData.append('ProdAttrCombi_ProductId', $scope.ProductId);
             });
             $http.post($rootScope.RoutePath + "ProductAttributeCombination/ImportProductAttributeCombinations?ProductId=" + $scope.ProductId + "&Type=" + obj.Type + "&UserRoleId=" + obj.UserRoleId, formData, {
                 transformRequest: angular.identity,
                 headers: { 'Content-Type': undefined }
-            }).then(function(response) {
+            }).then(function (response) {
                 if (response.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(response.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(response.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.closeModel();
 
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(response.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(response.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                 }
             });
         }
 
-        $scope.closeModel = function() {
+        $scope.closeModel = function () {
             $mdDialog.hide();
         }
     }

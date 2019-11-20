@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -15,7 +15,7 @@
         $scope.lstRoles = List.lstRoles;
         $scope.lstUsers = List.lstUsers;
 
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.modelCopyCombinationPrice = {
                 FromType: 'Role',
                 FromUserRoleId: '',
@@ -27,16 +27,16 @@
             }
         }
 
-        $scope.CopyCombinationPrice = function(o) {
+        $scope.CopyCombinationPrice = function (o) {
 
             o.idProduct = pid;
-            $http.post($rootScope.RoutePath + "productAttributeCombination/CopyCombinationPrice", o).success(function(data) {
+            $http.post($rootScope.RoutePath + "productAttributeCombination/CopyCombinationPrice", o).success(function (data) {
                 if (data.success) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.closeModel();
                     ProductVM.GetAllProductAttributeCombinationsFromModal();
@@ -44,20 +44,20 @@
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                 }
             });
         }
 
-        $scope.ClearData = function() {
+        $scope.ClearData = function () {
             $scope.modelCopyCombinationPrice.Amount = 0;
             $scope.modelCopyCombinationPrice.Percentage = 0;
         }
 
-        $scope.ClearProductAttributeCombinationUserRoleId = function(step, value) {
+        $scope.ClearProductAttributeCombinationUserRoleId = function (step, value) {
 
             if (step == 'From') {
                 $scope.modelCopyCombinationPrice.FromUserRoleId = "";
@@ -75,7 +75,7 @@
             }
         }
 
-        $scope.ResetCombinationPrice = function() {
+        $scope.ResetCombinationPrice = function () {
             $scope.modelCopyCombinationPrice = {
                 FromType: 'Role',
                 FromUserRoleId: '',
@@ -87,9 +87,9 @@
             }
         }
 
-        $scope.GetUserByNameFrom = function(query) {
+        $scope.GetUserByNameFrom = function (query) {
 
-            $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            return $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -97,11 +97,11 @@
                 return pendingSearchFrom
             });
 
-            return pendingSearchFrom;
+            // return pendingSearchFrom;
         }
-        $scope.GetUserByNameTo = function(query) {
+        $scope.GetUserByNameTo = function (query) {
 
-            $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            return $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -109,10 +109,10 @@
                 return pendingSearchTo
             });
 
-            return pendingSearchTo;
+            // return pendingSearchTo;
         }
         $scope.flgErrorNotFoundFrom = 1;
-        $scope.selectedItemChangeFrom = function(q) {
+        $scope.selectedItemChangeFrom = function (q) {
             if (q != null && q != undefined && !isNaN(q.id)) {
                 $scope.modelCopyCombinationPrice.FromUserRoleId = q.id;
                 $scope.flgErrorNotFoundFrom = 0;
@@ -122,7 +122,7 @@
             };
         }
         $scope.flgErrorNotFoundTo = 1;
-        $scope.selectedItemChangeTo = function(q) {
+        $scope.selectedItemChangeTo = function (q) {
             if (q != null && q != undefined && !isNaN(q.id)) {
                 $scope.modelCopyCombinationPrice.ToUserRoleId = q.id;
                 $scope.flgErrorNotFoundTo = 0;
@@ -133,7 +133,7 @@
         }
 
 
-        $scope.closeModel = function() {
+        $scope.closeModel = function () {
             $mdDialog.hide();
         }
 

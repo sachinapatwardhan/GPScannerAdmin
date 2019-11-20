@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -19,7 +19,7 @@
         vm.Reset = Reset;
         var pendingSearch = angular.noop;
         $scope.flgValidation = true;
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.model = {
                 id: 0,
                 iduser: '',
@@ -71,7 +71,7 @@
         }
 
 
-        $scope.gotoVehicleList = function() {
+        $scope.gotoVehicleList = function () {
             $scope.model = {
                 id: 0,
                 iduser: '',
@@ -117,21 +117,21 @@
             $scope.flag = false;
             $scope.ShowDtl = false;
         }
-        $scope.getAllVehicleType = function() {
+        $scope.getAllVehicleType = function () {
             var params = {
                 idApp: localStorage.getItem('appId')
             }
-            $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype", { params: params }).then(function(data) {
+            $http.get($rootScope.RoutePath + "vehicletype/GetAllActivevehicletype", { params: params }).then(function (data) {
                 $scope.lstVehicleType = data.data
             })
         }
-        $scope.clearSearchTerm = function() {
+        $scope.clearSearchTerm = function () {
             vm.searchTermVehicleType = '';
         };
-        $scope.onSearchChange = function($event) {
+        $scope.onSearchChange = function ($event) {
             $event.stopPropagation();
         }
-        $scope.GetUserByName = function(query) {
+        $scope.GetUserByName = function (query) {
             // var params = {
             //         UserName: query,
             //         appId: localStorage.getItem('appId'),
@@ -139,11 +139,11 @@
             //     // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
             // $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function(data) {
             var params = {
-                    email: query,
-                    appId: localStorage.getItem('appId'),
-                }
-                // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
-            $http.get($rootScope.RoutePath + "user/GetUserByEmail", { params: params }).then(function(data) {
+                email: query,
+                appId: localStorage.getItem('appId'),
+            }
+            // $http.get($rootScope.RoutePath + "user/GetUserByName?UserName=" + query).then(function(data) {
+            return $http.get($rootScope.RoutePath + "user/GetUserByEmail", { params: params }).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
@@ -151,11 +151,11 @@
                 return pendingSearch
             });
 
-            return pendingSearch;
+            // return pendingSearch;
         }
 
-        $scope.GetUserById = function(id) {
-            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function(data) {
+        $scope.GetUserById = function (id) {
+            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function (data) {
                 if (data.data.success == true) {
                     $scope.objUser = data.data.data;
                     $scope.selectedItem = $scope.objUser;
@@ -164,7 +164,7 @@
         }
 
         $scope.flgErrorNotFound = 1;
-        $scope.selectedItemChange = function(q) {
+        $scope.selectedItemChange = function (q) {
             if (q != null && q != undefined) {
                 $scope.model.iduser = q.id;
                 $scope.flgErrorNotFound = 0;
@@ -186,11 +186,11 @@
             $scope.flag = true;
         }
 
-        $scope.GetSerch = function(Search) {
+        $scope.GetSerch = function (Search) {
             $scope.Search = Search;
             GetAllDynamicVehicles(true);
         }
-        $scope.GetDeviceId = function(IMEI) {
+        $scope.GetDeviceId = function (IMEI) {
             $scope.model.deviceid = parseInt($scope.model.IMEI.toString().slice(1));
         }
 
@@ -207,15 +207,15 @@
             $('#VehicleDetail').dataTable()._fnAjaxUpdate();
         }
 
-        $scope.CreateVehicleDetails = function(o) {
+        $scope.CreateVehicleDetails = function (o) {
             $scope.model.deviceid = parseInt($scope.model.IMEI.toString().slice(1));
-            $http.get($rootScope.RoutePath + "bike/SaveVehicle", { params: o }).then(function(data) {
+            $http.get($rootScope.RoutePath + "bike/SaveVehicle", { params: o }).then(function (data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.resetForm();
                     $scope.ResetOnly();
@@ -226,9 +226,9 @@
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     };
 
@@ -238,7 +238,7 @@
 
         //Dynamic Pagging
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
 
             $scope.FilterStatus = '';
 
@@ -270,7 +270,7 @@
             }
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "distributor/GetAllDynamicVehicleForDistibutor",
-                data: function(d) {
+                data: function (d) {
                     // console.log(d)
                     if ($scope.Search == '') {
                         d.search = '';
@@ -287,7 +287,7 @@
                     return d;
                 },
                 type: "get",
-                dataSrc: function(json) {
+                dataSrc: function (json) {
                     if (json.success != false) {
                         $scope.lstVehicledata = json.data;
                         $scope.lstTotal = json.recordsTotal;
@@ -300,7 +300,7 @@
                 },
             })
 
-            .withOption('processing', true) //for show progress bar
+                .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
@@ -400,9 +400,9 @@
             }
         }
 
-        $scope.reloadData = function() {}
+        $scope.reloadData = function () { }
 
-        function callback(json) {}
+        function callback(json) { }
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -414,7 +414,7 @@
             return (meta.row + 1);
         }
 
-        $scope.EditDates = function(id, ev) {
+        $scope.EditDates = function (id, ev) {
             var obj = _.findWhere($scope.lstVehicledata, {
                 id: id
             });
@@ -428,33 +428,33 @@
             $scope.ShowDtl = true;
 
         }
-        $scope.UpdateExpiryDate = function() {
-                var params = $scope.modelUpdateDate;
-                $http.get($rootScope.RoutePath + "vehicles/UpdateExpiryDate", {
-                    params: params
-                }).success(function(data) {
-                    if (data.success == true) {
-                        $mdToast.show(
-                            $mdToast.simple()
+        $scope.UpdateExpiryDate = function () {
+            var params = $scope.modelUpdateDate;
+            $http.get($rootScope.RoutePath + "vehicles/UpdateExpiryDate", {
+                params: params
+            }).success(function (data) {
+                if (data.success == true) {
+                    $mdToast.show(
+                        $mdToast.simple()
                             .textContent(data.message)
                             .position('top right')
                             .hideDelay(3000)
-                        );
-                        $scope.ResetOnly();
-                        $scope.resetForm();
-                        GetAllDynamicVehicles(true);
-                    } else {
-                        $mdToast.show(
-                            $mdToast.simple()
+                    );
+                    $scope.ResetOnly();
+                    $scope.resetForm();
+                    GetAllDynamicVehicles(true);
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
                             .textContent(data.message)
                             .position('top right')
                             .hideDelay(3000)
-                        );
-                    }
-                });
-            }
-            //Edit Location
-        $scope.FetchVehicleById = function(id) {
+                    );
+                }
+            });
+        }
+        //Edit Location
+        $scope.FetchVehicleById = function (id) {
             $rootScope.FlgAddedEditlocal = true;
             var o = _.findWhere($scope.lstVehicledata, {
                 id: id
@@ -505,24 +505,24 @@
             $scope.flag = true;
         }
 
-        $scope.DeleteVehicle = function(id) {
+        $scope.DeleteVehicle = function (id) {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure to Delete this Vehicle ?')
                 .ok('Ok')
                 .cancel('Cancel')
-            $mdDialog.show(confirm).then(function() {
+            $mdDialog.show(confirm).then(function () {
                 var params = {
                     id: id
                 };
                 $http.get($rootScope.RoutePath + "vehicles/DeleteVehicle", {
                     params: params
-                }).success(function(data) {
+                }).success(function (data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.ResetOnly();
                         $scope.resetForm();
@@ -533,9 +533,9 @@
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                         }
                     }
@@ -543,8 +543,8 @@
             });
         };
 
-        $scope.chkTrackerId = function(IMEI) {
-            $http.get($rootScope.RoutePath + "PetDevice/GetGPSDeviceById?IMEI=" + IMEI).success(function(data) {
+        $scope.chkTrackerId = function (IMEI) {
+            $http.get($rootScope.RoutePath + "PetDevice/GetGPSDeviceById?IMEI=" + IMEI).success(function (data) {
                 // console.log(data);
                 if (data != null) {
                     $scope.model.idSalesAgent = data.idSalesAgent;
@@ -554,16 +554,16 @@
                     $scope.model.deviceid = "";
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent("Invalid TrackerId")
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent("Invalid TrackerId")
+                            .position('top right')
+                            .hideDelay(3000)
                     );
 
                 }
             })
         }
 
-        $scope.ShowModal = function(ev, device, Name, IsOnline) {
+        $scope.ShowModal = function (ev, device, Name, IsOnline) {
             $mdDialog.show({
                 controller: 'DistributorLocationController',
                 controllerAs: 'vm',
@@ -582,7 +582,7 @@
             });
         }
 
-        $scope.OpenViewModel = function(e, idVehicle) {
+        $scope.OpenViewModel = function (e, idVehicle) {
             GetAllDynamicVehicles(true);
             var o = _.findWhere($scope.lstVehicledata, {
                 id: idVehicle
@@ -610,7 +610,7 @@
             }
         }
 
-        $scope.ShowAlarmDetail = function(ev, id) {
+        $scope.ShowAlarmDetail = function (ev, id) {
             $scope.obj = _.findWhere($scope.lstVehicledata, { deviceid: id });
             $mdDialog.show({
                 controller: 'AlarmDetail1Controller',
@@ -628,11 +628,11 @@
             })
         }
 
-        $scope.closeModal = function() {
+        $scope.closeModal = function () {
             $mdDialog.hide();
         };
 
-        $scope.resetForm = function() {
+        $scope.resetForm = function () {
             $scope.formVehicledetails.$setUntouched();
             $scope.formVehicledetails.$setPristine();
             $scope.FormManageDate.$setUntouched();
@@ -640,12 +640,12 @@
 
         }
 
-        $scope.ResetTab = function() {
+        $scope.ResetTab = function () {
             if ($rootScope.FlgAddedAccess != true) {
                 $rootScope.FlgAddedEditlocal = false;
             }
         }
-        $scope.ResetData = function() {
+        $scope.ResetData = function () {
             $scope.model = {
                 id: 0,
                 iduser: '',
@@ -688,7 +688,7 @@
             $scope.query = '';
             $scope.resetForm();
         }
-        $scope.ResetModel = function() {
+        $scope.ResetModel = function () {
             $scope.model = {
                 id: 0,
                 iduser: '',
@@ -733,7 +733,7 @@
             $scope.ShowDtl = false;
             $scope.resetForm();
         }
-        $scope.SearchReset = function() {
+        $scope.SearchReset = function () {
             $scope.modelSearch = {
                 EndDate: null,
                 StartDate: null,
@@ -742,20 +742,20 @@
             }
             GetAllDynamicVehicles(true);
         }
-        $scope.toggle = function() {
+        $scope.toggle = function () {
             if (!$scope.flgforIcon) {
                 $scope.flgforIcon = true;
             } else {
                 $scope.flgforIcon = false;
             }
 
-            $(function() {
+            $(function () {
                 $(".showBtn").toggleClass("active");
                 $(".ShowContentBox").slideToggle();
             });
         };
 
-        $scope.Export = function() {
+        $scope.Export = function () {
             var UserId = $rootScope.UserRoles == "Sales Agent" ? $rootScope.UserId : '';
             var IsOnline = $scope.modelSearch.IsOnline == null || $scope.modelSearch.IsOnline == undefined ? '' : $scope.modelSearch.IsOnline;
             var idType = $scope.modelSearch.idType == null || $scope.modelSearch.idType == undefined ? '' : $scope.modelSearch.idType;
@@ -767,11 +767,11 @@
         }
 
 
-        $scope.DownloadExcelTemplate = function() {
+        $scope.DownloadExcelTemplate = function () {
             window.location = $rootScope.RoutePath + "import/DownloadTemplate";
         }
 
-        $scope.ShowImportModal = function(ev) {
+        $scope.ShowImportModal = function (ev) {
             $mdDialog.show({
                 controller: 'ImportDataController',
                 controllerAs: 'vm',
@@ -788,7 +788,7 @@
             })
         }
 
-        $scope.ResetOnly = function() {
+        $scope.ResetOnly = function () {
             $scope.model = {
                 id: 0,
                 iduser: '',

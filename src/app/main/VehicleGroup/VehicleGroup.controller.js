@@ -1,13 +1,13 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('app.VehicleGroup')
         .controller('VehiclesGroupController', VehiclesGroupController)
-        .directive('mdOption', function() {
+        .directive('mdOption', function () {
             return {
-                link: function(scope, elem) {
-                    scope.$on('$destroy', function() {
+                link: function (scope, elem) {
+                    scope.$on('$destroy', function () {
                         elem.detach();
                     });
                 }
@@ -21,7 +21,7 @@
         $scope.modelApp = {
             AppName: $rootScope.AppName
         }
-        $scope.init = function() {
+        $scope.init = function () {
             $scope.InitModel();
             $scope.selectedItem = null;
             $scope.Search = '';
@@ -33,31 +33,31 @@
         }
 
         var pendingSearch = angular.noop;
-        $scope.clearSearchTerm = function() {
+        $scope.clearSearchTerm = function () {
             vm.searchTermVehicleGroup = '';
             vm.searchTermVehicle = '';
         };
-        $scope.onSearchChange = function($event) {
+        $scope.onSearchChange = function ($event) {
             $event.stopPropagation();
         }
 
-        $scope.GetUserByName = function(query) {
+        $scope.GetUserByName = function (query) {
             var params = {
                 UserName: query,
                 appId: localStorage.getItem('appId'),
             }
-            $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function(data) {
+            return $http.get($rootScope.RoutePath + "user/GetUserByName", { params: params }).then(function (data) {
                 $scope.lstUser = data.data;
                 var deferred = $q.defer();
                 deferred.resolve($scope.lstUser);
                 pendingSearch = deferred.promise;
                 return pendingSearch
             });
-            return pendingSearch;
+            // return pendingSearch;
         }
 
         $scope.flgErrorNotFound = 1;
-        $scope.selectedItemChange = function(q) {
+        $scope.selectedItemChange = function (q) {
             if (q != null && q != undefined && q != '') {
                 $scope.model.IdUser = q.id;
                 if ($scope.model.id == 0) {
@@ -78,25 +78,25 @@
         }
 
 
-        $scope.GetAllGroupUserWise = function(iduser) {
+        $scope.GetAllGroupUserWise = function (iduser) {
             var params = {
                 IdUser: iduser
             }
-            $http.get($rootScope.RoutePath + "vehiclegroup/GetAllGroupUserWise", { params: params }).success(function(resData) {
+            $http.get($rootScope.RoutePath + "vehiclegroup/GetAllGroupUserWise", { params: params }).success(function (resData) {
                 $scope.lstVehicleGroup = resData;
             })
         }
 
-        $scope.GetAllVehicleUserWise = function(iduser) {
+        $scope.GetAllVehicleUserWise = function (iduser) {
             var params = {
                 IdUser: iduser
             }
-            $http.get($rootScope.RoutePath + "vehiclegroup/GetAllVehicleUserWise", { params: params }).success(function(resData) {
+            $http.get($rootScope.RoutePath + "vehiclegroup/GetAllVehicleUserWise", { params: params }).success(function (resData) {
                 $scope.lstVehicle = resData;
             })
         }
 
-        $scope.GetSerch = function(Search) {
+        $scope.GetSerch = function (Search) {
             $scope.Search = Search;
             GetAllDynamicVehicles(true);
         }
@@ -110,14 +110,14 @@
             $('#VehicleGroup').dataTable()._fnAjaxUpdate();
         }
 
-        $scope.CreateVehicleGroup = function(o) {
-            $http.post($rootScope.RoutePath + "vehiclegroup/SaveVehicleGroup", o).then(function(data) {
+        $scope.CreateVehicleGroup = function (o) {
+            $http.post($rootScope.RoutePath + "vehiclegroup/SaveVehicleGroup", o).then(function (data) {
                 if (data.data.success == true) {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent(data.data.message)
-                        .position('top right')
-                        .hideDelay(3000)
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
                     );
                     $scope.resetForm();
                     $scope.init();
@@ -128,9 +128,9 @@
                     } else {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                     };
 
@@ -140,7 +140,7 @@
 
         //Dynamic Pagging
 
-        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(response) {
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                 DTColumnBuilder.newColumn('Name'),
@@ -152,7 +152,7 @@
 
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "vehiclegroup/GetvehicleGroupWise",
-                data: function(d) {
+                data: function (d) {
                     if ($scope.Search == '') {
                         d.search = '';
                     } else {
@@ -163,7 +163,7 @@
                     return d;
                 },
                 type: "get",
-                dataSrc: function(json) {
+                dataSrc: function (json) {
                     if (json.success != false) {
                         $scope.lstVehicleGroupdata = json.data;
                         $scope.lstTotal = json.recordsTotal;
@@ -176,7 +176,7 @@
                 },
             })
 
-            .withOption('processing', true) //for show progress bar
+                .withOption('processing', true) //for show progress bar
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
@@ -213,9 +213,9 @@
         };
 
 
-        $scope.reloadData = function() {}
+        $scope.reloadData = function () { }
 
-        function callback(json) {}
+        function callback(json) { }
 
         //compile Datatable And Apply Class
         function createdRow(row, data, dataIndex) {
@@ -227,7 +227,7 @@
             return (meta.row + 1);
         }
 
-        $scope.FetchVehicleGroupById = function(id) {
+        $scope.FetchVehicleGroupById = function (id) {
             $rootScope.FlgAddedEditlocal = true;
             var o = _.findWhere($scope.lstVehicleGroupdata, {
                 id: id
@@ -241,8 +241,8 @@
             $scope.model.idUser = o.tblvehiclegroup.IdUser;
             $scope.flag = true;
         }
-        $scope.GetUserById = function(id) {
-            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function(data) {
+        $scope.GetUserById = function (id) {
+            $http.get($rootScope.RoutePath + "user/GetUserById?idUser=" + id).then(function (data) {
                 if (data.data.success == true) {
                     $scope.objUser = data.data.data;
                     $scope.selectedItem = $scope.objUser;
@@ -250,24 +250,24 @@
             })
         }
 
-        $scope.DeleteVehicleGroup = function(id) {
+        $scope.DeleteVehicleGroup = function (id) {
             var confirm = $mdDialog.confirm()
                 .title('Are you sure to Delete this Vehicle Group ?')
                 .ok('Ok')
                 .cancel('Cancel')
-            $mdDialog.show(confirm).then(function() {
+            $mdDialog.show(confirm).then(function () {
                 var params = {
                     id: id
                 };
                 $http.get($rootScope.RoutePath + "vehiclegroup/DeleteVehicleGroup", {
                     params: params
-                }).success(function(data) {
+                }).success(function (data) {
                     if (data.success == true) {
                         $mdToast.show(
                             $mdToast.simple()
-                            .textContent(data.message)
-                            .position('top right')
-                            .hideDelay(3000)
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
                         );
                         $scope.init();
                         $scope.resetForm();
@@ -278,9 +278,9 @@
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
-                                .textContent(data.message)
-                                .position('top right')
-                                .hideDelay(3000)
+                                    .textContent(data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
                             );
                         }
                     }
@@ -290,18 +290,18 @@
 
 
 
-        $scope.resetForm = function() {
+        $scope.resetForm = function () {
             $scope.FormVehicleGroup.$setUntouched();
             $scope.FormVehicleGroup.$setPristine();
         }
 
-        $scope.ResetTab = function() {
+        $scope.ResetTab = function () {
             if ($rootScope.FlgAddedAccess != true) {
                 $rootScope.FlgAddedEditlocal = false;
             }
         }
 
-        $scope.Reset = function() {
+        $scope.Reset = function () {
             $rootScope.FlgAddedEditlocal = false;
             if ($rootScope.FlgAddedAccess == true) {
                 $rootScope.FlgAddedEditlocal = true;
@@ -313,19 +313,19 @@
 
         }
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             $scope.ResetData();
             $scope.flag = false;
         }
 
-        $scope.ResetData = function() {
+        $scope.ResetData = function () {
             $scope.selectedItem = null;
             $scope.resetForm();
             $scope.clearSearchTerm();
             $scope.InitModel();
         }
 
-        $scope.InitModel = function() {
+        $scope.InitModel = function () {
             $scope.model = {
                 IdGroup: '',
                 IdUser: '',
@@ -333,14 +333,14 @@
                 id: 0,
             };
         }
-        $scope.toggle = function() {
+        $scope.toggle = function () {
             if (!$scope.flgforIcon) {
                 $scope.flgforIcon = true;
             } else {
                 $scope.flgforIcon = false;
             }
 
-            $(function() {
+            $(function () {
                 $(".showBtn").toggleClass("active");
                 $(".ShowContentBox").slideToggle();
             });
