@@ -14,7 +14,8 @@
         var vm = this;
         vm.ReloadTable = ReloadTable;
         var pendingSearch = angular.noop;
-
+        vm.search1country = '';
+        vm.search1Distributor = '';
         function ReloadTable() {
             vm.GetAllRenewDetail(true)
         }
@@ -26,6 +27,8 @@
                 EndDate: '',
                 idApp: $rootScope.appId,
                 Search: '',
+                idDistributor: '',
+                idCountry: 'All',
             }
             $scope.ModelRenewMultiple = {
                 iduser: '',
@@ -67,8 +70,30 @@
         $scope.getAllApps = function () {
             $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo").then(function (res) {
                 $scope.appNames = res.data;
+                $scope.GetAllDistributorForSearch();
             });
         };
+        $scope.GetAllDistributorForSearch = function () {
+            var params = {
+                idApp: $scope.ModelSearch.idApp,
+            }
+            $http.get($rootScope.RoutePath + "assigndistributor/GetAllDistributor", { params: params }).then(function (data) {
+                $scope.lstDistributor = data.data;
+                $scope.GetAllCountry();
+            });
+        }
+        $scope.clearSearchTerm = function () {
+            vm.search1country = '';
+            vm.search1Distributor = '';
+        };
+        $scope.onSearchChange = function ($event) {
+            $event.stopPropagation();
+        }
+        $scope.GetAllCountry = function () {
+            $http.get($rootScope.RoutePath + "country/GetAllCountry").then(function (data) {
+                $scope.lstCountry = data.data;
+            });
+        }
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.FilterStatus = 1;
@@ -140,6 +165,8 @@
                             d.idApp = $scope.ModelSearch.idApp;
                         }
                     }
+                    d.idDistributor = $scope.ModelSearch.idDistributor;
+                    d.idCountry = $scope.ModelSearch.idCountry == "All" ? '' : $scope.ModelSearch.idCountry;
                     return d;
                 },
                 type: "get",
@@ -535,7 +562,9 @@
                 StartDate: '',
                 EndDate: '',
                 idApp: $rootScope.appId,
-                Search: ''
+                Search: '',
+                idDistributor: '',
+                idCountry: 'All',
             }
             $scope.ChangeSearchDate();
             ReloadTable();
@@ -554,6 +583,8 @@
             // }
             $scope.ModelSearch.idApp = '';
             $scope.ModelSearch.Search = '';
+            $scope.ModelSearch.idDistributor = '';
+            $scope.ModelSearch.idCountry = 'All';
             // $scope.ChangeSearchDate();
             vm.GetAllRenewDetail(true);
         }
