@@ -167,6 +167,8 @@
                     }
                     d.idDistributor = $scope.ModelSearch.idDistributor;
                     d.idCountry = $scope.ModelSearch.idCountry == "All" ? '' : $scope.ModelSearch.idCountry;
+                    $scope.columns = d.columns;
+                    $scope.order = d.order;
                     return d;
                 },
                 type: "get",
@@ -592,6 +594,41 @@
         $scope.GoToBack = function () {
             vm.GetAllRenewDetail(false);
             $scope.flag = false;
+        }
+
+
+
+
+
+        $scope.Export = function () {
+            var CurrentOffset = encodeURIComponent($rootScope.CurrentOffset);
+            var search = $scope.ModelSearch.Search;
+            var StartDate = $scope.ModelSearch.StartDate;
+            if (StartDate != null && StartDate != undefined && StartDate != '') {
+                StartDate.setHours(0);
+                StartDate.setMinutes(0);
+                StartDate.setSeconds(0);
+            }
+            var EndDate = $scope.ModelSearch.EndDate;
+            if (EndDate != null && EndDate != undefined && EndDate != '') {
+                EndDate.setHours(0);
+                EndDate.setMinutes(0);
+                EndDate.setSeconds(0);
+            }
+            if ($rootScope.UserRoles != 'Super Admin') {
+                var idApp = $rootScope.appId;
+            } else {
+                if ($scope.ModelSearch.idApp != null && $scope.ModelSearch.idApp != undefined && $scope.ModelSearch.idApp != '' && $scope.ModelSearch.idApp != '-1') {
+                    var idApp = $scope.ModelSearch.idApp;
+                }
+            }
+            var columns = JSON.stringify($scope.columns);
+            var order = JSON.stringify($scope.order);
+            var IsSuperAdmin = $rootScope.UserRoles == 'Super Admin' ? '1' : '0';
+            window.location.href = $rootScope.RoutePath + "billing/ExportAllRenewData?idApp=" + idApp + "&CurrentOffset=" + CurrentOffset + "&search=" + search + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&columns=" + columns + "&order=" + order + "&IsSuperAdmin=" + IsSuperAdmin;
+
+
+
         }
         $scope.init();
     }
