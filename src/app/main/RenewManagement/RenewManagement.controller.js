@@ -625,7 +625,9 @@
             var columns = JSON.stringify($scope.columns);
             var order = JSON.stringify($scope.order);
             var IsSuperAdmin = $rootScope.UserRoles == 'Super Admin' ? '1' : '0';
-            window.location.href = $rootScope.RoutePath + "billing/ExportAllRenewData?idApp=" + idApp + "&CurrentOffset=" + CurrentOffset + "&search=" + search + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&columns=" + columns + "&order=" + order + "&IsSuperAdmin=" + IsSuperAdmin;
+            var idDistributor = $scope.ModelSearch.idDistributor;
+            var idCountry = $scope.ModelSearch.idCountry == "All" ? '' : $scope.ModelSearch.idCountry;
+            window.location.href = $rootScope.RoutePath + "billing/ExportAllRenewData?idApp=" + idApp + "&CurrentOffset=" + CurrentOffset + "&search=" + search + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&columns=" + columns + "&order=" + order + "&IsSuperAdmin=" + IsSuperAdmin + "&idDistributor=" + idDistributor + "&idCountry" + idCountry;
 
 
 
