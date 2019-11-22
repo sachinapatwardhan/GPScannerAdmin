@@ -91,6 +91,22 @@
                                 {{o.Country}}</md-option>
                         </md-select>
                     </md-input-container>
+
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15"
+                        flex>
+                        <label>Sales Agent</label>
+                        <md-select name="idSalesAgent" ng-model="ModelSearch.idSalesAgent"
+                            md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader"
+                            ng-change="vm.GetAllRenewDetail(true)">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.search1Sa" type="search" placeholder="Search for a Sales Agent.."
+                                    class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                            </md-select-header>
+                            <md-option ng-value="{{o.id}}"
+                                ng-repeat="o in lstSA |filter:vm.search1Sa| orderBy: 'email'">
+                                {{o.email}}</md-option>
+                        </md-select>
+                    </md-input-container>
                     <div align="left">
                         <md-button class="md-icon-button md-accent md-raised md-hue-2"
                             ng-click="vm.GetAllRenewDetail(true)" aria-label="Search">

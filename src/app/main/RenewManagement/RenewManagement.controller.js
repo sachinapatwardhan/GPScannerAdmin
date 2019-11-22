@@ -16,6 +16,7 @@
         var pendingSearch = angular.noop;
         vm.search1country = '';
         vm.search1Distributor = '';
+        vm.search1Sa = '';
         function ReloadTable() {
             vm.GetAllRenewDetail(true)
         }
@@ -29,6 +30,7 @@
                 Search: '',
                 idDistributor: '',
                 idCountry: 'All',
+                idSalesAgent: '',
             }
             $scope.ModelRenewMultiple = {
                 iduser: '',
@@ -79,12 +81,23 @@
             }
             $http.get($rootScope.RoutePath + "assigndistributor/GetAllDistributor", { params: params }).then(function (data) {
                 $scope.lstDistributor = data.data;
+                $scope.GetAllDistributorForSearch();
+            });
+        }
+
+        $scope.GetAllDistributorForSearch = function () {
+            var params = {
+                idApp: $scope.ModelSearch.idApp,
+            }
+            $http.get($rootScope.RoutePath + "billing/GetAllSalesAgentRole", { params: params }).then(function (data) {
+                $scope.lstSA = data.data.data;
                 $scope.GetAllCountry();
             });
         }
         $scope.clearSearchTerm = function () {
             vm.search1country = '';
             vm.search1Distributor = '';
+            vm.search1Sa = '';
         };
         $scope.onSearchChange = function ($event) {
             $event.stopPropagation();
@@ -167,6 +180,7 @@
                     }
                     d.idDistributor = $scope.ModelSearch.idDistributor;
                     d.idCountry = $scope.ModelSearch.idCountry == "All" ? '' : $scope.ModelSearch.idCountry;
+                    d.idSalesAgent = $scope.ModelSearch.idSalesAgent;
                     $scope.columns = d.columns;
                     $scope.order = d.order;
                     return d;
@@ -567,6 +581,7 @@
                 Search: '',
                 idDistributor: '',
                 idCountry: 'All',
+                idSalesAgent: '',
             }
             $scope.ChangeSearchDate();
             ReloadTable();
@@ -583,9 +598,10 @@
             //     idApp: '',
             //     Search: ''
             // }
-            $scope.ModelSearch.idApp = '';
+            $scope.ModelSearch.idApp = $rootScope.appId;
             $scope.ModelSearch.Search = '';
             $scope.ModelSearch.idDistributor = '';
+            $scope.ModelSearch.idSalesAgent = '';
             $scope.ModelSearch.idCountry = 'All';
             // $scope.ChangeSearchDate();
             vm.GetAllRenewDetail(true);
@@ -626,8 +642,10 @@
             var order = JSON.stringify($scope.order);
             var IsSuperAdmin = $rootScope.UserRoles == 'Super Admin' ? '1' : '0';
             var idDistributor = $scope.ModelSearch.idDistributor;
+            var idSalesAgent = $scope.ModelSearch.idSalesAgent;
             var idCountry = $scope.ModelSearch.idCountry == "All" ? '' : $scope.ModelSearch.idCountry;
-            window.location.href = $rootScope.RoutePath + "billing/ExportAllRenewData?idApp=" + idApp + "&CurrentOffset=" + CurrentOffset + "&search=" + search + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&columns=" + columns + "&order=" + order + "&IsSuperAdmin=" + IsSuperAdmin + "&idDistributor=" + idDistributor + "&idCountry" + idCountry;
+            console.log(idSalesAgent)
+            window.location.href = $rootScope.RoutePath + "billing/ExportAllRenewData?idApp=" + idApp + "&CurrentOffset=" + CurrentOffset + "&search=" + search + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&columns=" + columns + "&order=" + order + "&IsSuperAdmin=" + IsSuperAdmin + "&idDistributor=" + idDistributor + "&idCountry" + idCountry + "&idSalesAgent=" + idSalesAgent;
 
 
 
