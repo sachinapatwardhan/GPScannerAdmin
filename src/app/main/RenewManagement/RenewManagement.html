@@ -26,7 +26,10 @@
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button>
-                <md-button class="md-raised md-background" ng-click="Export()">Export</md-button>
+                <md-button class="md-icon-button md-raised md-background" ng-click="Export()">
+                    <md-icon md-font-icon="icon-file-excel"></md-icon>
+                    <md-tooltip md-visible="" md-direction="">Export</md-tooltip>
+                </md-button>
             </div>
         </div>
 
@@ -71,13 +74,13 @@
                                     placeholder="Search for a Distributor.." class="demo-header-searchbox md-text"
                                     ng-keydown="onSearchChange($event)">
                             </md-select-header>
+                            <md-option value="All">All</md-option>
                             <md-option ng-value="{{o.id}}"
                                 ng-repeat="o in lstDistributor |filter:vm.search1Distributor| orderBy: 'email'">
                                 {{o.email}}</md-option>
                         </md-select>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex="25" flex-gt-xs="50"
-                        flex-gt-sm="25" flex-gt-md="33">
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
                         <label>Country</label>
                         <md-select Name="idCountry" ng-model="ModelSearch.idCountry" md-on-close="clearSearchTerm()"
                             data-md-container-class="selectdemoSelectHeader" ng-change="vm.GetAllRenewDetail(true)">
@@ -102,6 +105,7 @@
                                 <input ng-model="vm.search1Sa" type="search" placeholder="Search for a Sales Agent.."
                                     class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
+                            <md-option value="All">All</md-option>
                             <md-option ng-value="{{o.id}}"
                                 ng-repeat="o in lstSA |filter:vm.search1Sa| orderBy: 'email'">
                                 {{o.email}}</md-option>

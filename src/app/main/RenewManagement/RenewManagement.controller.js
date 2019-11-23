@@ -28,9 +28,9 @@
                 EndDate: '',
                 idApp: $rootScope.appId,
                 Search: '',
-                idDistributor: '',
+                idDistributor: 'All',
                 idCountry: 'All',
-                idSalesAgent: '',
+                idSalesAgent: 'All',
             }
             $scope.ModelRenewMultiple = {
                 iduser: '',
@@ -43,6 +43,8 @@
             $scope.flag = false;
             $scope.checked = {};
             $scope.getAllApps();
+            $scope.GetAllDistributorForSearch();
+            $scope.GetAllSAForSearch();
             $scope.flaglink = 0;
         }
 
@@ -72,7 +74,6 @@
         $scope.getAllApps = function () {
             $http.get($rootScope.RoutePath + "appsetting/GetAllAppInfo").then(function (res) {
                 $scope.appNames = res.data;
-                $scope.GetAllDistributorForSearch();
             });
         };
         $scope.GetAllDistributorForSearch = function () {
@@ -81,11 +82,10 @@
             }
             $http.get($rootScope.RoutePath + "assigndistributor/GetAllDistributor", { params: params }).then(function (data) {
                 $scope.lstDistributor = data.data;
-                $scope.GetAllDistributorForSearch();
             });
         }
 
-        $scope.GetAllDistributorForSearch = function () {
+        $scope.GetAllSAForSearch = function () {
             var params = {
                 idApp: $scope.ModelSearch.idApp,
             }
@@ -178,9 +178,9 @@
                             d.idApp = $scope.ModelSearch.idApp;
                         }
                     }
-                    d.idDistributor = $scope.ModelSearch.idDistributor;
+                    d.idDistributor = $scope.ModelSearch.idDistributor == "All" ? '' : $scope.ModelSearch.idDistributor;
                     d.idCountry = $scope.ModelSearch.idCountry == "All" ? '' : $scope.ModelSearch.idCountry;
-                    d.idSalesAgent = $scope.ModelSearch.idSalesAgent;
+                    d.idSalesAgent = $scope.ModelSearch.idSalesAgent == 'All' ? '' : $scope.ModelSearch.idSalesAgent;
                     $scope.columns = d.columns;
                     $scope.order = d.order;
                     return d;
@@ -567,7 +567,7 @@
             $(".showBtn").toggleClass("active");
             $(".ShowContentBox").slideToggle();
         });
-        $scope.flgforIcon = true;
+        $scope.flgforIcon = false;
 
         $scope.ResetModel = function () {
             $scope.Reset();
@@ -579,9 +579,9 @@
                 EndDate: '',
                 idApp: $rootScope.appId,
                 Search: '',
-                idDistributor: '',
+                idDistributor: 'All',
                 idCountry: 'All',
-                idSalesAgent: '',
+                idSalesAgent: 'All',
             }
             $scope.ChangeSearchDate();
             ReloadTable();
@@ -600,8 +600,8 @@
             // }
             $scope.ModelSearch.idApp = $rootScope.appId;
             $scope.ModelSearch.Search = '';
-            $scope.ModelSearch.idDistributor = '';
-            $scope.ModelSearch.idSalesAgent = '';
+            $scope.ModelSearch.idDistributor = 'All';
+            $scope.ModelSearch.idSalesAgent = 'All';
             $scope.ModelSearch.idCountry = 'All';
             // $scope.ChangeSearchDate();
             vm.GetAllRenewDetail(true);
@@ -641,8 +641,8 @@
             var columns = JSON.stringify($scope.columns);
             var order = JSON.stringify($scope.order);
             var IsSuperAdmin = $rootScope.UserRoles == 'Super Admin' ? '1' : '0';
-            var idDistributor = $scope.ModelSearch.idDistributor;
-            var idSalesAgent = $scope.ModelSearch.idSalesAgent;
+            var idDistributor = $scope.ModelSearch.idDistributor == "All" ? '' : $scope.ModelSearch.idDistributor;
+            var idSalesAgent = $scope.ModelSearch.idSalesAgent == "All" ? '' : $scope.ModelSearch.idSalesAgent;
             var idCountry = $scope.ModelSearch.idCountry == "All" ? '' : $scope.ModelSearch.idCountry;
             console.log(idSalesAgent)
             window.location.href = $rootScope.RoutePath + "billing/ExportAllRenewData?idApp=" + idApp + "&CurrentOffset=" + CurrentOffset + "&search=" + search + "&StartDate=" + StartDate + "&EndDate=" + EndDate + "&columns=" + columns + "&order=" + order + "&IsSuperAdmin=" + IsSuperAdmin + "&idDistributor=" + idDistributor + "&idCountry" + idCountry + "&idSalesAgent=" + idSalesAgent;
