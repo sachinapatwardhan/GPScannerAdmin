@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -11,12 +11,13 @@
         // $rootScope.RoutePath = "http://localhost:3030/";
         //////////
         $rootScope.editorOptions = {
-            language: 'en'
-                // uiColor: '#000000'
+            language: 'en',
+            extraPlugins: 'colorbutton'
+            // uiColor: '#000000'
         };
 
 
-        $rootScope.convertdateformat = function(date1, flg) {
+        $rootScope.convertdateformat = function (date1, flg) {
             var date = new Date(date1);
             var firstdayDay = date.getDate();
             var firstdayMonth = date.getMonth() + 1;
@@ -50,7 +51,7 @@
 
 
         // Remove the splash screen
-        $scope.$on('$viewContentAnimationEnded', function(event) {
+        $scope.$on('$viewContentAnimationEnded', function (event) {
             if (event.targetScope.$id === $scope.$id) {
                 $rootScope.$broadcast('msSplashScreen::remove');
             }
