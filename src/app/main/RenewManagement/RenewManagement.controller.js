@@ -21,7 +21,21 @@
             vm.GetAllRenewDetail(true)
         }
         // vm.GetAllRenewDetail = GetAllRenewDetail;
+
+
+
+
         $scope.init = function () {
+
+            $scope.FlgAdmin = false;
+            $rootScope.UserRoles = $cookieStore.get('UserRoles');
+            if ($rootScope.UserRoles.length > 0) {
+                for (var i = 0; i < $rootScope.UserRoles.length; i++) {
+                    if ($rootScope.UserRoles[i] == "HC CARGO" || $rootScope.UserRoles[i] == "Maark") {
+                        $scope.FlgAdmin = true;
+                    }
+                }
+            }
             $scope.SelectedRenew = [];
             $scope.ModelSearch = {
                 StartDate: '',
