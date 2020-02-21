@@ -11,6 +11,8 @@
         $rootScope.appId = localStorage.getItem('appId');
         $rootScope.AppName = localStorage.getItem('appName');
         $rootScope.Amount = $cookieStore.get('RenewAmount');
+        $scope.UserId = $cookieStore.get('UserId');
+        console.log($scope.UserId)
         var vm = this;
         vm.ReloadTable = ReloadTable;
         var pendingSearch = angular.noop;
@@ -28,11 +30,17 @@
         $scope.init = function () {
 
             $scope.FlgAdmin = false;
+            $scope.FlagSalesAgent = false;
             $rootScope.UserRoles = $cookieStore.get('UserRoles');
             if ($rootScope.UserRoles.length > 0) {
                 for (var i = 0; i < $rootScope.UserRoles.length; i++) {
+                    console.log($rootScope.UserRoles[i])
                     if ($rootScope.UserRoles[i] == "HC CARGO" || $rootScope.UserRoles[i] == "Maark") {
                         $scope.FlgAdmin = true;
+                        $scope.FlagSalesAgent = false;
+                    }
+                    if ($rootScope.UserRoles[i] == "Sales Agent") {
+                        $scope.FlagSalesAgent = true;
                     }
                 }
             }
@@ -45,6 +53,9 @@
                 idDistributor: 'All',
                 idCountry: 'All',
                 idSalesAgent: 'All',
+            }
+            if ($scope.FlagSalesAgent) {
+                $scope.ModelSearch.idSalesAgent = $scope.UserId;
             }
             $scope.ModelRenewMultiple = {
                 iduser: '',
@@ -596,6 +607,9 @@
                 idDistributor: 'All',
                 idCountry: 'All',
                 idSalesAgent: 'All',
+            }
+            if ($scope.FlagSalesAgent) {
+                $scope.ModelSearch.idSalesAgent = $scope.UserId;
             }
             $scope.ChangeSearchDate();
             ReloadTable();
