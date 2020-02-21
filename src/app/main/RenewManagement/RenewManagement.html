@@ -22,7 +22,7 @@
                     <md-tooltip md-visible="" md-direction="">Send Email</md-tooltip>
                 </md-button>
                 <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search"
-                    ng-show="UserRoles=='Super Admin'">
+                    ng-show="UserRoles=='Super Admin' || FlgAdmin">
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button>
@@ -42,7 +42,7 @@
                 <li ng-click="ResetTabExpired()" ng-if="flaglink == 2"><a class="active">Expired</a></li>
                 <li ng-click="ResetTabExpired()" ng-if="flaglink != 2"><a>Expired</a></li>
             </ul>
-            <div class="ShowContentBox" ng-show="UserRoles=='Super Admin'">
+            <div class="ShowContentBox" ng-show="UserRoles=='Super Admin' || FlgAdmin">
                 <i ng-show="flgforIcon" ng-click="toggle()" class="icon-close-circle-outline right closeIcon"></i>
                 <div layout="row" layout-wrap>
                     <!--<md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
