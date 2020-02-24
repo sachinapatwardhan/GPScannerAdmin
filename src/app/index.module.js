@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -85,5 +85,8 @@
             'app.DistributorRenew',
             'app.AssignDistributor',
             'app.distributorsubuser',
+            'app.WarrantyDevice',
+            'app.WarrantySIM',
+            //'app.SalesDashboard',
         ]);
 })();

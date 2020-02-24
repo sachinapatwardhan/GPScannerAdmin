@@ -18,6 +18,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
+                Status: '-1',
                 idApp: parseInt($rootScope.appId),
             }
             $scope.modelSearch = {
@@ -69,21 +70,27 @@
             $scope.FilterStatus = 1;
             if ($rootScope.UserRoles == "Super Admin") {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('SerialNum'),
                     DTColumnBuilder.newColumn('PhoneNum'),
                     DTColumnBuilder.newColumn('TelName').renderWith(Valuefun),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn('AppName').renderWith(Valuefun),
+                    DTColumnBuilder.newColumn('Status'),
+                    DTColumnBuilder.newColumn('SpoilDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('StartDate').renderWith(dateFormat),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
             } else {
                 $scope.dtColumns = [
-                    DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                    DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn('SerialNum'),
                     DTColumnBuilder.newColumn('PhoneNum'),
                     DTColumnBuilder.newColumn('TelName').renderWith(Valuefun),
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('Status'),
+                    DTColumnBuilder.newColumn('SpoilDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('StartDate').renderWith(dateFormat),
                     // DTColumnBuilder.newColumn('AppName').renderWith(Valuefun),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                 ]
@@ -117,7 +124,7 @@
                 .withOption('serverSide', true) // for server side processing
                 .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
                 .withDisplayLength(25) // Page size
-                .withOption('aaSorting', [4, 'desc'])
+                .withOption('aaSorting', [0, 'desc'])
                 .withOption('responsive', true)
                 .withOption('autoWidth', true)
                 .withOption('createdRow', createdRow)
@@ -256,6 +263,7 @@
         // $scope.dtInstance = {};
 
         $scope.SaveSIMInfo = function (o) {
+            o.Status = o.Status == '-1' || o.Status == '' ? null : o.Status;
             $http.post($rootScope.RoutePath + "sim/SaveSIMInfo", o).then(function (data) {
                 if (data.data.success == true) {
                     $mdToast.show(
@@ -270,6 +278,7 @@
                     // getAllSIMInfo();
                     vm.GetAllSIMDetail(true);
                 } else {
+                    o.Status = '-1';
                     $mdToast.show(
                         $mdToast.simple()
                             .textContent(data.data.message)
@@ -288,6 +297,7 @@
             $scope.model.PhoneNum = parseInt(o.PhoneNum);
             $scope.model.idTelCo = o.idTelCo;
             $scope.model.idApp = o.idApp;
+            $scope.model.Status = o.Status == '' || o.Status == null ? '-1' : o.Status;
             $scope.flag = true;
         }
         $scope.onSearchChange = function ($event) {
@@ -339,6 +349,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
+                Status: '-1',
                 idApp: parseInt($rootScope.appId),
             }
 
@@ -356,6 +367,7 @@
                 SerialNum: '',
                 PhoneNum: '',
                 idTelCo: null,
+                Status: '-1',
                 idApp: parseInt($rootScope.appId),
 
             }

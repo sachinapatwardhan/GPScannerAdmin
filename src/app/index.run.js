@@ -289,6 +289,20 @@
                             });
                         }
 
+                        // //SalesDashboard
+                        // var lstSalesDashboard = _.filter(lstAllPages, function (obj) {
+                        //     return obj.tblmodulemgmt.Module == 'Sales Dashboard';
+                        // });
+                        // if (lstSalesDashboard.length > 0) {
+                        //     msNavigationService.saveItem('Sales Dashboard', {
+                        //         title: 'Dashboard',
+                        //         state: 'app.SalesDashboard',
+                        //         icon: 'icon-view-dashboard',
+                        //         order: lstSalesDashboard[0].tblmodulemgmt.DisplayOrder,
+                        //         weight: 1
+                        //     });
+                        // }
+
                         //Country-State-City
                         var lstCountryStateCity = _.filter(lstAllPages, function (obj) {
                             return obj.tblmodulemgmt.Module == 'Country-State-City';
@@ -1039,6 +1053,31 @@
                             });
                         }
 
+                        //WarrantyReplace 
+                        var lstWarrantyReplace = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Warranty Device';
+                        });
+                        if (lstWarrantyReplace.length > 0) {
+                            msNavigationService.saveItem('Settings.Warranty Device', {
+                                title: 'Warranty Device',
+                                state: 'app.WarrantyDevice',
+                                order: lstWarrantyReplace[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+                        //WarrantySIM 
+                        var lstWarrantySIM = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Warranty SIM';
+                        });
+                        if (lstWarrantySIM.length > 0) {
+                            msNavigationService.saveItem('Settings.Warranty SIM', {
+                                title: 'Warranty SIM',
+                                state: 'app.WarrantySIM',
+                                order: lstWarrantySIM[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
                         // ------------------------------Main module----------------------------------
                         if (lstGPSDelete.length > 0 || lstManageCustomer.length > 0 || lstVehicleLastUse.length > 0 ||
                             lstVehicle.length > 0 || gps.length > 0 || Alarm.length > 0 || CanBusData.length > 0 ||
@@ -1076,7 +1115,8 @@
                             lstTransferDevice.length > 0 || lstAssignDevice.length > 0 || lstVehicleMonitor.length > 0 || lstEmailSetting.length > 0 ||
                             lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0 || lstUserFeedback.length ||
                             /* lstAssignRetailer.length > 0  ||*/
-                            lstAssignLicence.length > 0 || lstAssignAgentRetailer.length > 0 || lstAssignDistributor.length > 0) {
+                            lstAssignLicence.length > 0 || lstAssignAgentRetailer.length > 0 || lstAssignDistributor.length > 0
+                            || lstWarrantyReplace.length > 0 || lstWarrantySIM.length > 0) {
                             msNavigationService.saveItem('Settings', {
                                 title: 'Settings',
                                 icon: 'icon-cog',

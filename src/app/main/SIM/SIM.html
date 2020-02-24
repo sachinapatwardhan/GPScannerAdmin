@@ -81,6 +81,21 @@
                                     <span class="column-title ">App Name</span>
                                 </div>
                             </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Status</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Spoil Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Start Date</span>
+                                </div>
+                            </th>
                             <th class="all ">
                                 <div class="table-header ">
                                     <span class="column-title ">Action</span>
@@ -143,6 +158,11 @@
                             </th>
                             <th class="secondary-text ">
                                 <div class="table-header ">
+                                    <span class="column-title ">Status</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
                                     <span class="column-title ">Created Date</span>
                                 </div>
                             </th>
@@ -151,6 +171,16 @@
                                     <span class="column-title ">App Name</span>
                                 </div>
                             </th> -->
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Spoil Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header ">
+                                    <span class="column-title ">Start Date</span>
+                                </div>
+                            </th>
                             <th class="all ">
                                 <div class="table-header ">
                                     <span class="column-title ">Action</span>
@@ -276,6 +306,16 @@
                                         <span>App Name is required.</span>
                                     </div>
                                 </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25">
+                                <label>Sim Status</label>
+                                <md-select ng-model="model.Status" name="status">
+                                    <md-option value="-1">Select Status</md-option>
+                                    <md-option name="status1" value="Spoil">Spoil</md-option>
+                                    <md-option name="status2" value="Terminate">Terminate</md-option>
+
+                                    </md-option>
+                                </md-select>
                             </md-input-container>
                         </div>
                         <div align="left ">
