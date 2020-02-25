@@ -48,12 +48,6 @@
             $scope.GetAllCountry();
             // $scope.GetAlltelco();
             $scope.GetAllUserBySalesRole();
-            if ($rootScope.UserRoles == 'Super Admin') {
-                $scope.GetAllInfoList();
-            } else if ($rootScope.UserRoles == "Sales Agent") {
-                $scope.flgSalesAgent = true;
-                $scope.model.idSalesAgent = $rootScope.UserId;
-            }
 
             $scope.Search = '';
             $scope.flag = false;
@@ -62,6 +56,13 @@
             $scope.tab = {
                 selectedIndex: 0
             };
+
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.GetAllInfoList();
+            } else if ($rootScope.UserRoles == "Sales Agent") {
+                $scope.flgSalesAgent = true;
+                $scope.model.idSalesAgent = $rootScope.UserId;
+            }
             $scope.GetAllSerialnumber();
             $rootScope.UserRoles = $cookieStore.get('UserRoles');
         }
@@ -215,6 +216,7 @@
 
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.FilterStatus = '';
+            console.log($rootScope.UserRoles)
             if ($rootScope.UserRoles == 'Super Admin') {
                 if ($rootScope.AppName == 'Tracking') {
                     $scope.dtColumns = [
@@ -273,18 +275,18 @@
                         //  DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                         //  DTColumnBuilder.newColumn('CreatedBy'),
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
-                        DTColumnBuilder.newColumn('Status'),
-                        DTColumnBuilder.newColumn('Remark'),
+                        // DTColumnBuilder.newColumn('Status'),
+                        // DTColumnBuilder.newColumn('Remark'),
                         // DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                     ]
                 } else {
                     $scope.dtColumns2 = [
                         DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn('DeviceId'),
-                        DTColumnBuilder.newColumn('Company'),
-                        DTColumnBuilder.newColumn('Type'),
+                        // DTColumnBuilder.newColumn('Company'),
+                        // DTColumnBuilder.newColumn('Type'),
                         DTColumnBuilder.newColumn('IMEI'),
-                        DTColumnBuilder.newColumn('Version'),
+                        // DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('SerialNum'),
                         DTColumnBuilder.newColumn('PhoneNum'),
                         DTColumnBuilder.newColumn('LicenceNo'),
@@ -292,8 +294,8 @@
                         //DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                         //  DTColumnBuilder.newColumn('CreatedBy'),
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
-                        DTColumnBuilder.newColumn('Status'),
-                        DTColumnBuilder.newColumn('Remark'),
+                        // DTColumnBuilder.newColumn('Status'),
+                        // DTColumnBuilder.newColumn('Remark'),
                         // DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                     ]
                 }

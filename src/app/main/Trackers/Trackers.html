@@ -25,18 +25,19 @@
                     <md-icon md-font-icon="icon-file-excel"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Export Excel Report</md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ShowImportGpsDeviceModal($event)"
-                    aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-if="!flgSalesAgent"
+                    ng-click="ShowImportGpsDeviceModal($event)" aria-label="Search">
                     <md-icon md-font-icon="icon-import"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Import Excel</md-tooltip>
                 </md-button>
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="DownloadExcelTemplate()"
-                    aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-if="!flgSalesAgent"
+                    ng-click="DownloadExcelTemplate()" aria-label="Search">
                     <md-icon md-font-icon="icon-download"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
                 </md-button>
                 <div ng-if="FlgAddedEditlocal">
-                    <md-button class="md-icon-button  md-raised md-hue-2" ng-click="vm.Reset()" aria-label="Search">
+                    <md-button class="md-icon-button  md-raised md-hue-2" ng-if="!flgSalesAgent" ng-click="vm.Reset()"
+                        aria-label="Search">
                         <md-icon md-font-icon="icon-plus"></md-icon>
                         <md-tooltip md-visible="" md-direction="">Add New Tracker</md-tooltip>
                     </md-button>
@@ -167,7 +168,7 @@
                                     <span class="column-title">Device ID</span>
                                 </div>
                             </th>
-                            <th class="secondary-text" ng-if="AppName != 'Tracking'">
+                            <!-- <th class="secondary-text" ng-if="AppName != 'Tracking'">
                                 <div class=" table-header">
                                     <span class="column-title">Company</span>
                                 </div>
@@ -176,17 +177,17 @@
                                 <div class="table-header">
                                     <span class="column-title">Type</span>
                                 </div>
-                            </th>
+                            </th> -->
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">IMEI</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <!-- <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Version</span>
                                 </div>
-                            </th>
+                            </th> -->
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">SIM Serial Number</span>
@@ -199,7 +200,7 @@
                             </th>
                             <!-- <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">License</span>
+                                    <span class="column-title">Licence</span>
                                 </div>
                             </th> -->
                             <!-- 
@@ -210,7 +211,7 @@
                             </th> -->
                             <th class="secondary-text">
                                 <div class="table-header">
-                                    <span class="column-title">License</span>
+                                    <span class="column-title">Licence</span>
                                 </div>
                             </th>
 
@@ -235,7 +236,7 @@
                                     <span class="column-title">Created By</span>
                                 </div>
                             </th> -->
-                            <th class="secondary-text">
+                            <!-- <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Status</span>
                                 </div>
@@ -244,7 +245,7 @@
                                 <div class="table-header">
                                     <span class="column-title">Remark</span>
                                 </div>
-                            </th>
+                            </th> -->
                         </tr>
                     </thead>
                 </table>
