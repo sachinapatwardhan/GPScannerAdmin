@@ -19,21 +19,24 @@
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33"
                 align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input id="modelsearch" ng-model="modelSearch.Search" ng-change="GetAllOrderService(true)" class="search-input"
-                    type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH" flex>
+                <input id="modelsearch" ng-model="modelSearch.Search" ng-change="GetAllOrderService(true)"
+                    class="search-input" type="text" placeholder="Search" translate translate-attr-placeholder="SEARCH"
+                    flex>
             </div>
             <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
                 <!-- <md-button class="md-icon-button  md-raised md-hue-2" ng-click="toggle()" aria-label="Search">
                     <md-icon md-font-icon="icon-filter-variant"></md-icon>
                     <md-tooltip md-visible="" md-direction="">Advance Search</md-tooltip>
                 </md-button> -->
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportOrderService()" aria-label="Search">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-click="ExportOrderService()"
+                    aria-label="Search">
                     <md-icon md-font-icon="icon-file-excel"></md-icon>
 
                     <md-tooltip md-visible="" md-direction="">Export Order Service</md-tooltip>
                 </md-button>
 
-                <md-button class="md-icon-button  md-raised md-hue-2" ng-if="FlgAddedAccess" ng-click="AddOrderService()">
+                <md-button class="md-icon-button  md-raised md-hue-2" ng-if="FlgAddedAccess"
+                    ng-click="AddOrderService()">
                     <md-icon md-font-icon="icon-plus"></md-icon>
                     <md-tooltip md-visible=" " md-direction=" ">Add New Order Service</md-tooltip>
                 </md-button>
@@ -49,25 +52,27 @@
                         <label>Type</label>
                         <md-select ng-model="modelSearch.Type" ng-change="ChangeType();GetAllOrderService(true);">
                             <md-option value="0">ALL</md-option>
-                            <md-option value="{{o.id}}" ng-repeat="o in lstProductTypes | orderBy:'AppName'">{{o.AppName}}</md-option>
+                            <md-option value="{{o.id}}" ng-repeat="o in lstProductTypes | orderBy:'AppName'">
+                                {{o.AppName}}</md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>Start Date</label>
-                        <input name="Start" mdc-datetime-picker date="true" time="false" type="text" id="time" max-date="modelSearch.EndDate"
-                            format="DD-MM-YYYY" ng-model="modelSearch.StartDate">
+                        <input name="Start" mdc-datetime-picker date="true" time="false" type="text" id="time"
+                            max-date="modelSearch.EndDate" format="DD-MM-YYYY" ng-model="modelSearch.StartDate">
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>End Date</label>
-                        <input name="End" mdc-datetime-picker date="true" time="false" type="text" id="time" min-date="modelSearch.StartDate"
-                            format="DD-MM-YYYY" ng-model="modelSearch.EndDate">
+                        <input name="End" mdc-datetime-picker date="true" time="false" type="text" id="time"
+                            min-date="modelSearch.StartDate" format="DD-MM-YYYY" ng-model="modelSearch.EndDate">
                     </md-input-container>
 
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
                         <label>Status</label>
                         <md-select ng-model="modelSearch.Status" ng-change="GetAllOrderService(true)">
                             <md-option value="0">ALL</md-option>
-                            <md-option value="{{o.id}}" ng-repeat="o in LstAllStatus | orderBy:'OrderStatus'">{{o.OrderStatus}}</md-option>
+                            <md-option value="{{o.id}}" ng-repeat="o in LstAllStatus | orderBy:'OrderStatus'">
+                                {{o.OrderStatus}}</md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
@@ -79,10 +84,13 @@
                                     class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
                             <md-option value="All">ALL</md-option>
-                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstCountry | filter:vm.searchcountry | orderBy: 'Country'">{{o.Country}}</md-option>
+                            <md-option ng-value="{{o.id}}"
+                                ng-repeat="o in lstCountry | filter:vm.searchcountry | orderBy: 'Country'">{{o.Country}}
+                            </md-option>
                         </md-select>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15"
+                        ng-show="FlgEmail">
                         <label>Email</label>
                         <md-select Name="Country" ng-model="modelSearch.IdUser" md-on-close="clearSearchTerm()"
                             data-md-container-class="selectdemoSelectHeader" ng-change="GetAllOrderService(true)">
@@ -91,24 +99,30 @@
                                     class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
                             </md-select-header>
                             <md-option value="All">ALL</md-option>
-                            <md-option ng-value="{{o.id}}" ng-repeat="o in lstCustomer | filter:vm.searchCustomer | orderBy: 'email'">{{o.email}}</md-option>
+                            <md-option ng-value="{{o.id}}"
+                                ng-repeat="o in lstCustomer | filter:vm.searchCustomer | orderBy: 'email'">{{o.email}}
+                            </md-option>
                         </md-select>
                     </md-input-container>
-                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15">
+                    <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="15"
+                        ng-if="UserRoles == 'Super Admin'">
                         <label>Device ID</label>
                         <md-select Name="Country" ng-model="modelSearch.DeviceId" md-on-close="clearSearchTerm()"
                             data-md-container-class="selectdemoSelectHeader" ng-change="GetAllOrderService(true)">
                             <md-select-header class="demo-select-header">
-                                <input ng-model="vm.searchDeviceId" type="search" placeholder="Search for a Device ID .."
-                                    class="demo-header-searchbox md-text" ng-keydown="onSearchChange($event)">
+                                <input ng-model="vm.searchDeviceId" type="search"
+                                    placeholder="Search for a Device ID .." class="demo-header-searchbox md-text"
+                                    ng-keydown="onSearchChange($event)">
                             </md-select-header>
                             <md-option value="All">ALL</md-option>
-                            <md-option ng-value="{{o.deviceid}}" ng-repeat="o in lstDeviceId | filter:vm.searchDeviceId | orderBy: 'deviceid'">{{o.deviceid}}</md-option>
+                            <md-option ng-value="{{o.deviceid}}"
+                                ng-repeat="o in lstDeviceId | filter:vm.searchDeviceId | orderBy: 'deviceid'">
+                                {{o.deviceid}}</md-option>
                         </md-select>
                     </md-input-container>
                     <div align="left">
-                        <md-button class="md-icon-button md-accent md-raised md-hue-2" ng-click="GetAllOrderService(true)"
-                            aria-label="Search">
+                        <md-button class="md-icon-button md-accent md-raised md-hue-2"
+                            ng-click="GetAllOrderService(true)" aria-label="Search">
                             <md-icon md-font-icon="icon-magnify"></md-icon>
                             <md-tooltip md-visible="" md-direction="">Search </md-tooltip>
                         </md-button>
@@ -117,7 +131,8 @@
                             <md-icon md-font-icon="icon-refresh"></md-icon>
                             <md-tooltip md-visible="" md-direction="">Reset Search </md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button md-primary md-raised md-hue-2" ng-click="ShowALL()" aria-label="Show All">
+                        <md-button class="md-icon-button md-primary md-raised md-hue-2" ng-click="ShowALL()"
+                            aria-label="Show All">
                             <md-icon md-font-icon="icon-arrow-expand"></md-icon>
                             <md-tooltip md-visible="" md-direction="">Show All </md-tooltip>
                         </md-button>
@@ -125,9 +140,10 @@
 
                 </div>
             </div>
-            <div class="content fullpage-datatable" layout="column" flex ng-show="ShowDtl==false">
-                <table id="OrderServicetable" class="dataTable cell-border row-border hover" datatable="" dt-instance="dtInstance"
-                    dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+            <div class="content fullpage-datatable" layout="column" flex
+                ng-if="ShowDtl==false && UserRoles == 'Super Admin'">
+                <table id="OrderServicetable" class="dataTable cell-border row-border hover" datatable=""
+                    dt-instance="vm.dtInstance" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
                     <thead>
                         <tr>
                             <th class="all">
@@ -190,15 +206,68 @@
                     </thead>
                 </table>
             </div>
+            <div class="content fullpage-datatable" layout="column" flex
+                ng-if="ShowDtl==false && UserRoles != 'Super Admin'">
+                <table id="OrderServicetable1" class="dataTable cell-border row-border hover" datatable=""
+                    dt-instance="vm.dtInstance1" dt-columns="dtColumns" dt-options="dtOptions" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="all">
+                                <div class="table-header">
+                                    <span class="column-title">No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Order No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Type</span>
+                                </div>
+                            </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Order Total</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Device</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Country</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Status</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
             <div class="content" layout-margin ng-show="ShowDtl==true">
                 <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
-                    <form name="FormManageDate" novalidate class="ms-stepper" aria-invalid="false" style="padding: 24px">
+                    <form name="FormManageDate" novalidate class="ms-stepper" aria-invalid="false"
+                        style="padding: 24px">
                         <h2 style="color:green;">Order No : {{objOrderData.PurchaseOrderNumber}}</h2>
                         <br />
                         <md-input-container class="md-block" flex="50">
                             <label> Date</label>
-                            <input name="dStart" mdc-datetime-picker date="true" time="false" ng-required="true" type="text"
-                                id="time" format="DD-MM-YYYY" ng-model="modelUpdateDate.CreatedOnUtc">
+                            <input name="dStart" mdc-datetime-picker date="true" time="false" ng-required="true"
+                                type="text" id="time" format="DD-MM-YYYY" ng-model="modelUpdateDate.CreatedOnUtc">
                         </md-input-container>
                         <div>
                             <md-button class="md-raised md-primary" ng-click="UpdateOrderServiceDates(modelUpdateDate)"
@@ -219,7 +288,8 @@
 
     <div class="header md-accent-bg " layout="row " layout-align="start center ">
         <div class="white-fg " layout="row " layout-align="start center " flex>
-            <md-button class="goto-products-button md-icon-button " aria-label="Go to Vehicle " ng-click="ResetModel() ">
+            <md-button class="goto-products-button md-icon-button " aria-label="Go to Vehicle "
+                ng-click="ResetModel() ">
                 <md-icon md-font-icon="icon-arrow-left "></md-icon>
             </md-button>
             <div layout="row " layout-align="start center ">
@@ -230,12 +300,14 @@
                 </div>
             </div>
         </div>
-        <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
+        <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33"
+            align="center">
 
         </div>
 
         <div flex="40" flex-gt-xs="40" flex-gt-sm="33" layout="row" layout-align="end center">
-            <md-button class="md-raised md-primary" ng-disabled="!formOrderService.$valid || !IsRenewFalgOpen" ng-click="CheckOut(model)">Save</md-button>
+            <md-button class="md-raised md-primary" ng-disabled="!formOrderService.$valid || !IsRenewFalgOpen"
+                ng-click="CheckOut(model)">Save</md-button>
             <md-button class="md-accent md-raised" ng-click="AddOrderService()">Reset</md-button>
             <md-button class="md-raised md-warn" ng-click="ResetModel()">Cancel</md-button>
         </div>
@@ -246,9 +318,10 @@
             <div layout="row" layout-wrap>
                 <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                     <label>Select Email</label>
-                    <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true" md-selected-item="selectedItem"
-                        md-search-text="query" md-select-on-match="true" md-selected-item-change="selectedItemChange(item)"
-                        md-items="item in GetUserByName(query)" md-item-text="item.email" placeholder="Select Email">
+                    <md-autocomplete ng-required="true" md-input-name="email" md-no-cache="true"
+                        md-selected-item="selectedItem" md-search-text="query" md-select-on-match="true"
+                        md-selected-item-change="selectedItemChange(item)" md-items="item in GetUserByName(query)"
+                        md-item-text="item.email" placeholder="Select Email">
                         <md-item-template>
                             <span md-highlight-text="query" md-highlight-flags="^i">{{item.email}}</span>
                         </md-item-template>
@@ -271,8 +344,8 @@
         </div>
         <div class="m-16 p-16  md-whiteframe-4dp">
             <div class="content fullpage-datatable" layout="column" flex>
-                <table class="dataTable  row-border hover" width="100%" id="order" datatable="ng" dt-instance="vm.dtInstance"
-                    dt-column-defs="dtColumnDefs1" dt-options="dtOptions1">
+                <table class="dataTable  row-border hover" width="100%" id="order" datatable="ng"
+                    dt-instance="vm.dtInstance" dt-column-defs="dtColumnDefs1" dt-options="dtOptions1">
 
                     <!-- <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptions" dt-column-defs="vm.dtColumnDefs"> -->
                     <thead>
@@ -323,8 +396,8 @@
                             <td> {{o.UOM}}</td>
                             <td> {{o.Expiring}}</td>
                             <td style="width: 20%; text-align: center;">
-                                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.Checked" ng-change="CheckRenewDevice()"
-                                    class="md-primary"></md-checkbox>
+                                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="o.Checked"
+                                    ng-change="CheckRenewDevice()" class="md-primary"></md-checkbox>
                             </td>
                         </tr>
                         <!-- <tr ng-if="lstAllExpiryVehicle.length<=0">

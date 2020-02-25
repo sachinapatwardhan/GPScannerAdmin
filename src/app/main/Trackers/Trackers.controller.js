@@ -275,7 +275,7 @@
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn('Status'),
                         DTColumnBuilder.newColumn('Remark'),
-                        DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
+                        // DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                     ]
                 } else {
                     $scope.dtColumns2 = [
@@ -294,7 +294,7 @@
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn('Status'),
                         DTColumnBuilder.newColumn('Remark'),
-                        DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
+                        // DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
                     ]
                 }
             }

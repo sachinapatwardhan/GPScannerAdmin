@@ -11,6 +11,7 @@
         vm.GetAllOrderServiceFromModal = GetAllOrderServiceFromModal;
         var pendingSearch = angular.noop;
         $rootScope.UserRoles = $cookieStore.get('UserRoles');
+        $rootScope.UserId = $cookieStore.get('UserId');
         $rootScope.AppName = localStorage.getItem('appName');
         $rootScope.idApp = localStorage.getItem('appId');
         $scope.lstAllExpiryVehicle = [];
@@ -25,6 +26,7 @@
         vm.searchCustomer = '';
         vm.searchDeviceId = '';
         $scope.init = function () {
+            $scope.FlgEmail = true;
             $scope.modelNew = {
                 idUser: '',
             }
@@ -47,7 +49,7 @@
                 Country: 'All',
                 Search: '',
                 DeviceId: 'All',
-                IdUser: 'All'
+                IdUser: ''
             }
             $scope.selectedItem = null;
 
@@ -74,7 +76,8 @@
         $scope.getAllCustomer = function () {
             var idApp = '';
             if ($rootScope.UserRoles != 'Super Admin') {
-                idApp = $rootScope.idApp
+                idApp = $rootScope.idApp;
+                $scope.FlgEmail = false;
             } else {
                 if ($scope.modelSearch.Type != null && $scope.modelSearch.Type != undefined && $scope.modelSearch.Type != "" && $scope.modelSearch.Type != 0) {
                     idApp = $scope.modelSearch.Type
@@ -87,14 +90,20 @@
 
         $scope.getAllDevice = function () {
             var idApp = '';
+            var IdUser = '';
             if ($rootScope.UserRoles != 'Super Admin') {
-                idApp = $rootScope.idApp
-            } {
+                idApp = $rootScope.idApp;
+                IdUser = $rootScope.UserId
+            }
+            else {
                 if ($scope.modelSearch.Type != null && $scope.modelSearch.Type != undefined && $scope.modelSearch.Type != "" && $scope.modelSearch.Type != 0) {
-                    idApp = $scope.modelSearch.Type
+                    idApp = $scope.modelSearch.Type;
+                    IdUser = $rootScope.UserId
                 }
             }
-            $http.get($rootScope.RoutePath + 'orderservice/GetAllDeviceId?idApp=' + idApp).then(function (data) {
+
+
+            $http.get('http://192.168.1.53:7212/orderservice/GetAllDeviceId?idApp=' + idApp + '&idUser=' + IdUser).then(function (data) {
                 $scope.lstDeviceId = data.data;
             });
         }
@@ -224,6 +233,7 @@
 
         ];
         vm.dtInstance = {};
+        vm.dtInstance1 = {};
 
         $scope.dtOptions1 = DTOptionsBuilder.newOptions()
             .withPaginationType('full_numbers')
@@ -283,21 +293,33 @@
         };
         $scope.toggle();
 
-        $scope.dtColumns = [
-            DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('PurchaseOrderNumber'),
-            DTColumnBuilder.newColumn('AppName').renderWith(TypeHtml),
-            DTColumnBuilder.newColumn('Email').renderWith(EmailHtml),
-            // DTColumnBuilder.newColumn('UserName').renderWith(UserNameHtml).withOption('class', 'text-center'),
-            DTColumnBuilder.newColumn('CreatedOnUtc').renderWith(DateFormateHtml),
-            // DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateFormateHtml),
-            DTColumnBuilder.newColumn('OrderTotal'),
-            DTColumnBuilder.newColumn('OrderNotes'),
-            DTColumnBuilder.newColumn('tbluserinformation.country'),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(StatusHtml),
-            DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
-        ]
-
+        if ($rootScope.UserRoles == 'Super Admin') {
+            $scope.dtColumns = [
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('PurchaseOrderNumber'),
+                DTColumnBuilder.newColumn('AppName').renderWith(TypeHtml),
+                DTColumnBuilder.newColumn('Email').renderWith(EmailHtml),
+                // DTColumnBuilder.newColumn('UserName').renderWith(UserNameHtml).withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('CreatedOnUtc').renderWith(DateFormateHtml),
+                // DTColumnBuilder.newColumn('ExpiryDate').renderWith(DateFormateHtml),
+                DTColumnBuilder.newColumn('OrderTotal'),
+                DTColumnBuilder.newColumn('OrderNotes'),
+                DTColumnBuilder.newColumn('tbluserinformation.country'),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(StatusHtml),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
+            ]
+        } else {
+            $scope.dtColumns = [
+                DTColumnBuilder.newColumn(null).renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                DTColumnBuilder.newColumn('PurchaseOrderNumber'),
+                DTColumnBuilder.newColumn('AppName').renderWith(TypeHtml),
+                DTColumnBuilder.newColumn('CreatedOnUtc').renderWith(DateFormateHtml),
+                DTColumnBuilder.newColumn('OrderTotal'),
+                DTColumnBuilder.newColumn('OrderNotes'),
+                DTColumnBuilder.newColumn('tbluserinformation.country'),
+                DTColumnBuilder.newColumn(null).notSortable().renderWith(StatusHtml),
+            ]
+        }
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
                 url: $rootScope.RoutePath + "orderservice/GetAllOrderServiceNew",
@@ -314,6 +336,7 @@
                     }
                     if ($rootScope.UserRoles != 'Super Admin') {
                         d.idApp = $rootScope.idApp;
+                        d.IdUser = $rootScope.UserId
                     }
                     d.Status = $scope.modelSearch.Status;
                     d.Type = $scope.modelSearch.Type;
@@ -323,12 +346,13 @@
                         d.Country = '';
                     }
                     d.DeviceId = $scope.modelSearch.DeviceId;
-                    d.IdUser = $scope.modelSearch.IdUser;
+                    // d.IdUser = $scope.modelSearch.IdUser;
                     d.search = $scope.modelSearch.Search;
                     return d;
                 },
                 type: "get",
                 dataSrc: function (json) {
+                    console.log(json.data)
                     $scope.TotalOrderTotal = 0;
                     $scope.TotalOrder = 0;
                     if (json.success != false) {
@@ -367,16 +391,27 @@
 
         //Reload Datatable
         $scope.GetAllOrderService = function (IsUpdate) {
-
+            console.log("32165165415", IsUpdate)
 
             var resetPaging = false;
             if (IsUpdate == true) {
                 resetPaging = true;
             };
-            $scope.dtInstance.reloadData(callback, resetPaging);
-            $('#OrderServicetable').dataTable()._fnPageChange(0);
-            $('#OrderServicetable').dataTable()._fnAjaxUpdate();
+            // $scope.dtInstance.reloadData(callback, resetPaging);
+            // $('#OrderServicetable').dataTable()._fnPageChange(0);
+            // $('#OrderServicetable').dataTable()._fnAjaxUpdate();
 
+            if ($rootScope.UserRoles == 'Super Admin') {
+                console.log("search")
+                vm.dtInstance.reloadData(callback, resetPaging);
+                $('#OrderServicetable').dataTable()._fnPageChange(0);
+                $('#OrderServicetable').dataTable()._fnAjaxUpdate();
+            } else {
+                console.log("search", vm.dtInstance1)
+                vm.dtInstance1.reloadData(callback, resetPaging);
+                $('#OrderServicetable1').dataTable()._fnPageChange(0);
+                $('#OrderServicetable1').dataTable()._fnAjaxUpdate();
+            }
         }
 
         function GetAllOrderServiceFromModal() {
@@ -863,8 +898,13 @@
             if ($rootScope.UserRoles != 'Super Admin') {
                 idApp = $rootScope.idApp;
                 IsAdmin = false;
+                $scope.modelSearch.IdUser = $rootScope.UserId
             }
-            window.location = $rootScope.RoutePath + "orderservice/ExportOrderServiceNew?StartDate=" + StartDate + "&EndDate=" + EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country + "&IdUser=" + $scope.modelSearch.IdUser + "&DeviceId=" + $scope.modelSearch.DeviceId + "&TimeZone=" + $rootScope.CurrentTimeZone + "&IsAdmin=" + IsAdmin;
+            var IsSalesAgent = false;
+            if ($rootScope.UserRoles.indexOf('Sales Agent') > -1) { IsSalesAgent = true }
+            window.location = $rootScope.RoutePath + "orderservice/ExportOrderServiceNew?StartDate=" + StartDate + "&EndDate=" +
+                EndDate + "&Status=" + Status + "&Type=" + Type + "&search=" + search + "&idApp=" + idApp + "&Country=" + Country +
+                "&IdUser=" + $scope.modelSearch.IdUser + "&DeviceId=" + $scope.modelSearch.DeviceId + "&TimeZone=" + $rootScope.CurrentTimeZone + "&IsAdmin=" + IsAdmin + "&IsSalesAgent=" + IsSalesAgent;
         }
         $scope.GetAllInfoList = function () {
             $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {

@@ -1,0 +1,88 @@
+<md-content>
+    <div id="dashboard-project" class="page-layout simple right-sidenav">
+
+        <!-- CENTER -->
+        <div class="center" flex ms-scroll>
+
+            <!-- HEADER -->
+            <div class="header md-accent-bg" layout="column" layout-align="space-between">
+                <div layout="row" layout-align="space-between">
+                    <div>
+                        <div class="h1" layout="row" layout-align="start center" style="margin-top: 20px;">
+                            <md-icon md-font-icon="icon-view-dashboard" style="color: aliceblue"></md-icon>
+                            <span translate="DashBoard">DashBoard</span>
+                        </div>
+                        <span class="md-display-1 font-weight-300"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="content">
+            <div class="widget-group" layout="row" flex="100" layout-wrap>
+                <ms-widget layout="column" flex="auto">
+                    <ms-widget-front class="p-10 blue-700-bg white-fg" layout="row" flex>
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="lstTotalsalesboard==null">0</span>
+                                <span ng-if="lstTotalsalesboard!=null">{{lstTotalsalesboard.TotalDevice}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Total Device</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-link-variant-off" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+                <ms-widget layout="column" flex="auto">
+                    <ms-widget-front class="p-10 green-700-bg white-fg" layout="row">
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="lstTotalsalesboard==null">0</span>
+                                <span ng-if="lstTotalsalesboard!=null">{{lstTotalsalesboard.TotalAttachedDevice}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Total Attached Device</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-link-variant-off" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+                <ms-widget layout="column" flex="auto">
+                    <ms-widget-front class="p-10 indigo-400-bg white-fg" layout="row">
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="lstTotalsalesboard==null">0</span>
+                                <span ng-if="lstTotalsalesboard!=null">{{lstTotalsalesboard.TotalExpiredDevice}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Total Expired & terminate Device</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-link-variant-off" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+                <ms-widget layout="column" flex="auto">
+                    <ms-widget-front class="p-10 grey-700-bg white-fg" layout="row">
+                        <div layout="column" layout-align="center center" flex>
+                            <div class="md-display-3 pb-8">
+                                <span ng-if="lstTotalsalesboard==null">0</span>
+                                <span ng-if="lstTotalsalesboard!=null">{{lstTotalsalesboard.TotalUnusedDevice}}</span>
+                            </div>
+                            <div class="h3 font-weight-500">Total Unused Device</div>
+                        </div>
+
+                        <div class="background-image-center">
+                            <md-icon md-font-icon="icon-link-variant-off" class="s256 faint-text"></md-icon>
+                        </div>
+                    </ms-widget-front>
+                </ms-widget>
+            </div>
+        </div>
+    </div>
+    <!-- / CENTER -->
+    </div>
+</md-content>

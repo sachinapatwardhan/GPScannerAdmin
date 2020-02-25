@@ -122,10 +122,12 @@
                         msNavigationService.clearNavigation();
                         $http.defaults.headers.common['Authorization'] = data.data.token; // jshint ignore:line
                         $rootScope.MenuSet();
+                      
                         if (data.data.UserRoles.indexOf("Distributor") > -1 || data.data.UserRoles.indexOf("Distributor Sub User") > -1 && data.data.UserRoles.indexOf("Super Admin") == -1) {
                             $window.location.href = '/#/DistributorTrackers';
                         } else if (data.data.UserRoles.indexOf("Sales Agent") > -1) {
-                            $window.location.href = '/#/RenewManagement';
+                          
+                            $window.location.href = '/#/SalesDashboard';
                         } else {
                             $window.location.href = '/#/Dashboard';
                         }

@@ -87,6 +87,6 @@
             'app.distributorsubuser',
             'app.WarrantyDevice',
             'app.WarrantySIM',
-            //'app.SalesDashboard',
+            'app.SalesDashboard',
         ]);
 })();

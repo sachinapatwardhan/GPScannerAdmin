@@ -289,19 +289,19 @@
                             });
                         }
 
-                        // //SalesDashboard
-                        // var lstSalesDashboard = _.filter(lstAllPages, function (obj) {
-                        //     return obj.tblmodulemgmt.Module == 'Sales Dashboard';
-                        // });
-                        // if (lstSalesDashboard.length > 0) {
-                        //     msNavigationService.saveItem('Sales Dashboard', {
-                        //         title: 'Dashboard',
-                        //         state: 'app.SalesDashboard',
-                        //         icon: 'icon-view-dashboard',
-                        //         order: lstSalesDashboard[0].tblmodulemgmt.DisplayOrder,
-                        //         weight: 1
-                        //     });
-                        // }
+                        //SalesDashboard
+                        var lstSalesDashboard = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Sales Dashboard';
+                        });
+                        if (lstSalesDashboard.length > 0) {
+                            msNavigationService.saveItem('Sales Dashboard', {
+                                title: 'Dashboard',
+                                state: 'app.SalesDashboard',
+                                icon: 'icon-view-dashboard',
+                                order: lstSalesDashboard[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
 
                         //Country-State-City
                         var lstCountryStateCity = _.filter(lstAllPages, function (obj) {
