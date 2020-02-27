@@ -118,7 +118,7 @@
                                             placeholder="Search for a Old SIM.." class="demo-header-searchbox md-text"
                                             ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.SerialNum}}"
+                                    <md-option value="{{o.SerialNum}}"
                                         ng-repeat="o in lstsim |filter:vm.searchTermOldsim | orderBy: 'SerialNum'">
                                         {{o.SerialNum}}</md-option>
                                 </md-select>
@@ -136,7 +136,7 @@
                                             placeholder="Search for a new SIM.." class="demo-header-searchbox md-text"
                                             ng-keydown="onSearchChange($event)">
                                     </md-select-header>
-                                    <md-option ng-value="{{o.SerialNum}}"
+                                    <md-option value="{{o.SerialNum}}"
                                         ng-repeat="o in lstsim |filter:vm.searchTermnewsim | orderBy: 'SerialNum'">
                                         {{o.SerialNum}}</md-option>
                                 </md-select>
