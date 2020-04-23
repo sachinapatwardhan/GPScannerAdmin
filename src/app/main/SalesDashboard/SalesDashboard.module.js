@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -14,7 +14,7 @@
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/SalesDashboard/SalesDashboard.html',
-                        controller: 'SalesDashboardController'
+                        controller: 'SalesDashboardController as vm'
                     }
                 },
                 bodyClass: 'Sales Dashboard',

@@ -1,0 +1,33 @@
+<md-dialog class="flex-40">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>Remark</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeModel()">
+                <md-icon md-font-icon="icon-close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <ms-form-wizard flex>
+            <form name="formUpdateDevice" novalidate class="ms-stepper" aria-invalid="false">
+                <md-content>
+
+                    <div flex="100" flex-gt-sm="100">
+                        <md-input-container class="md-block " flex="100 " flex-gt-sm="100">
+                            <label>Remark</label>
+                            <input type="text " name="Remark" ng-model="modelRemark.Remark">
+                        </md-input-container>
+                    </div>
+
+                    <md-button class="md-raised md-primary"
+                        ng-disabled="modelRemark.Remark==''||modelRemark.Remark==null" ng-click="RenewMultipleDevice()">
+                        Renew</md-button>
+                    <md-button class="md-raised md-warn" ng-click="closeModel()">Cancel
+                    </md-button>
+                </md-content>
+
+            </form>
+        </ms-form-wizard>
+    </md-dialog-content>
+</md-dialog>

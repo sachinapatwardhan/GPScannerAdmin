@@ -595,3 +595,9 @@ table.dataTable>tbody>tr.child ul .table-header {
 
 
 /*Urvi's table style end*/
+
+.dtcustom .dataTables_wrapper .dataTables_scroll {
+    -webkit-flex: auto;
+    -ms-flex: auto;
+    flex: auto;
+}

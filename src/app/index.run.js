@@ -19,7 +19,7 @@
         //} catch (ex) {
 
         //}
-        $rootScope.VersionNumber = "20.01.0225.e0af2b52";
+        $rootScope.VersionNumber = "20.01.0227.2dd8d5b";
         // $rootScope.RoutePath = "http://localhost:7212/";
         // $rootScope.Socket_URL = "http://localhost:7212";
 
@@ -39,8 +39,8 @@
         // $rootScope.RoutePath = "http://45.64.169.32:4444/";
         // $rootScope.RoutePath = "http://bugzstudio.com:7212/";
         // $rootScope.Socket_URL = "http://bugzstudio.com:7212";
-        $rootScope.RoutePath = "http://api.maark.my:7212/";
-        $rootScope.Socket_URL = "http://api.maark.my:7212";
+        // $rootScope.RoutePath = "http://api.maark.my:7212/";
+        // $rootScope.Socket_URL = "http://api.maark.my:7212";
         // $rootScope.RoutePath = "http://uatapi.maark.my/";
         // $rootScope.Socket_URL = "http://uatapi.maark.my:7212";
         // $rootScope.RoutePath = "http://api.itcdtracking.com/";
@@ -50,11 +50,15 @@
         // $rootScope.RoutePath = "http://trackoxapi.themaark.in/";
         // $rootScope.Socket_URL = "http://13.126.112.254:7212";
 
-        // $rootScope.RoutePath = $location.protocol() + '://' + $location.host() + '/api/';
-        // $rootScope.Socket_URL = $location.protocol() + '://' + $location.host();
+        // $rootScope.RoutePath = $window.location.protocol + '://' + $location.host() + '/api/';
+        // $rootScope.Socket_URL = $window.location.protocol + '://' + $location.host();
+
+        $rootScope.RoutePath = $window.location.protocol + "//api.maark.my/";
+        $rootScope.Socket_URL = $window.location.protocol + "//api.maark.my";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
-        $rootScope.MapTile_URL = "http://178.128.18.61:8080/";
+        // $rootScope.MapTile_URL = $window.location.protocol + "//178.128.18.61:8080/";
+        $rootScope.MapTile_URL = "https://map.maark.my/";
         var x = new Date();
         var offset = -x.getTimezoneOffset();
         $rootScope.CurrentOffset = (('00' + offset).slice(-2) >= 0 ? "+" : "-") + ('00' + parseInt(offset / 60).toString()).slice(-2) + ":" + offset % 60;
@@ -62,7 +66,7 @@
         // $rootScope.appName = 'Maark';
 
         // var url = $window.location.protocol + "//" + $window.location.host + "/";
-        var url = $location.protocol() + '://' + $location.host() + '/';
+        var url = 'http://' + $location.host() + '/';
         // var url = "http://localhost:3000/";
         // var url = "http://admin.itcdtracking.com/";
         // var url = "http://admin.maark.my/";
@@ -129,7 +133,7 @@
             $rootScope.CountryList = [];
         }
 
-        $http.get('http://geoip.maark.my:5000/GetCurrentCountry').success(function (data) {
+        $http.get('https://geoip.maark.my/GetCurrentCountry').success(function (data) {
             if (data != null) {
                 $rootScope.CurrentTimeZone = data.time_zone;
             }

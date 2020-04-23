@@ -247,6 +247,7 @@
                         DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('SerialNum'),
                         DTColumnBuilder.newColumn('PhoneNum'),
+                        DTColumnBuilder.newColumn('SimStatus'),
                         DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
                         DTColumnBuilder.newColumn('Country'),
                         // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
@@ -372,9 +373,9 @@
                     } else {
                         d.search = $scope.Search;
                     }
-                    if ($rootScope.UserRoles == 'Sales Agent') {
-                        d.UserId = $rootScope.UserId;
-                    }
+                    // if ($rootScope.UserRoles == 'Sales Agent') {
+                    //     d.UserId = $rootScope.UserId;
+                    // }
                     if (($rootScope.UserRoles).indexOf('Sales Agent') != -1) {
                         d.idSalesAgent = $rootScope.UserId;
                     }

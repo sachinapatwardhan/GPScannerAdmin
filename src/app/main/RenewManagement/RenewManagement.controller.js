@@ -152,6 +152,7 @@
                     DTColumnBuilder.newColumn('GpsDate').notSortable().renderWith(gpsdateFormat),
                     // DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     // DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('Status').renderWith(NAHTML).withOption('class', 'text-center'),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center')
                 ]
             } else {
@@ -168,6 +169,7 @@
                     DTColumnBuilder.newColumn('LicenceRenewalType'),
                     DTColumnBuilder.newColumn('LastLoginDate').notSortable().renderWith(dateFormat),
                     DTColumnBuilder.newColumn('GpsDate').notSortable().renderWith(gpsdateFormat),
+                    DTColumnBuilder.newColumn('Status').renderWith(NAHTML).withOption('class', 'text-center'),
                     // DTColumnBuilder.newColumn('AppName'),
                     // DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
                     // DTColumnBuilder.newColumn('ModifiedDate').renderWith(dateFormat),
@@ -236,9 +238,23 @@
                 .withOption('autoWidth', true)
                 .withOption('createdRow', createdRow)
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
-                .withOption('scrollY', 'auto');
-
+                .withOption('scrollY', 'auto')
+                .withOption('initComplete', function () {
+                    $scope.AdjustColumn();
+                });
         });
+
+        $(window).resize(function () {
+            $scope.AdjustColumn();
+        });
+
+        $scope.AdjustColumn = function () {
+            if (vm.dtInstance) {
+                vm.dtInstance.DataTable.columns.adjust();
+            } else if (vm.dtInstance) {
+                vm.dtInstance1.DataTable.columns.adjust();
+            }
+        }
         vm.dtInstance = {};
         vm.dtInstance1 = {};
 
@@ -254,6 +270,14 @@
 
         function NumberHtml(data, type, full, meta) {
             return (meta.row + 1);
+        }
+
+        function NAHTML(data) {
+            var value = 'N/A';
+            if (data != null && data != undefined && data != '') {
+                value = data;
+            }
+            return value;
         }
 
         function daysHtml(data, type, full, meta) {
@@ -431,7 +455,11 @@
 
         $scope.renewMultiple = function (idUser, Email, DeviceId, LastLoginDate) {
             $scope.flag = true;
+            if ($scope.FlagSalesAgent) {
+                $scope.ModelRenewMultiple.iduser = $scope.UserId;
+            }else{
             $scope.ModelRenewMultiple.iduser = idUser;
+            }
             $scope.ModelRenewMultiple.UserName = Email;
             $scope.ModelRenewMultiple.Remark = '';
             $scope.ModelRenewMultiple.LastloginDate = LastLoginDate;

@@ -103,7 +103,7 @@
             }
 
 
-            $http.get('http://192.168.1.53:7212/orderservice/GetAllDeviceId?idApp=' + idApp + '&idUser=' + IdUser).then(function (data) {
+            $http.get($rootScope.RoutePath + 'orderservice/GetAllDeviceId?idApp=' + idApp + '&idUser=' + IdUser).then(function (data) {
                 $scope.lstDeviceId = data.data;
             });
         }
