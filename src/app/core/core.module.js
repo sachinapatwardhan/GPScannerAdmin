@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -23,5 +23,6 @@
             'ngTagsInput',
             'ngMaterialDatePicker',
             'ngImgCrop',
+            'underscore'
         ]);
 })();

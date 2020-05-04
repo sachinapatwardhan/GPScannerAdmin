@@ -1,15 +1,15 @@
 /*!
- * Angular Material Design
+ * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.1
+ * v1.1.22
  */
 (function( window, angular, undefined ){
 "use strict";
 
 /**
  * @ngdoc module
- * @name material.components.menu-bar
+ * @name material.components.menuBar
  */
 
 angular.module('material.components.menuBar', [
@@ -19,7 +19,7 @@ angular.module('material.components.menuBar', [
 ]);
 
 
-MenuBarController.$inject = ["$scope", "$rootScope", "$element", "$attrs", "$mdConstant", "$document", "$mdUtil", "$timeout"];
+MenuBarController['$inject'] = ["$scope", "$rootScope", "$element", "$attrs", "$mdConstant", "$document", "$mdUtil", "$timeout"];
 angular
   .module('material.components.menuBar')
   .controller('MenuBarController', MenuBarController);
@@ -72,7 +72,8 @@ MenuBarController.prototype.init = function() {
       el[0].classList.remove('md-open');
     }
 
-    if ($element[0].contains(el[0])) {
+    var ctrl = angular.element(el[0]).controller('mdMenu');
+    if (ctrl.isInMenuBar && ctrl.mdMenuBarCtrl === self) {
       var parentMenu = el[0];
       while (parentMenu && rootMenus.indexOf(parentMenu) == -1) {
         parentMenu = $mdUtil.getClosest(parentMenu, 'MD-MENU', true);
@@ -80,9 +81,9 @@ MenuBarController.prototype.init = function() {
       if (parentMenu) {
         if (!opts.skipFocus) parentMenu.querySelector('button:not([disabled])').focus();
         self.currentlyOpenMenu = undefined;
-        self.disableOpenOnHover();
-        self.setKeyboardMode(true);
       }
+      self.disableOpenOnHover();
+      self.setKeyboardMode(true);
     }
   }));
 
@@ -270,31 +271,27 @@ MenuBarController.prototype.handleParentClick = function(event) {
   var openMenu = this.querySelector('md-menu.md-open');
 
   if (openMenu && !openMenu.contains(event.target)) {
-    angular.element(openMenu).controller('mdMenu').close();
+    angular.element(openMenu).controller('mdMenu').close(true, {
+      closeAll: true
+    });
   }
 };
-
-
-
-
-
-
 
 /**
  * @ngdoc directive
  * @name mdMenuBar
- * @module material.components.menu-bar
+ * @module material.components.menuBar
  * @restrict E
  * @description
  *
- * Menu bars are containers that hold multiple menus. They change the behavior and appearence
+ * Menu bars are containers that hold multiple menus. They change the behavior and appearance
  * of the `md-menu` directive to behave similar to an operating system provided menu.
  *
  * @usage
  * <hljs lang="html">
  * <md-menu-bar>
  *   <md-menu>
- *     <button ng-click="$mdOpenMenu()">
+ *     <button ng-click="$mdMenu.open()">
  *       File
  *     </button>
  *     <md-menu-content>
@@ -307,7 +304,7 @@ MenuBarController.prototype.handleParentClick = function(event) {
  *       <md-menu-item>
  *       <md-menu-item>
  *         <md-menu>
- *           <md-button ng-click="$mdOpenMenu()">New</md-button>
+ *           <md-button ng-click="$mdMenu.open()">New</md-button>
  *           <md-menu-content>
  *             <md-menu-item><md-button ng-click="ctrl.sampleAction('New Document', $event)">Document</md-button></md-menu-item>
  *             <md-menu-item><md-button ng-click="ctrl.sampleAction('New Spreadsheet', $event)">Spreadsheet</md-button></md-menu-item>
@@ -324,25 +321,32 @@ MenuBarController.prototype.handleParentClick = function(event) {
  *
  * ## Menu Bar Controls
  *
- * You may place `md-menu-items` that function as controls within menu bars.
+ * You may place `md-menu-item`s that function as controls within menu bars.
  * There are two modes that are exposed via the `type` attribute of the `md-menu-item`.
  * `type="checkbox"` will function as a boolean control for the `ng-model` attribute of the
  * `md-menu-item`. `type="radio"` will function like a radio button, setting the `ngModel`
  * to the `string` value of the `value` attribute. If you need non-string values, you can use
- * `ng-value` to provide an expression (this is similar to how angular's native `input[type=radio]` works.
+ * `ng-value` to provide an expression (this is similar to how angular's native `input[type=radio]`
+ * works.
+ *
+ * If you want either to disable closing the opened menu when clicked, you can add the
+ * `md-prevent-menu-close` attribute to the `md-menu-item`. The attribute will be forwarded to the
+ * `button` element that is generated.
  *
  * <hljs lang="html">
  * <md-menu-bar>
  *  <md-menu>
- *    <button ng-click="$mdOpenMenu()">
+ *    <button ng-click="$mdMenu.open()">
  *      Sample Menu
  *    </button>
  *    <md-menu-content>
- *      <md-menu-item type="checkbox" ng-model="settings.allowChanges">Allow changes</md-menu-item>
+ *      <md-menu-item type="checkbox" ng-model="settings.allowChanges" md-prevent-menu-close>
+ *        Allow changes
+ *      </md-menu-item>
  *      <md-menu-divider></md-menu-divider>
  *      <md-menu-item type="radio" ng-model="settings.mode" ng-value="1">Mode 1</md-menu-item>
- *      <md-menu-item type="radio" ng-model="settings.mode" ng-value="1">Mode 2</md-menu-item>
- *      <md-menu-item type="radio" ng-model="settings.mode" ng-value="1">Mode 3</md-menu-item>
+ *      <md-menu-item type="radio" ng-model="settings.mode" ng-value="2">Mode 2</md-menu-item>
+ *      <md-menu-item type="radio" ng-model="settings.mode" ng-value="3">Mode 3</md-menu-item>
  *    </md-menu-content>
  *  </md-menu>
  * </md-menu-bar>
@@ -356,7 +360,7 @@ MenuBarController.prototype.handleParentClick = function(event) {
  * <hljs lang="html">
  * <md-menu-item>
  *   <md-menu>
- *     <button ng-click="$mdOpenMenu()">New</md-button>
+ *     <button ng-click="$mdMenu.open()">New</md-button>
  *     <md-menu-content>
  *       <md-menu-item><md-button ng-click="ctrl.sampleAction('New Document', $event)">Document</md-button></md-menu-item>
  *       <md-menu-item><md-button ng-click="ctrl.sampleAction('New Spreadsheet', $event)">Spreadsheet</md-button></md-menu-item>
@@ -370,7 +374,7 @@ MenuBarController.prototype.handleParentClick = function(event) {
  *
  */
 
-MenuBarDirective.$inject = ["$mdUtil", "$mdTheming"];
+MenuBarDirective['$inject'] = ["$mdUtil", "$mdTheming"];
 angular
   .module('material.components.menuBar')
   .directive('mdMenuBar', MenuBarDirective);
@@ -441,7 +445,7 @@ function MenuDividerDirective() {
 }
 
 
-MenuItemController.$inject = ["$scope", "$element", "$attrs"];
+MenuItemController['$inject'] = ["$scope", "$element", "$attrs"];
 angular
   .module('material.components.menuBar')
   .controller('MenuItemController', MenuItemController);
@@ -547,24 +551,24 @@ MenuItemController.prototype.handleClick = function(e) {
 };
 
 
-MenuItemDirective.$inject = ["$mdUtil", "$$mdSvgRegistry"];
+MenuItemDirective['$inject'] = ["$mdUtil", "$mdConstant", "$$mdSvgRegistry"];
 angular
   .module('material.components.menuBar')
   .directive('mdMenuItem', MenuItemDirective);
 
  /* ngInject */
-function MenuItemDirective($mdUtil, $$mdSvgRegistry) {
+function MenuItemDirective($mdUtil, $mdConstant, $$mdSvgRegistry) {
   return {
     controller: 'MenuItemController',
     require: ['mdMenuItem', '?ngModel'],
-    priority: 210, // ensure that our post link runs after ngAria
+    priority: $mdConstant.BEFORE_NG_ARIA,
     compile: function(templateEl, templateAttrs) {
       var type = templateAttrs.type;
       var inMenuBarClass = 'md-in-menu-bar';
 
       // Note: This allows us to show the `check` icon for the md-menu-bar items.
       // The `md-in-menu-bar` class is set by the mdMenuBar directive.
-      if ((type == 'checkbox' || type == 'radio') && templateEl.hasClass(inMenuBarClass)) {
+      if ((type === 'checkbox' || type === 'radio') && templateEl.hasClass(inMenuBarClass)) {
         var text = templateEl[0].textContent;
         var buttonEl = angular.element('<md-button type="button"></md-button>');
         var iconTemplate = '<md-icon md-svg-src="' + $$mdSvgRegistry.mdChecked + '"></md-icon>';
@@ -572,12 +576,16 @@ function MenuItemDirective($mdUtil, $$mdSvgRegistry) {
         buttonEl.html(text);
         buttonEl.attr('tabindex', '0');
 
+        if (angular.isDefined(templateAttrs.mdPreventMenuClose)) {
+          buttonEl.attr('md-prevent-menu-close', templateAttrs.mdPreventMenuClose);
+        }
+
         templateEl.html('');
         templateEl.append(angular.element(iconTemplate));
         templateEl.append(buttonEl);
         templateEl.addClass('md-indent').removeClass(inMenuBarClass);
 
-        setDefault('role', type == 'checkbox' ? 'menuitemcheckbox' : 'menuitemradio', buttonEl);
+        setDefault('role', type === 'checkbox' ? 'menuitemcheckbox' : 'menuitemradio', buttonEl);
         moveAttrToButton('ng-disabled');
 
       } else {

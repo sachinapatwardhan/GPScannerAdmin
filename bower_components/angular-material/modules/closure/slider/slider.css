@@ -1,8 +1,8 @@
 /*!
- * Angular Material Design
+ * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.1
+ * v1.1.22
  */
 @-webkit-keyframes sliderFocusThumb {
   0% {
@@ -84,7 +84,6 @@ md-slider {
   display: block;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
           flex-direction: row;
   /**
    * Track
@@ -169,13 +168,10 @@ md-slider {
   md-slider .md-sign {
     /* Center the children (slider-thumb-text) */
     display: -webkit-box;
-    display: -webkit-flex;
     display: flex;
     -webkit-box-align: center;
-    -webkit-align-items: center;
             align-items: center;
     -webkit-box-pack: center;
-    -webkit-justify-content: center;
             justify-content: center;
     position: absolute;
     left: -14px;
@@ -305,24 +301,19 @@ md-slider {
   md-slider[md-vertical] {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
             flex-direction: column;
     min-height: 128px;
     min-width: 0; }
     md-slider[md-vertical] .md-slider-wrapper {
       -webkit-box-flex: 1;
-      -webkit-flex: 1;
               flex: 1;
       padding-top: 12px;
       padding-bottom: 12px;
       width: 48px;
-      -webkit-align-self: center;
-              align-self: center;
+      align-self: center;
       display: -webkit-box;
-      display: -webkit-flex;
       display: flex;
       -webkit-box-pack: center;
-      -webkit-justify-content: center;
               justify-content: center; }
     md-slider[md-vertical] .md-track-container {
       height: 100%;
@@ -387,14 +378,11 @@ md-slider {
 
 md-slider-container {
   display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   -webkit-box-align: center;
-  -webkit-align-items: center;
           align-items: center;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
           flex-direction: row; }
   md-slider-container > *:first-child:not(md-slider),
   md-slider-container > *:last-child:not(md-slider) {
@@ -418,7 +406,6 @@ md-slider-container {
   md-slider-container[md-vertical] {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
             flex-direction: column; }
     md-slider-container[md-vertical] > *:first-child:not(md-slider),
     md-slider-container[md-vertical] > *:last-child:not(md-slider) {

@@ -1,5 +1,6 @@
 {
   "name": "nvd3",
+  "version": "1.7.1",
   "homepage": "http://www.nvd3.org",
   "authors": [
     "Bob Monteverde",
@@ -19,9 +20,9 @@
     "svg",
     "charts"
   ],
-  "license": "Apache-2.0",
+  "license": "Apache License, v2.0",
   "dependencies": {
-    "d3": "^3.4.4"
+    "d3": "~3.3.13"
   },
   "ignore": [
     "**/.*",
@@ -37,14 +38,19 @@
     "*.json",
     "*.md"
   ],
-  "version": "1.8.5",
-  "_release": "1.8.5",
+  "resolutions": {
+    "d3": "~3.3.13"
+  },
+  "devDependencies": {
+    "d3": "~3.3.13"
+  },
+  "_release": "1.7.1",
   "_resolution": {
     "type": "version",
-    "tag": "v1.8.5",
-    "commit": "3fee7f9eec75b9e9234706cca01bf128607a41a6"
+    "tag": "v1.7.1",
+    "commit": "679fe2ff96c194e442970cb9959ebccd79f6bd43"
   },
   "_source": "https://github.com/novus/nvd3.git",
-  "_target": "1.8.5",
+  "_target": "1.7.1",
   "_originalSource": "nvd3"
 }

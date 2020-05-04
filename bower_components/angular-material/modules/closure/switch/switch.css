@@ -1,8 +1,8 @@
 /*!
- * Angular Material Design
+ * AngularJS Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.1
+ * v1.1.22
  */
 .md-inline-form md-switch {
   margin-top: 18px;
@@ -20,10 +20,8 @@ md-switch {
   height: 30px;
   line-height: 28px;
   -webkit-box-align: center;
-  -webkit-align-items: center;
           align-items: center;
   display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   margin-left: inherit;
   margin-right: 16px; }
@@ -55,19 +53,24 @@ md-switch {
     margin-right: 8px;
     float: left; }
     [dir=rtl] md-switch .md-container {
-      margin-right: auto;
+      margin-right: 0px;
       margin-left: 8px; }
+  md-switch.md-inverted .md-container {
+    margin-right: initial;
+    margin-left: 8px; }
+    [dir=rtl] md-switch.md-inverted .md-container {
+      margin-right: 8px; }
+    [dir=rtl] md-switch.md-inverted .md-container {
+      margin-left: initial; }
   md-switch:not([disabled]) .md-dragging,
   md-switch:not([disabled]).md-dragging .md-container {
     cursor: -webkit-grabbing;
     cursor: grabbing; }
-  md-switch.md-focused:not([disabled]) .md-thumb:before {
+  md-switch.md-focused .md-thumb:before {
     left: -8px;
     top: -8px;
     right: -8px;
     bottom: -8px; }
-  md-switch.md-focused:not([disabled]):not(.md-checked) .md-thumb:before {
-    background-color: rgba(0, 0, 0, 0.12); }
   md-switch .md-label {
     border-color: transparent;
     border-width: 0;
