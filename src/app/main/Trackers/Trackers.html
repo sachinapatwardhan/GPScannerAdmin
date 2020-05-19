@@ -32,7 +32,8 @@
                 </md-button>
                 <md-button class="md-icon-button  md-raised md-hue-2" ng-if="!flgSalesAgent"
                     ng-click="DownloadExcelTemplate()" aria-label="Search">
-                    <md-icon md-font-icon="icon-download"></md-icon>
+                    <md-icon on md-font-icon="icon-download">
+                    </md-icon>
                     <md-tooltip md-visible="" md-direction="">Download Template</md-tooltip>
                 </md-button>
                 <div ng-if="FlgAddedEditlocal">
@@ -506,7 +507,7 @@
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>SIM Serial Number</label>
                                 <md-select Name="idSim" ng-model="model.idSim" md-on-close="clearSearchTerm()"
-                                    data-md-container-class="selectdemoSelectHeader">
+                                    data-md-container-class="selectdemoSelectHeader" required>
                                     <md-select-header class="demo-select-header">
                                         <input ng-model="vm.searchTermidSim" type="search"
                                             placeholder="Search for a Serial Number.."

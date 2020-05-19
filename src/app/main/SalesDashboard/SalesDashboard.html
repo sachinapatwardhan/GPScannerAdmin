@@ -97,37 +97,39 @@
                         </md-button>
                     </div>
                 </md-toolbar>
-                <table id="ExpiredSoon" class="dataTable row-border hover" datatable=""
-                    style="display: block !important" dt-instance="vm.dtInstance1" dt-columns="dtColumns1"
-                    dt-options="dtOptions1" width="100%">
-                    <thead>
-                        <tr>
-                            <th class="secondary-text">
-                                <div class="table-header">No</div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Device ID</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">ExpiryDate</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Days</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Action</span>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="dtcustom">
+                    <table id="ExpiredSoon" class="dataTable row-border hover" datatable=""
+                        style="display: block !important" dt-instance="vm.dtInstance1" dt-columns="dtColumns1"
+                        dt-options="dtOptions1" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="secondary-text">
+                                    <div class="table-header">No</div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Device ID</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">ExpiryDate</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Days</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Action</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
                 <!-- <table class="dataTable row-border hover" datatable="ng" dt-options="dtOptionstable"
                     dt-column-defs="dtColumnDefsC">
                     <thead>

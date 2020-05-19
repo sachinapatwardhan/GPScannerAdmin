@@ -254,7 +254,11 @@
                 //     '<md-icon md-font-icon="icon-forward"  class="s18 blue-500-fg"></md-icon>' +
                 //     '<md-tooltip md-visible="" md-direction="">Renew</md-tooltip>' +
                 //     '</md-button>';
-                btns += '<span  style="background:#2196F3;padding: 0px 2px 0px 2px;color: white" ng-click="OpenRemark(' + full.Id + ')">Renew</span>';
+                if (full.DeviceStatus == 'Terminate') {
+                    btns += '<span  style="background:#dd2c00;padding: 0px 2px 0px 2px;color: white">Terminated</span>';
+                } else {
+                    btns += '<span  style="background:#2196F3;padding: 0px 2px 0px 2px;color: white" ng-click="OpenRemark(' + full.Id + ')">Renew</span>';
+                }
             }
 
             btns += '</div>'
