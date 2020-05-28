@@ -192,7 +192,7 @@
             if ($rootScope.UserRoles == 'Super Admin') {
                 vm.dtInstance.reloadData(callback, resetPaging);
                 $('#TRACKERDetail').dataTable()._fnAjaxUpdate();
-            } else if ($rootScope.UserRoles.indexOf('Sales Agent') == 1) {
+            } else if ($rootScope.UserRoles.indexOf('Sales Agent') != -1) {
                 vm.dtInstance2.reloadData(callback, resetPaging);
                 $('#TRACKERDetail2').dataTable()._fnAjaxUpdate();
             }
