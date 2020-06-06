@@ -1,8 +1,8 @@
 /*!
- * AngularJS Material Design
+ * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.22
+ * v1.1.1
  */
 (function( window, angular, undefined ){
 "use strict";
@@ -12,7 +12,7 @@
  * @name material.components.progressLinear
  * @description Linear Progress module!
  */
-MdProgressLinearDirective['$inject'] = ["$mdTheming", "$mdUtil", "$log"];
+MdProgressLinearDirective.$inject = ["$mdTheming", "$mdUtil", "$log"];
 angular.module('material.components.progressLinear', [
   'material.core'
 ])
@@ -135,17 +135,17 @@ function MdProgressLinearDirective($mdTheming, $mdUtil, $log) {
       });
 
       attr.$observe('mdMode', function(mode) {
-        if (lastMode) container.removeClass(lastMode);
+        if (lastMode) container.removeClass( lastMode );
 
-        switch (mode) {
+        switch( mode ) {
           case MODE_QUERY:
           case MODE_BUFFER:
           case MODE_DETERMINATE:
           case MODE_INDETERMINATE:
-            container.addClass(lastMode = "md-mode-" + mode);
+            container.addClass( lastMode = "md-mode-" + mode );
             break;
           default:
-            container.addClass(lastMode = "md-mode-" + MODE_INDETERMINATE);
+            container.addClass( lastMode = "md-mode-" + MODE_INDETERMINATE );
             break;
         }
       });
@@ -155,10 +155,13 @@ function MdProgressLinearDirective($mdTheming, $mdUtil, $log) {
      * Auto-defaults the mode to either `determinate` or `indeterminate` mode; if not specified
      */
     function validateMode() {
-      if (angular.isUndefined(attr.mdMode)) {
+      if ( angular.isUndefined(attr.mdMode) ) {
         var hasValue = angular.isDefined(attr.value);
         var mode = hasValue ? MODE_DETERMINATE : MODE_INDETERMINATE;
         var info = "Auto-adding the missing md-mode='{0}' to the ProgressLinear element";
+
+        //$log.debug( $mdUtil.supplant(info, [mode]) );
+
         element.attr("md-mode", mode);
         attr.mdMode = mode;
       }
@@ -169,8 +172,8 @@ function MdProgressLinearDirective($mdTheming, $mdUtil, $log) {
      */
     function mode() {
       var value = (attr.mdMode || "").trim();
-      if (value) {
-        switch (value) {
+      if ( value ) {
+        switch(value) {
           case MODE_DETERMINATE:
           case MODE_INDETERMINATE:
           case MODE_BUFFER:
@@ -189,11 +192,11 @@ function MdProgressLinearDirective($mdTheming, $mdUtil, $log) {
      * percentage value (0-100).
      */
     function animateIndicator(target, value) {
-      if (isDisabled || !mode()) return;
+      if ( isDisabled || !mode() ) return;
 
-      var to = $mdUtil.supplant("translateX({0}%) scale({1},1)", [(value-100)/2, value/100]);
+      var to = $mdUtil.supplant("translateX({0}%) scale({1},1)", [ (value-100)/2, value/100 ]);
       var styles = toVendorCSS({ transform : to });
-      angular.element(target).css(styles);
+      angular.element(target).css( styles );
     }
   }
 

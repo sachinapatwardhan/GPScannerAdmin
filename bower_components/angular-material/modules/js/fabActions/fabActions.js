@@ -1,8 +1,8 @@
 /*!
- * AngularJS Material Design
+ * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.22
+ * v1.1.1
  */
 (function( window, angular, undefined ){
 "use strict";
@@ -14,7 +14,7 @@
    * @ngdoc module
    * @name material.components.fabActions
    */
-  MdFabActionsDirective['$inject'] = ["$mdUtil"];
+  MdFabActionsDirective.$inject = ["$mdUtil"];
   angular
     .module('material.components.fabActions', ['material.core'])
     .directive('mdFabActions', MdFabActionsDirective);
@@ -53,7 +53,7 @@
           children.wrap('<div class="md-fab-action-item">');
         }
       }
-    };
+    }
   }
 
 })();

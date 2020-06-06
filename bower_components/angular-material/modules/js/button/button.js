@@ -1,8 +1,8 @@
 /*!
- * AngularJS Material Design
+ * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.22
+ * v1.1.1
  */
 (function( window, angular, undefined ){
 "use strict";
@@ -14,10 +14,10 @@
  *
  * Button
  */
-MdButtonDirective['$inject'] = ["$mdButtonInkRipple", "$mdTheming", "$mdAria", "$mdInteraction"];
-MdAnchorDirective['$inject'] = ["$mdTheming"];
+MdButtonDirective.$inject = ["$mdButtonInkRipple", "$mdTheming", "$mdAria", "$timeout"];
+MdAnchorDirective.$inject = ["$mdTheming"];
 angular
-    .module('material.components.button', ['material.core'])
+    .module('material.components.button', [ 'material.core' ])
     .directive('mdButton', MdButtonDirective)
     .directive('a', MdAnchorDirective);
 
@@ -88,12 +88,11 @@ function MdAnchorDirective($mdTheming) {
  *   <md-button class="md-no-focus">No Focus Style</md-button>
  * </hljs>
  *
+ * @param {boolean=} md-no-ink If present, disable ripple ink effects.
+ * @param {expression=} ng-disabled En/Disable based on the expression
+ * @param {string=} md-ripple-size Overrides the default ripple size logic. Options: `full`, `partial`, `auto`
  * @param {string=} aria-label Adds alternative text to button for accessibility, useful for icon buttons.
  * If no default text is found, a warning will be logged.
- * @param {boolean=} md-no-ink If present, disable ink ripple effects.
- * @param {string=} md-ripple-size Overrides the default ripple size logic. Options: `full`, `partial`, `auto`.
- * @param {expression=} ng-disabled Disable the button when the expression is truthy.
- * @param {expression=} ng-blur Expression evaluated when focus is removed from the button.
  *
  * @usage
  *
@@ -126,7 +125,7 @@ function MdAnchorDirective($mdTheming) {
  *  </md-button>
  * </hljs>
  */
-function MdButtonDirective($mdButtonInkRipple, $mdTheming, $mdAria, $mdInteraction) {
+function MdButtonDirective($mdButtonInkRipple, $mdTheming, $mdAria, $timeout) {
 
   return {
     restrict: 'EA',
@@ -144,7 +143,7 @@ function MdButtonDirective($mdButtonInkRipple, $mdTheming, $mdAria, $mdInteracti
     if (isAnchor(attr)) {
       return '<a class="md-button" ng-transclude></a>';
     } else {
-      // If buttons don't have type="button", they will submit forms automatically.
+      //If buttons don't have type="button", they will submit forms automatically.
       var btnType = (typeof attr.type === 'undefined') ? 'button' : attr.type;
       return '<button class="md-button" type="' + btnType + '" ng-transclude></button>';
     }
@@ -157,10 +156,9 @@ function MdButtonDirective($mdButtonInkRipple, $mdTheming, $mdAria, $mdInteracti
     // Use async expect to support possible bindings in the button label
     $mdAria.expectWithoutText(element, 'aria-label');
 
-    // For anchor elements, we have to set tabindex manually when the element is disabled.
-    // We don't do this for md-nav-bar anchors as the component manages its own tabindex values.
-    if (isAnchor(attr) && angular.isDefined(attr.ngDisabled) &&
-        !element.hasClass('_md-nav-button')) {
+    // For anchor elements, we have to set tabindex manually when the
+    // element is disabled
+    if (isAnchor(attr) && angular.isDefined(attr.ngDisabled) ) {
       scope.$watch(attr.ngDisabled, function(isDisabled) {
         element.attr('tabindex', isDisabled ? -1 : 0);
       });
@@ -175,17 +173,20 @@ function MdButtonDirective($mdButtonInkRipple, $mdTheming, $mdAria, $mdInteracti
     });
 
     if (!element.hasClass('md-no-focus')) {
-
-      element.on('focus', function() {
-
-        // Only show the focus effect when being focused through keyboard interaction or programmatically
-        if (!$mdInteraction.isUserInvoked() || $mdInteraction.getLastInteractionType() === 'keyboard') {
+      // restrict focus styles to the keyboard
+      scope.mouseActive = false;
+      element.on('mousedown', function() {
+        scope.mouseActive = true;
+        $timeout(function(){
+          scope.mouseActive = false;
+        }, 100);
+      })
+      .on('focus', function() {
+        if (scope.mouseActive === false) {
           element.addClass('md-focused');
         }
-
-      });
-
-      element.on('blur', function() {
+      })
+      .on('blur', function(ev) {
         element.removeClass('md-focused');
       });
     }

@@ -1,8 +1,8 @@
 /*!
- * AngularJS Material Design
+ * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.22
+ * v1.1.1
  */
 goog.provide('ngmaterial.components.progressCircular');
 goog.require('ngmaterial.core');
@@ -59,7 +59,7 @@ angular.module('material.components.progressCircular', ['material.core']);
  * </hljs>
  */
 
-MdProgressCircularDirective['$inject'] = ["$window", "$mdProgressCircular", "$mdTheming", "$mdUtil", "$interval", "$log"];
+MdProgressCircularDirective.$inject = ["$window", "$mdProgressCircular", "$mdTheming", "$mdUtil", "$interval", "$log"];
 angular
   .module('material.components.progressCircular')
   .directive('mdProgressCircular', MdProgressCircularDirective);
@@ -79,6 +79,7 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
             $window.webkitCancelRequestAnimationFrame ||
             angular.noop;
 
+  var DEGREE_IN_RADIANS = $window.Math.PI / 180;
   var MODE_DETERMINATE = 'determinate';
   var MODE_INDETERMINATE = 'indeterminate';
   var DISABLED_CLASS = '_md-progress-circular-disabled';
@@ -103,7 +104,11 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
       });
 
       if (angular.isUndefined(attrs.mdMode)) {
-        var mode = attrs.hasOwnProperty('value') ? MODE_DETERMINATE : MODE_INDETERMINATE;
+        var hasValue = angular.isDefined(attrs.value);
+        var mode = hasValue ? MODE_DETERMINATE : MODE_INDETERMINATE;
+        var info = "Auto-adding the missing md-mode='{0}' to the ProgressCircular element";
+
+          // $log.debug( $mdUtil.supplant(info, [mode]) );
         attrs.$set('mdMode', mode);
       } else {
         attrs.$set('mdMode', attrs.mdMode.trim());
@@ -119,7 +124,7 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
     var path = angular.element(node.querySelector('path'));
     var startIndeterminate = $mdProgressCircular.startIndeterminate;
     var endIndeterminate = $mdProgressCircular.endIndeterminate;
-    var iterationCount = 0;
+    var rotationIndeterminate = 0;
     var lastAnimationId = 0;
     var lastDrawFrame;
     var interval;
@@ -129,7 +134,7 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
 
     // If the mode is indeterminate, it doesn't need to
     // wait for the next digest. It can start right away.
-    if (scope.mdMode === MODE_INDETERMINATE){
+    if(scope.mdMode === MODE_INDETERMINATE){
       startIndeterminateAnimation();
     }
 
@@ -150,14 +155,12 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
       if (isDisabled === true || isDisabled === false){
         return isDisabled;
       }
-
       return angular.isDefined(element.attr('disabled'));
+
     }], function(newValues, oldValues) {
       var mode = newValues[1];
       var isDisabled = newValues[2];
       var wasDisabled = oldValues[2];
-      var diameter = 0;
-      var strokeWidth = 0;
 
       if (isDisabled !== wasDisabled) {
         element.toggleClass(DISABLED_CLASS, !!isDisabled);
@@ -172,28 +175,14 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
         }
 
         if (mode === MODE_INDETERMINATE) {
-          if (oldValues[1] === MODE_DETERMINATE) {
-            diameter = getSize(scope.mdDiameter);
-            strokeWidth = getStroke(diameter);
-            path.attr('d', getSvgArc(diameter, strokeWidth, true));
-            path.attr('stroke-dasharray', (diameter - strokeWidth) * $window.Math.PI * 0.75);
-          }
           startIndeterminateAnimation();
         } else {
           var newValue = clamp(newValues[0]);
-          var oldValue = clamp(oldValues[0]);
 
           cleanupIndeterminateAnimation();
 
-          if (oldValues[1] === MODE_INDETERMINATE) {
-            diameter = getSize(scope.mdDiameter);
-            strokeWidth = getStroke(diameter);
-            path.attr('d', getSvgArc(diameter, strokeWidth, false));
-            path.attr('stroke-dasharray', (diameter - strokeWidth) * $window.Math.PI);
-          }
-
           element.attr('aria-valuenow', newValue);
-          renderCircle(oldValue, newValue);
+          renderCircle(clamp(oldValues[0]), newValue);
         }
       }
 
@@ -204,7 +193,6 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
     scope.$watch('mdDiameter', function(newValue) {
       var diameter = getSize(newValue);
       var strokeWidth = getStroke(diameter);
-      var value = clamp(scope.value);
       var transformOrigin = (diameter / 2) + 'px';
       var dimensions = {
         width: diameter + 'px',
@@ -228,52 +216,37 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
         .css('transform-origin', transformOrigin + ' ' + transformOrigin + ' ' + transformOrigin);
 
       element.css(dimensions);
-
-      path.attr('stroke-width', strokeWidth);
-      path.attr('stroke-linecap', 'square');
-      if (scope.mdMode == MODE_INDETERMINATE) {
-        path.attr('d', getSvgArc(diameter, strokeWidth, true));
-        path.attr('stroke-dasharray', (diameter - strokeWidth) * $window.Math.PI * 0.75);
-        path.attr('stroke-dashoffset', getDashLength(diameter, strokeWidth, 1, 75));
-      } else {
-        path.attr('d', getSvgArc(diameter, strokeWidth, false));
-        path.attr('stroke-dasharray', (diameter - strokeWidth) * $window.Math.PI);
-        path.attr('stroke-dashoffset', getDashLength(diameter, strokeWidth, 0, 100));
-        renderCircle(value, value);
-      }
-
+      path.css('stroke-width',  strokeWidth + 'px');
     });
 
-    function renderCircle(animateFrom, animateTo, easing, duration, iterationCount, maxValue) {
+    function renderCircle(animateFrom, animateTo, easing, duration, rotation) {
       var id = ++lastAnimationId;
       var startTime = $mdUtil.now();
       var changeInValue = animateTo - animateFrom;
       var diameter = getSize(scope.mdDiameter);
-      var strokeWidth = getStroke(diameter);
+      var pathDiameter = diameter - getStroke(diameter);
       var ease = easing || $mdProgressCircular.easeFn;
       var animationDuration = duration || $mdProgressCircular.duration;
-      var rotation = -90 * (iterationCount || 0);
-      var dashLimit = maxValue || 100;
 
       // No need to animate it if the values are the same
       if (animateTo === animateFrom) {
-        renderFrame(animateTo);
+        path.attr('d', getSvgArc(animateTo, diameter, pathDiameter, rotation));
       } else {
         lastDrawFrame = rAF(function animation() {
           var currentTime = $window.Math.max(0, $window.Math.min($mdUtil.now() - startTime, animationDuration));
 
-          renderFrame(ease(currentTime, animateFrom, changeInValue, animationDuration));
+          path.attr('d', getSvgArc(
+            ease(currentTime, animateFrom, changeInValue, animationDuration),
+            diameter,
+            pathDiameter,
+            rotation
+          ));
 
           // Do not allow overlapping animations
           if (id === lastAnimationId && currentTime < animationDuration) {
             lastDrawFrame = rAF(animation);
           }
         });
-      }
-
-      function renderFrame(value) {
-        path.attr('stroke-dashoffset', getDashLength(diameter, strokeWidth, value, dashLimit));
-        path.attr('transform','rotate(' + (rotation) + ' ' + diameter/2 + ' ' + diameter/2 + ')');
       }
     }
 
@@ -283,14 +256,16 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
         endIndeterminate,
         $mdProgressCircular.easeFnIndeterminate,
         $mdProgressCircular.durationIndeterminate,
-        iterationCount,
-        75
+        rotationIndeterminate
       );
 
-      // The %4 technically isn't necessary, but it keeps the rotation
-      // under 360, instead of becoming a crazy large number.
-      iterationCount = ++iterationCount % 4;
+      // The % 100 technically isn't necessary, but it keeps the rotation
+      // under 100, instead of becoming a crazy large number.
+      rotationIndeterminate = (rotationIndeterminate + endIndeterminate) % 100;
 
+      var temp = startIndeterminate;
+      startIndeterminate = -endIndeterminate;
+      endIndeterminate = -temp;
     }
 
     function startIndeterminateAnimation() {
@@ -298,7 +273,7 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
         // Note that this interval isn't supposed to trigger a digest.
         interval = $interval(
           animateIndeterminate,
-          $mdProgressCircular.durationIndeterminate,
+          $mdProgressCircular.durationIndeterminate + 50,
           0,
           false
         );
@@ -321,38 +296,55 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
   }
 
   /**
-   * Returns SVG path data for progress circle
+   * Generates an arc following the SVG arc syntax.
    * Syntax spec: https://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
    *
+   * @param {number} current Current value between 0 and 100.
    * @param {number} diameter Diameter of the container.
-   * @param {number} strokeWidth Stroke width to be used when drawing circle
-   * @param {boolean} indeterminate Use if progress circle will be used for indeterminate
+   * @param {number} pathDiameter Diameter of the path element.
+   * @param {number=0} rotation The point at which the semicircle should start rendering.
+   * Used for doing the indeterminate animation.
    *
    * @returns {string} String representation of an SVG arc.
    */
-  function getSvgArc(diameter, strokeWidth, indeterminate) {
+  function getSvgArc(current, diameter, pathDiameter, rotation) {
+    // The angle can't be exactly 360, because the arc becomes hidden.
+    var maximumAngle = 359.99 / 100;
+    var startPoint = rotation || 0;
     var radius = diameter / 2;
-    var offset = strokeWidth / 2;
-    var start = radius + ',' + offset; // ie: (25, 2.5) or 12 o'clock
-    var end = offset + ',' + radius;   // ie: (2.5, 25) or  9 o'clock
-    var arcRadius = radius - offset;
-    return 'M' + start
-         + 'A' + arcRadius + ',' + arcRadius + ' 0 1 1 ' + end // 75% circle
-         + (indeterminate ? '' : 'A' + arcRadius + ',' + arcRadius + ' 0 0 1 ' + start); // loop to start
+    var pathRadius = pathDiameter / 2;
+
+    var startAngle = startPoint * maximumAngle;
+    var endAngle = current * maximumAngle;
+    var start = polarToCartesian(radius, pathRadius, startAngle);
+    var end = polarToCartesian(radius, pathRadius, endAngle + startAngle);
+    var arcSweep = endAngle < 0 ? 0 : 1;
+    var largeArcFlag;
+
+    if (endAngle < 0) {
+      largeArcFlag = endAngle >= -180 ? 0 : 1;
+    } else {
+      largeArcFlag = endAngle <= 180 ? 0 : 1;
+    }
+
+    return 'M' + start + 'A' + pathRadius + ',' + pathRadius +
+      ' 0 ' + largeArcFlag + ',' + arcSweep + ' ' + end;
   }
 
   /**
-   * Return stroke length for progress circle
+   * Converts Polar coordinates to Cartesian.
    *
-   * @param {number} diameter Diameter of the container.
-   * @param {number} strokeWidth Stroke width to be used when drawing circle
-   * @param {number} value Percentage of circle (between 0 and 100)
-   * @param {number} limit Max percentage for circle
+   * @param {number} radius Radius of the container.
+   * @param {number} pathRadius Radius of the path element
+   * @param {number} angleInDegress Angle at which to place the point.
    *
-   * @returns {number} Stroke length for progres circle
+   * @returns {string} Cartesian coordinates in the format of `x,y`.
    */
-  function getDashLength(diameter, strokeWidth, value, limit) {
-    return (diameter - strokeWidth) * $window.Math.PI * ((3 * (limit || 100) / 100) - (value/100));
+  function polarToCartesian(radius, pathRadius, angleInDegrees) {
+    var angleInRadians = (angleInDegrees - 90) * DEGREE_IN_RADIANS;
+
+    return (radius + (pathRadius * $window.Math.cos(angleInRadians))) +
+      ',' + (radius + (pathRadius * $window.Math.sin(angleInRadians)));
   }
 
   /**
@@ -389,7 +381,6 @@ function MdProgressCircularDirective($window, $mdProgressCircular, $mdTheming,
   function getStroke(diameter) {
     return $mdProgressCircular.strokeWidth / 100 * diameter;
   }
-
 }
 
 /**
@@ -440,9 +431,9 @@ function MdProgressCircularProvider() {
     duration: 100,
     easeFn: linearEase,
 
-    durationIndeterminate: 1333,
-    startIndeterminate: 1,
-    endIndeterminate: 149,
+    durationIndeterminate: 500,
+    startIndeterminate: 3,
+    endIndeterminate: 80,
     easeFnIndeterminate: materialEase,
 
     easingPresets: {
