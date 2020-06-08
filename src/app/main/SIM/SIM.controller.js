@@ -294,7 +294,7 @@
             o = o[0];
             $scope.model.Id = o.id;
             $scope.model.SerialNum = o.SerialNum;
-            $scope.model.PhoneNum = parseInt(o.PhoneNum);
+            $scope.model.PhoneNum = o.PhoneNum;
             $scope.model.idTelCo = o.idTelCo;
             $scope.model.idApp = o.idApp;
             $scope.model.Status = o.Status == '' || o.Status == null ? '-1' : o.Status;
