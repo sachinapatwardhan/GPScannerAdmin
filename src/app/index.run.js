@@ -20,8 +20,8 @@
 
         //}
         $rootScope.VersionNumber = "20.02.0608.128db22c";
-        // $rootScope.RoutePath = "http://localhost:7212/";
-        // $rootScope.Socket_URL = "http://localhost:7212";
+        $rootScope.RoutePath = "http://localhost:7212/";
+        $rootScope.Socket_URL = "http://localhost:7212";
 
         // $rootScope.RoutePath = "http://api.dotracks.in/";
         // $rootScope.Socket_URL = "http://api.dotracks.in:80";
@@ -53,8 +53,8 @@
         // $rootScope.RoutePath = $window.location.protocol + '://' + $location.host() + '/api/';
         // $rootScope.Socket_URL = $window.location.protocol + '://' + $location.host();
 
-        $rootScope.RoutePath = $window.location.protocol + "//api.maark.my/";
-        $rootScope.Socket_URL = $window.location.protocol + "//api.maark.my";
+        // $rootScope.RoutePath = $window.location.protocol + "//api.maark.my/";
+        // $rootScope.Socket_URL = $window.location.protocol + "//api.maark.my";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
         // $rootScope.MapTile_URL = $window.location.protocol + "//178.128.18.61:8080/";
@@ -66,11 +66,11 @@
         // $rootScope.appName = 'Maark';
 
         // var url = $window.location.protocol + "//" + $window.location.host + "/";
-        var url = 'http://' + $location.host() + '/';
+        // var url = 'http://' + $location.host() + '/';
         // var url = "http://localhost:3000/";
         // var url = "http://admin.itcdtracking.com/";
         // var url = "http://admin.maark.my/";
-        // var url = "http://admin.hc-cargo.com.my/"
+        var url = "http://admin.hc-cargo.com.my/"
         // var url = "http://admin.trackox.com/";
         // var url = "http://admin.dotracks.in/";
         // var url = "http://uatapi.maark.my:7214/";

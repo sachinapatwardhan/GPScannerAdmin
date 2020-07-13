@@ -224,15 +224,17 @@
                         DTColumnBuilder.newColumn('DeviceId'),
 
                         DTColumnBuilder.newColumn('IMEI'),
-                        DTColumnBuilder.newColumn('Version'),
+
                         DTColumnBuilder.newColumn('SerialNum'),
                         DTColumnBuilder.newColumn('PhoneNum'),
                         DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
                         DTColumnBuilder.newColumn('Country'),
                         // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                         DTColumnBuilder.newColumn('AppName'),
-                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                         DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('VehicleExpiryDate').renderWith(dateFormat),
+                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('CreatedBy'),
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
@@ -244,7 +246,6 @@
                         DTColumnBuilder.newColumn('Company'),
                         DTColumnBuilder.newColumn('Type'),
                         DTColumnBuilder.newColumn('IMEI'),
-                        DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('SerialNum'),
                         DTColumnBuilder.newColumn('PhoneNum'),
                         DTColumnBuilder.newColumn('SimStatus'),
@@ -252,8 +253,11 @@
                         DTColumnBuilder.newColumn('Country'),
                         // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                         DTColumnBuilder.newColumn('AppName'),
-                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                         DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('VehicleExpiryDate').renderWith(dateFormat),
+                        // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
+
+                        DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('CreatedBy'),
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn('Status'),
@@ -307,7 +311,6 @@
                         DTColumnBuilder.newColumn('id').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn('DeviceId'),
                         DTColumnBuilder.newColumn('IMEI'),
-                        DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('SerialNum'),
                         DTColumnBuilder.newColumn('PhoneNum'),
                         DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
@@ -315,6 +318,9 @@
                         // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                         // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                         DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('VehicleExpiryDate').renderWith(dateFormat),
+
+                        DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('CreatedBy'),
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn('Status'),
@@ -328,7 +334,6 @@
                         DTColumnBuilder.newColumn('Company'),
                         DTColumnBuilder.newColumn('Type'),
                         DTColumnBuilder.newColumn('IMEI'),
-                        DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('SerialNum'),
                         DTColumnBuilder.newColumn('PhoneNum'),
                         DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
@@ -336,6 +341,8 @@
                         // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                         // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                         DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('VehicleExpiryDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('CreatedBy'),
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn('Status'),
@@ -348,7 +355,7 @@
                         DTColumnBuilder.newColumn('DeviceId'),
                         DTColumnBuilder.newColumn('Type'),
                         DTColumnBuilder.newColumn('IMEI'),
-                        DTColumnBuilder.newColumn('Version'),
+
                         DTColumnBuilder.newColumn('SerialNum'),
                         DTColumnBuilder.newColumn('PhoneNum'),
                         DTColumnBuilder.newColumn('Name').renderWith(TelCompanyHtml),
@@ -356,6 +363,8 @@
                         // DTColumnBuilder.newColumn('username').renderWith(SalesAgentHtml),
                         // DTColumnBuilder.newColumn('ExpiryDate').renderWith(dateFormat),
                         DTColumnBuilder.newColumn('CreatedDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('VehicleExpiryDate').renderWith(dateFormat),
+                        DTColumnBuilder.newColumn('Version'),
                         DTColumnBuilder.newColumn('CreatedBy'),
                         // DTColumnBuilder.newColumn(null).renderWith(IsActiveHtml).notSortable().withOption('class', 'text-center'),
                         DTColumnBuilder.newColumn('Status'),
@@ -410,6 +419,9 @@
                 .withOption('autoWidth', true)
                 // .withOption('deferRender', true)
                 .withOption('createdRow', createdRow)
+                .withOption('initComplete', function () {
+                    $scope.AdjustColumn();
+                })
                 // .withOption('bFilter', false)
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
                 // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
@@ -418,6 +430,20 @@
         vm.dtInstance = {};
         vm.dtInstance1 = {};
         vm.dtInstance2 = {};
+
+        $(window).resize(function () {
+            $scope.AdjustColumn();
+        });
+
+        $scope.AdjustColumn = function () {
+            if ($rootScope.UserRoles == 'Super Admin') {
+                vm.dtInstance.DataTable.columns.adjust();
+            } else if ($rootScope.UserRoles.indexOf('Sales Agent') != -1) {
+                vm.dtInstance2.DataTable.columns.adjust();
+            } else {
+                vm.dtInstance1.DataTable.columns.adjust();
+            }
+        }
 
         function dateFormat(date) {
             if (date != null) {
