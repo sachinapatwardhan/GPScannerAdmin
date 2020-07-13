@@ -20,8 +20,8 @@
 
         //}
         $rootScope.VersionNumber = "20.02.0608.128db22c";
-        $rootScope.RoutePath = "http://localhost:7212/";
-        $rootScope.Socket_URL = "http://localhost:7212";
+        // $rootScope.RoutePath = "http://localhost:7212/";
+        // $rootScope.Socket_URL = "http://localhost:7212";
 
         // $rootScope.RoutePath = "http://api.dotracks.in/";
         // $rootScope.Socket_URL = "http://api.dotracks.in:80";
@@ -53,8 +53,8 @@
         // $rootScope.RoutePath = $window.location.protocol + '://' + $location.host() + '/api/';
         // $rootScope.Socket_URL = $window.location.protocol + '://' + $location.host();
 
-        // $rootScope.RoutePath = $window.location.protocol + "//api.maark.my/";
-        // $rootScope.Socket_URL = $window.location.protocol + "//api.maark.my";
+        $rootScope.RoutePath = $window.location.protocol + "//api.maark.my/";
+        $rootScope.Socket_URL = $window.location.protocol + "//api.maark.my";
 
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
         // $rootScope.MapTile_URL = $window.location.protocol + "//178.128.18.61:8080/";
@@ -65,12 +65,12 @@
         $rootScope.AdminUserId = 1;
         // $rootScope.appName = 'Maark';
 
-        // var url = $window.location.protocol + "//" + $window.location.host + "/";
+        var url = $window.location.protocol + "//" + $window.location.host + "/";
         // var url = 'http://' + $location.host() + '/';
         // var url = "http://localhost:3000/";
         // var url = "http://admin.itcdtracking.com/";
         // var url = "http://admin.maark.my/";
-        var url = "http://admin.hc-cargo.com.my/"
+        // var url = "http://admin.hc-cargo.com.my/"
         // var url = "http://admin.trackox.com/";
         // var url = "http://admin.dotracks.in/";
         // var url = "http://uatapi.maark.my:7214/";
@@ -1069,6 +1069,20 @@
                                 weight: 1
                             });
                         }
+
+                        // Distributor User
+                        var lstDistributorUser = _.filter(lstAllPages, function (obj) {
+                            return obj.tblmodulemgmt.Module == 'Distributor';
+                        });
+                        if (lstDistributorUser.length > 0) {
+                            msNavigationService.saveItem('Settings.Distributor', {
+                                title: 'Distributor',
+                                state: 'app.distributor',
+                                order: lstDistributorUser[0].tblmodulemgmt.DisplayOrder,
+                                weight: 1
+                            });
+                        }
+
                         //WarrantySIM 
                         var lstWarrantySIM = _.filter(lstAllPages, function (obj) {
                             return obj.tblmodulemgmt.Module == 'Warranty SIM';
@@ -1120,7 +1134,7 @@
                             lstAuditLog.length > 0 || lstGPSDelete.length > 0 || lstEmailTemplate.length > 0 || lstUserFeedback.length ||
                             /* lstAssignRetailer.length > 0  ||*/
                             lstAssignLicence.length > 0 || lstAssignAgentRetailer.length > 0 || lstAssignDistributor.length > 0
-                            || lstWarrantyReplace.length > 0 || lstWarrantySIM.length > 0) {
+                            || lstWarrantyReplace.length > 0 || lstWarrantySIM.length > 0 || lstDistributorUser.length > 0) {
                             msNavigationService.saveItem('Settings', {
                                 title: 'Settings',
                                 icon: 'icon-cog',

@@ -88,5 +88,6 @@
             'app.WarrantyDevice',
             'app.WarrantySIM',
             'app.SalesDashboard',
+            'app.distributor',
         ]);
 })();

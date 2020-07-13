@@ -1,0 +1,800 @@
+(function () {
+    'use strict';
+
+    angular
+        .module('app.distributor')
+        .controller('DistributorController', DistributorController);
+
+    /** @ngInject */
+    function DistributorController($http, $scope, $rootScope, $state, $q, $timeout, $mdToast, $document, $mdDialog, $cookieStore, $stateParams, DTOptionsBuilder, DTColumnDefBuilder, DTColumnBuilder, $compile) {
+        var vm = this;
+        $rootScope.appId = localStorage.getItem('appId');
+        $rootScope.UserRoles = localStorage.getItem('UserRoles');
+        $scope.init = function () {
+            $scope.model = {
+                id: '',
+                email: '',
+                username: '',
+                phone: '',
+                createdby: 'Admin',
+                createddate: new Date(),
+                modifiedby: '',
+                modifieddate: null,
+                roleId: '',
+                userId: '',
+                country: '',
+                state: '',
+                city: '',
+                gender: '',
+                image: '',
+                IsMobileVerify: false,
+                idApp: parseInt($rootScope.appId),
+                Amount: 0,
+                password: '',
+                confirmpassword: '',
+                LoginUserId: $rootScope.UserRoles != "Super Admin" ? $rootScope.UserId : '',
+            };
+            //$scope.GetAllUser();
+            // $scope.GetAllRoles();
+            $scope.tab = {
+                selectedIndex: 0
+            };
+            $scope.Search = '';
+            $scope.flag = false;
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.GetAllInfoList();
+                // $scope.GetAllOnlyDistributor();
+            }
+            $scope.checked = {};
+            // GetAllCountry();
+        }
+        $scope.GetAllInfoList = function () {
+            $http.get($rootScope.RoutePath + "appinfo/GetAllInfoList").then(function (data) {
+                $scope.lstAppInfo = data.data;
+            })
+        }
+
+        // $scope.GetAllOnlyDistributor = function () {
+        //     // Data
+        //     $http.get($rootScope.RoutePath + "user/GetAllOnlyDistributorUser", { params: { appId: $scope.model.idApp } }).then(function (data) {
+        //         $scope.lstUser = data.data;
+        //     });
+        //     console.log("$$$$", $scope.lstUser)
+        // }
+
+        $scope.clearSearchTerm = function () {
+            $scope.searchTermCountry = '';
+            $scope.searchTermState = '';
+            $scope.searchTermCity = '';
+            $scope.searchTermLocation = '';
+            $scope.searchTermSubLocation = '';
+
+            $scope.searchCountry = '';
+            $scope.searchState = '';
+            $scope.searchCity = '';
+            $scope.searchLocation = '';
+            $scope.searchSubLocation = '';
+            vm.searchTermidAppName = '';
+            vm.SearchUser = '';
+            vm.searchTermCountry = '';
+        };
+
+        $scope.onSearchChange = function ($event) {
+            $event.stopPropagation();
+        }
+
+        $scope.GetAllRoles = function () {
+            // Data
+            $http.get($rootScope.RoutePath + "role/GetAllRole").then(function (data) {
+                $scope.lstRoles = data.data;
+            });
+        }
+
+        $scope.FetchRoleById = function (id) {
+            $rootScope.FlgAddedEditlocal = true;
+            var o = _.findWhere($scope.lstdata, {
+                id: id
+            });
+            $scope.tab.selectedIndex = 1;
+            $scope.model.phone = o.phone;
+            $scope.model.email = o.email;
+            $scope.model.phone = o.phone;
+            $scope.model.username = o.username;
+            $scope.model.createddate = o.createddate;
+            $scope.model.createdby = o.createdby;
+            $scope.model.modifieddate = new Date();
+            $scope.model.modifiedby = "Admin";
+            $scope.model.id = o.id;
+            $scope.model.userId = o.id;
+            $scope.model.idApp = o.idApp;
+            $scope.model.LoginUserId = o.MainUseId;
+            $scope.model.password = o.password;
+            $scope.model.confirmpassword = o.password;
+
+            //$scope.model.password = o.password;
+            $scope.model.country = o.country;
+            // $scope.GetAllStateByCountry($scope.model.country);
+            // $scope.model.state = o.state;
+            // $timeout(function() {
+            //     $scope.GetAllCityByStateId($scope.model.state);
+            //     $scope.model.city = o.city;
+            // }, 1000);
+
+            $scope.model.gender = o.gender;
+            // $scope.model.IsMobileVerify = o.IsMobileVerify;
+
+            // if (o.tbluserinroles.length > 0) {
+            //     for (var i = 0; i < o.tbluserinroles.length; i++) {
+            //         var obj = _.findWhere($scope.lstRoles, {
+            //             id: o.tbluserinroles[i].roleId
+            //         })
+            //         obj.checked = true;
+            //     }
+            // }
+            // if (o.Role != '' && o.Role != null && o.Role != undefined) {
+            //     var str = o.Role.split(",");
+            //     for (var i = 0; i < str.length; i++) {
+            //         var obj = _.findWhere($scope.lstRoles, {
+            //             RoleName: str[i]
+            //         })
+            //         obj.checked = true;
+            //     }
+            // }
+            // $scope.changeUserRole();
+            // $scope.model.Amount = o.Amount != null && o.Amount != '' ? o.Amount : 0;
+            // $scope.model.image = o.image;
+            // $scope.myCroppedImage = $rootScope.RoutePath + 'MediaUploads/UserUpload/' + $scope.model.image;
+            // if ($scope.model.image != null && $scope.model.image != '' && $scope.model.image != undefined) {
+            //     $scope.FlgImage = 1;
+            // } else {
+            //     $scope.FlgImage = 0;
+            // }
+
+            $scope.flag = true;
+
+        }
+
+
+
+
+        //Create New User With It's Role
+        $scope.CreateUser = function (o) {
+            $http.post($rootScope.RoutePath + "user/SaveUserDistributor", o).then(function (data) {
+                //$scope.SaveUserInRole(o);
+                if (data.data.success == true) {
+                    // var id;
+                    // if (o.id != 0) {
+                    //     id = o.id;
+                    // } else {
+                    //     id = data.data.data.userId;
+                    // }
+                    // if ($scope.Mediafiles.length > 0) {
+                    //     var formData = new FormData();
+                    //     // angular.forEach($scope.Mediafiles, function(d) {
+                    //     formData.append(id, file);
+                    //     // });
+                    //     $http.post($rootScope.RoutePath + "user/uploadImage", formData, {
+                    //         transformRequest: angular.identity,
+                    //         headers: {
+                    //             'Content-Type': undefined
+                    //         }
+                    //     }).then(function(data) {
+                    //         if ($rootScope.UserName == o.username) {
+                    //             if (data.data.data != null) {
+                    //                 $cookieStore.put('UserImage', data.data.data);
+                    //                 $rootScope.UserImage = $cookieStore.get('UserImage');
+                    //             }
+                    //         }
+
+                    //         $scope.myImage = '';
+                    //         $scope.myCroppedImage = '';
+                    //         $scope.apiMedia.removeAll();
+                    //         $scope.GetAllUser(true);
+                    //         $rootScope.FlgAddedEditlocal = false;
+                    //         if ($rootScope.FlgAddedAccess == true) {
+                    //             $rootScope.FlgAddedEditlocal = true;
+                    //         }
+
+                    //         $scope.init();
+                    //     }, function(err) {
+                    //         $scope.myImage = '';
+                    //         $scope.myCroppedImage = '';
+                    //         $scope.apiMedia.removeAll();
+                    //         $mdToast.show(
+                    //             $mdToast.simple()
+                    //             .textContent(err)
+                    //             .position('top right')
+                    //             .hideDelay(3000)
+                    //         );
+                    //         // do sometingh
+                    //     });
+
+                    // } else {
+                    //     $rootScope.FlgAddedEditlocal = false;
+                    //     if ($rootScope.FlgAddedAccess == true) {
+                    //         $rootScope.FlgAddedEditlocal = true;
+                    //     }
+                    //     $scope.GetAllUser(true);
+                    //     $scope.init();
+                    // }
+                    $rootScope.FlgAddedEditlocal = false;
+                    if ($rootScope.FlgAddedAccess == true) {
+                        $rootScope.FlgAddedEditlocal = true;
+                    }
+                    $scope.GetAllUser(true);
+                    $scope.init();
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent(data.data.message)
+                            .position('top right')
+                            .hideDelay(3000)
+                    );
+                } else {
+                    if (data.data.data == 'TOKEN') {
+                        //$cookieStore.remove('UserName');
+                        //$cookieStore.remove('token');
+                        //window.location.href = '/app/login';
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                        );
+                    }
+                }
+            });
+        }
+
+        $scope.ChangeUserStatus = function (UserId) {
+            var Status = $scope.checked[UserId] == true ? 1 : 0;
+
+            var params = {
+                UserId: UserId,
+                IsActive: Status,
+                UserName: $cookieStore.get("UserName"),
+            }
+
+            $http.get($rootScope.RoutePath + "user/changeUserStatus", { params: params }).success(function (resData) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent(resData.message)
+                        .position('top right')
+                        .hideDelay(3000)
+                );
+                if (resData.success) {
+                    $scope.GetAllUser();
+                }
+            })
+        }
+
+        //Dynamic Pagging
+        // console.log($rootScope.UserCountry);
+        // console.log($rootScope.UserRoles);
+        // console.log($rootScope.CountryList);
+        $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function (response) {
+            $scope.FilterStatus = 1;
+            if ($rootScope.UserRoles == 'Super Admin') {
+                $scope.dtColumns = [
+                    DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                    // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
+                    DTColumnBuilder.newColumn('username').withOption('width', '12%'),
+                    DTColumnBuilder.newColumn('email').withOption('width', '13%'),
+                    DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
+                    // DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
+                    // DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
+                    // DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
+                    // // DTColumnBuilder.newColumn('tblappinfo.AppName').renderWith(AppHtml),
+                    DTColumnBuilder.newColumn('AppName'),
+                    DTColumnBuilder.newColumn('MainUserName'),
+                    // DTColumnBuilder.newColumn('AppVersion'),
+                    // DTColumnBuilder.newColumn('Platform'),
+                    // DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('id').renderWith(CheckboxHtml).notSortable().withOption('width', '5%').withOption('class', 'text-center').withOption('responsivePriority', 1),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '5%').withOption('class', 'text-center')
+                ]
+                if ($rootScope.AppName != "Trackox") {
+                    $scope.dtColumns.splice(6, 1);
+                    $("#isActiveflg").remove();
+                }
+            } else {
+                $scope.dtColumns1 = [
+                    DTColumnBuilder.newColumn('createddate').renderWith(NumberHtml).notSortable().notSortable().withOption('width', '4%').withOption('class', 'text-center'),
+                    // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml).withOption('width', '4%'),
+                    DTColumnBuilder.newColumn('username').withOption('width', '12%'),
+                    DTColumnBuilder.newColumn('email').withOption('width', '13%'),
+                    DTColumnBuilder.newColumn('phone').withOption('width', '9%'),
+                    // DTColumnBuilder.newColumn(null).renderWith(roleHtml).notSortable(),
+                    // DTColumnBuilder.newColumn('Role').renderWith(CountryHtml),
+                    // DTColumnBuilder.newColumn('country').renderWith(CountryHtml),
+
+                    // DTColumnBuilder.newColumn('AppVersion'),
+                    // DTColumnBuilder.newColumn('Platform'),
+                    // DTColumnBuilder.newColumn('LastLoginDate').renderWith(dateFormat),
+                    DTColumnBuilder.newColumn('id').renderWith(CheckboxHtml).notSortable().withOption('width', '10%').withOption('class', 'text-center').withOption('responsivePriority', 1),
+                    DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('width', '10%').withOption('class', 'text-center')
+                ]
+                console.log($scope.dtColumns1)
+                if ($rootScope.AppName != "Trackox") {
+                    $scope.dtColumns1.splice(4, 1);
+                    $("#isActiveflg").remove();
+                }
+            }
+
+            $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
+                url: $rootScope.RoutePath + "user/GetAllDynamicDistributorUser",
+                data: function (d) {
+                    if ($scope.Search == '') {
+                        d.search = '';
+                    } else {
+                        d.search = $scope.Search;
+                    }
+                    if ($rootScope.UserRoles != 'Super Admin') {
+
+                        d.appId = $rootScope.appId;
+                    } else {
+                        d.appId = '';
+                    }
+                    d.userId = $rootScope.UserRoles == "Super Admin" ? '' : $rootScope.UserId;
+                    // d.UserCountry = $rootScope.UserCountry;
+                    // d.UserRoles = $rootScope.UserRoles;
+                    // d.CountryList = $rootScope.CountryList;
+                    return d;
+                },
+                type: "get",
+                dataSrc: function (json) {
+
+                    if (json.success != false) {
+                        $scope.lstdata = json.data;
+                        console.log($scope.lstdata)
+                        return json.data;
+                    } else {
+                        return [];
+                    }
+                },
+            })
+                .withOption('processing', true) //for show progress bar
+                .withOption('serverSide', true) // for server side processing
+                .withPaginationType('full_numbers') // for get full pagination options // first / last / prev / next and page numbers
+                .withDisplayLength(25) // Page size
+                .withOption('aaSorting', [0, 'desc'])
+                .withOption('responsive', true)
+                .withOption('createdRow', createdRow)
+                // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+                .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
+                .withOption('scrollY', 'auto');
+        });
+
+
+
+        vm.dtInstance = {};
+        vm.dtInstance1 = {};
+
+        //Reload Datatable
+        $scope.GetAllUser = function (IsUpdate) {
+            var resetPaging = false;
+            if (IsUpdate == true) {
+                resetPaging = true;
+            };
+            if ($rootScope.UserRoles == 'Super Admin') {
+                vm.dtInstance.reloadData(callback, resetPaging);
+                $('#Usertable').dataTable()._fnPageChange(0);
+                $('#Usertable').dataTable()._fnAjaxUpdate();
+            } else {
+                vm.dtInstance1.reloadData(callback, resetPaging);
+                $('#Usertable1').dataTable()._fnPageChange(0);
+                $('#Usertable1').dataTable()._fnAjaxUpdate();
+            }
+
+
+
+        }
+
+        $scope.reloadData = function () { }
+
+        function callback(json) { }
+
+        //compile Datatable And Apply Class
+        function createdRow(row, data, dataIndex) {
+            // Recompiling so we can bind Angular directive to the DT
+            $compile(angular.element(row).contents())($scope);
+        }
+
+
+        function NumberHtml(data, type, full, meta) {
+            return (meta.row + 1);
+        }
+
+        function AppHtml(data, type, full, meta) {
+            // console.log(full)
+            var appname = '';
+            if (full.tblappinfo != null && full.tblappinfo != undefined && full.tblappinfo != '') {
+                if (full.tblappinfo.AppName != null && full.tblappinfo.AppName != undefined && full.tblappinfo.AppName != '') {
+                    appname = full.tblappinfo.AppName;
+                }
+            }
+
+            return appname;
+        }
+
+        function CountryHtml(data) {
+            var country = '';
+            if (data != null && data != '' && data != undefined) {
+                country = data;
+            }
+            return country;
+        }
+
+        function roleHtml(data, type, full, meta) {
+            var varspan = '';
+            if (full.tbluserinroles.length > 0) {
+                for (var i = 0; i < full.tbluserinroles.length; i++) {
+                    if (i == 0) {
+                        varspan = full.tbluserinroles[i].tblrole.RoleName;
+                    } else {
+                        varspan = varspan + ', ' + full.tbluserinroles[i].tblrole.RoleName;
+                    }
+                }
+            } else {
+                varspan = 'N/A';
+            }
+            // if (full.RoleName != null) {
+            //     varspan = full.RoleName;
+            // } else {
+            //     varspan = 'N/A';
+            // }
+            return varspan;
+        };
+
+        function dateFormat(data, type, full, meta) {
+            if (data != null && data != '') {
+                return moment(data).format('DD-MM-YYYY hh:mm:ss a')
+            } else {
+                return "";
+            }
+
+        }
+
+        function DateFormateHtml(data, type, full, meta) {
+            if (data != null && data != undefined && data != '') {
+                return $rootScope.convertdateformat(data, 2);
+            } else {
+                return 'N/A';
+            }
+        }
+
+        function ImageHtml(data, type, full, meta) {
+            var img = '';
+            if (full.image != "") {
+                img = '<img ng-src="' + $rootScope.RoutePath + 'MediaUploads/UserUpload/' + full.image + '" err-src="assets/images/default-user.png" height="50px" width="50px">';
+
+            } else if (full.image == "") {
+                img = '<img ng-src="assets/images/default-user.png" height="50px" width="50px">';
+            }
+            return img;
+        }
+
+
+        function CheckboxHtml(data, type, full, meta) {
+            $scope.checked[data] = full.IsActive == 0 ? false : true;
+
+            var btn = "<div layout='row' class='text-center'>";
+            btn += '<md-checkbox ng-model="checked[' + data + ']" ng-change="ChangeUserStatus( ' + full.id + ')" aria-label="Checkbox 1" class="md-primary"></md-checkbox>';
+            btn += '</div>';
+            return btn;
+        }
+
+        function actionsHtml(data, type, full, meta) {
+            var btns = '<div layout="row" layout-align="center">'
+            // btns += '<md-button  class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="FetchRoleById(' + data.id + ')" aria-label="">' +
+            //     '<md-icon md-font-icon="icon-pencil-box-outline"></md-icon> <md-tooltip md-visible="" md-direction="">Edit User </md-tooltip>' +
+            //     '</md-button>';
+
+
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="FetchRoleById(' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-pencil"  class="s18 green-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Edit</md-tooltip>' +
+                    '</md-button>';
+            }
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="ResetPassword($event,' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-account-alert"  class="s18 blue-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip>' +
+                    '</md-button>';
+            }
+
+            if ($rootScope.FlgModifiedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="ChangePassword($event,' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-key-change"  class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Change Password</md-tooltip>' +
+                    '</md-button>';
+
+            }
+
+            if ($rootScope.FlgDeletedAccess) {
+                btns += '<md-button class="edit-button md-icon-button"  ng-click="DeleteUser($event,' + data.id + ')" aria-label="">' +
+                    '<md-icon md-font-icon="icon-trash" class="s18 red-500-fg"></md-icon>' +
+                    '<md-tooltip md-visible="" md-direction="">Delete</md-tooltip>' +
+                    '</md-button>';
+            }
+            // if (data.IsSuspend) {
+            //     btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',0)" aria-label="">' +
+            //         '<md-icon md-font-icon="icon-lock-outline" class="s18 red-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Resume User </md-tooltip>' +
+            //         '</md-button>';
+            // } else {
+            //     btns += '<md-button class="edit-button md-icon-button" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="SetSuspendStatus(' + data.id + ',1)" aria-label="">' +
+            //         '<md-icon md-font-icon="icon-lock-unlocked-outline" class="s18 deep-purple-500-fg"></md-icon> <md-tooltip md-visible="" md-direction="">Suspend User </md-tooltip>' +
+            //         '</md-button>';
+            // }
+
+            // btns += '<md-button class="md-icon-button md-accent md-raised md-hue-2" ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')"><md-icon md-svg-icon="assets/icons/icon-pass-reset.svg"></md-icon> <md-tooltip md-visible="" md-direction="">Reset Password</md-tooltip></md-button></div>';
+            // btns += '<md-button class="md-raised md-primary"  ng-if="' + $rootScope.FlgModifiedAccess + '" ng-click="ResetPassword(' + data.id + ')">Reset Password</md-button>'
+            btns += '<div>';
+            return btns;
+        };
+
+        //Dynamic Pagging End
+
+        $scope.DeleteUser = function (ev, id) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure to delete this record?')
+                .textContent('')
+                .ariaLabel('Lucky day')
+                .targetEvent(ev)
+                .ok('Yes')
+                .cancel('No');
+
+            $mdDialog.show(confirm).then(function () {
+                $http.get($rootScope.RoutePath + "user/DeleteDistributorUser?idUser=" + id).then(function (data) {
+                    if (data.data.success) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                        );
+                        $scope.GetAllUser(true);
+                        $rootScope.FlgAddedEditlocal = false;
+                        if ($rootScope.FlgAddedAccess == true) {
+                            $rootScope.FlgAddedEditlocal = true;
+                        }
+                        $scope.init();
+                    } else {
+                        if (data.data.data == 'TOKEN') {
+                            $rootScope.logout();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                        }
+                    }
+                });
+            }, function () { });
+
+        }
+
+        $scope.SetSuspendStatus = function (id, flg) {
+            var title = "";
+            if (flg) {
+                title = 'Are you sure you want to suspend this user?';
+            } else {
+                title = 'Are you sure you want to resumed this user?';
+            }
+            var confirm = $mdDialog.confirm()
+                .title(title)
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function () {
+                var params = {
+                    idUser: id,
+                    flg: flg
+                };
+                $http.get($rootScope.RoutePath + "user/SetSuspendStatus", {
+                    params: params
+                }).success(function (data) {
+                    if (data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                        );
+                        $scope.GetAllUser(true);
+                        $scope.init();
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                        );
+                    }
+                });
+            });
+        }
+
+        $scope.ResetPassword = function (ev, id) {
+            var obj = _.findWhere($scope.lstdata, { id: id })
+            $mdDialog.show({
+                controller: 'UserPasswordConifrmationController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/User/dialogs/PasswordConfirmation/PasswordConfirmation.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    obj: obj,
+                    Tasks: [],
+                    event: ev,
+                    VM: vm,
+                    flg: 1
+                }
+            })
+        }
+
+        //Reset Password User By Id
+        $scope.ResetPassword1 = function (id) {
+            $scope.obj = _.findWhere($scope.lstdata, {
+                id: id
+            });
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure to Reset Password of this User ?')
+                .ok('Ok')
+                .cancel('Cancel')
+            $mdDialog.show(confirm).then(function () {
+                var params = {
+                    // email: $scope.obj.email,
+                    // idApp: $rootScope.appId,
+                    id: id,
+                    AppName: localStorage.getItem('appName') + ' Admin'
+                }
+                $http.get($rootScope.RoutePath + "account/forgotpassword", { params: params }).then(function (data) {
+                    if (data.data.success == true) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent(data.data.message)
+                                .position('top right')
+                                .hideDelay(3000)
+                        );
+                    } else {
+                        if (data.data.data == 'TOKEN') {
+                            $cookieStore.remove('UserName');
+                            $cookieStore.remove('token');
+                            $state.go('app.login', {
+                                cache: false
+                            });
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                        }
+                    }
+                });
+
+            });
+
+        }
+
+        $scope.ChangePassword = function (ev, id) {
+            var obj = _.findWhere($scope.lstdata, { id: id })
+            $mdDialog.show({
+                skipHide: true,
+                controller: 'UserChangePasswordController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/User/dialogs/ChangePassword/ChangePassword.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    obj: obj,
+                    Tasks: [],
+                    event: ev,
+                    VM: vm
+                }
+            });
+        }
+
+        $scope.restForm = function () {
+            $scope.AddUserForm.$setUntouched();
+            $scope.AddUserForm.$setPristine();
+        }
+
+        $scope.GetSerch = function (Search) {
+            $scope.Search = Search;
+            $scope.GetAllUser(true);
+        }
+
+
+
+        $scope.ResetEdit = function () {
+            if ($rootScope.FlgAddedAccess == true) {
+                $scope.model = {
+                    id: '',
+                    email: '',
+                    username: '',
+                    phone: '',
+                    createdby: 'Admin',
+                    createddate: new Date(),
+                    modifiedby: '',
+                    modifieddate: null,
+                    roleId: '',
+                    userId: '',
+                    country: '',
+                    state: '',
+                    city: '',
+                    gender: '',
+                    image: '',
+                    IsMobileVerify: false,
+                    idApp: parseInt($rootScope.appId),
+                    Amount: 0,
+                    LoginUserId: $rootScope.UserRoles != "Super Admin" ? $rootScope.UserId : '',
+                    password: '',
+                    confirmpassword: '',
+                };
+                $scope.tab = {
+                    selectedIndex: 1
+                };
+                $scope.flag = true;
+
+                // $scope.GetAllRoles();
+                $scope.restForm();
+
+            }
+        }
+        $scope.ResetData = function () {
+
+            $scope.model = {
+                id: '',
+                email: '',
+                username: '',
+                phone: '',
+                createdby: 'Admin',
+                createddate: new Date(),
+                modifiedby: '',
+                modifieddate: null,
+                roleId: '',
+                userId: '',
+                country: '',
+                state: '',
+                city: '',
+                gender: '',
+                image: '',
+                IsMobileVerify: false,
+                idApp: parseInt($rootScope.appId),
+                Amount: 0,
+                LoginUserId: $rootScope.UserRoles != "Super Admin" ? $rootScope.UserId : '',
+                password: '',
+                confirmpassword: '',
+            };
+
+            $scope.restForm();
+
+        }
+        $scope.ResetTab = function () {
+            if ($rootScope.FlgAddedAccess != true) {
+                $scope.FlgAddedEditlocal = false;
+            }
+        }
+
+        $scope.Reset = function () {
+            $rootScope.FlgAddedEditlocal = false;
+            if ($rootScope.FlgAddedAccess == true) {
+                $rootScope.FlgAddedEditlocal = true;
+            }
+            $scope.GetAllUser(true);
+            $scope.init();
+
+        }
+
+
+        $scope.init();
+    }
+
+})();
