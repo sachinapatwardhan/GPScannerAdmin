@@ -56,6 +56,9 @@
         $rootScope.RoutePath = $window.location.protocol + "//api.maark.my/";
         $rootScope.Socket_URL = $window.location.protocol + "//api.maark.my";
 
+        // $rootScope.RoutePath = $window.location.protocol + "//api.maark.uat.bugzstudio.com/";
+        // $rootScope.Socket_URL = $window.location.protocol + "//api.maark.uat.bugzstudio.com";
+
         // $rootScope.FrontPath = "http://182.70.126.194:10075/";
         // $rootScope.MapTile_URL = $window.location.protocol + "//178.128.18.61:8080/";
         $rootScope.MapTile_URL = "https://map.maark.my/";

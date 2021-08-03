@@ -80,6 +80,8 @@
                         var SpeedApiUrl = $rootScope.RoutePath + 'socketapi_toplovo/SendSpeedToplovoData';
                     } else if ($scope.DeviceCompany == 'Concox') {
                         var SpeedApiUrl = $rootScope.RoutePath + 'socketapi_concox/SendSpeedData';
+                    } else if ($scope.DeviceCompany == 'Beiduo') {
+                        var SpeedApiUrl = $rootScope.RoutePath + 'socketapi_beidou/SendSpeedData';
                     } else {
                         var SpeedApiUrl = $rootScope.RoutePath + 'socketapi/SendSpeedData';
                     }
@@ -201,52 +203,98 @@
                     DeviceId: objVehicle.deviceid,
                     Arm: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetArmSettings", { params: params }).then(function (data) {
-                    if (data.data.success == true) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                        );
-                        $scope.reload();
-                    } else {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                        );
-                        $scope.reload();
-                    }
-                    HideLoader();
-                })
+                if ($scope.DeviceCompany == 'Beiduo') {
+                    $http.get($rootScope.RoutePath + "socketapi_beidou/SetArmSettings", { params: params }).then(function (data) {
+                        if (data.data.success == true) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        }
+                        HideLoader();
+                    })
+                } else {
+                    $http.get($rootScope.RoutePath + "socketapi/SetArmSettings", { params: params }).then(function (data) {
+                        if (data.data.success == true) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        }
+                        HideLoader();
+                    })
+                }
             } else if (name == 'OdoMeter') {
                 // if (objModel <= 9999) {
                 var params = {
                     DeviceId: objVehicle.deviceid,
                     odometer: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetOdometerSetting", { params: params }).then(function (data) {
-                    if (data.success == true) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                        );
-                        $scope.reload();
-                    } else {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                        );
-                        $scope.reload();
-                    }
-                    HideLoader();
-                })
+                if ($scope.DeviceCompany == 'Beiduo') {
+                    $http.get($rootScope.RoutePath + "socketapi_beidou/SetOdometerSetting", { params: params }).then(function (data) {
+                        if (data.success == true) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        }
+                        HideLoader();
+                    })
+                } else {
+                    $http.get($rootScope.RoutePath + "socketapi/SetOdometerSetting", { params: params }).then(function (data) {
+                        if (data.success == true) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        }
+                        HideLoader();
+                    })
+                }
                 // } else {
                 //     return;
                 // }
@@ -284,26 +332,49 @@
                     DeviceId: objVehicle.deviceid,
                     Relay: objModel
                 }
-                $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function (data) {
-                    if (data.data.success == true) {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                        );
-                        $scope.reload();
-                    } else {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent(data.data.message)
-                                .position('top right')
-                                .hideDelay(3000)
-                        );
-                        $scope.reload();
-                    }
-                    HideLoader();
-                })
+                if ($scope.DeviceCompany == 'Beiduo') {
+                    $http.get($rootScope.RoutePath + "socketapi_beidou/SetRelaySetting", { params: params }).then(function (data) {
+                        if (data.data.success == true) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        }
+                        HideLoader();
+                    })
+                } else {
+                    $http.get($rootScope.RoutePath + "socketapi/SetOutputControl", { params: params }).then(function (data) {
+                        if (data.data.success == true) {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        } else {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent(data.data.message)
+                                    .position('top right')
+                                    .hideDelay(3000)
+                            );
+                            $scope.reload();
+                        }
+                        HideLoader();
+                    })
+                }
             } else if (name == 'Siren') {
                 var params = {
                     DeviceId: objVehicle.deviceid,

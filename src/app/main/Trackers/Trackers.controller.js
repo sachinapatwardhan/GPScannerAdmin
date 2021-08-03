@@ -106,7 +106,12 @@
 
         $scope.GetDeviceId = function (IMEI) {
             if ($scope.model.IMEI != '') {
-                $scope.model.DeviceId = parseInt($scope.model.IMEI.toString().slice(1));
+                if ($scope.model.Company != 'Beiduo') {
+                    $scope.model.DeviceId = parseInt($scope.model.IMEI.toString().slice(1));
+                } else {
+                    $scope.model.DeviceId = $scope.model.IMEI;
+                }
+
             }
         }
 

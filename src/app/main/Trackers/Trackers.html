@@ -377,21 +377,38 @@
                 <form name="formTrackingdetails" novalidate class="md-inline-form" aria-invalid="false">
                     <div class="content">
                         <div layout="row" layout-wrap>
+                            <md-input-container class="md-block" flex="100" flex-gt-sm="25"
+                                ng-if="AppName == 'DoTracks' || AppName == 'Trackox' || UserRoles == 'Super Admin'">
+                                <label>Company</label>
+                                <md-select ng-model="model.Company" name="Company" ng-change="GetDeviceId(model.IMEI)"
+                                    required>
+                                    <md-option name="Company1" value="Maark" selected="true">Maark</md-option>
+                                    <md-option name="Company2" value="ITCD">ITCD</md-option>
+                                    <md-option name="Company3" value="Beiduo">Beiduo</md-option>
+                                    <!-- <md-option name="Company2" value="Concox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">Concox</md-option>
+                                    <md-option name="Company3" value="GPSBox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">GPSBox</md-option>
+                                    <md-option name="Company4" value="Toplovo" ng-if="AppName == 'Trackox' || UserRoles == 'Super Admin'">Toplovo</md-option> -->
+                                </md-select>
+                            </md-input-container>
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25">
                                 <label>IMEI</label>
                                 <input name="IMEI" type="text" ng-model="model.IMEI" ng-disabled="flagEdit"
-                                    ng-required="true" ng-maxlength="15" ng-minlength="15"
-                                    ng-blur="GetDeviceId(model.IMEI)">
+                                    ng-required="true" ng-maxlength="model.Company=='Beiduo'?12:15"
+                                    ng-minlength="model.Company=='Beiduo'?12:15" ng-blur="GetDeviceId(model.IMEI)">
                                 <div ng-messages="formTrackingdetails.IMEI.$error"
                                     ng-if="formTrackingdetails.IMEI.$touched" role="alert">
                                     <div ng-message="required">
                                         <span>IMEI is required</span>
                                     </div>
                                     <div ng-message="maxlength">
-                                        <span>IMEI should not Grater than 15 digit</span>
+                                        <span ng-if="model.Company!='Beiduo'">IMEI should not Grater than 15
+                                            digit</span>
+                                        <span ng-if="model.Company=='Beiduo'">IMEI should not Grater than 12
+                                            digit</span>
                                     </div>
                                     <div ng-message="minlength">
-                                        <span>IMEI should not less than 15 digit</span>
+                                        <span ng-if="model.Company!='Beiduo'">IMEI should not less than 15 digit</span>
+                                        <span ng-if="model.Company=='Beiduo'">IMEI should not less than 12 digit</span>
                                     </div>
                                 </div>
                             </md-input-container>
@@ -410,17 +427,7 @@
                                     </div>
                                 </div>
                             </md-input-container>-->
-                            <md-input-container class="md-block" flex="100" flex-gt-sm="25"
-                                ng-if="AppName == 'DoTracks' || AppName == 'Trackox' || UserRoles == 'Super Admin'">
-                                <label>Company</label>
-                                <md-select ng-model="model.Company" name="Company" required>
-                                    <md-option name="Company1" value="Maark" selected="true">Maark</md-option>
-                                    <md-option name="Company2" value="ITCD">ITCD</md-option>
-                                    <!-- <md-option name="Company2" value="Concox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">Concox</md-option>
-                                    <md-option name="Company3" value="GPSBox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">GPSBox</md-option>
-                                    <md-option name="Company4" value="Toplovo" ng-if="AppName == 'Trackox' || UserRoles == 'Super Admin'">Toplovo</md-option> -->
-                                </md-select>
-                            </md-input-container>
+
                             <md-input-container class="md-block" flex="100" flex-gt-sm="25"
                                 ng-if="AppName != 'Tracking'">
                                 <label>Type</label>
@@ -431,6 +438,7 @@
                                     <md-option name="Type4" value="GT08">GT08</md-option>
                                     <md-option name="Type5" value="MT05">MT05</md-option>
                                     <md-option name="Type10" value="Concox">Concox</md-option>
+                                    <md-option name="Type10" value="Beiduo">Beiduo</md-option>
                                     <md-option name="Type6" value="ITCD" ng-if="UserRoles == 'Super Admin'">ITCD
                                     </md-option>
                                     <!-- <md-option name="Type6" value="Concox" ng-if="AppName != 'Trackox' || UserRoles == 'Super Admin'">Concox</md-option>
