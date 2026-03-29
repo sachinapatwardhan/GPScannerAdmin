@@ -400,7 +400,7 @@ Paid      → Void       (refund / cancellation)
 
 ## 17. App Version / Settings
 
-### `SaveAppVersion(o)` / `SaveAppVesionInfo`
+### `SaveAppVersion(o)` / `SaveAppVesionInfo` *(endpoint name as in codebase)*
 **Business Rules:**
 - Separate iOS and Android version fields with corresponding download URLs.
 - `UpdateAppText` is the message shown in-app when a new version is available.
@@ -414,7 +414,7 @@ Paid      → Void       (refund / cancellation)
 
 ## 18. Device Renew Price
 
-### `SaveDevcieRenewPrice(o)`
+### `SaveDevcieRenewPrice(o)` *(endpoint name as in codebase)*
 **Business Rules:**
 - A price entry is scoped to one Sales Agent (`IdUser`) and one Device Type (`Type`) within an app.
 - Duplicate `(IdUser, Type)` combinations within the same app are rejected (server-side).
