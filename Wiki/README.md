@@ -19,6 +19,9 @@ This Wiki documents every AngularJS module and controller in the **GPScannerAdmi
 | 9 | [System Configuration](./09-System-Configuration.md) | AppInfo, Module, MainSetting, EmailSetting, EmailTemplate |
 | 10 | [Audit, Warranty & Sharing](./10-Audit-Warranty-Sharing.md) | AuditLog, AuditLogLicense, WarrantyDevice, WarrantySIM, SharedVehicle |
 | 11 | [Cross-Cutting Concerns & API Reference](./11-Cross-Cutting-API-Reference.md) | RBAC, Navigation, Common Patterns, Full API Endpoint Index |
+| 12 | [System Workflows](./12-System-Workflows.md) | Authentication, Device Onboarding, Assignment, Licensing, Subscriptions, Tracking, Alarms, Payments |
+| 13 | [Data Entities](./13-Data-Entities.md) | User, Vehicle, GPS Device, SIM, Licence, OrderService, Wallet, Alarm, Product, and all supporting entities |
+| 14 | [Actions, Business Rules & Validations](./14-Actions-Business-Rules.md) | All controller actions with business rules, validation logic, and status transitions |
 
 ---
 
