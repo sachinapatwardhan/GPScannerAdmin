@@ -1,0 +1,46 @@
+name: Sync Wiki folder to GitHub Wiki
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Wiki/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clone GitHub Wiki repository
+        run: |
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git /tmp/wiki
+
+      - name: Copy Wiki files to wiki repository
+        run: |
+          # Copy all markdown files from Wiki/ folder
+          cp Wiki/*.md /tmp/wiki/
+
+          # GitHub Wiki uses Home.md as the landing page; rename README.md
+          if [ -f /tmp/wiki/README.md ]; then
+            mv /tmp/wiki/README.md /tmp/wiki/Home.md
+          fi
+
+      - name: Commit and push to GitHub Wiki
+        run: |
+          cd /tmp/wiki
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Sync wiki docs from Wiki/ folder (commit ${{ github.sha }})"
+            git push
+          fi
