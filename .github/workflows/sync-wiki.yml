@@ -24,8 +24,8 @@ jobs:
 
       - name: Copy Wiki files to wiki repository
         run: |
-          # Copy all markdown files from Wiki/ folder
-          cp Wiki/*.md /tmp/wiki/
+          # Copy all files from Wiki/ folder recursively
+          cp -r Wiki/. /tmp/wiki/
 
           # GitHub Wiki uses Home.md as the landing page; rename README.md
           if [ -f /tmp/wiki/README.md ]; then
