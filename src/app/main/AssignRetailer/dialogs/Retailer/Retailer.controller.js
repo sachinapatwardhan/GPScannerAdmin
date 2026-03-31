@@ -15,19 +15,12 @@
         $scope.Email = Email;
         $scope.init = function() {
             $scope.idUser = idUser;
-            // $scope.GetAllRetailerByUser($scope.idUser);
+            
             $scope.GetAllRetailer();
-            // $scope.GetAllAssignRetailer();
+           
         }
 
-        // $scope.GetAllRetailerByUser = function(idUser) {
-        //     var params = {
-        //         iduser: idUser,
-        //     }
-        //     $http.get($rootScope.RoutePath + "assignretailer/GetAllRetailerByUser", { params: params }).then(function(data) {
-        //         $scope.lstUserRetailer = data.data;
-        //     });
-        // }
+        
 
         $scope.GetAllRetailer = function(idUser) {
             var params = {
@@ -102,9 +95,7 @@
                         );
 
                         $scope.init();
-                        // $scope.ResetModel();
-                        // getAllSIMInfo();
-                        // vm.GetAllSIMDetail(true);
+                        
 
                     } else {
                         $mdToast.show(
@@ -126,9 +117,7 @@
                             .hideDelay(3000)
                         );
                         $scope.init();
-                        // $scope.ResetModel();
-                        // getAllSIMInfo();
-                        // vm.GetAllSIMDetail(true);
+                        
 
                     } else {
                         $mdToast.show(

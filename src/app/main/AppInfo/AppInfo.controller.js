@@ -77,13 +77,7 @@
                                     $scope.FlgImage = 1;
                                 })
 
-                                // $('#UploadedImage').attr('src','');
-                                //$('#UploadedImage').remove();
-                                // $('#UploadedImage')[0].removeAttribute("src");
-                                // $('#UploadedImage')[0].src = $scope.myCroppedImage;
-                                // document.getElementById("UploadedImage").src = $scope.myCroppedImage;
-                                //document.getElementById("UploadedImage").innerHTML = "<img src\= " + $scope.myCroppedImage + " width='150px' />";
-                            } else {
+                                } else {
                                 $scope.$apply(function() {
                                     $scope.myCroppedImage = '';
                                 })

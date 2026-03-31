@@ -21,14 +21,5 @@
                 ModuleName: 'Alarm'
             });
 
-        // Translation
-        //$translatePartialLoaderProvider.addPart('app/main/Feedback');
-
-        // Navigation
-        // msNavigationServiceProvider.saveItem('Products.brand', {
-        //     title: 'Authentication',
-        //     icon: 'icon-lock',
-        //     weight: 1
-        // });
     }
 })();

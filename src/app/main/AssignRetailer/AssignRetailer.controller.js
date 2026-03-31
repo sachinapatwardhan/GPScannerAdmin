@@ -30,13 +30,12 @@
             if ($rootScope.UserRoles == 'Super Admin') {
                 $scope.dtColumns = [
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
-                    // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
+                    
                     DTColumnBuilder.newColumn('email'),
-                    // DTColumnBuilder.newColumn('OwnerName'),
+                    
                     DTColumnBuilder.newColumn('phone'),
                     DTColumnBuilder.newColumn('country'),
-                    // DTColumnBuilder.newColumn('OTP'),
-                    // DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
+                    
                     DTColumnBuilder.newColumn('TotalDevice'),
                     DTColumnBuilder.newColumn('AppName'),
                     DTColumnBuilder.newColumn('LastLogin').renderWith(dateFormat),
@@ -45,13 +44,12 @@
             } else {
                 $scope.dtColumns1 = [
                     DTColumnBuilder.newColumn('CreatedDate').renderWith(NumberHtml).notSortable().withOption('width', '4%').withOption('class', 'text-center'),
-                    // DTColumnBuilder.newColumn(null).notSortable().renderWith(ImageHtml),
+                    
                     DTColumnBuilder.newColumn('email'),
-                    // DTColumnBuilder.newColumn('OwnerName'),
+                    
                     DTColumnBuilder.newColumn('phone'),
                     DTColumnBuilder.newColumn('country'),
-                    // DTColumnBuilder.newColumn('OTP'),
-                    // DTColumnBuilder.newColumn('IsMobileVerify').renderWith(IsFlg),
+                    
                     DTColumnBuilder.newColumn('TotalDevice'),
                     DTColumnBuilder.newColumn('LastLogin').renderWith(dateFormat),
                     DTColumnBuilder.newColumn(null).notSortable().renderWith(actionsHtml).withOption('class', 'text-center'),
@@ -95,7 +93,7 @@
                 .withOption('aaSorting', [0, 'DESC'])
                 .withOption('responsive', true).withOption('bAutoWidth', false)
                 .withOption('createdRow', createdRow)
-                // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
+                
                 .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
                 .withOption('scrollY', 'auto');
         });

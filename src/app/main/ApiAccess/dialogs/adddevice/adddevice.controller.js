@@ -17,8 +17,7 @@
             DTColumnBuilder.newColumn('DeviceId').notSortable().withOption('width', '3%'),
             DTColumnBuilder.newColumn('email').notSortable().withOption('width', '10%'),
             DTColumnBuilder.newColumn('username').notSortable().withOption('width', '10%'),
-            // DTColumnBuilder.newColumn('null').notSortable().withOption('class', 'text-center').withOption('width', '10%').renderWith(Email),
-            // DTColumnBuilder.newColumn(null).notSortable().withOption('class', 'text-center').withOption('width', '10%').renderWith(User),
+            
         ]
         $rootScope.CheckPageRights(($rootScope.state.current.ModuleName), function(req, res) {
             $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('ajax', {
@@ -93,7 +92,7 @@
         $scope.devices = {};
 
         function CheckboxHtml(data, type, full, meta) {
-            // full.tblapiaccessclient.DeviceId = full.apiaccDeviceId;
+            
             if (full.apiaccDeviceId != null) {
                 var deviceID = full.apiaccDeviceId.split(',');
                 var index = deviceID.indexOf(full.DeviceId)

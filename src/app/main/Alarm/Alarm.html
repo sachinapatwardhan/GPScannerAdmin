@@ -7,10 +7,7 @@
                     <md-icon md-font-icon="icon-cube-outline"></md-icon>
                     <span translate="Alarm"> Alarm</span>
                 </div>
-                <!--<div class="product-count secondary-text" hide-xs>
-                    <span>Total Employee :</span>
-                    <b>{{lstDetail}}</b>
-                </div>-->
+                
             </div>
             <div class="search" layout="row" layout-align="start center" flex="60" flex-gt-xs="60" flex-gt-sm="33" align="center">
                 <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
@@ -39,13 +36,7 @@
                         <label>End Date</label>
                         <input name="End" mdc-datetime-picker date="true" time="true" type="text" id="time" min-date="minDate" format="DD-MM-YYYY hh:mm A" ng-model="ModelSearch.EndDate">
                     </md-input-container>
-                    <!-- <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-  <labelDd</label>
-  <md-select name="DeviceId" ng-model="ModelSearch.DeviceId">
-    <md-option ng-repeat="o in lstdevice" value="{{o.DeviceId}}">{{o.DeviceId}}</md-option>
-  </md-select>
-</md-input-container>
- -->
+
                     <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>Device ID</label>
                         <md-select Name="DeviceId" ng-model="ModelSearch.DeviceId" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllAlarm(true)">
@@ -56,12 +47,7 @@
                             <md-option ng-value="{{o.DeviceId}}" ng-repeat="o in lstdevice |filter: searchDevice | orderBy : 'CreatedDate':true">{{o.DeviceId}}</md-option>
                         </md-select>
                     </md-input-container>
-                    <!--           <md-input-container class="md-block" flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
-            <label>Alarm</label>
-            <md-select name="DeviceId" ng-model="ModelSearch.AlarmCode">
-              <md-option ng-repeat="o in ResponseAlarm" value="{{o.AlarmCode}}">{{o.Alarm}}</md-option>
-            </md-select>
-          </md-input-container> -->
+
                     <md-input-container flex="100" flex-gt-xs="50" flex-gt-sm="25" flex-gt-md="20">
                         <label>Alarm</label>
                         <md-select Name="MachineTypeId" ng-model="ModelSearch.AlarmCode" md-on-close="clearSearchTerm()" data-md-container-class="selectdemoSelectHeader" ng-change="GetAllAlarm(true)">

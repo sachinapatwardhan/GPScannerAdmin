@@ -114,7 +114,6 @@
             .withOption('aaSorting', [1, 'desc'])
             .withOption('responsive', true)
             .withOption('createdRow', createdRow)
-            // .withOption('dom', 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>')
             .withOption('dom', 'rt<"bottom"<"left"<"length"l><"info"i>><"right"<"pagination"p>>>')
             .withOption('scrollY', 'auto');
         $scope.dtInstance = {};
@@ -146,10 +145,7 @@
 
         function Datefun(data, type, full, meta) {
             if (data != '' && data != null && data != undefined) {
-                // return $filter('date')(data, "dd-MM-yyyy");
-                // return moment(moment(data).toDate()).format("DD-MM-YYYY hh:mm a");
-                // var date = $rootScope.convertdateformat(data, 2);
-                // return date; 
+                
                 return moment(data).format('DD-MM-YYYY hh:mm:ss a')
             } else {
                 return '';
